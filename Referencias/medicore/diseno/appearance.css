@@ -1,0 +1,112 @@
+/* Identidad visual común: menta, azul suave y superficies cálidas. */
+:root{--green:#087f79;--ink:#173e45;--muted:#526e76;--line:#cddfe0;--bg:#e9f3f2}
+body{background:linear-gradient(135deg,#e4f2ed 0%,#edf3fa 65%,#e5f0f3 100%);background-attachment:fixed}
+.prototype{background:#123f49;color:#d4e7eb;border-bottom:1px solid #37616b}
+.prototype select{background:#24545e;border-color:#729096;color:#fff;min-height:32px}
+.layout{background:transparent}
+.layout>aside{background:#153f49;border-right:1px solid #2d5660;color:#f2faf8;box-shadow:4px 0 24px #0a3d4510}
+.layout>aside .brand{color:#f5fffc}
+.layout>aside .brand small{color:#b9d8d6}
+.cross{background:#0a9185;box-shadow:0 3px 10px #084e4b15}
+.layout>aside .navlabel{color:#b1cece}
+.layout>aside .nav{color:#d2e3e5;transition:background .15s,color .15s}
+.layout>aside .nav:hover{background:#23545e;color:white}
+.layout>aside .nav.active{background:#d2efe4;color:#135649;box-shadow:0 3px 10px #071e2920}
+.layout>aside .sidebottom p{color:#b7d1d2}
+.layout>aside .sidebottom .link{color:#deefeb}
+.layout>aside .notice{background:#244f58;color:#e1f1eb;border:1px solid #3c626b}
+header{background:#e4f0f1;border-color:#c9dfe0}
+.crumb{color:#526c75}
+.avatar{background:#cce8e0;color:#245d57;border:1px solid #bedbd1}
+.user small{color:#506a72}
+.content{padding-top:30px}
+.content>.eyebrow{display:inline-block;color:#145e5b;background:#cee9df;padding:7px 11px;border:1px solid #b8d9cd;border-radius:6px;letter-spacing:1.2px;margin-bottom:17px}
+.content>.titlebar{background:linear-gradient(105deg,#d5ebe3,#e0edf4);padding:24px 26px;border:1px solid #c3dbd7;border-radius:15px;box-shadow:0 5px 18px #224d5410}
+.titlebar h1{color:#173e45}
+.sub{color:#526e76}
+.panel{background:#fcfefd;border-color:#cbdfdc;box-shadow:0 5px 22px #315e6210;border-radius:15px}
+.toolbar{background:#eaf3f4;border-color:#d0e2e3;padding-top:18px;padding-bottom:18px}
+.toolbar input,.toolbar select,.field input,.field select,.field textarea{border-color:#bacfd1;background:#f8fcfc;border-radius:8px;min-height:43px}
+.field{color:#304f57;font-weight:600}
+.field input:focus,.field select:focus,.field textarea:focus,.toolbar input:focus{outline:3px solid #00837822;border-color:#13877e}
+.field input:disabled{background:#e9f0ef;color:#546e72}
+.btn{background:#087f79;border-color:#087f79;min-height:43px;border-radius:9px;box-shadow:0 3px 8px #0a6e7518}
+.btn:hover{background:#066b67;border-color:#066b67}
+.btn.secondary{background:#e9f3f0;color:#1c6257;border-color:#bad9cf;box-shadow:none}
+.btn.secondary:hover{background:#d7ebe3}
+.btn.danger{background:#fff2ef;border-color:#e7b5b1;color:#a03f3b;box-shadow:none}
+.link{color:#086d72;min-height:34px}
+.link:hover{text-decoration:underline}
+th{background:#e1eeed;color:#385e61;padding-top:17px;padding-bottom:17px;letter-spacing:.65px}
+td{border-color:#d9e8e3}
+tbody tr:nth-child(even){background:#f0f7f4}
+tbody tr:hover{background:#e6f2ee}
+.seg{background:#d5e6e8;border:1px solid #c3d8da}
+.seg .selected{background:#fff;color:#125f62}
+.daytitle{color:#2b565b;border-color:#d1e3de}
+.slot{border-color:#dce9e5}
+.time{color:#547179;font-weight:500}
+.appointment{background:#e0f1e7;border-color:#21836d;box-shadow:0 2px 5px #1a5e4510}
+.appointment strong{color:#204c43}
+.appointment small{color:#526e63}
+.appointment.blue{background:#e2edf9;border-color:#4e83bc}
+.appointment.empty{background:#eef6fa;border:1px dashed #aacbd5;color:#426d7b;box-shadow:none;min-height:52px}
+.appointment.empty:hover{background:#dfedf5;border-color:#548a9e}
+.badge{background:#c8e8d7;color:#205d41;border:1px solid #a9d5bd;font-weight:600}
+.badge.blue{background:#d7e6f8;color:#315b8c;border-color:#b3cbe8}
+.badge.gray{background:#e5eded;color:#455f61;border-color:#c7d7d5}
+.badge.red{background:#f9dfdc;color:#8f3932;border-color:#eab6b1}
+.calendar{background:#f2f8ef}
+.calgrid span,.calgrid button{color:#42655a}
+.calgrid .faded{color:#82978a}
+.calgrid button:hover{background:#dcebdd}
+.calgrid .chosen,.calgrid .chosen:hover{background:#087f79;color:white;box-shadow:0 3px 6px #16584922}
+.legend{color:#526e61}
+.note{background:#deebe0;border:1px solid #c4dac7;color:#315a44}
+.note p{color:#526d59}
+.steps{background:#edf4f2;border-radius:8px;padding:15px 17px;color:#667d78;border-bottom:0}
+.steps .on{color:#08695f}
+.times button{background:#edf7f4;color:#186b60;border-color:#b7d7cd;min-height:46px}
+.times button:hover:not(:disabled){background:#d6ece4}
+.times button.selected{background:#087f79;color:white;border-color:#087f79;box-shadow:0 3px 7px #0b665d20}
+.times button:disabled{background:#e9efee;color:#6f8280;border-color:#dae4e1}
+.notice{background:#dff0e8;color:#365f50;border:1px solid #bfdbcb}
+.summaryline{border-color:#d6e5df}
+.summaryline span{color:#526e76}
+.tabs{border-color:#caddd6}
+.tabs button{color:#526e76;font-weight:600}
+.tabs .on{color:#076c64;border-color:#087f79}
+.mobcard{background:#f9fcf7;border-color:#c6dcd3;box-shadow:0 3px 10px #1d554e0a}
+.mobcard:hover{border-color:#83b7a7;background:#eff8f2}
+.mobcard p{color:#526d65}
+.mobcard h3{color:#245548}
+.mobile-stage{max-width:1100px;padding-top:36px}
+.mobileguide h1{color:#164f58;font-size:34px;line-height:1.2}
+.mobileguide button{color:#496c70;border-left:3px solid transparent}
+.mobileguide button:hover{background:#deecea}
+.mobileguide button.active{background:#cce8df;color:#175f52;border-left-color:#087f79;font-weight:700}
+.phone{background:linear-gradient(165deg,#e4f0ec 0%,#eaf2f8 60%,#e5f2ee 100%);border-color:#214f59;box-shadow:0 22px 55px #163e4925}
+.statusbar{background:#d6e9e4;color:#2c5559}
+.mobhead{background:#d6e9e4;margin-bottom:22px;border-bottom:1px solid #bdd6ce;padding-top:18px;padding-bottom:21px}
+.mobhead .brand{color:#194f52}
+.mobcontent>.eyebrow{font-size:9px;color:#32665f}
+.mobhero{background:#155c64;color:white;border:1px solid #1a6b72;box-shadow:0 7px 18px #1b596421}
+.mobhero .eyebrow{color:#c2e5dd}
+.mobhero h2{color:#fff}
+.mobhero p{color:#e0efeb}
+.mobhero .btn.secondary{background:#d8eee4;color:#1d594d;border-color:#c4e0d2}
+.mobnav{background:#e0efeb;border-color:#b6d2c8}
+.mobnav button{color:#566f70;padding:5px 12px;border-radius:8px}
+.mobnav button.active{background:#c4e2d8;color:#0b6156;font-weight:700}
+.minilabel{color:#486f65;font-weight:700}
+.prototypehint{color:#587570}
+.loginart{background:linear-gradient(145deg,#144c58,#087b72);color:#fff}
+.loginart .brand,.loginart h1{color:white}
+.loginart .brand small{color:#cee5df}
+.loginart p{color:#d9ece6}
+.artcross{color:#ffffff0b}
+.loginform{background:linear-gradient(150deg,#e2f0e8,#e4eef7)}
+.loginform form{max-width:420px;background:#f8fcf8;border:1px solid #c4dcd1;padding:32px;border-radius:20px;box-shadow:0 12px 35px #1b594d12}
+.loginform h1{font-size:28px}
+.loginform .sub{color:#526e76}
+@media(max-width:700px){.layout>aside .brand{margin:3px 0 17px}.layout>aside nav{gap:7px;padding-bottom:3px}.layout>aside .nav{padding:11px 14px}.content>.titlebar{padding:20px;align-items:stretch;flex-direction:column;gap:18px}.content>.titlebar .btn{align-self:flex-start}.content{padding:20px 14px}.appointment{padding:14px 12px;align-items:flex-start;flex-direction:column;gap:9px}.appointment>div:last-child{display:flex;align-items:center;gap:8px}.appointment.empty{align-items:center}.slot{grid-template-columns:51px 1fr;min-height:87px}.toolbar{padding:15px}.phone{width:min(390px,calc(100vw - 20px))}.mobile-stage{padding:18px 0}.loginform{padding:24px 16px}.loginform form{padding:25px}.steps{gap:16px;line-height:1.5}}
