@@ -1,0 +1,33 @@
+@page "{id:guid?}"
+@model MediCore.Web.Pages.Medicos.FormularioModel
+@{
+    ViewData["Code"] = "WEB-08";
+    ViewData["Title"] = Model.IsEdit ? "Editar médico" : "Registrar médico";
+    ViewData["Subtitle"] = "Información de contacto y especialidad.";
+}
+
+<form method="post" class="panel panelpad" novalidate>
+    <div asp-validation-summary="ModelOnly" class="err" role="alert"></div>
+    <div class="formgrid">
+        <label class="field">Nombre completo
+            <input asp-for="Input.FullName" required maxlength="120" autocomplete="off" />
+            <span asp-validation-for="Input.FullName" class="err"></span>
+        </label>
+        <label class="field">Especialidad
+            <input asp-for="Input.Specialty" required maxlength="80" autocomplete="off" />
+            <span asp-validation-for="Input.Specialty" class="err"></span>
+        </label>
+        <label class="field">Teléfono
+            <input asp-for="Input.Phone" type="tel" required maxlength="20" />
+            <span asp-validation-for="Input.Phone" class="err"></span>
+        </label>
+        <label class="field">Correo electrónico
+            <input asp-for="Input.Email" type="email" required maxlength="254" />
+            <span asp-validation-for="Input.Email" class="err"></span>
+        </label>
+    </div>
+    <div class="formfoot">
+        <a class="btn secondary" asp-page="/Medicos/Index">Cancelar</a>
+        <button class="btn" type="submit">Guardar médico</button>
+    </div>
+</form>

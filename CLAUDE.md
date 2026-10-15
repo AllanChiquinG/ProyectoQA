@@ -25,7 +25,10 @@ Plataforma hospitalaria (Proyecto 2 de `Docs/Proyecto Final QA.docx`, curso 048 
 - Autorización por rol **y** por recurso (un paciente solo ve lo suyo; un médico solo lo autorizado). Auditoría de accesos y cambios clínicos.
 - Autenticación (entrega 2): la API emite JWT de 15 min + token de refresco de un solo uso que rota; la sesión vive en Redis (8 h absolutas) y cada petición verifica que siga existiendo (cerrar sesión o cambiar el rol la revoca; si Redis cae, falla cerrado). La web actúa como BFF: guarda los tokens en la cookie cifrada (HttpOnly) y llama a la API con ellos; renueva el acceso en `SessionTokens.ValidateAsync`. Reutilizar un refresh ya rotado revoca la sesión. Contraseñas con `PasswordHasher` de ASP.NET; bloqueo tras 5 fallos (15 min); límite por IP en login/refresh; mensaje único para todos los fallos de login.
 - Seguro por defecto: la política fallback exige usuario autenticado en API y web; lo público se marca con `[AllowAnonymous]`. Roles en `MediCore.Contracts.Roles` (deben coincidir con `UserRole`). Auditoría en `audit_entries` vía `IAuditLogger` (solo códigos, sin datos personales ni clínicos en `Details`).
-- Pendiente: autorización a nivel de recurso (paciente/médico) llega con las entidades clínicas (entregas 3–6).
+- Autorización por recurso (entrega 3): `PatientAuthorizationHandler` (IAuthorizationService, `PatientOperations.Read/Update`). Recepción y Administrador gestionan todo; el Paciente solo lee su propio registro (`Patient.UserId`); el Médico NO accede hasta que exista relación de atención (se añade con las citas, entrega 4); Laboratorio no accede. Un acceso ajeno devuelve 404 (no confirma existencia) y se audita como `patients.access_denied`. Toda lectura de datos de pacientes se audita (`patients.read`, `patients.searched`) sin guardar datos personales.
+- Cache (entrega 3): `ICacheService` falla abierto (sin Redis consulta PostgreSQL); el catálogo de médicos se cachea 5 min (`Cache:DoctorCatalogTtl`) y se invalida al crear/editar. Las sesiones, en cambio, fallan cerrado.
+- Unicidad de la identificación del paciente: índice único en PostgreSQL (maneja altas simultáneas); la API responde 409.
+- Pendiente: autorización por recurso de citas, consultas, recetas y resultados (entregas 4–6).
 
 ## Estructura
 

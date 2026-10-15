@@ -7,16 +7,18 @@
     var name = User.Identity?.Name ?? "";
     var initials = string.Concat(name.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2).Select(p => p[0]));
 
-    // Navegación por rol, según el diseño. Solo lleva enlace lo que ya está implementado.
-    (string Icon, string Text, string? Page)[] nav = role switch
+    // Navegación por rol, según el diseño. Solo lleva enlace lo que ya está implementado (Section == null).
+    (string Icon, string Text, string? Section, string? Target)[] nav = role switch
     {
-        Roles.Administrador => [("♧", "Pacientes", null), ("✚", "Médicos", null), ("⚿", "Usuarios y roles", "/Usuarios")],
-        Roles.Medico => [("▦", "Mi agenda", null), ("♧", "Pacientes autorizados", null)],
-        Roles.Laboratorio => [("⚗", "Resultados de laboratorio", null)],
-        _ => [("▦", "Agenda de citas", null), ("♧", "Pacientes", null)],
+        Roles.Administrador => [("♧", "Pacientes", "/Pacientes", "/Pacientes/Index"), ("✚", "Médicos", "/Medicos", "/Medicos/Index"), ("⚿", "Usuarios y roles", "/Usuarios", "/Usuarios")],
+        Roles.Medico => [("▦", "Mi agenda", null, null), ("♧", "Pacientes autorizados", "/Pacientes", "/Pacientes/Index")],
+        Roles.Laboratorio => [("⚗", "Resultados de laboratorio", null, null)],
+        _ => [("▦", "Agenda de citas", null, null), ("♧", "Pacientes", "/Pacientes", "/Pacientes/Index")],
     };
-    var currentPage = ViewContext.RouteData.Values["page"] as string;
+    var currentPage = ViewContext.RouteData.Values["page"] as string ?? "";
     var roleText = Roles.Mostrar(role);
+    var actionText = ViewData["ActionText"] as string;
+    var actionPage = ViewData["ActionPage"] as string;
 }
 
 <div class="layout">
@@ -26,13 +28,14 @@
         <nav aria-label="Navegación principal">
             @foreach (var item in nav)
             {
-                if (item.Page is null)
+                if (item.Section is null)
                 {
                     <span class="nav disabled" aria-disabled="true" title="Disponible en próximas entregas"><i aria-hidden="true">@item.Icon</i>@item.Text</span>
                 }
                 else
                 {
-                    <a href="@Url.Page(item.Page)" class="nav @(currentPage == item.Page ? "active" : "")" aria-current="@(currentPage == item.Page ? "page" : null)"><i aria-hidden="true">@item.Icon</i>@item.Text</a>
+                    var active = currentPage == item.Section || currentPage.StartsWith(item.Section + "/");
+                    <a href="@Url.Page(item.Target)" class="nav @(active ? "active" : "")" aria-current="@(active ? "page" : null)"><i aria-hidden="true">@item.Icon</i>@item.Text</a>
                 }
             }
         </nav>
@@ -59,6 +62,10 @@
                     <h1>@ViewData["Title"]</h1>
                     <p class="sub">@ViewData["Subtitle"]</p>
                 </div>
+                @if (actionText is not null && actionPage is not null)
+                {
+                    <a class="btn" href="@Url.Page(actionPage)">＋ @actionText</a>
+                }
             </div>
             @RenderBody()
         </div>
