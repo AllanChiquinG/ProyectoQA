@@ -1,11 +1,13 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/MediCore.Api/MediCore.Api.csproj" />
+    <Project Path="src/MediCore.Contracts/MediCore.Contracts.csproj" />
     <Project Path="src/MediCore.Domain/MediCore.Domain.csproj" />
     <Project Path="src/MediCore.Infrastructure/MediCore.Infrastructure.csproj" />
     <Project Path="src/MediCore.Web/MediCore.Web.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/MediCore.Api.Tests/MediCore.Api.Tests.csproj" />
+    <Project Path="tests/MediCore.UnitTests/MediCore.UnitTests.csproj" />
   </Folder>
 </Solution>

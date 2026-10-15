@@ -4,12 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] · MediCore</title>
-    @* Orden aprobado del diseño: style.css y después appearance.css. *@
+    @* Orden aprobado del diseño: style.css, luego appearance.css; los ajustes propios van al final en app.css. *@
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/appearance.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/app.css" asp-append-version="true" />
 </head>
 <body>
     @RenderBody()
+    @if (TempData.Peek("Toast") is string toast)
+    {
+        <div id="toast" role="status" class="visible">@toast</div>
+        <script src="~/js/toast.js" asp-append-version="true"></script>
+        TempData.Remove("Toast");
+    }
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
