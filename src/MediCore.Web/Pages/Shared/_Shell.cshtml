@@ -1,0 +1,66 @@
+@using System.Security.Claims
+@using MediCore.Contracts
+@{
+    Layout = "_Layout";
+
+    var role = User.FindFirstValue(ClaimTypes.Role) ?? "";
+    var name = User.Identity?.Name ?? "";
+    var initials = string.Concat(name.Split(' ', StringSplitOptions.RemoveEmptyEntries).Take(2).Select(p => p[0]));
+
+    // Navegación por rol, según el diseño. Solo lleva enlace lo que ya está implementado.
+    (string Icon, string Text, string? Page)[] nav = role switch
+    {
+        Roles.Administrador => [("♧", "Pacientes", null), ("✚", "Médicos", null), ("⚿", "Usuarios y roles", "/Usuarios")],
+        Roles.Medico => [("▦", "Mi agenda", null), ("♧", "Pacientes autorizados", null)],
+        Roles.Laboratorio => [("⚗", "Resultados de laboratorio", null)],
+        _ => [("▦", "Agenda de citas", null), ("♧", "Pacientes", null)],
+    };
+    var currentPage = ViewContext.RouteData.Values["page"] as string;
+    var roleText = Roles.Mostrar(role);
+}
+
+<div class="layout">
+    <aside>
+        <div class="brand"><span class="cross">+</span><div>MediCore<small>ATENCIÓN CONECTADA</small></div></div>
+        <div class="navlabel">ESPACIO DE TRABAJO</div>
+        <nav aria-label="Navegación principal">
+            @foreach (var item in nav)
+            {
+                if (item.Page is null)
+                {
+                    <span class="nav disabled" aria-disabled="true" title="Disponible en próximas entregas"><i aria-hidden="true">@item.Icon</i>@item.Text</span>
+                }
+                else
+                {
+                    <a href="@Url.Page(item.Page)" class="nav @(currentPage == item.Page ? "active" : "")" aria-current="@(currentPage == item.Page ? "page" : null)"><i aria-hidden="true">@item.Icon</i>@item.Text</a>
+                }
+            }
+        </nav>
+        <div class="sidebottom">
+            <div class="notice">Una atención más cercana.<br>Un equipo mejor conectado.</div>
+            <p>Proyecto 2 · MediCore</p>
+            <form method="post" asp-page="/Logout">
+                <button class="link" type="submit"><span aria-hidden="true">↪</span> Cerrar sesión</button>
+            </form>
+        </div>
+    </aside>
+    <main class="main">
+        <header>
+            <div class="crumb">MediCore &nbsp; / &nbsp; <strong>@ViewData["Title"]</strong></div>
+            <div class="user">
+                <div class="avatar" aria-hidden="true">@initials</div>
+                <div>@name<small>@roleText</small></div>
+            </div>
+        </header>
+        <div class="content">
+            <div class="eyebrow">@ViewData["Code"] &nbsp; / &nbsp; @roleText.ToUpperInvariant()</div>
+            <div class="titlebar">
+                <div>
+                    <h1>@ViewData["Title"]</h1>
+                    <p class="sub">@ViewData["Subtitle"]</p>
+                </div>
+            </div>
+            @RenderBody()
+        </div>
+    </main>
+</div>

@@ -1,0 +1,13 @@
+@page
+@model AccesoDenegadoModel
+@{
+    ViewData["Code"] = "ACCESO";
+    ViewData["Title"] = "Acceso restringido";
+    ViewData["Subtitle"] = "Tu rol no tiene permiso para ver esta sección.";
+}
+
+<div class="panel panelpad narrow">
+    <h2>No tienes acceso a esta página</h2>
+    <p class="sub">Si crees que deberías tenerlo, comunícate con el administrador.</p>
+    <div class="formfoot"><a class="btn" href="/">Volver al inicio</a></div>
+</div>

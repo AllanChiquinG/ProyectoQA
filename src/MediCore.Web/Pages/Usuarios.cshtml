@@ -1,0 +1,54 @@
+@page
+@using System.Security.Claims
+@using MediCore.Contracts
+@model UsuariosModel
+@{
+    ViewData["Code"] = "WEB-10";
+    ViewData["Title"] = "Usuarios y roles";
+    ViewData["Subtitle"] = "Accesos según la responsabilidad de cada persona.";
+    var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+}
+
+@if (Model.Error is not null)
+{
+    <div class="err" role="alert">@Model.Error</div>
+}
+
+<div class="panel">
+    <table>
+        <thead>
+            <tr><th>Usuario</th><th>Correo electrónico</th><th>Rol asignado</th><th></th></tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                var isSelf = user.Id.ToString() == currentUserId;
+                <tr>
+                    <td>@user.DisplayName</td>
+                    <td>@user.Email</td>
+                    <td class="rolecell">
+                        <form method="post" id="form-@user.Id" asp-page-handler="Cambiar">
+                            <input type="hidden" name="id" value="@user.Id" />
+                            <select name="role" aria-label="Rol de @user.DisplayName" disabled="@isSelf">
+                                @foreach (var role in Roles.Todos)
+                                {
+                                    <option value="@role" selected="@(role == user.Role)">@Roles.Mostrar(role)</option>
+                                }
+                            </select>
+                        </form>
+                    </td>
+                    <td class="table-actions">
+                        @if (isSelf)
+                        {
+                            <span class="sub">Tu cuenta</span>
+                        }
+                        else
+                        {
+                            <button class="link" type="submit" form="form-@user.Id">Guardar</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
