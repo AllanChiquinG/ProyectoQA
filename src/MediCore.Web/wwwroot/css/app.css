@@ -1,0 +1,24 @@
+/* Ajustes propios sobre el diseño aprobado. Se carga después de style.css y appearance.css.
+   - Quita el desplazamiento de 46 px que dejaba la barra del prototipo (no existe en el sistema final).
+   - Estilo de elementos de navegación aún no disponibles y botón de cierre de sesión dentro de un formulario. */
+.layout { min-height: 100vh; }
+.login { min-height: 100vh; }
+
+.layout > aside .nav.disabled { opacity: .55; cursor: default; }
+.layout > aside .nav.disabled:hover { background: transparent; color: #d2e3e5; }
+
+.sidebottom form { margin: 0; }
+.sidebottom .link { padding-left: 0; }
+
+.err:empty { display: none; }
+.err { margin-top: 18px; }
+
+.rolecell select { min-width: 190px; }
+.table-actions { white-space: nowrap; }
+
+@media (max-width: 700px) {
+    .login { min-height: auto; }
+}
+
+#toast.visible { display: block; }
+.narrow { max-width: 760px; }

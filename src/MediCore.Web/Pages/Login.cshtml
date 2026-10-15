@@ -1,0 +1,31 @@
+@page
+@model LoginModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Inicio de sesión";
+}
+
+<div class="login">
+    <section class="loginart">
+        <div class="brand"><span class="cross">+</span><div>MediCore<small>ATENCIÓN CONECTADA</small></div></div>
+        <h1>Más cerca de una mejor atención.</h1>
+        <p>Pacientes, profesionales e información conectados en un mismo lugar.</p>
+        <span class="artcross" aria-hidden="true">+</span>
+    </section>
+    <div class="loginform">
+        <form id="loginForm" method="post" novalidate>
+            <input type="hidden" asp-for="ReturnUrl" />
+            <div class="eyebrow">BIENVENIDO A MEDICORE</div>
+            <h1>Inicia tu jornada</h1>
+            <p class="sub">Ingresa para acceder a tu espacio de trabajo.</p>
+            <label class="field">Correo electrónico
+                <input asp-for="Input.Email" type="email" autocomplete="username" required maxlength="254" />
+            </label>
+            <label class="field">Contraseña
+                <input asp-for="Input.Password" type="password" autocomplete="current-password" required maxlength="128" />
+            </label>
+            <div class="err" role="alert">@Model.Error</div>
+            <button class="btn" type="submit">Iniciar sesión →</button>
+        </form>
+    </div>
+</div>

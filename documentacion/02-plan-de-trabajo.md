@@ -5,8 +5,8 @@ Cada entrega es pequeña, termina compilando, con pruebas verdes y la matriz de 
 | # | Entrega | Contenido | Estado |
 |---|---|---|---|
 | 0 | Preparación | Solución, API y web iniciales, CLAUDE.md, README, plan y trazabilidad, prueba de humo | **Hecha** |
-| 1 | Base técnica | Capas del monolito modular (dominio/aplicación/infraestructura por módulo), EF Core + PostgreSQL con migraciones, `docker-compose` (Postgres, Redis, RabbitMQ), `.env.example`, configuración y secretos locales (user-secrets), manejo global de errores, Swagger/OpenAPI | En curso (PR abierto) |
-| 2 | Identidad y acceso | Usuarios, roles, login web (cookie) y API (JWT corto + refresh), sesiones en Redis, políticas por rol y por recurso, auditoría base, WEB-01, MOB-01 (API) | Pendiente |
+| 1 | Base técnica | Capas del monolito modular (dominio/aplicación/infraestructura por módulo), EF Core + PostgreSQL con migraciones, `docker-compose` (Postgres, Redis, RabbitMQ), `.env.example`, configuración y secretos locales (user-secrets), manejo global de errores, Swagger/OpenAPI | **Hecha** (PR #1 fusionado) |
+| 2 | Identidad y acceso | Usuarios, roles, login web (cookie) y API (JWT corto + refresh), sesiones en Redis, políticas por rol y por recurso, auditoría base, WEB-01, MOB-01 (API), usuarios y roles (WEB-10) | En curso |
 | 3 | Pacientes y médicos | CRUD, búsqueda, `GET /api/patients/{id}`, `GET /api/doctors`, WEB-05…08, auditoría de accesos a datos clínicos | Pendiente |
 | 4 | Agenda y citas | Disponibilidad (WEB-09), `GET /api/doctors/{id}/availability`, `POST /api/appointments`, cancelación, **anti doble reserva** (restricción única en BD + concurrencia optimista/transacción), cache Redis de disponibilidad con invalidación, WEB-02/03/04/11 | Pendiente |
 | 5 | Consultas y recetas | Expediente, consultas, recetas, `GET /api/prescriptions/{id}`, WEB-12…15, autorización por recurso | Pendiente |

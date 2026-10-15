@@ -23,18 +23,22 @@ Plataforma hospitalaria (Proyecto 2 de `Docs/Proyecto Final QA.docx`, curso 048 
 - Agenda: la prevención de doble reserva se garantiza en la base de datos (restricción única + transacción/concurrencia optimista), no en memoria ni solo en cache.
 - Infra: Azure + Terraform (ruta A), Ansible, Docker/Compose, GitHub, Jenkins.
 - Autorización por rol **y** por recurso (un paciente solo ve lo suyo; un médico solo lo autorizado). Auditoría de accesos y cambios clínicos.
-- Decisión pendiente (entrega 2): mecanismo de autenticación (propuesta: cookie en web, JWT corto + refresh en móvil/API, sesiones en Redis).
+- Autenticación (entrega 2): la API emite JWT de 15 min + token de refresco de un solo uso que rota; la sesión vive en Redis (8 h absolutas) y cada petición verifica que siga existiendo (cerrar sesión o cambiar el rol la revoca; si Redis cae, falla cerrado). La web actúa como BFF: guarda los tokens en la cookie cifrada (HttpOnly) y llama a la API con ellos; renueva el acceso en `SessionTokens.ValidateAsync`. Reutilizar un refresh ya rotado revoca la sesión. Contraseñas con `PasswordHasher` de ASP.NET; bloqueo tras 5 fallos (15 min); límite por IP en login/refresh; mensaje único para todos los fallos de login.
+- Seguro por defecto: la política fallback exige usuario autenticado en API y web; lo público se marca con `[AllowAnonymous]`. Roles en `MediCore.Contracts.Roles` (deben coincidir con `UserRole`). Auditoría en `audit_entries` vía `IAuditLogger` (solo códigos, sin datos personales ni clínicos en `Details`).
+- Pendiente: autorización a nivel de recurso (paciente/médico) llega con las entidades clínicas (entregas 3–6).
 
 ## Estructura
 
 ```
 MediCore.slnx          solución (abrir en Visual Studio)
 src/MediCore.Api       Web API
+src/MediCore.Contracts  DTO y nombres de rol compartidos (API, Web, móvil)
 src/MediCore.Domain    entidades por módulo, sin dependencias externas
 src/MediCore.Infrastructure  EF Core/Npgsql, migraciones (Persistence/Migrations), futuros Redis/RabbitMQ
 docker-compose.yml     Postgres 17 (5433), Redis 7, RabbitMQ 4; credenciales desde .env
 src/MediCore.Web       Razor Pages (personal)
-tests/MediCore.Api.Tests  xUnit + WebApplicationFactory
+tests/MediCore.Api.Tests  integración: WebApplicationFactory + Testcontainers (Postgres, Redis), entorno "Testing" (no lee user-secrets)
+tests/MediCore.UnitTests  reglas de dominio
 documentacion/         alcance, plan, trazabilidad (propios)
 Docs/, Referencias/    entradas, no tocar
 ```
@@ -59,6 +63,8 @@ dotnet ef migrations add <Nombre> --project src/MediCore.Infrastructure --startu
 dotnet ef database update --project src/MediCore.Infrastructure --startup-project src/MediCore.Api   # requiere ConnectionStrings__Postgres en el entorno
 ```
 
-Cadena de conexión: user-secrets (`ConnectionStrings:Postgres`) en la API; nunca en appsettings. `dotnet ef` usa `DesignTimeDbContextFactory` (variable de entorno). Flujo Git: ramas `feature/*`, PR hacia `main`; `main` debe protegerse en GitHub.
+Secretos en user-secrets de la API (`ConnectionStrings:Postgres`, `ConnectionStrings:Redis` con 127.0.0.1, `Jwt:SigningKey`, `Seed:DevPassword`); nunca en appsettings. En Development la API migra y crea usuarios ficticios al arrancar (`DevelopmentBootstrap`). `dotnet ef` usa `DesignTimeDbContextFactory` (variable de entorno). Flujo Git: ramas `feature/*`, PR hacia `main`; `main` debe protegerse en GitHub.
 
 Advertencias tratadas como errores (`Directory.Build.props`).
+
+La web usa `wwwroot/css/app.css` (tercer archivo, después de style.css y appearance.css) para ajustes propios; CSP estricta: sin estilos ni scripts en línea.
