@@ -1,9 +1,11 @@
 using MediCore.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediCore.Api.Controllers;
 
 [ApiController]
+[AllowAnonymous]
 [Route("api/health")]
 public class HealthController : ControllerBase
 {

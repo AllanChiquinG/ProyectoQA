@@ -1,21 +1,15 @@
 @page
+@using System.Security.Claims
 @model IndexModel
 @{
-    ViewData["Title"] = "Atención conectada";
+    ViewData["Code"] = "INICIO";
+    ViewData["Title"] = "Espacio de trabajo";
+    ViewData["Subtitle"] = "Tu jornada de atención, en un solo lugar.";
+    var firstName = (User.Identity?.Name ?? "").Split(' ', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
 }
 
-<div class="login">
-    <section class="loginart">
-        <div class="brand"><span class="cross">+</span><div>MediCore<small>ATENCIÓN CONECTADA</small></div></div>
-        <h1>Más cerca de una mejor atención.</h1>
-        <p>Pacientes, profesionales e información conectados en un mismo lugar.</p>
-        <span class="artcross">+</span>
-    </section>
-    <div class="loginform">
-        <div>
-            <div class="eyebrow">EN CONSTRUCCIÓN</div>
-            <h1>Web del personal</h1>
-            <p class="sub">La estructura inicial está lista. El inicio de sesión se implementará en la siguiente entrega.</p>
-        </div>
-    </div>
+<div class="panel panelpad narrow">
+    <h2>Hola, @firstName</h2>
+    <p class="sub">Tu sesión está iniciada. Verás aquí los módulos que corresponden a tu rol.</p>
+    <div class="notice">Los módulos de trabajo se habilitarán en las próximas entregas.</div>
 </div>
