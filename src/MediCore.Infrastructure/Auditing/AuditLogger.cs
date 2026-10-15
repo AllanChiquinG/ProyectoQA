@@ -45,4 +45,12 @@ public static class AuditActions
     public const string RefreshReuseDetected = "auth.refresh_reuse";
     public const string UserRoleChanged = "users.role_changed";
     public const string AuditViewed = "audit.viewed";
+
+    public const string PatientCreated = "patients.created";
+    public const string PatientUpdated = "patients.updated";
+    public const string PatientRead = "patients.read";
+    public const string PatientSearched = "patients.searched";
+    public const string PatientAccessDenied = "patients.access_denied";
+    public const string DoctorCreated = "doctors.created";
+    public const string DoctorUpdated = "doctors.updated";
 }

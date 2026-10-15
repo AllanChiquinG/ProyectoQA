@@ -1,16 +1,13 @@
 using MediCore.Contracts;
 using MediCore.Contracts.Auth;
 using MediCore.Web.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace MediCore.Web.Pages;
 
 [Authorize(Roles = Roles.Administrador)]
-public class UsuariosModel(IMediCoreApi api) : PageModel
+public class UsuariosModel(IMediCoreApi api) : StaffPageModel
 {
     public IReadOnlyList<UserDto> Users { get; private set; } = [];
 
@@ -19,7 +16,7 @@ public class UsuariosModel(IMediCoreApi api) : PageModel
     public async Task<IActionResult> OnGetAsync(CancellationToken ct)
     {
         var result = await api.GetUsersAsync(ct);
-        if (result.Status == ApiStatus.Unauthorized) return await EndSessionAsync();
+        if (await HandleCommonAsync(result) is { } handled) return handled;
         if (!result.IsOk)
         {
             Error = "No se pudo cargar la lista de usuarios. Inténtalo de nuevo.";
@@ -44,12 +41,5 @@ public class UsuariosModel(IMediCoreApi api) : PageModel
             _ => "No se pudo actualizar el rol. Inténtalo de nuevo.",
         };
         return RedirectToPage();
-    }
-
-    // La API ya no reconoce la sesión (por ejemplo, otro administrador cambió el rol): se cierra también la cookie.
-    private async Task<IActionResult> EndSessionAsync()
-    {
-        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        return RedirectToPage("/Login");
     }
 }
