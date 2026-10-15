@@ -1,0 +1,16 @@
+@page
+@model ErrorModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="content">
+    <div class="eyebrow">ERROR</div>
+    <h1>Ocurrió un problema</h1>
+    <p class="sub">No pudimos procesar tu solicitud. Inténtalo de nuevo en unos minutos.</p>
+    @if (Model.ShowRequestId)
+    {
+        <p class="sub">Identificador de la solicitud: <code>@Model.RequestId</code></p>
+    }
+    <a class="btn" href="/">Volver al inicio</a>
+</div>
