@@ -30,6 +30,9 @@ Plataforma hospitalaria (Proyecto 2 de `Docs/Proyecto Final QA.docx`, curso 048 
 ```
 MediCore.slnx          solución (abrir en Visual Studio)
 src/MediCore.Api       Web API
+src/MediCore.Domain    entidades por módulo, sin dependencias externas
+src/MediCore.Infrastructure  EF Core/Npgsql, migraciones (Persistence/Migrations), futuros Redis/RabbitMQ
+docker-compose.yml     Postgres 17 (5433), Redis 7, RabbitMQ 4; credenciales desde .env
 src/MediCore.Web       Razor Pages (personal)
 tests/MediCore.Api.Tests  xUnit + WebApplicationFactory
 documentacion/         alcance, plan, trazabilidad (propios)
@@ -47,5 +50,15 @@ dotnet run --project src/MediCore.Api --launch-profile http
 dotnet run --project src/MediCore.Web --launch-profile http
 dotnet format MediCore.slnx --verify-no-changes
 ```
+
+Base de datos (ver README para variables):
+
+```bash
+docker compose up -d
+dotnet ef migrations add <Nombre> --project src/MediCore.Infrastructure --startup-project src/MediCore.Api --output-dir Persistence/Migrations
+dotnet ef database update --project src/MediCore.Infrastructure --startup-project src/MediCore.Api   # requiere ConnectionStrings__Postgres en el entorno
+```
+
+Cadena de conexión: user-secrets (`ConnectionStrings:Postgres`) en la API; nunca en appsettings. `dotnet ef` usa `DesignTimeDbContextFactory` (variable de entorno). Flujo Git: ramas `feature/*`, PR hacia `main`; `main` debe protegerse en GitHub.
 
 Advertencias tratadas como errores (`Directory.Build.props`).
