@@ -1,7 +1,9 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using MediCore.Contracts.Auth;
+using MediCore.Domain.Doctors;
 using MediCore.Domain.Identity;
+using MediCore.Domain.Patients;
 using MediCore.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -49,6 +51,44 @@ public sealed class StackFixture : ApiFactory, IAsyncLifetime
         db.Users.Add(user);
         await db.SaveChangesAsync();
         return (user.Id, email);
+    }
+
+    public async Task<Patient> CreatePatientAsync(Guid? userId = null, string? identification = null, string name = "Paciente de Prueba")
+    {
+        using var scope = Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<MediCoreDbContext>();
+        identification ??= $"ID-{Guid.NewGuid():N}"[..20];
+        var patient = new Patient
+        {
+            FullName = name,
+            IdentificationNumber = identification,
+            NormalizedIdentification = Patient.NormalizeIdentification(identification),
+            BirthDate = new DateOnly(1990, 1, 1),
+            Phone = "5550 0000",
+            Email = "paciente@example.com",
+            UserId = userId,
+        };
+        db.Patients.Add(patient);
+        await db.SaveChangesAsync();
+        return patient;
+    }
+
+    public async Task<Doctor> CreateDoctorAsync(string name = "Dr. Prueba", string specialty = "Cardiología")
+    {
+        using var scope = Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<MediCoreDbContext>();
+        var doctor = new Doctor { FullName = name, Specialty = specialty, Phone = "5550 1111", Email = "doctor@example.com" };
+        db.Doctors.Add(doctor);
+        await db.SaveChangesAsync();
+        return doctor;
+    }
+
+    public async Task<(HttpClient Client, LoginResponse Login)> LoginClientForAsync(string email)
+    {
+        var client = CreateClient();
+        var login = await LoginAsync(client, email);
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", login.AccessToken);
+        return (client, login);
     }
 
     public static async Task<LoginResponse> LoginAsync(HttpClient client, string email, string password = Password)

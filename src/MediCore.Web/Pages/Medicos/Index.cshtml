@@ -1,0 +1,42 @@
+@page
+@model MediCore.Web.Pages.Medicos.IndexModel
+@{
+    ViewData["Code"] = "WEB-07";
+    ViewData["Title"] = "Gestión de médicos";
+    ViewData["Subtitle"] = "El equipo que hace posible una mejor atención.";
+    ViewData["ActionText"] = "Registrar médico";
+    ViewData["ActionPage"] = "/Medicos/Formulario";
+}
+
+@if (Model.Error is not null)
+{
+    <div class="err" role="alert">@Model.Error</div>
+}
+
+<div class="panel">
+    <form method="get" class="toolbar" role="search">
+        <input name="q" value="@Model.Q" placeholder="Buscar médico o especialidad…" aria-label="Buscar médico" maxlength="100" />
+        <button class="btn secondary" type="submit">Buscar</button>
+        <span class="sub">@Model.Doctors.Count @(Model.Doctors.Count == 1 ? "médico" : "médicos")</span>
+    </form>
+    <table>
+        <thead>
+            <tr><th>Médico</th><th>Especialidad</th><th>Contacto</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var doctor in Model.Doctors)
+            {
+                <tr>
+                    <td><strong>@doctor.FullName</strong></td>
+                    <td>@doctor.Specialty</td>
+                    <td>@doctor.Email</td>
+                    <td><a class="link" asp-page="/Medicos/Formulario" asp-route-id="@doctor.Id">Editar</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (Model.Doctors.Count == 0 && Model.Error is null)
+    {
+        <div class="emptymsg">No se encontraron médicos.</div>
+    }
+</div>

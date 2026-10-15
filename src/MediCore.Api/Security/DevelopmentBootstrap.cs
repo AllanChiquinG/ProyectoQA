@@ -25,11 +25,14 @@ public static class DevelopmentBootstrap
             if (string.IsNullOrWhiteSpace(password))
             {
                 logger.LogInformation("Seed:DevPassword no está definido: no se crean usuarios de desarrollo.");
-                return;
+            }
+            else
+            {
+                var created = await UserSeeder.SeedAsync(db, scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>(), password);
+                if (created > 0) logger.LogInformation("Se crearon {Count} usuarios ficticios de desarrollo.", created);
             }
 
-            var created = await UserSeeder.SeedAsync(db, scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>(), password);
-            if (created > 0) logger.LogInformation("Se crearon {Count} usuarios ficticios de desarrollo.", created);
+            await ClinicalDemoSeeder.SeedAsync(db);
         }
         catch (Exception ex)
         {
