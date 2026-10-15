@@ -1,5 +1,6 @@
 using MediCore.Domain.Identity;
 using MediCore.Infrastructure.Auditing;
+using MediCore.Infrastructure.Caching;
 using MediCore.Infrastructure.Identity;
 using MediCore.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
@@ -44,6 +45,7 @@ public static class DependencyInjection
             return ConnectionMultiplexer.Connect(options);
         }));
         services.AddSingleton<ISessionStore, RedisSessionStore>();
+        services.AddSingleton<ICacheService, RedisCacheService>();
 
         services.AddScoped<IAuditLogger, AuditLogger>();
         return services;

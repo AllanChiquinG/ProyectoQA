@@ -10,6 +10,21 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AllowAnonymousToPage("/Login");
     options.Conventions.AllowAnonymousToPage("/Error");
 });
+builder.Services.Configure<Microsoft.AspNetCore.Mvc.MvcOptions>(options =>
+{
+    // Mensajes de validación del enlace de datos en español.
+    var messages = options.ModelBindingMessageProvider;
+    messages.SetValueMustNotBeNullAccessor(_ => "Este campo es obligatorio.");
+    messages.SetMissingBindRequiredValueAccessor(_ => "Este campo es obligatorio.");
+    messages.SetMissingKeyOrValueAccessor(() => "Este campo es obligatorio.");
+    messages.SetAttemptedValueIsInvalidAccessor((_, _) => "El valor ingresado no es válido.");
+    messages.SetUnknownValueIsInvalidAccessor(_ => "El valor ingresado no es válido.");
+    messages.SetValueIsInvalidAccessor(_ => "El valor ingresado no es válido.");
+    messages.SetNonPropertyAttemptedValueIsInvalidAccessor(_ => "El valor ingresado no es válido.");
+    messages.SetNonPropertyUnknownValueIsInvalidAccessor(() => "El valor ingresado no es válido.");
+    messages.SetNonPropertyValueMustBeANumberAccessor(() => "El valor debe ser un número.");
+    messages.SetValueMustBeANumberAccessor(_ => "El valor debe ser un número.");
+});
 
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddHttpContextAccessor();

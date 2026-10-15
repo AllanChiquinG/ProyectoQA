@@ -1,0 +1,39 @@
+@page "{id:guid?}"
+@model MediCore.Web.Pages.Pacientes.FormularioModel
+@{
+    ViewData["Code"] = "WEB-06";
+    ViewData["Title"] = Model.IsEdit ? "Datos del paciente" : "Registrar paciente";
+    ViewData["Subtitle"] = "Completa los datos generales del paciente.";
+}
+
+<form method="post" class="panel panelpad form-wide" novalidate>
+    <h2>@(Model.IsEdit ? "Datos del paciente" : "Información general")</h2>
+    <p class="sub form-lead">Los campos marcados con * son obligatorios.</p>
+    <div asp-validation-summary="ModelOnly" class="err" role="alert"></div>
+    <div class="formgrid">
+        <label class="field">Nombre completo *
+            <input asp-for="Input.FullName" required maxlength="120" autocomplete="off" />
+            <span asp-validation-for="Input.FullName" class="err"></span>
+        </label>
+        <label class="field">Identificación *
+            <input asp-for="Input.IdentificationNumber" required maxlength="30" autocomplete="off" />
+            <span asp-validation-for="Input.IdentificationNumber" class="err"></span>
+        </label>
+        <label class="field">Fecha de nacimiento *
+            <input asp-for="Input.BirthDate" type="date" required min="1900-01-01" max="@DateTime.UtcNow:yyyy-MM-dd" />
+            <span asp-validation-for="Input.BirthDate" class="err"></span>
+        </label>
+        <label class="field">Teléfono *
+            <input asp-for="Input.Phone" type="tel" required maxlength="20" />
+            <span asp-validation-for="Input.Phone" class="err"></span>
+        </label>
+        <label class="field">Correo electrónico *
+            <input asp-for="Input.Email" type="email" required maxlength="254" />
+            <span asp-validation-for="Input.Email" class="err"></span>
+        </label>
+    </div>
+    <div class="formfoot">
+        <a class="btn secondary" asp-page="/Pacientes/Index">Cancelar</a>
+        <button class="btn" type="submit">Guardar paciente</button>
+    </div>
+</form>

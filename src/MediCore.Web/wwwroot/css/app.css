@@ -22,3 +22,9 @@
 
 #toast.visible { display: block; }
 .narrow { max-width: 760px; }
+
+.form-wide { max-width: 850px; }
+.form-lead { margin-bottom: 25px; }
+.field .err { margin-top: 0; font-weight: 500; }
+.toolbar .btn { min-height: 43px; }
+.pager { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 22px; }

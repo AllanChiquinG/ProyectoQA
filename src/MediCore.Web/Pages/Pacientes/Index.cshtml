@@ -1,0 +1,74 @@
+@page
+@model MediCore.Web.Pages.Pacientes.IndexModel
+@{
+    ViewData["Code"] = "WEB-05";
+    ViewData["Title"] = "Gestión de pacientes";
+    ViewData["Subtitle"] = "Información general, organizada y a tu alcance.";
+    if (Model.CanManage)
+    {
+        ViewData["ActionText"] = "Registrar paciente";
+        ViewData["ActionPage"] = "/Pacientes/Formulario";
+    }
+}
+
+@if (Model.Error is not null)
+{
+    <div class="err" role="alert">@Model.Error</div>
+}
+
+<div class="panel">
+    <form method="get" class="toolbar" role="search">
+        <input name="q" value="@Model.Q" placeholder="Buscar por nombre o identificación…" aria-label="Buscar paciente" maxlength="100" />
+        <button class="btn secondary" type="submit">Buscar</button>
+        <span class="sub">@Model.Result.Total @(Model.Result.Total == 1 ? "paciente" : "pacientes")</span>
+    </form>
+    <table>
+        <thead>
+            <tr><th>Paciente</th><th>Identificación</th><th>Contacto</th><th>Acciones</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var patient in Model.Result.Items)
+            {
+                <tr>
+                    <td><div class="person"><span class="avatar" aria-hidden="true">@Display.Initials(patient.FullName)</span><strong>@patient.FullName</strong></div></td>
+                    <td>@patient.IdentificationNumber</td>
+                    <td>@patient.Phone<small>@patient.Email</small></td>
+                    <td>
+                        @if (Model.CanManage)
+                        {
+                            <a class="link" asp-page="/Pacientes/Formulario" asp-route-id="@patient.Id">Consultar / editar ↗</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (Model.Result.Items.Count == 0 && Model.Error is null)
+    {
+        <div class="emptymsg">
+            @if (User.IsInRole(MediCore.Contracts.Roles.Medico))
+            {
+                <text>Aún no tienes pacientes autorizados. Aparecerán cuando tengas citas o consultas con ellos.</text>
+            }
+            else
+            {
+                <text>No se encontraron pacientes.</text>
+            }
+        </div>
+    }
+</div>
+
+@if (Model.HasPrevious || Model.HasNext)
+{
+    <nav class="pager" aria-label="Paginación">
+        @if (Model.HasPrevious)
+        {
+            <a class="btn secondary" asp-page="/Pacientes/Index" asp-route-q="@Model.Q" asp-route-pageNumber="@(Model.Result.Page - 1)">← Anterior</a>
+        }
+        <span class="sub">Página @Model.Result.Page</span>
+        @if (Model.HasNext)
+        {
+            <a class="btn secondary" asp-page="/Pacientes/Index" asp-route-q="@Model.Q" asp-route-pageNumber="@(Model.Result.Page + 1)">Siguiente →</a>
+        }
+    </nav>
+}
