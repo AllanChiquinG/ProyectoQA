@@ -11,14 +11,14 @@
     (string Icon, string Text, string? Section, string? Target)[] nav = role switch
     {
         Roles.Administrador => [("♧", "Pacientes", "/Pacientes", "/Pacientes/Index"), ("✚", "Médicos", "/Medicos", "/Medicos/Index"), ("⚿", "Usuarios y roles", "/Usuarios", "/Usuarios")],
-        Roles.Medico => [("▦", "Mi agenda", null, null), ("♧", "Pacientes autorizados", "/Pacientes", "/Pacientes/Index")],
+        Roles.Medico => [("▦", "Mi agenda", "/MiAgenda", "/MiAgenda"), ("♧", "Pacientes autorizados", "/Pacientes", "/Pacientes/Index")],
         Roles.Laboratorio => [("⚗", "Resultados de laboratorio", null, null)],
-        _ => [("▦", "Agenda de citas", null, null), ("♧", "Pacientes", "/Pacientes", "/Pacientes/Index")],
+        _ => [("▦", "Agenda de citas", "/Agenda", "/Agenda/Index"), ("♧", "Pacientes", "/Pacientes", "/Pacientes/Index")],
     };
     var currentPage = ViewContext.RouteData.Values["page"] as string ?? "";
     var roleText = Roles.Mostrar(role);
     var actionText = ViewData["ActionText"] as string;
-    var actionPage = ViewData["ActionPage"] as string;
+    var actionUrl = ViewData["ActionUrl"] as string ?? (ViewData["ActionPage"] is string actionPage ? Url.Page(actionPage) : null);
 }
 
 <div class="layout">
@@ -62,12 +62,16 @@
                     <h1>@ViewData["Title"]</h1>
                     <p class="sub">@ViewData["Subtitle"]</p>
                 </div>
-                @if (actionText is not null && actionPage is not null)
+                @if (actionText is not null && actionUrl is not null)
                 {
-                    <a class="btn" href="@Url.Page(actionPage)">＋ @actionText</a>
+                    <a class="btn" href="@actionUrl">＋ @actionText</a>
                 }
             </div>
             @RenderBody()
         </div>
     </main>
 </div>
+
+@section Scripts {
+    @await RenderSectionAsync("Scripts", required: false)
+}

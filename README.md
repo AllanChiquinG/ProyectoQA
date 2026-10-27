@@ -1,6 +1,6 @@
 # MediCore
 
-Plataforma hospitalaria: web del personal (Razor Pages), API (ASP.NET Core) y app móvil del paciente (.NET MAUI, Android). Proyecto 2 del Proyecto Final de QA. **Estado: entrega 3 (pacientes y médicos) en curso.** Ver el plan en [documentacion/02-plan-de-trabajo.md](documentacion/02-plan-de-trabajo.md).
+Plataforma hospitalaria: web del personal (Razor Pages), API (ASP.NET Core) y app móvil del paciente (.NET MAUI, Android). Proyecto 2 del Proyecto Final de QA. **Estado: entrega 5 (expediente, consultas y recetas) en curso.** Ver el plan en [documentacion/02-plan-de-trabajo.md](documentacion/02-plan-de-trabajo.md).
 
 ## Requisitos
 
@@ -41,7 +41,7 @@ dotnet user-secrets set "Seed:DevPassword" "<contraseña de desarrollo para los 
 
 Usa `127.0.0.1` y no `localhost` para Redis: Docker publica el puerto solo en IPv4 y el cliente puede intentar IPv6 primero.
 
-Al arrancar la API en Development se aplican las migraciones y, si la tabla de usuarios está vacía, se crean usuarios ficticios con la contraseña de `Seed:DevPassword`: `elena.vargas@example.com` (Recepción), `lucia.mendez@example.com` (Médico), `daniela.reyes@example.com` (Laboratorio), `admin@example.com` (Administrador) y `ana.garcia@example.com` (Paciente, solo móvil). También se crean 4 pacientes y 3 médicos ficticios del diseño (Ana García queda vinculada a su cuenta y la Dra. Lucía Méndez a la suya).
+Al arrancar la API en Development se aplican las migraciones y, si la tabla de usuarios está vacía, se crean usuarios ficticios con la contraseña de `Seed:DevPassword`: `elena.vargas@example.com` (Recepción), `lucia.mendez@example.com` (Médico), `daniela.reyes@example.com` (Laboratorio), `admin@example.com` (Administrador) y `ana.garcia@example.com` (Paciente, solo móvil). También se crean 4 pacientes y 3 médicos ficticios del diseño (Ana García queda vinculada a su cuenta y la Dra. Lucía Méndez a la suya). Cada médico recibe un horario de lunes a viernes de 08:00 a 12:00 y la Dra. Méndez cuatro citas el próximo día hábil, como en la agenda del diseño.
 
 El puerto 5433 evita choques con un PostgreSQL local en 5432 (cámbialo con `POSTGRES_PORT`).
 
@@ -58,6 +58,21 @@ dotnet run --project src/MediCore.Web --launch-profile http   # http://localhost
 
 Con la API en Development, el contrato OpenAPI está en `http://localhost:5011/openapi/v1.json`.
 
+## Expediente, consultas y recetas
+
+- El médico abre el expediente desde su agenda o desde "Pacientes autorizados". Cada consulta pertenece a una cita (una consulta por cita; de hoy o anteriores) y cada receta a una consulta, con 1 a 10 medicamentos.
+- **Expediente compartido:** un médico con relación de atención válida con el paciente (una cita no cancelada o una consulta registrada) lee las consultas y recetas que escribieron **otros médicos**, identificadas por autor. **Nadie modifica registros de otro profesional** (solo el autor crea recetas sobre su consulta; las consultas y recetas no se editan ni se borran). Sin relación válida no hay acceso. Recepción, Administrador y Laboratorio no acceden a la información clínica.
+- El paciente lee únicamente sus propias recetas, de cualquiera de sus médicos (`GET /api/prescriptions/me`, para la app móvil).
+- La sección Laboratorio del expediente indica que el módulo está pendiente y no muestra resultados.
+- La auditoría y las bitácoras registran quién accedió a qué recurso y cuándo, nunca el contenido clínico.
+
+## Agenda y citas
+
+- Las horas son del reloj de la clínica (`Clinic:TimeZone`, por defecto `America/Guatemala`); se puede reservar desde hoy hasta `Scheduling:MaxDaysAhead` días (90). Las citas duran 30 minutos.
+- La disponibilidad se cachea en Redis (`Cache:AvailabilityTtl`, 2 min) y se invalida al reservar, cancelar o cambiar el horario del médico.
+- Para reintentar sin duplicar, `POST /api/appointments` acepta el encabezado `Idempotency-Key` (8 a 64 caracteres, letras, números, `-` y `_`). La web lo genera en cada formulario de reserva.
+- Una cita no se puede solapar con otra activa del mismo médico ni del mismo paciente: lo garantiza PostgreSQL (extensión `btree_gist`, que incluye la imagen oficial de Docker; en Azure Database for PostgreSQL debe habilitarse en la lista de extensiones permitidas).
+
 ## Estructura
 
 ```
@@ -73,6 +88,10 @@ tests/MediCore.UnitTests   reglas de dominio
 documentacion/          alcance, plan de trabajo, trazabilidad
 Docs/  Referencias/     documento del proyecto y diseño aprobado (solo lectura)
 ```
+
+## Estado de las pruebas
+
+Hoy: 162 pruebas xUnit superadas (31 unitarias y 131 de integración con PostgreSQL y Redis reales). Además, **Cypress** (`tests/cypress`) ya cubre los recorridos de Recepción (8 pruebas) y Médico (10 pruebas, con datos aislados y sin depender de la hora); ver su README. **Pendientes y obligatorios según el documento del proyecto**: ampliar Cypress (smoke, Administrador y Laboratorio, regresión), colección de Insomnia (API), Maestro (móvil) y pruebas de rendimiento con k6 o JMeter. Detalle en [documentacion/03-matriz-trazabilidad.md](documentacion/03-matriz-trazabilidad.md); los hallazgos y la verificación manual en [documentacion/04-registro-de-hallazgos.md](documentacion/04-registro-de-hallazgos.md).
 
 ## Seguridad
 

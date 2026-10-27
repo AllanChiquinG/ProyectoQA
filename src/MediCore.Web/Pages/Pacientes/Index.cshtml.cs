@@ -27,7 +27,7 @@ public class IndexModel(IMediCoreApi api) : StaffPageModel
 
     public async Task<IActionResult> OnGetAsync(CancellationToken ct)
     {
-        var result = await api.GetPatientsAsync(Q, Math.Max(PageNumber, 1), ct);
+        var result = await api.GetPatientsAsync(Q, Math.Max(PageNumber, 1), ct: ct);
         if (await HandleCommonAsync(result) is { } handled) return handled;
 
         if (!result.IsOk)

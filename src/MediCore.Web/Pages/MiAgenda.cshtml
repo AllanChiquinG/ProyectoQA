@@ -1,0 +1,21 @@
+@page
+@model MediCore.Web.Pages.MiAgendaModel
+@{
+    ViewData["Code"] = "WEB-11";
+    ViewData["Title"] = "Mi agenda";
+    ViewData["Subtitle"] = "Tu jornada de atención, en un solo lugar.";
+}
+
+@if (Model.Error is not null)
+{
+    <div class="err" role="alert">@Model.Error</div>
+}
+
+@if (Model.Day is not null)
+{
+    <partial name="_AgendaDay" model="Model.Day" />
+}
+
+@section Scripts {
+    <script src="~/js/autosubmit.js" asp-append-version="true"></script>
+}

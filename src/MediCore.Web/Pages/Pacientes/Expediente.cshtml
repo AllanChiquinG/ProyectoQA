@@ -1,0 +1,82 @@
+@page "{id:guid}"
+@model MediCore.Web.Pages.Pacientes.ExpedienteModel
+@{
+    ViewData["Code"] = "WEB-12";
+    ViewData["Title"] = "Expediente del paciente";
+    ViewData["Subtitle"] = "Información clínica para acompañar su atención.";
+}
+
+@if (Model.Error is not null)
+{
+    <div class="err" role="alert">@Model.Error</div>
+}
+
+@if (Model.Patient is { } patient)
+{
+    <div class="panel panelpad">
+        <div class="titlebar">
+            <div class="person">
+                <span class="avatar" aria-hidden="true">@Display.Initials(patient.FullName)</span>
+                <div>
+                    <h2>@patient.FullName</h2>
+                    <p class="sub">@patient.IdentificationNumber · Información clínica autorizada</p>
+                </div>
+            </div>
+            <a class="btn" asp-page="/Pacientes/RegistrarConsulta" asp-route-id="@patient.Id" asp-route-cita="@Model.Cita">＋ Registrar consulta</a>
+        </div>
+
+        <div class="notice notice-top" id="expedienteCompartido">Expediente compartido entre los médicos que atienden a este paciente: puedes leer lo que registraron otros profesionales. Solo puedes crear recetas sobre tus propias consultas.</div>
+
+        <div class="tabs" role="tablist" aria-label="Secciones del expediente">
+            @foreach (var tab in MediCore.Web.Pages.Pacientes.ExpedienteModel.Tabs)
+            {
+                <a role="tab" aria-selected="@(tab == Model.ActiveTab ? "true" : "false")" class="@(tab == Model.ActiveTab ? "on" : "")"
+                   asp-page="/Pacientes/Expediente" asp-route-id="@patient.Id" asp-route-tab="@tab" asp-route-cita="@Model.Cita">@tab</a>
+            }
+        </div>
+
+        @if (Model.ActiveTab == MediCore.Web.Pages.Pacientes.ExpedienteModel.TabConsultas)
+        {
+            @foreach (var consultation in Model.Consultations)
+            {
+                <div class="mobcard">
+                    <h3>@consultation.Reason</h3>
+                    <p>@consultation.Date.ToString("dd/MM/yyyy") · @consultation.Diagnosis</p>
+                    <p>@consultation.Notes</p>
+                    <p class="author">@(consultation.IsOwn ? "Registrada por ti" : $"Registrada por {consultation.DoctorName}")</p>
+                    @if (consultation.IsOwn)
+                    {
+                        <a class="link" asp-page="/Pacientes/CrearReceta" asp-route-id="@consultation.Id">Crear receta ↗</a>
+                    }
+                </div>
+            }
+            @if (Model.Consultations.Count == 0)
+            {
+                <div class="emptymsg">Este paciente aún no tiene consultas registradas.</div>
+            }
+        }
+        else if (Model.ActiveTab == MediCore.Web.Pages.Pacientes.ExpedienteModel.TabRecetas)
+        {
+            @foreach (var prescription in Model.Prescriptions)
+            {
+                var first = prescription.Items[0].Medication;
+                <div class="mobcard">
+                    <h3>@first@(prescription.Items.Count > 1 ? $" y {prescription.Items.Count - 1} más" : "")</h3>
+                    <p>@prescription.Date.ToString("dd/MM/yyyy") · @(prescription.IsOwn ? "Escrita por ti" : $"Escrita por {prescription.DoctorName}")</p>
+                    <a class="link" asp-page="/Pacientes/Receta" asp-route-id="@prescription.Id">Ver receta ↗</a>
+                </div>
+            }
+            @if (Model.Prescriptions.Count == 0)
+            {
+                <div class="emptymsg">Sin recetas registradas.</div>
+            }
+        }
+        else
+        {
+            <div class="emptymsg" id="laboratorioPendiente">
+                <strong>Resultados de laboratorio: pendiente.</strong><br />
+                El módulo de laboratorio todavía no está disponible en MediCore, por eso aquí no se muestra ningún resultado.
+            </div>
+        }
+    </div>
+}
