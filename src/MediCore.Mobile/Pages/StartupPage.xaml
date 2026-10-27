@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MediCore.Mobile.Pages.StartupPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <!-- Pantalla de arranque: decide entre MOB-01 y MOB-02 según haya o no sesión guardada. -->
+    <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="14">
+        <ActivityIndicator IsRunning="True" Color="{StaticResource Green}" />
+        <Label Text="MediCore" Style="{StaticResource Title}" HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,11 @@
+# Inicio de sesión reutilizable. Variables: EMAIL, PASSWORD (la contraseña no se guarda en el repositorio: se pasa con -e al ejecutar).
+- launchApp:
+    clearState: true
+- assertVisible: "Bienvenida de nuevo"
+- tapOn: "correo@ejemplo.com"
+- inputText: ${EMAIL}
+- tapOn: "Tu contraseña"
+- inputText: ${PASSWORD}
+- hideKeyboard
+- tapOn: "Iniciar sesión →"
+- assertVisible: "Qué bueno tenerte por aquí."

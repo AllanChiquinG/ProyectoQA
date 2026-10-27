@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MediCore.Mobile.Pages.HomePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MediCore.Mobile.Views"
+             Title="Inicio">
+    <ScrollView>
+        <VerticalStackLayout>
+            <views:HeaderBar />
+            <VerticalStackLayout Padding="24,8,24,24" Spacing="8">
+                <Label Text="MOB-02 · PACIENTE" Style="{StaticResource Eyebrow}" />
+                <Label Text="{Binding Greeting}" Style="{StaticResource Title}" AutomationId="saludo" />
+                <Label Text="Qué bueno tenerte por aquí." Style="{StaticResource Sub}" />
+                <Label Text="● Tienes notificaciones sin leer" TextColor="{StaticResource Green}" FontSize="12" IsVisible="{Binding HasUnread}" AutomationId="aviso_sin_leer" />
+
+                <views:StateBanner />
+
+                <Border IsVisible="{Binding IsContent}" BackgroundColor="{StaticResource Hero}" StrokeThickness="0" StrokeShape="RoundRectangle 15" Padding="22" Margin="0,12">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="TU PRÓXIMA CITA" Style="{StaticResource Eyebrow}" TextColor="#C2E5DD" />
+                        <Label Text="{Binding NextTitle}" TextColor="White" FontSize="20" FontAttributes="Bold" AutomationId="proxima_cita_titulo" />
+                        <Label Text="{Binding NextDetail}" TextColor="{StaticResource HeroText}" FontSize="12" AutomationId="proxima_cita_detalle" />
+                        <Button Text="{Binding NextButtonText}" Command="{Binding OpenNextCommand}" Style="{StaticResource SecondaryButton}" BackgroundColor="#D8EEE4" Margin="0,8,0,0" AutomationId="boton_proxima_cita" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <VerticalStackLayout IsVisible="{Binding IsContent}" Spacing="8">
+                    <Button Text="＋ Solicitar una cita" Command="{Binding BookCommand}" AutomationId="boton_solicitar_cita" />
+
+                    <Label Text="TU INFORMACIÓN MÉDICA" Style="{StaticResource Eyebrow}" Margin="0,18,0,4" />
+                    <Border Style="{StaticResource CardBorder}" AutomationId="acceso_resultados">
+                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding LabResultsCommand}" /></Border.GestureRecognizers>
+                        <VerticalStackLayout>
+                            <Label Text="▤   Resultados de laboratorio ↗" Style="{StaticResource CardTitle}" />
+                            <Label Text="Consulta tus exámenes disponibles." Style="{StaticResource CardText}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Style="{StaticResource CardBorder}" AutomationId="acceso_recetas">
+                        <Border.GestureRecognizers><TapGestureRecognizer Command="{Binding PrescriptionsCommand}" /></Border.GestureRecognizers>
+                        <VerticalStackLayout>
+                            <Label Text="✚   Mis recetas ↗" Style="{StaticResource CardTitle}" />
+                            <Label Text="Indicaciones de tu médico, a mano." Style="{StaticResource CardText}" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Button Text="Cerrar sesión" Command="{Binding LogoutCommand}" Style="{StaticResource LinkButton}" Margin="0,8,0,0" AutomationId="boton_cerrar_sesion" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

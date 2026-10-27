@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MediCore.Mobile.Pages.LabResultsPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MediCore.Mobile.Views"
+             xmlns:vm="clr-namespace:MediCore.Mobile.Core.ViewModels;assembly=MediCore.Mobile.Core"
+             Title="Resultados">
+    <ScrollView>
+        <VerticalStackLayout>
+            <views:HeaderBar />
+            <VerticalStackLayout Padding="24,8,24,24" Spacing="8">
+                <Label Text="MOB-08 · PACIENTE" Style="{StaticResource Eyebrow}" />
+                <Label Text="Mis resultados" Style="{StaticResource Title}" />
+                <Label Text="Información para tu seguimiento." Style="{StaticResource Sub}" />
+
+                <views:StateBanner />
+
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Items}" IsVisible="{Binding IsContent}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:LabResultItem">
+                            <Border Style="{StaticResource CardBorder}" AutomationId="tarjeta_resultado">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LabResultsViewModel}}, Path=OpenCommand}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout Spacing="3">
+                                    <Label Text="{Binding ExamType}" Style="{StaticResource CardTitle}" />
+                                    <Label Text="{Binding DateText}" Style="{StaticResource CardText}" />
+                                    <Button Text="Ver resultado →" Style="{StaticResource LinkButton}" AutomationId="boton_ver_resultado"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:LabResultsViewModel}}, Path=OpenCommand}" CommandParameter="{Binding .}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

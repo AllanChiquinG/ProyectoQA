@@ -491,3 +491,6 @@ $RECYCLE.BIN/
 *.tfvars
 node_modules/
 .claude/settings.local.json
+
+# APK de desarrollo generado localmente
+artifacts/

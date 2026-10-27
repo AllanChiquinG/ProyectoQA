@@ -178,6 +178,34 @@ Decisiones y desviaciones del diseño en esta entrega (no son errores):
 
 Evidencia reproducible: `documentacion/evidencias/entrega-6-laboratorio.md` (generada por `python scripts/evidencia_laboratorio.py`) y `documentacion/evidencias/entrega-6-pruebas.md` (comandos y resultados de las ejecuciones).
 
+## Entrega 7 · app móvil del paciente
+
+### Qué se implementó, compiló, probó y qué no
+
+| Estado | Detalle |
+|---|---|
+| **Implementado** | MOB-01 a MOB-12 en `src/MediCore.Mobile` (XAML + Shell) sobre `src/MediCore.Mobile.Core` (cliente de la API con renovación de tokens, ViewModels con estados de carga/vacío/error/sesión vencida, reserva con clave de idempotencia y recuperación ante horario ocupado); sesión en `SecureStorage`; configuración de red solo-HTTPS con excepción para desarrollo; 8 flujos Maestro; scripts de preparación y ejecución; documentación en `documentacion/05-app-movil.md`. |
+| **Compilado** | `MediCore.Mobile.Core` y las pruebas móviles (SDK de .NET en contenedor Linux). La app MAUI se compiló a APK de desarrollo (arm64-v8a y x86_64) en un contenedor Linux con el workload `maui-android` y la plataforma Android 36: **Build succeeded**. Compilar en Linux **no equivale** a probarla en Android. |
+| **Probado (verificado)** | 50 pruebas unitarias de la lógica móvil (xUnit, API simulada solo para aislar el ViewModel) y 17 pruebas del cliente contra la **API real** (PostgreSQL y Redis reales): login y rechazo del personal, renovación y rotación de tokens, cierre de sesión que revoca, reserva y cancelación, idempotencia (5 reintentos simultáneos → 1 cita), horario ocupado (409), IDOR en citas/resultados/recetas/notificaciones, notificaciones. Los 6 escenarios de datos de Maestro se prepararon con éxito contra la API real. |
+| **Probado en Android** | **Nada.** No hay emulador ni dispositivo, ni Maestro. Ninguna pantalla se ha visto ejecutándose y ningún flujo Maestro se ejecutó; **no se marcan como aprobados**. |
+
+### Herramientas que faltan (exacto) para compilar y probar en Android
+Workload `maui-android`; SDK de Android (platform-tools, `platforms;android-36`, `build-tools;36.0.0`); emulador con imagen del sistema (o un teléfono con depuración USB); Maestro CLI. JDK 17 y .NET SDK 10.0.401 ya están. Detalle y comandos en `documentacion/05-app-movil.md`.
+
+### Hallazgos y decisiones
+
+| ID | Tipo | Qué ocurrió | Causa / decisión | Resultado |
+|---|---|---|---|---|
+| H7-01 | Entorno | No hay workload, SDK, emulador ni Maestro. | No se instaló nada en el equipo sin tu aprobación; se separó la lógica en `Mobile.Core` para probarla ahora; la compilación Android se intentó en un contenedor Linux. | Ver el reporte. |
+| H7-02 | Prueba | El token de acceso no cambia si se renueva en el mismo segundo (la prueba exigía que fuera distinto). | El JWT es determinista para la misma sesión y segundo; lo que debe rotar es el refresco. | La prueba comprueba la rotación del refresco y que reutilizar el refresco viejo revoca la sesión. |
+| H7-03 | Decisión | Las notificaciones del diseño incluyen "Cita confirmada" y "Nueva receta". | El sistema solo genera `LabResultReady` (los demás eventos están pendientes en el plan); no se inventó backend nuevo. | La app muestra cualquier notificación y abre el contenido solo cuando existe (hoy, resultados). |
+| H7-04 | Riesgo abierto | Los identificadores de Maestro dependen de cómo MAUI expone `AutomationId` y `SemanticProperties` en Android. | Los flujos usan texto visible y descripciones de accesibilidad (los de `Fecha de la cita` y `Notificaciones` son los más sensibles); sin dispositivo no se pudo confirmar. | Abierto: puede requerir ajustes al ejecutar. |
+| H7-06 | Defecto de código (detectado al compilar) | La primera compilación real de la app falló: `DatePicker.DateSelected` entrega `DateTime?` en MAUI 10 (CS1503); además `DisplayAlert` está obsoleto. | El código MAUI se escribió sin poder compilarlo hasta tener el workload en un contenedor. | `SlotsPage` usa `e.NewDate is { } date`; el diálogo usa `DisplayAlertAsync`. | La app compila (Build succeeded). |
+| H7-07 | Entorno | La compilación fallaba con NETSDK1047 (sin destino `android-x64`/`android-arm64`) y el instalador del SDK con "UserName must have a valid value". | Falta `RuntimeIdentifiers` en el restore; el contenedor no define `USER`. | `RuntimeIdentifiers` en el `.csproj` y `USER`/`USERNAME` en `android-build-linux.sh`. | APK generado. |
+| H7-05 | Riesgo abierto | Smart App Control sigue activo; MAUI puede ejecutar herramientas que carguen ensamblados sin firma de MediCore. | No se desactivó; hay compilación alternativa en contenedor Linux. | Abierto hasta compilar de forma nativa. |
+
+Evidencia: `documentacion/evidencias/entrega-7-pruebas.md`.
+
 ## Entregas anteriores
 
 Los hallazgos de las entregas 0 a 3 se trasladarán al registro formal de defectos en la entrega 14. Los principales: login con 503 por usar `localhost` para Redis (el cliente probaba IPv6 y Docker publica solo IPv4; corregido con `127.0.0.1`), una prueba que comparaba el `traceId` de dos respuestas de error, una prueba del catálogo de médicos afectada por la caché compartida con otras pruebas (se descarta la clave antes de insertar datos directos) y la interfaz de `IAsyncLifetime` de xUnit v2.
