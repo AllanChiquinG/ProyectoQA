@@ -494,3 +494,13 @@ node_modules/
 
 # APK de desarrollo generado localmente
 artifacts/
+
+# Ambiente QA: secretos generados localmente
+.env.qa
+
+# Terraform y Ansible: nada de secretos ni estado en el repositorio
+infrastructure/terraform/**/backend.hcl
+infrastructure/terraform/**/*.tfvars
+infrastructure/ansible/inventory/qa.ini
+infrastructure/ansible/group_vars/**/vault.yml
+infrastructure/ansible/.vault_pass*

@@ -64,7 +64,9 @@ def login(email):
 
 
 def psql(sql):
-    result = subprocess.run(['docker', 'compose', 'exec', '-T', 'postgres', 'sh', '-c', 'psql -t -A -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "$0"', sql],
+    # Por defecto el compose de desarrollo del repositorio; para el ambiente QA: MEDICORE_COMPOSE_ARGS="-p medicore-qa --env-file .env.qa -f docker-compose.yml -f docker-compose.qa.yml"
+    compose_args = os.environ.get('MEDICORE_COMPOSE_ARGS', '').split()
+    result = subprocess.run(['docker', 'compose', *compose_args, 'exec', '-T', 'postgres', 'sh', '-c', 'psql -t -A -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "$0"', sql],
                             cwd=ROOT, capture_output=True, text=True)
     if result.returncode != 0:
         raise SystemExit(f'psql falló: {result.stderr.strip()}')

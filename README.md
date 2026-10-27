@@ -84,6 +84,20 @@ Windows con Smart App Control en modo activo bloquea la carga de los `.dll` sin 
 
 App Android con .NET MAUI (`src/MediCore.Mobile`) sobre la API real: inicio y cierre de sesión, próxima cita, mis citas y detalle, reserva en tres pasos, cancelación, resultados, recetas y notificaciones (MOB-01 a MOB-12). La lógica está en `src/MediCore.Mobile.Core` y se prueba sin Android. **Cómo compilar, instalar, conectar con la API en Docker y ejecutar Maestro: [documentacion/05-app-movil.md](documentacion/05-app-movil.md).** La app se compila con `scripts/android-build-linux.sh` (contenedor Linux) y se prueba en un emulador con Maestro; las herramientas (SDK de Android, emulador, Maestro) ya están instaladas en este equipo. Pasos exactos en el documento.
 
+## Contenedores y ambiente QA (entrega 8)
+
+El sistema completo corre en contenedores (API, web, proceso de mensajería, PostgreSQL, Redis, RabbitMQ y proxy inverso). **Guía, arquitectura, costos estimados de Azure y procedimientos de crear, modificar y destruir: [documentacion/06-infraestructura.md](documentacion/06-infraestructura.md).**
+
+```bash
+scripts/qa.sh init      # .env.qa con contraseñas aleatorias (no se versiona)
+scripts/qa.sh up        # construye, migra y levanta; solo el proxy publica puertos (http://127.0.0.1:8080)
+scripts/qa.sh seed      # usuarios y datos ficticios
+scripts/qa.sh smoke     # pruebas de humo de web y API
+scripts/qa.sh down      # conserva los volúmenes; "destroy" los borra (pide confirmación)
+```
+
+La infraestructura de Azure (Terraform y Ansible) está **preparada y validada como archivos, no desplegada**: no se ha ejecutado `terraform apply` ni se ha creado ningún recurso; el plan y su costo esperan tu aprobación (sección 3 del documento). La app Android es un APK, no un servicio del Compose.
+
 ## Agenda y citas
 
 - Las horas son del reloj de la clínica (`Clinic:TimeZone`, por defecto `America/Guatemala`); se puede reservar desde hoy hasta `Scheduling:MaxDaysAhead` días (90). Las citas duran 30 minutos.

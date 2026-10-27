@@ -1,0 +1,39 @@
+---
+# Despliegue de la aplicación: los MISMOS archivos Compose que se usan en local (docker-compose.yml + docker-compose.qa.yml).
+- name: Código de la aplicación (versión fija)
+  ansible.builtin.git:
+    repo: "{{ medicore_repo_url }}"
+    dest: "{{ medicore_dir }}"
+    version: "{{ medicore_version }}"
+    force: false
+
+- name: Archivo de entorno (secretos del Vault; permisos restringidos)
+  ansible.builtin.template:
+    src: env.qa.j2
+    dest: "{{ medicore_dir }}/.env.qa"
+    mode: "0600"
+    owner: root
+    group: root
+  no_log: true
+
+- name: Ambiente QA levantado (migración, API, web, worker y proxy)
+  community.docker.docker_compose_v2:
+    project_src: "{{ medicore_dir }}"
+    project_name: "{{ medicore_project_name }}"
+    files: [docker-compose.yml, docker-compose.qa.yml]
+    env_files: [.env.qa]
+    build: policy
+    state: present
+    wait: true
+    wait_timeout: 300
+  no_log: true
+
+- name: Datos ficticios de QA (solo si medicore_seed es true)
+  ansible.builtin.command:
+    cmd: >-
+      docker compose -p {{ medicore_project_name }} --env-file .env.qa -f docker-compose.yml -f docker-compose.qa.yml
+      --profile seed run --rm seed
+    chdir: "{{ medicore_dir }}"
+  when: medicore_seed | bool
+  changed_when: true
+  no_log: true

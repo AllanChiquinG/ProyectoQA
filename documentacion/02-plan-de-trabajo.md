@@ -16,7 +16,7 @@ Cada entrega es pequeña, termina compilando, con pruebas verdes y la matriz de 
 | 9 | App móvil (trabajada como "entrega 7" de la numeración de sesiones) | .NET MAUI Android (MOB-01…12) sobre la API real, flujos Maestro y documentación de conexión con Docker | Implementada en la rama `feature/entrega-7-app-movil`; compilada a APK de desarrollo y **probada en emulador (Maestro 8/8)**; pendiente de PR y fusión |
 | 10 | Pruebas | Unitarias, integración (BD/Redis/RabbitMQ con Testcontainers), API (Insomnia), concurrencia de agenda, Cypress, Maestro | En curso (Cypress iniciado con el recorrido de Recepción) |
 | 11 | DevSecOps | Jenkinsfile (18 etapas), SonarQube, Dependency-Check, npm audit, Fortify, ZAP, Dockerfiles | Pendiente |
-| 12 | Cloud | Terraform (Azure), Ansible, aprovisionar/modificar/destruir, ambiente QA | Pendiente |
+| 12 | Cloud (preparación = "entrega 8" de la numeración de sesiones) | Terraform (Azure), Ansible, aprovisionar/modificar/destruir, ambiente QA | Preparado y verificado en local (contenedores, humo, persistencia, validación de Terraform/Ansible); **sin `apply`**: el despliegue real espera la aprobación del plan y costo de `documentacion/06-infraestructura.md` |
 | 13 | Rendimiento y calidad | k6/JMeter con umbrales previos, Lighthouse/axe, prueba de usabilidad | Pendiente |
 | 14 | Cierre | Plan de pruebas (20 secciones), matriz de riesgos, casos/evidencias, defectos, informe GO / NO-GO, presentación | Pendiente |
 
@@ -27,6 +27,8 @@ Pendientes obligatorios de pruebas (ver matriz de trazabilidad): Cypress, Insomn
 Decisión aceptada (entrega 5, ajuste): **expediente compartido entre médicos autorizados.** Un médico con relación de atención válida lee las consultas y recetas que registraron otros médicos; nadie modifica registros de otro profesional; sin relación válida no hay acceso; los demás roles mantienen sus restricciones. Detalle en `CLAUDE.md` y en `04-registro-de-hallazgos.md`.
 
 Decisión aceptada (entrega 6): el **evento `LabResultReady`** y la infraestructura de mensajería (outbox, publicador, consumidor con reintentos, DLQ e idempotencia) se adelantaron a la entrega 6 porque el flujo de laboratorio los necesita. La entrega 7 conserva el resto: los eventos `AppointmentCreated`, `AppointmentCancelled`, `PrescriptionCreated` y `PatientNotification`, y la generalización del consumidor.
+
+Decisión aceptada (entrega 8): el proceso de mensajería se separa en el proyecto `MediCore.Worker` (mismo código de Infrastructure) para desplegarlo como contenedor; en desarrollo sigue dentro de la API. **Siguen pendientes y NO están hechos:** Jenkins (Jenkinsfile de 18 etapas), SonarQube, Dependency-Check/npm audit/Fortify, OWASP ZAP, Insomnia, k6/JMeter, ampliar Cypress y los entregables de QA de la entrega 14.
 
 Dependencias clave: 2 antes de 3–6; 4 y 6 usan los eventos de 7 (se publican vía outbox desde 4 y 6 y se consumen en 7); 9 requiere API estable (≥ entrega 6).
 

@@ -1,0 +1,60 @@
+---
+- name: Paquetes base
+  ansible.builtin.apt:
+    name: [ca-certificates, curl, git, gnupg, ufw, fail2ban, unattended-upgrades]
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Actualizaciones de seguridad automáticas
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
+    mode: "0644"
+    owner: root
+    group: root
+
+- name: SSH solo con clave y sin acceso de root
+  ansible.builtin.copy:
+    dest: /etc/ssh/sshd_config.d/99-medicore.conf
+    content: |
+      PasswordAuthentication no
+      PermitRootLogin no
+      KbdInteractiveAuthentication no
+    mode: "0644"
+    owner: root
+    group: root
+    validate: /usr/sbin/sshd -t -f %s
+  notify: Recargar sshd
+
+- name: Cortafuegos - denegar la entrada por defecto
+  community.general.ufw:
+    default: deny
+    direction: incoming
+
+- name: Cortafuegos - permitir la salida
+  community.general.ufw:
+    default: allow
+    direction: outgoing
+
+- name: Cortafuegos - SSH (limitado en intentos), HTTP y HTTPS
+  community.general.ufw:
+    rule: "{{ item.rule }}"
+    port: "{{ item.port }}"
+    proto: tcp
+  loop:
+    - { rule: limit, port: "22" }
+    - { rule: allow, port: "80" }
+    - { rule: allow, port: "443" }
+
+- name: Cortafuegos - activar
+  community.general.ufw:
+    state: enabled
+
+- name: Servicio fail2ban activo
+  ansible.builtin.service:
+    name: fail2ban
+    state: started
+    enabled: true

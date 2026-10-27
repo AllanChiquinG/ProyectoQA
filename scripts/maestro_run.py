@@ -58,6 +58,8 @@ def missing_tools():
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--only', help='Prefijo del flujo a ejecutar (por ejemplo 03)')
+    parser.add_argument('--out', default='documentacion/evidencias/entrega-7-maestro.md', help='Archivo de evidencia a escribir')
+    parser.add_argument('--title', default='Entrega 7 · resultado de los flujos Maestro')
     args = parser.parse_args()
 
     missing = missing_tools()
@@ -87,10 +89,10 @@ def main():
             print(tail)
 
     prep.clean_patient()
-    out = ROOT / 'documentacion' / 'evidencias' / 'entrega-7-maestro.md'
+    out = ROOT / args.out
     out.parent.mkdir(parents=True, exist_ok=True)
     stamp = datetime.datetime.now().astimezone().strftime('%Y-%m-%d %H:%M:%S %z')
-    lines = ['# Entrega 7 · resultado de los flujos Maestro', '', f'Ejecutado el {stamp} con `scripts/maestro_run.py` en un dispositivo Android real o emulado, contra la API y RabbitMQ de desarrollo.', '',
+    lines = [f'# {args.title}', '', f'Ejecutado el {stamp} con `scripts/maestro_run.py` en un dispositivo Android real o emulado, contra la API y RabbitMQ de desarrollo.', '',
              '| Flujo | Escenario | Resultado | Duración |', '|---|---|---|---|']
     for flow, scenario, passed, seconds, _ in results:
         lines.append(f'| `{flow}` | {scenario} | {"APROBADO" if passed else "FALLIDO"} | {seconds:.0f} s |')

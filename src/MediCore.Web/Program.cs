@@ -1,5 +1,7 @@
 using MediCore.Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,7 +57,26 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddAuthorizationBuilder();
 
+// Las claves que cifran la cookie de sesión y los tokens antifalsificación deben sobrevivir a los reinicios del contenedor (volumen).
+var keysPath = builder.Configuration["DataProtection:KeysPath"];
+if (!string.IsNullOrWhiteSpace(keysPath))
+    builder.Services.AddDataProtection().SetApplicationName("MediCore.Web").PersistKeysToFileSystem(new DirectoryInfo(keysPath));
+
+// Detrás del proxy inverso (único camino de entrada en el Compose de QA).
+if (builder.Configuration.GetValue<bool>("ForwardedHeaders:Enabled"))
+{
+    builder.Services.Configure<ForwardedHeadersOptions>(options =>
+    {
+        options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+        options.KnownIPNetworks.Clear();
+        options.KnownProxies.Clear();
+        options.ForwardLimit = 1;
+    });
+}
+
 var app = builder.Build();
+
+if (app.Configuration.GetValue<bool>("ForwardedHeaders:Enabled")) app.UseForwardedHeaders();
 
 if (!app.Environment.IsDevelopment())
 {
