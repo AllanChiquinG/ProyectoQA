@@ -398,6 +398,62 @@ public class AppointmentsApiTests(StackFixture stack)
         Assert.Equal(HttpStatusCode.NotFound, (await doctorClient.GetAsync($"/api/patients/{patient.Id}")).StatusCode);
     }
 
+    [Fact]
+    public async Task Con_varias_citas_del_mismo_paciente_el_acceso_se_retira_solo_al_cancelar_la_ultima()
+    {
+        var (docUserId, docEmail) = await stack.CreateUserAsync(UserRole.Medico);
+        var doctor = await stack.CreateScheduledDoctorAsync(docUserId);
+        var patient = await stack.CreatePatientAsync();
+        var first = await stack.CreateAppointmentAsync(patient.Id, doctor.Id, StackFixture.Future(3).ToDateTime(new TimeOnly(9, 0)));
+        var second = await stack.CreateAppointmentAsync(patient.Id, doctor.Id, StackFixture.Future(4).ToDateTime(new TimeOnly(9, 0)));
+        var (doctorClient, _) = await stack.LoginClientForAsync(docEmail);
+        var (reception, _) = await stack.LoginClientAsync(UserRole.Recepcion);
+
+        await reception.PostAsync($"/api/appointments/{first.Id}/cancel", null);
+        Assert.Equal(HttpStatusCode.OK, (await doctorClient.GetAsync($"/api/patients/{patient.Id}")).StatusCode); // queda la segunda cita
+
+        await reception.PostAsync($"/api/appointments/{second.Id}/cancel", null);
+        Assert.Equal(HttpStatusCode.NotFound, (await doctorClient.GetAsync($"/api/patients/{patient.Id}")).StatusCode); // ya no queda ninguna
+    }
+
+    [Fact]
+    public async Task Una_cita_pasada_no_cancelada_mantiene_la_relacion_de_atencion()
+    {
+        var (docUserId, docEmail) = await stack.CreateUserAsync(UserRole.Medico);
+        var doctor = await stack.CreateScheduledDoctorAsync(docUserId);
+        var patient = await stack.CreatePatientAsync();
+        await stack.CreateAppointmentAsync(patient.Id, doctor.Id, DateTime.UtcNow.Date.AddDays(-20).AddHours(9));
+        var (client, _) = await stack.LoginClientForAsync(docEmail);
+
+        Assert.Equal(HttpStatusCode.OK, (await client.GetAsync($"/api/patients/{patient.Id}")).StatusCode);
+    }
+
+    [Fact]
+    public async Task La_relacion_es_por_medico_cancelar_con_uno_no_afecta_el_acceso_del_otro()
+    {
+        var (userA, emailA) = await stack.CreateUserAsync(UserRole.Medico);
+        var (userB, emailB) = await stack.CreateUserAsync(UserRole.Medico);
+        var doctorA = await stack.CreateScheduledDoctorAsync(userA);
+        var doctorB = await stack.CreateScheduledDoctorAsync(userB);
+        var patient = await stack.CreatePatientAsync();
+        var date = StackFixture.Future(3);
+        var withA = await stack.CreateAppointmentAsync(patient.Id, doctorA.Id, date.ToDateTime(new TimeOnly(9, 0)));
+        await stack.CreateAppointmentAsync(patient.Id, doctorB.Id, date.ToDateTime(new TimeOnly(10, 0)));
+        var (clientA, _) = await stack.LoginClientForAsync(emailA);
+        var (clientB, _) = await stack.LoginClientForAsync(emailB);
+        var (reception, _) = await stack.LoginClientAsync(UserRole.Recepcion);
+
+        await reception.PostAsync($"/api/appointments/{withA.Id}/cancel", null);
+
+        Assert.Equal(HttpStatusCode.NotFound, (await clientA.GetAsync($"/api/patients/{patient.Id}")).StatusCode);
+        Assert.Equal(HttpStatusCode.OK, (await clientB.GetAsync($"/api/patients/{patient.Id}")).StatusCode);
+    }
+
+    [Fact(Skip = "PENDIENTE (entrega 5): la relación médico–paciente también debe surgir de una consulta registrada. " +
+                 "Cuando exista el módulo de consultas: registrar una consulta del médico a un paciente sin citas → acceso 200; " +
+                 "cancelar la última cita con una consulta vigente → el acceso se conserva.")]
+    public Task Una_consulta_registrada_crea_y_conserva_la_relacion_de_atencion() => Task.CompletedTask;
+
     [Theory]
     [InlineData(UserRole.Administrador)]
     [InlineData(UserRole.Laboratorio)]

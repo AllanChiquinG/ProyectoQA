@@ -20,7 +20,9 @@ Cada entrega es pequeña, termina compilando, con pruebas verdes y la matriz de 
 | 13 | Rendimiento y calidad | k6/JMeter con umbrales previos, Lighthouse/axe, prueba de usabilidad | Pendiente |
 | 14 | Cierre | Plan de pruebas (20 secciones), matriz de riesgos, casos/evidencias, defectos, informe GO / NO-GO, presentación | Pendiente |
 
-Decisión aceptada (entregas 3–4): el médico accede únicamente a pacientes con quienes tiene una cita registrada (no cancelada); la regla se valida en la API (`PatientAuthorizationHandler`). Las consultas (entrega 5) también crearán esa relación.
+Decisión aceptada (entregas 3–4): el médico accede a pacientes con quienes tiene una cita no cancelada **o una consulta registrada**; la regla se valida en la API (`PatientAuthorizationHandler`). Cancelar una cita solo retira el acceso si no queda otra relación válida (otra cita con ese médico o una consulta). La parte de consultas se agrega y se prueba en la entrega 5 (hay una prueba omitida y visible que lo recuerda).
+
+Pendientes obligatorios de pruebas (ver matriz de trazabilidad): Cypress, Insomnia, Maestro y rendimiento con k6/JMeter.
 
 Dependencias clave: 2 antes de 3–6; 4 y 6 usan los eventos de 7 (se publican vía outbox desde 4 y 6 y se consumen en 7); 9 requiere API estable (≥ entrega 6).
 
