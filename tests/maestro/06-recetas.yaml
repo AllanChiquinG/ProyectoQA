@@ -1,0 +1,16 @@
+# MOB-10, MOB-11. Escenario: recetas. Listar y abrir una receta propia.
+appId: com.medicore.paciente
+name: 06 · Recetas
+---
+- runFlow: subflows/login.yaml
+- tapOn: "Recetas"
+- assertVisible: "Mis recetas"
+- assertVisible: ${MEDICAMENTO}
+- tapOn: ${MEDICAMENTO}
+- assertVisible: "Detalle de receta"
+- assertVisible: "Dosis"
+- assertVisible: "500 mg"
+- assertVisible: "Frecuencia"
+- assertVisible: "Indicaciones"
+- tapOn: "← Volver"
+- assertVisible: "Mis recetas"

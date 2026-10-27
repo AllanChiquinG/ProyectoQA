@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView x:Class="MediCore.Mobile.Views.StateBanner"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <!-- Estados comunes de las pantallas que cargan datos: cargando, error con reintento y lista vacía. Usa el ViewModel de la página. -->
+    <VerticalStackLayout Spacing="12" Padding="0,16">
+        <HorizontalStackLayout IsVisible="{Binding IsLoading}" Spacing="12" HorizontalOptions="Center" AutomationId="estado_cargando">
+            <ActivityIndicator IsRunning="{Binding IsLoading}" Color="{StaticResource Green}" HeightRequest="24" WidthRequest="24" />
+            <Label Text="Cargando…" Style="{StaticResource Sub}" VerticalOptions="Center" />
+        </HorizontalStackLayout>
+
+        <Border IsVisible="{Binding IsError}" Style="{StaticResource CardBorder}" BackgroundColor="{StaticResource DangerBackground}" Stroke="{StaticResource DangerBorder}" AutomationId="estado_error">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="{Binding ErrorMessage}" TextColor="{StaticResource DangerText}" SemanticProperties.Description="Error" />
+                <Button Text="Reintentar" Command="{Binding RetryCommand}" Style="{StaticResource SecondaryButton}" AutomationId="boton_reintentar" />
+            </VerticalStackLayout>
+        </Border>
+
+        <Label IsVisible="{Binding IsEmpty}" Text="{Binding EmptyMessage}" Style="{StaticResource Sub}" HorizontalTextAlignment="Center" Padding="0,24" AutomationId="estado_vacio" />
+    </VerticalStackLayout>
+</ContentView>
