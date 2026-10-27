@@ -60,5 +60,6 @@ fieldset.medicamento { border: 1px solid #cbdfdc; border-radius: 12px; padding: 
 fieldset.medicamento legend { font: 700 14px Manrope, sans-serif; color: #245548; padding: 0 8px; }
 fieldset.medicamento .link { margin-top: 8px; }
 .add-medication { margin-bottom: 4px; }
+.mobcard .author { font-size: 11px; font-style: italic; margin-top: 8px; }
 .medication-card { cursor: default; }
 .medication-card:hover { border-color: #c6dcd3; background: #f9fcf7; }

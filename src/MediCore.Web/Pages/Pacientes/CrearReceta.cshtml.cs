@@ -77,6 +77,9 @@ public class CrearRecetaModel(IMediCoreApi api) : StaffPageModel
         if (await HandleCommonAsync(consultation) is { } handled) return handled;
         if (!consultation.IsOk) return RedirectToPage("/Pacientes/Index");
 
+        // Expediente compartido: se pueden leer las consultas de otros médicos, pero solo su autor crea recetas sobre ellas.
+        if (!consultation.Value!.IsOwn) return RedirectToPage("/AccesoDenegado");
+
         var patient = await api.GetPatientAsync(consultation.Value!.PatientId, ct);
         if (await HandleCommonAsync(patient) is { } patientFailure) return patientFailure;
 

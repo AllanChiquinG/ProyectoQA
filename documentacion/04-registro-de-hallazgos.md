@@ -111,9 +111,25 @@ Decisiones y desviaciones del diseño en esta entrega (no son errores):
 
 ### Verificación de la entrega 5
 
-- **Cypress `medico-expediente.cy.js` (7 pruebas), sin inyectar JavaScript:** iniciar sesión como Médico; abrir el expediente desde la agenda; recorrer Consultas, Recetas y Laboratorio (pendiente); guardar una consulta incompleta (errores); registrar la consulta; crear una receta con dos medicamentos (agregar y quitar filas conservando lo escrito); ver el detalle; volver al expediente y abrir la receta desde su tarjeta; comprobar que la cita ya no admite otra consulta; y que un paciente sin relación devuelve 404. **7/7 en Chrome 155 y Electron 146.**
+- **Cypress `medico-expediente.cy.js` (10 pruebas tras el ajuste del expediente compartido), sin inyectar JavaScript:** iniciar sesión como Médico; abrir el expediente desde la agenda; recorrer Consultas, Recetas y Laboratorio (pendiente); guardar una consulta incompleta (errores); registrar la consulta; crear una receta con dos medicamentos (agregar y quitar filas conservando lo escrito); ver el detalle; volver al expediente y abrir la receta desde su tarjeta; comprobar que la cita ya no admite otra consulta; y que un paciente sin relación devuelve 404. **10/10 y la regresión de Recepción 8/8, en Chrome 155 y Electron 146** (una ejecución por navegador tras el ajuste; en la primera ejecución la prueba 10 falló porque `cy.visit` rechaza el 403 de Acceso denegado: se corrigió la prueba con `failOnStatusCode: false`, no la aplicación). No se repitió a distintas horas del día; la independencia horaria se debe al diseño (cita pasada insertada directamente).
 - **Regresión de Recepción `recepcion-reserva.cy.js` (8 pruebas):** 8/8 en ambos navegadores, tras los cambios de esta entrega.
 - **Límites:** Cypress dispara eventos del navegador (no es una persona con teclado físico); `confirm()` no interviene en este recorrido; no se midió accesibilidad ni móvil; cada ejecución agrega una consulta y una receta de prueba (la información clínica no se borra) con un texto único.
+
+## Entrega 5 · ajustes posteriores (expediente compartido y pruebas independientes de la hora)
+
+**Decisión de producto (reemplaza la de la primera versión de la entrega 5):** el expediente es **compartido entre médicos autorizados**.
+
+- Un médico con relación de atención válida con el paciente (una cita no cancelada o una consulta registrada) **lee** las consultas y recetas escritas por otros médicos; cada registro indica su autor (`IsOwn`, `DoctorName`) y la lectura de lo ajeno se audita como `other_author`, sin contenido.
+- **No puede modificar** registros de otro profesional: solo el autor crea recetas sobre su consulta, solo se registra la consulta de una cita propia y no existe operación de edición ni de borrado de consultas ni de recetas (PUT, PATCH y DELETE devuelven 405, también para el autor).
+- Sin relación válida no hay acceso (404 y `clinical.access_denied`); al cancelarse la última cita sin consulta se pierde la lectura. Recepción, Administrador y Laboratorio mantienen sus restricciones; el paciente lee solo sus recetas, de cualquiera de sus médicos.
+- Motivo y riesgo: la relación de atención es una barrera baja (basta una cita no cancelada, incluso futura, con ese médico). Con el expediente compartido, esa cita da lectura de todo el historial clínico del paciente. Se acepta por indicación del equipo; si se quisiera endurecer, bastaría exigir una cita ya atendida o una consulta, cambiando `PatientAccess.HasCareRelationship` (una sola definición).
+
+| ID | Tipo | Qué ocurrió | Causa | Corrección | Resultado |
+|---|---|---|---|---|---|
+| H5-07 | Prueba | El spec de Cypress del médico dependía de la hora del día: necesitaba un horario libre **más tarde hoy** y fallaba en los últimos minutos del día. | Para registrar una consulta hace falta una cita de hoy o anterior; la API no permite reservar en el pasado, así que la prueba reservaba "hoy, más tarde". | Cita ya pasada creada con una tarea de Cypress directamente en la base de datos **local** (`db:createPastAppointment`; se niega a conectar con cualquier servidor que no sea local). No se debilita ninguna validación de la API. | La prueba no mira el reloj. |
+| H5-08 | Prueba | La prueba del médico **cambiaba temporalmente el horario de la Dra. Méndez** (un médico de uso normal) y lo restauraba al final. | Necesitaba que atendiera todo el día. | Dos médicos dedicados a Cypress, sembrados solo en Development (`e2e.medico` y `e2e.colega`, ver `E2eFixtureSeeder`). Ningún médico de uso normal se toca. | Sin cambios en agendas reales. |
+| H5-09 | Prueba | Cada ejecución del spec del médico dejaba una consulta y una receta nuevas. | La información clínica no se borra por la API. | Tarea `db:cleanE2eClinical` al empezar y al terminar: borra consultas, recetas y citas **solo** de los pacientes `CYP-E2E-*`. | Sin acumulación; el estado vacío del expediente ahora se comprueba. |
+| H5-10 | Producto (diseño de código) | Con el expediente compartido, `PrescriptionAuthorizationHandler` necesitaba la relación de atención y la consulta estaba escrita dentro de otro manejador. | Duplicación. | Servicio `ICareRelationship` (usado por ambos manejadores; mismo criterio que el listado de pacientes). Las pruebas unitarias lo simulan sin base de datos. | 31 pruebas unitarias. |
 
 ## Entregas anteriores
 

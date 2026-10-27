@@ -29,6 +29,18 @@ public static class PatientAccess
                       || db.Consultations.Any(c => c.PatientId == patient.Id && c.Doctor.UserId == doctorUserId);
 }
 
+/// <summary>Consulta si un médico tiene relación de atención con un paciente (ver <see cref="PatientAccess.HasCareRelationship"/>).</summary>
+public interface ICareRelationship
+{
+    Task<bool> ExistsAsync(Guid doctorUserId, Guid patientId, CancellationToken ct = default);
+}
+
+public sealed class DbCareRelationship(MediCoreDbContext db) : ICareRelationship
+{
+    public Task<bool> ExistsAsync(Guid doctorUserId, Guid patientId, CancellationToken ct = default)
+        => db.Patients.Where(p => p.Id == patientId).Where(PatientAccess.HasCareRelationship(db, doctorUserId)).AnyAsync(ct);
+}
+
 /// <summary>
 /// Autorización a nivel de recurso: decide si ESTE usuario puede actuar sobre ESTE paciente.
 /// Deniega por defecto. Un rol correcto no basta: un paciente solo accede a su propio registro y un médico solo a
@@ -55,9 +67,8 @@ public sealed class PatientAuthorizationHandler(IServiceProvider services) : Aut
 
             // El médico solo puede leer pacientes con quienes tiene una cita no cancelada o una consulta registrada.
             case Roles.Medico when requirement == PatientOperations.Read && userId is not null:
-                // El contexto se obtiene solo cuando hace falta: esta clase se instancia en cada evaluación de autorización.
-                var db = services.GetRequiredService<MediCoreDbContext>();
-                if (await db.Patients.Where(p => p.Id == patient.Id).Where(PatientAccess.HasCareRelationship(db, userId.Value)).AnyAsync())
+                // El servicio se obtiene solo cuando hace falta: esta clase se instancia en cada evaluación de autorización.
+                if (await services.GetRequiredService<ICareRelationship>().ExistsAsync(userId.Value, patient.Id))
                     context.Succeed(requirement);
                 break;
 

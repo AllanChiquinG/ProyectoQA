@@ -70,9 +70,10 @@ builder.Services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationSc
     });
 
 // Autorización por recurso (¿puede ESTE usuario ver ESTE paciente?).
+builder.Services.AddScoped<ICareRelationship, DbCareRelationship>();
 builder.Services.AddScoped<IAuthorizationHandler, PatientAuthorizationHandler>();
 builder.Services.AddSingleton<IAuthorizationHandler, AppointmentAuthorizationHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, PrescriptionAuthorizationHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, PrescriptionAuthorizationHandler>();
 
 // Seguro por defecto: todo requiere usuario autenticado salvo lo marcado con [AllowAnonymous].
 builder.Services.AddAuthorizationBuilder()
