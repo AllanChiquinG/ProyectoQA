@@ -1,0 +1,62 @@
+@page "{id:guid}"
+@model MediCore.Web.Pages.Pacientes.CrearRecetaModel
+@{
+    ViewData["Code"] = "WEB-14";
+    ViewData["Title"] = "Crear receta";
+    ViewData["Subtitle"] = "Registra el medicamento y sus indicaciones.";
+}
+
+@if (Model.Patient is { } patient && Model.Consultation is { } consultation)
+{
+    <form method="post" action="@Url.Page("/Pacientes/CrearReceta", new { id = consultation.Id })" asp-antiforgery="true" class="panel panelpad" novalidate>
+        <div class="notice notice-top">Paciente: @patient.FullName · @consultation.DoctorName · Consulta del @consultation.Date.ToString("dd/MM/yyyy")</div>
+        <div asp-validation-summary="ModelOnly" class="err" role="alert"></div>
+        @if (Model.Error is not null)
+        {
+            <div class="err" role="alert">@Model.Error</div>
+        }
+
+        @for (var i = 0; i < Model.Items.Count; i++)
+        {
+            <fieldset class="medicamento">
+                <legend>Medicamento @(i + 1)</legend>
+                <div class="formgrid">
+                    <label class="field">Medicamento
+                        <input asp-for="Items[i].Medication" required maxlength="120" autocomplete="off" />
+                        <span asp-validation-for="Items[i].Medication" class="err"></span>
+                    </label>
+                    <label class="field">Dosis
+                        <input asp-for="Items[i].Dose" required maxlength="80" autocomplete="off" />
+                        <span asp-validation-for="Items[i].Dose" class="err"></span>
+                    </label>
+                    <label class="field">Frecuencia
+                        <input asp-for="Items[i].Frequency" required maxlength="80" autocomplete="off" />
+                        <span asp-validation-for="Items[i].Frequency" class="err"></span>
+                    </label>
+                    <label class="field">Duración
+                        <input asp-for="Items[i].Duration" required maxlength="80" autocomplete="off" />
+                        <span asp-validation-for="Items[i].Duration" class="err"></span>
+                    </label>
+                    <label class="field span2">Indicaciones
+                        <textarea asp-for="Items[i].Instructions" required maxlength="500"></textarea>
+                        <span asp-validation-for="Items[i].Instructions" class="err"></span>
+                    </label>
+                </div>
+                @if (Model.Items.Count > 1)
+                {
+                    <button class="link" type="submit" asp-page-handler="Quitar" asp-route-index="@i" formnovalidate>Quitar este medicamento</button>
+                }
+            </fieldset>
+        }
+
+        @if (Model.Items.Count < MediCore.Web.Pages.Pacientes.CrearRecetaModel.MaxItems)
+        {
+            <button class="btn secondary add-medication" type="submit" asp-page-handler="Agregar" formnovalidate>＋ Agregar medicamento</button>
+        }
+
+        <div class="formfoot">
+            <a class="btn secondary" asp-page="/Pacientes/Expediente" asp-route-id="@patient.Id" asp-route-tab="Recetas">Cancelar</a>
+            <button class="btn" type="submit">Guardar receta</button>
+        </div>
+    </form>
+}

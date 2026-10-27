@@ -1,6 +1,7 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using MediCore.Contracts.Auth;
+using MediCore.Domain.Clinical;
 using MediCore.Domain.Doctors;
 using MediCore.Domain.Identity;
 using MediCore.Domain.Patients;
@@ -117,6 +118,31 @@ public sealed class StackFixture : ApiFactory, IAsyncLifetime
         await db.SaveChangesAsync();
         return appointment;
     }
+
+    /// <summary>Consulta insertada directamente en la base de datos (para preparar estados que la API no permite crear).</summary>
+    public async Task<Consultation> CreateConsultationAsync(Appointment appointment, string reason = "Motivo de prueba")
+    {
+        using var scope = Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<MediCoreDbContext>();
+        var consultation = new Consultation
+        {
+            PatientId = appointment.PatientId, DoctorId = appointment.DoctorId, AppointmentId = appointment.Id,
+            Reason = reason, Notes = "Notas de prueba", Diagnosis = "Diagnóstico de prueba",
+        };
+        db.Consultations.Add(consultation);
+        await db.SaveChangesAsync();
+        return consultation;
+    }
+
+    public async Task SetAppointmentStatusAsync(Guid appointmentId, AppointmentStatus status)
+    {
+        using var scope = Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<MediCoreDbContext>();
+        await db.Appointments.Where(a => a.Id == appointmentId).ExecuteUpdateAsync(s => s.SetProperty(a => a.Status, status));
+    }
+
+    /// <summary>Hora de la clínica (misma zona que la API en pruebas).</summary>
+    public static DateTime ClinicNow => DateTime.SpecifyKind(TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "America/Guatemala"), DateTimeKind.Unspecified);
 
     /// <summary>Fecha futura (días desde hoy, hora de la clínica = UTC-6, por eso se suman al menos 2 para no rozar el cambio de día).</summary>
     public static DateOnly Future(int days = 3) => DateOnly.FromDateTime(DateTime.UtcNow).AddDays(Math.Max(days, 2));

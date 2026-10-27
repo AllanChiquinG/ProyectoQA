@@ -1,6 +1,6 @@
 # MediCore
 
-Plataforma hospitalaria: web del personal (Razor Pages), API (ASP.NET Core) y app móvil del paciente (.NET MAUI, Android). Proyecto 2 del Proyecto Final de QA. **Estado: entrega 4 (disponibilidad, agenda y citas) en curso.** Ver el plan en [documentacion/02-plan-de-trabajo.md](documentacion/02-plan-de-trabajo.md).
+Plataforma hospitalaria: web del personal (Razor Pages), API (ASP.NET Core) y app móvil del paciente (.NET MAUI, Android). Proyecto 2 del Proyecto Final de QA. **Estado: entrega 5 (expediente, consultas y recetas) en curso.** Ver el plan en [documentacion/02-plan-de-trabajo.md](documentacion/02-plan-de-trabajo.md).
 
 ## Requisitos
 
@@ -58,6 +58,13 @@ dotnet run --project src/MediCore.Web --launch-profile http   # http://localhost
 
 Con la API en Development, el contrato OpenAPI está en `http://localhost:5011/openapi/v1.json`.
 
+## Expediente, consultas y recetas
+
+- El médico abre el expediente desde su agenda o desde "Pacientes autorizados". Cada consulta pertenece a una cita (una consulta por cita; de hoy o anteriores) y cada receta a una consulta, con 1 a 10 medicamentos.
+- El médico ve en el expediente **solo las consultas y recetas que él escribió** (mínimo privilegio). El paciente lee únicamente sus propias recetas (`GET /api/prescriptions/me`, para la app móvil).
+- La sección Laboratorio del expediente indica que el módulo está pendiente y no muestra resultados.
+- La auditoría y las bitácoras registran quién accedió a qué recurso y cuándo, nunca el contenido clínico.
+
 ## Agenda y citas
 
 - Las horas son del reloj de la clínica (`Clinic:TimeZone`, por defecto `America/Guatemala`); se puede reservar desde hoy hasta `Scheduling:MaxDaysAhead` días (90). Las citas duran 30 minutos.
@@ -83,7 +90,7 @@ Docs/  Referencias/     documento del proyecto y diseño aprobado (solo lectura)
 
 ## Estado de las pruebas
 
-Hoy: 128 pruebas xUnit superadas y 1 omitida a propósito (la relación médico–paciente por consulta, pendiente de la entrega 5), entre unitarias e integración con PostgreSQL y Redis reales. Además, **Cypress** (`tests/cypress`) ya cubre el recorrido de Recepción (8 pruebas; ver su README). **Pendientes y obligatorios según el documento del proyecto**: ampliar Cypress (smoke, otros roles, regresión), colección de Insomnia (API), Maestro (móvil) y pruebas de rendimiento con k6 o JMeter. Detalle en [documentacion/03-matriz-trazabilidad.md](documentacion/03-matriz-trazabilidad.md); los hallazgos y la verificación manual en [documentacion/04-registro-de-hallazgos.md](documentacion/04-registro-de-hallazgos.md).
+Hoy: 155 pruebas xUnit superadas (28 unitarias y 127 de integración con PostgreSQL y Redis reales). Además, **Cypress** (`tests/cypress`) ya cubre los recorridos de Recepción (8 pruebas) y Médico (7 pruebas); ver su README. **Pendientes y obligatorios según el documento del proyecto**: ampliar Cypress (smoke, Administrador y Laboratorio, regresión), colección de Insomnia (API), Maestro (móvil) y pruebas de rendimiento con k6 o JMeter. Detalle en [documentacion/03-matriz-trazabilidad.md](documentacion/03-matriz-trazabilidad.md); los hallazgos y la verificación manual en [documentacion/04-registro-de-hallazgos.md](documentacion/04-registro-de-hallazgos.md).
 
 ## Seguridad
 

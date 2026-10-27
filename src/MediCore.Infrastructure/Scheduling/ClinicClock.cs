@@ -8,6 +8,9 @@ public interface IClinicClock
     DateTime NowLocal { get; }
     DateOnly Today { get; }
 
+    /// <summary>Convierte un instante UTC a la hora de la clínica (para mostrar fechas de registros creados en UTC).</summary>
+    DateTime ToLocal(DateTime utc);
+
     /// <summary>Último día en el que se puede reservar (configurable, 90 días por defecto).</summary>
     DateOnly LastBookableDate { get; }
 }
@@ -27,6 +30,9 @@ internal sealed class ClinicClock : IClinicClock
     }
 
     public DateTime NowLocal => DateTime.SpecifyKind(TimeZoneInfo.ConvertTime(_time.GetUtcNow(), _zone).DateTime, DateTimeKind.Unspecified);
+
+    public DateTime ToLocal(DateTime utc)
+        => DateTime.SpecifyKind(TimeZoneInfo.ConvertTime(new DateTimeOffset(DateTime.SpecifyKind(utc, DateTimeKind.Utc)), _zone).DateTime, DateTimeKind.Unspecified);
 
     public DateOnly Today => DateOnly.FromDateTime(NowLocal);
 

@@ -1,4 +1,5 @@
 using MediCore.Domain.Auditing;
+using MediCore.Domain.Clinical;
 using MediCore.Domain.Doctors;
 using MediCore.Domain.Identity;
 using MediCore.Domain.Messaging;
@@ -17,6 +18,9 @@ public class MediCoreDbContext(DbContextOptions<MediCoreDbContext> options) : Db
     public DbSet<Doctor> Doctors => Set<Doctor>();
     public DbSet<DoctorSchedule> DoctorSchedules => Set<DoctorSchedule>();
     public DbSet<Appointment> Appointments => Set<Appointment>();
+    public DbSet<Consultation> Consultations => Set<Consultation>();
+    public DbSet<Prescription> Prescriptions => Set<Prescription>();
+    public DbSet<PrescriptionItem> PrescriptionItems => Set<PrescriptionItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
         => modelBuilder.ApplyConfigurationsFromAssembly(typeof(MediCoreDbContext).Assembly);

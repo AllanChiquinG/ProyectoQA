@@ -8,8 +8,8 @@ Cada entrega es pequeña, termina compilando, con pruebas verdes y la matriz de 
 | 1 | Base técnica | Capas del monolito modular (dominio/aplicación/infraestructura por módulo), EF Core + PostgreSQL con migraciones, `docker-compose` (Postgres, Redis, RabbitMQ), `.env.example`, configuración y secretos locales (user-secrets), manejo global de errores, Swagger/OpenAPI | **Hecha** (PR #1 fusionado) |
 | 2 | Identidad y acceso | Usuarios, roles, login web (cookie) y API (JWT corto + refresh), sesiones en Redis, políticas por rol y por recurso, auditoría base, WEB-01, MOB-01 (API), usuarios y roles (WEB-10) | **Hecha** (PR #2 fusionado) |
 | 3 | Pacientes y médicos | CRUD, búsqueda, `GET /api/patients/{id}`, `GET /api/doctors`, WEB-05…08, auditoría de accesos a datos clínicos | **Hecha** (PR #3 fusionado) |
-| 4 | Agenda y citas | Disponibilidad (WEB-09), `GET /api/doctors/{id}/availability`, `POST /api/appointments`, cancelación, **anti doble reserva** (restricción única en BD + concurrencia optimista/transacción), cache Redis de disponibilidad con invalidación, WEB-02/03/04/11 | En revisión (PR abierto) |
-| 5 | Consultas y recetas | Expediente, consultas, recetas, `GET /api/prescriptions/{id}`, WEB-12…15, autorización por recurso | Pendiente |
+| 4 | Agenda y citas | Disponibilidad (WEB-09), `GET /api/doctors/{id}/availability`, `POST /api/appointments`, cancelación, **anti doble reserva** (restricción única en BD + concurrencia optimista/transacción), cache Redis de disponibilidad con invalidación, WEB-02/03/04/11 | Pendiente de fusión: el PR sigue abierto (origin/main no lo contiene) |
+| 5 | Consultas y recetas | Expediente, consultas, recetas, `GET /api/prescriptions/{id}`, WEB-12…15, autorización por recurso | En curso (rama apilada sobre la entrega 4) |
 | 6 | Laboratorio | `POST /api/labs/results`, WEB-16…18, resultado guardado antes de publicar el evento (outbox) | Pendiente |
 | 7 | Mensajería y notificaciones | RabbitMQ: productor, consumidor, reintentos con espera, DLQ, idempotencia; los 5 eventos; outbox transaccional; reintento de notificación | Pendiente |
 | 8 | Web del personal completa | Pulido contra el diseño, accesibilidad, responsive, español | Pendiente |
@@ -20,7 +20,7 @@ Cada entrega es pequeña, termina compilando, con pruebas verdes y la matriz de 
 | 13 | Rendimiento y calidad | k6/JMeter con umbrales previos, Lighthouse/axe, prueba de usabilidad | Pendiente |
 | 14 | Cierre | Plan de pruebas (20 secciones), matriz de riesgos, casos/evidencias, defectos, informe GO / NO-GO, presentación | Pendiente |
 
-Decisión aceptada (entregas 3–4): el médico accede a pacientes con quienes tiene una cita no cancelada **o una consulta registrada**; la regla se valida en la API (`PatientAuthorizationHandler`). Cancelar una cita solo retira el acceso si no queda otra relación válida (otra cita con ese médico o una consulta). La parte de consultas se agrega y se prueba en la entrega 5 (hay una prueba omitida y visible que lo recuerda).
+Decisión aceptada (entregas 3–4): el médico accede a pacientes con quienes tiene una cita no cancelada **o una consulta registrada**; la regla se valida en la API (`PatientAuthorizationHandler`). Cancelar una cita solo retira el acceso si no queda otra relación válida (otra cita con ese médico o una consulta). La parte de consultas se implementó y se prueba en la entrega 5 (la prueba que estaba omitida ya está activa).
 
 Pendientes obligatorios de pruebas (ver matriz de trazabilidad): Cypress, Insomnia, Maestro y rendimiento con k6/JMeter.
 

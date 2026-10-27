@@ -9,6 +9,7 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AuthorizeFolder("/");
     options.Conventions.AllowAnonymousToPage("/Login");
     options.Conventions.AllowAnonymousToPage("/Error");
+    options.Conventions.AllowAnonymousToPage("/Estado");
 });
 builder.Services.Configure<Microsoft.AspNetCore.Mvc.MvcOptions>(options =>
 {
@@ -76,6 +77,8 @@ app.Use(async (context, next) =>
 });
 
 app.UseHttpsRedirection();
+// Respuestas vacías de error (404, 400, etc.) se muestran con una página en español y conservan el código HTTP.
+app.UseStatusCodePagesWithReExecute("/Estado", "?codigo={0}");
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();

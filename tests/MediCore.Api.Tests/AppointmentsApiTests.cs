@@ -449,10 +449,7 @@ public class AppointmentsApiTests(StackFixture stack)
         Assert.Equal(HttpStatusCode.OK, (await clientB.GetAsync($"/api/patients/{patient.Id}")).StatusCode);
     }
 
-    [Fact(Skip = "PENDIENTE (entrega 5): la relación médico–paciente también debe surgir de una consulta registrada. " +
-                 "Cuando exista el módulo de consultas: registrar una consulta del médico a un paciente sin citas → acceso 200; " +
-                 "cancelar la última cita con una consulta vigente → el acceso se conserva.")]
-    public Task Una_consulta_registrada_crea_y_conserva_la_relacion_de_atencion() => Task.CompletedTask;
+    // La prueba de la relación por consultas se activó en la entrega 5: ver ClinicalApiTests.Una_consulta_registrada_crea_y_conserva_la_relacion_de_atencion.
 
     [Theory]
     [InlineData(UserRole.Administrador)]
