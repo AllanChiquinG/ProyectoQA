@@ -1,0 +1,42 @@
+@page "{id:guid}"
+@model MediCore.Web.Pages.Medicos.DisponibilidadModel
+@{
+    ViewData["Code"] = "WEB-09";
+    ViewData["Title"] = "Disponibilidad médica";
+    ViewData["Subtitle"] = "Define los bloques de atención del médico.";
+}
+
+<form method="post" class="panel panelpad form-wide" novalidate>
+    <h2>@Model.Doctor!.FullName</h2>
+    <p class="sub form-lead">Bloques de atención · @Model.MonthText</p>
+    <div class="formgrid">
+        <label class="field">Días
+            <select asp-for="Preset">
+                @foreach (var preset in MediCore.Web.Pages.Medicos.DisponibilidadModel.Presets)
+                {
+                    <option value="@preset.Key" selected="@(preset.Key == Model.Preset)">@preset.Label</option>
+                }
+                @if (Model.HasCustomDays)
+                {
+                    <option value="@MediCore.Web.Pages.Medicos.DisponibilidadModel.Custom" selected="@(Model.Preset == MediCore.Web.Pages.Medicos.DisponibilidadModel.Custom)">Personalizado (configurado desde la API)</option>
+                }
+            </select>
+        </label>
+        <label class="field">Duración de cita
+            <select disabled>
+                <option>30 minutos</option>
+            </select>
+        </label>
+        <label class="field">Inicio
+            <input asp-for="StartTime" type="time" step="1800" required />
+        </label>
+        <label class="field">Finalización
+            <input asp-for="EndTime" type="time" step="1800" required />
+        </label>
+    </div>
+    <div id="formError" class="err" role="alert">@Model.Error</div>
+    <div class="formfoot">
+        <a class="btn secondary" asp-page="/Medicos/Index">Volver</a>
+        <button class="btn" type="submit">Guardar disponibilidad</button>
+    </div>
+</form>

@@ -1,0 +1,32 @@
+@page "{id:guid}"
+@model MediCore.Web.Pages.Agenda.CitaModel
+@using MediCore.Contracts.Scheduling
+@using MediCore.Web.Services
+@{
+    ViewData["Code"] = "WEB-04";
+    ViewData["Title"] = "Detalle de cita";
+    ViewData["Subtitle"] = "Información de la reserva y su estado.";
+    var a = Model.Appointment!;
+}
+
+<div class="panel panelpad narrow">
+    <h2>Reserva de atención médica</h2>
+    <div class="summaryline"><span>Paciente</span><strong>@a.PatientName</strong></div>
+    <div class="summaryline"><span>Médico</span><strong>@a.DoctorName</strong></div>
+    <div class="summaryline"><span>Fecha</span><strong>@a.Date.ToString("dd/MM/yyyy")</strong></div>
+    <div class="summaryline"><span>Hora</span><strong>@a.Time</strong></div>
+    <div class="summaryline"><span>Estado</span><span class="badge @(a.Status == AppointmentStatuses.Cancelled ? "red" : "")">@AppointmentStatuses.Mostrar(a.Status)</span></div>
+    <div class="formfoot">
+        <a class="btn secondary" asp-page="/Agenda/Index" asp-route-date="@a.Date.ToString("yyyy-MM-dd")" asp-route-doctorId="@a.DoctorId">Volver a agenda</a>
+        @if (Model.CanCancel)
+        {
+            <form method="post" asp-page-handler="Cancelar" data-confirm="¿Confirmas que deseas cancelar esta cita?">
+                <button class="btn danger" type="submit">Cancelar cita</button>
+            </form>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/confirm.js" asp-append-version="true"></script>
+}

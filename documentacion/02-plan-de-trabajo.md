@@ -7,8 +7,8 @@ Cada entrega es pequeña, termina compilando, con pruebas verdes y la matriz de 
 | 0 | Preparación | Solución, API y web iniciales, CLAUDE.md, README, plan y trazabilidad, prueba de humo | **Hecha** |
 | 1 | Base técnica | Capas del monolito modular (dominio/aplicación/infraestructura por módulo), EF Core + PostgreSQL con migraciones, `docker-compose` (Postgres, Redis, RabbitMQ), `.env.example`, configuración y secretos locales (user-secrets), manejo global de errores, Swagger/OpenAPI | **Hecha** (PR #1 fusionado) |
 | 2 | Identidad y acceso | Usuarios, roles, login web (cookie) y API (JWT corto + refresh), sesiones en Redis, políticas por rol y por recurso, auditoría base, WEB-01, MOB-01 (API), usuarios y roles (WEB-10) | **Hecha** (PR #2 fusionado) |
-| 3 | Pacientes y médicos | CRUD, búsqueda, `GET /api/patients/{id}`, `GET /api/doctors`, WEB-05…08, auditoría de accesos a datos clínicos | En curso |
-| 4 | Agenda y citas | Disponibilidad (WEB-09), `GET /api/doctors/{id}/availability`, `POST /api/appointments`, cancelación, **anti doble reserva** (restricción única en BD + concurrencia optimista/transacción), cache Redis de disponibilidad con invalidación, WEB-02/03/04/11 | Pendiente |
+| 3 | Pacientes y médicos | CRUD, búsqueda, `GET /api/patients/{id}`, `GET /api/doctors`, WEB-05…08, auditoría de accesos a datos clínicos | **Hecha** (PR #3 fusionado) |
+| 4 | Agenda y citas | Disponibilidad (WEB-09), `GET /api/doctors/{id}/availability`, `POST /api/appointments`, cancelación, **anti doble reserva** (restricción única en BD + concurrencia optimista/transacción), cache Redis de disponibilidad con invalidación, WEB-02/03/04/11 | En curso |
 | 5 | Consultas y recetas | Expediente, consultas, recetas, `GET /api/prescriptions/{id}`, WEB-12…15, autorización por recurso | Pendiente |
 | 6 | Laboratorio | `POST /api/labs/results`, WEB-16…18, resultado guardado antes de publicar el evento (outbox) | Pendiente |
 | 7 | Mensajería y notificaciones | RabbitMQ: productor, consumidor, reintentos con espera, DLQ, idempotencia; los 5 eventos; outbox transaccional; reintento de notificación | Pendiente |
@@ -20,7 +20,7 @@ Cada entrega es pequeña, termina compilando, con pruebas verdes y la matriz de 
 | 13 | Rendimiento y calidad | k6/JMeter con umbrales previos, Lighthouse/axe, prueba de usabilidad | Pendiente |
 | 14 | Cierre | Plan de pruebas (20 secciones), matriz de riesgos, casos/evidencias, defectos, informe GO / NO-GO, presentación | Pendiente |
 
-Decisión de la entrega 3: el médico no ve pacientes hasta que exista una relación de atención (cita o consulta); esa regla se agrega en la entrega 4 dentro de `PatientAuthorizationHandler`.
+Decisión aceptada (entregas 3–4): el médico accede únicamente a pacientes con quienes tiene una cita registrada (no cancelada); la regla se valida en la API (`PatientAuthorizationHandler`). Las consultas (entrega 5) también crearán esa relación.
 
 Dependencias clave: 2 antes de 3–6; 4 y 6 usan los eventos de 7 (se publican vía outbox desde 4 y 6 y se consumen en 7); 9 requiere API estable (≥ entrega 6).
 

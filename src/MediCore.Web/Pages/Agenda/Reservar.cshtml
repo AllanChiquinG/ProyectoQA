@@ -1,0 +1,74 @@
+@page
+@model MediCore.Web.Pages.Agenda.ReservarModel
+@{
+    ViewData["Code"] = "WEB-03";
+    ViewData["Title"] = "Reservar cita";
+    ViewData["Subtitle"] = "Selecciona el paciente y un horario disponible.";
+}
+
+<form id="bookingForm" method="post" action="@Url.Page("/Agenda/Reservar")" asp-antiforgery="true" novalidate>
+    <input type="hidden" asp-for="IdempotencyKey" />
+    <div class="formlayout">
+        <div class="panel panelpad">
+            <div class="steps"><span class="on">01 &nbsp; Paciente y médico</span><span class="on">02 &nbsp; Fecha y horario</span></div>
+            <div class="formgrid">
+                <label class="field">Paciente
+                    <select asp-for="PatientId" data-refresh required>
+                        <option value="">Selecciona un paciente…</option>
+                        @foreach (var patient in Model.Patients)
+                        {
+                            <option value="@patient.Id" selected="@(patient.Id == Model.PatientId)">@patient.FullName</option>
+                        }
+                    </select>
+                </label>
+                <label class="field">Médico
+                    <select asp-for="DoctorId" data-refresh required>
+                        @foreach (var doctor in Model.Doctors)
+                        {
+                            <option value="@doctor.Id" selected="@(doctor.Id == Model.DoctorId)">@doctor.FullName</option>
+                        }
+                    </select>
+                </label>
+                <label class="field">Fecha
+                    <input asp-for="Date" type="date" data-refresh required min="@Model.Min.ToString("yyyy-MM-dd")" max="@Model.Max.ToString("yyyy-MM-dd")" />
+                </label>
+                <div class="field">Duración<input value="30 minutos" disabled aria-label="Duración" /></div>
+                <div class="span2">
+                    <h3 id="timesTitle">Horarios disponibles</h3>
+                    @if (Model.Slots.Count == 0)
+                    {
+                        <p class="sub">@(Model.IsWorkingDay ? "Selecciona un médico y una fecha para ver los horarios." : "El médico no atiende este día.")</p>
+                    }
+                    else
+                    {
+                        <div class="times" role="radiogroup" aria-labelledby="timesTitle">
+                            @foreach (var slot in Model.Slots)
+                            {
+                                <label>
+                                    <input type="radio" name="Time" value="@slot.Time" checked="@(slot.Time == Model.Time)" disabled="@(!slot.Available)" />
+                                    <span>@slot.Time</span>
+                                </label>
+                            }
+                        </div>
+                    }
+                    <button id="refreshTimes" class="btn secondary refresh-times" type="submit" asp-page-handler="Actualizar" formnovalidate>Actualizar horarios</button>
+                </div>
+            </div>
+            <div id="formError" class="err" role="alert">@Model.Error</div>
+            <div class="formfoot">
+                <a class="btn secondary" asp-page="/Agenda/Index" asp-route-date="@Model.Date?.ToString("yyyy-MM-dd")" asp-route-doctorId="@Model.DoctorId">Cancelar</a>
+                <button class="btn" type="submit">Confirmar cita →</button>
+            </div>
+        </div>
+        <div class="panel panelpad panel-aside">
+            <div class="eyebrow">ANTES DE CONFIRMAR</div>
+            <h2>Una cita, un espacio</h2>
+            <p class="sub">Selecciona un horario disponible. La reserva se confirmará al guardar.</p>
+            <div class="notice">Si otro paciente ocupa el horario, podrás elegir otro sin perder los datos.</div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/reservar.js" asp-append-version="true"></script>
+}

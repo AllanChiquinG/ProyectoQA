@@ -30,7 +30,10 @@
                     <td><strong>@doctor.FullName</strong></td>
                     <td>@doctor.Specialty</td>
                     <td>@doctor.Email</td>
-                    <td><a class="link" asp-page="/Medicos/Formulario" asp-route-id="@doctor.Id">Editar</a></td>
+                    <td>
+                        <a class="link" asp-page="/Medicos/Formulario" asp-route-id="@doctor.Id">Editar</a>
+                        <a class="link" asp-page="/Medicos/Disponibilidad" asp-route-id="@doctor.Id">Disponibilidad ↗</a>
+                    </td>
                 </tr>
             }
         </tbody>

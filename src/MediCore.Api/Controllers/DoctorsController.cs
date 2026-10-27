@@ -43,6 +43,16 @@ public class DoctorsController(MediCoreDbContext db, ICacheService cache, IAudit
         return result.ToList();
     }
 
+    /// <summary>Registro del médico autenticado (su agenda lo usa para conocer su identificador).</summary>
+    [HttpGet("me")]
+    [Authorize(Roles = Roles.Medico)]
+    public async Task<ActionResult<DoctorDto>> Me(CancellationToken ct)
+    {
+        var userId = User.UserId();
+        var doctor = await db.Doctors.AsNoTracking().SingleOrDefaultAsync(d => d.UserId == userId, ct);
+        return doctor is null ? NotFound() : ToDto(doctor);
+    }
+
     [HttpGet("{id:guid}")]
     [Authorize(Roles = Roles.Administrador)]
     public async Task<ActionResult<DoctorDto>> GetById(Guid id, CancellationToken ct)

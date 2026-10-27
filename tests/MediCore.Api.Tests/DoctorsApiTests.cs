@@ -79,6 +79,20 @@ public class DoctorsApiTests(StackFixture stack)
     }
 
     [Fact]
+    public async Task Medico_consulta_su_propio_registro_y_sin_vinculo_recibe_404()
+    {
+        var (userId, email) = await stack.CreateUserAsync(UserRole.Medico);
+        var doctor = await stack.CreateScheduledDoctorAsync(userId);
+        var (client, _) = await stack.LoginClientForAsync(email);
+        var (unlinked, _) = await stack.LoginClientAsync(UserRole.Medico);
+        var (patient, _) = await stack.LoginClientAsync(UserRole.Paciente);
+
+        Assert.Equal(doctor.Id, (await client.GetFromJsonAsync<DoctorDto>("/api/doctors/me"))!.Id);
+        Assert.Equal(HttpStatusCode.NotFound, (await unlinked.GetAsync("/api/doctors/me")).StatusCode);
+        Assert.Equal(HttpStatusCode.Forbidden, (await patient.GetAsync("/api/doctors/me")).StatusCode);
+    }
+
+    [Fact]
     public async Task Medico_con_datos_invalidos_devuelve_400()
     {
         var (admin, _) = await stack.LoginClientAsync(UserRole.Administrador);
