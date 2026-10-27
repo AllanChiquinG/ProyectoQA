@@ -8,10 +8,12 @@ Las 129 pruebas xUnit actuales (128 superadas y 1 omitida a propósito; unitaria
 
 | Entregable (documento, secciones 4, 8 y 12) | ID | Qué exige | Estado | Entrega |
 |---|---|---|---|---|
-| **Cypress** (web) | GEN-10 | Smoke, flujo funcional crítico, regresión y al menos un escenario negativo | ○ **PENDIENTE** — no hay ni una prueba Cypress | 10 |
+| **Cypress** (web) | GEN-10 | Smoke, flujo funcional crítico, regresión y al menos un escenario negativo | ◐ **INICIADO** — `tests/cypress`: 8 pruebas del recorrido de Recepción (flujo crítico + el negativo de conflicto), 8/8 en Electron y Chrome. **Faltan**: smoke general, flujos de Médico, Administrador y Laboratorio, regresión y más negativos | 10 |
 | **Insomnia** (API) | GEN-17 | Colección con pruebas positivas, negativas, de autenticación, autorización y errores | ○ **PENDIENTE** — no existe la colección | 10 |
 | **Maestro** (móvil) | GEN-11 | Entre 5 y 8 flujos de la app, con al menos un escenario negativo | ○ **PENDIENTE** — la app móvil aún no existe | 9–10 |
 | **Rendimiento con k6 o JMeter** | GEN-12, CRI-01, CRI-02 | Load, Stress y Spike con umbrales declarados antes de ejecutar (p95, tasa de error, throughput) y el escenario de alta demanda de citas con lecturas de agenda | ○ **PENDIENTE** — no hay scripts ni resultados | 13 |
+
+Cypress ya existe para el recorrido de Recepción (WEB-01 a WEB-04), pero **no cubre** el smoke general, los demás roles ni la regresión.
 
 Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 solicitudes al mismo horario, 24 pacientes por 4 horarios con lecturas simultáneas), que sirven como base del escenario pero **no cuentan como prueba de rendimiento** (no miden p95 ni throughput y no usan umbrales previos). La verificación manual en navegador está descrita en `04-registro-de-hallazgos.md` y tampoco sustituye a Cypress.
 
@@ -20,7 +22,7 @@ Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 sol
 | ID | Requisito (fuente) | Pantallas | Implementación | Pruebas previstas | Entrega | Estado |
 |---|---|---|---|---|---|---|
 | RF-01 | Gestión de pacientes y médicos (P2) | WEB-05…08 | `PatientsController`, `DoctorsController`, `Pages/Pacientes`, `Pages/Medicos` | `PatientsApiTests`, `DoctorsApiTests`, `PatientRulesTests`; Cypress pendiente | 3 | ◐ |
-| RF-02 | Agenda y reserva de citas (P2) | WEB-02, 03, 04, 09, 11; MOB-03…07 (API lista) | `AppointmentsController`, `DoctorSchedulesController`, `Pages/Agenda`, `Pages/MiAgenda`, `Pages/Medicos/Disponibilidad` | `AppointmentsApiTests`, `AvailabilityApiTests`, `SchedulingRulesTests`; Cypress y Maestro pendientes | 4 | ◐ |
+| RF-02 | Agenda y reserva de citas (P2) | WEB-02, 03, 04, 09, 11; MOB-03…07 (API lista) | `AppointmentsController`, `DoctorSchedulesController`, `Pages/Agenda`, `Pages/MiAgenda`, `Pages/Medicos/Disponibilidad` | `AppointmentsApiTests`, `AvailabilityApiTests`, `SchedulingRulesTests`; Cypress: recorrido de Recepción (`recepcion-reserva.cy.js`, 8 pruebas); Maestro pendiente | 4 | ◐ |
 | RF-03 | Consultas médicas (P2) | WEB-12, 13 | — | Unit; API; Cypress | 5 | ○ |
 | RF-04 | Recetas (P2) | WEB-14, 15; MOB-10, 11 | — | Unit; API; Maestro | 5 | ○ |
 | RF-05 | Registro/consulta de resultados de laboratorio (P2) | WEB-16…18; MOB-08, 09 | — | Unit; integración; API; Maestro | 6 | ○ |
@@ -83,7 +85,7 @@ Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 sol
 | GEN-07 | SonarQube + Quality Gate | — | 11 | ○ |
 | GEN-08 | Fortify, Dependency-Check, npm audit | — | 11 | ○ |
 | GEN-09 | OWASP ZAP sobre QA | — | 11 | ○ |
-| GEN-10 | Cypress (smoke, crítico, regresión, negativo) | — | 10 | ○ |
+| GEN-10 | Cypress (smoke, crítico, regresión, negativo) | `tests/cypress/e2e/recepcion-reserva.cy.js` (solo Recepción; ver pendientes arriba) | 10 | ◐ |
 | GEN-11 | Maestro (5–8 flujos) | — | 10 | ○ |
 | GEN-12 | k6/JMeter: Load, Stress, Spike con umbrales previos | — | 13 | ○ |
 | GEN-13 | Usabilidad (≥5 participantes) + Lighthouse/axe | — | 13 | ○ |

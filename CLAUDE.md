@@ -11,7 +11,7 @@ Plataforma hospitalaria (Proyecto 2 de `Docs/Proyecto Final QA.docx`, curso 048 
 - **Nunca copiar** la barra del prototipo (selector Web/Móvil y rol) ni sus datos/reglas en memoria. Acceso y navegación salen del usuario autenticado.
 - Cambios de accesibilidad/adaptación permitidos sin alterar la identidad visual; explicarlos al hacerlos.
 - **Sin secretos en el repo.** Solo datos ficticios. Configuración sensible por variables de entorno / user-secrets; `.env.example` con valores de ejemplo.
-- Pendientes obligatorios de pruebas, siempre visibles en la matriz: Cypress, Insomnia, Maestro y k6/JMeter (las pruebas xUnit no los sustituyen). Registro de hallazgos y verificación manual: `documentacion/04-registro-de-hallazgos.md`.
+- Pendientes obligatorios de pruebas, siempre visibles en la matriz: ampliar Cypress (iniciado), Insomnia, Maestro y k6/JMeter (las pruebas xUnit no los sustituyen). Registro de hallazgos y verificación manual: `documentacion/04-registro-de-hallazgos.md`.
 - Una entrega pequeña a la vez; actualizar `documentacion/03-matriz-trazabilidad.md` en cada una. No declarar comprobaciones que no se ejecutaron.
 
 ## Decisiones técnicas acordadas
@@ -47,6 +47,7 @@ docker-compose.yml     Postgres 17 (5433), Redis 7, RabbitMQ 4; credenciales des
 src/MediCore.Web       Razor Pages (personal)
 tests/MediCore.Api.Tests  integración: WebApplicationFactory + Testcontainers (Postgres, Redis), entorno "Testing" (no lee user-secrets)
 tests/MediCore.UnitTests  reglas de dominio
+tests/cypress          pruebas end-to-end de la web (Cypress)
 documentacion/         alcance, plan, trazabilidad (propios)
 Docs/, Referencias/    entradas, no tocar
 ```
@@ -74,5 +75,7 @@ dotnet ef database update --project src/MediCore.Infrastructure --startup-projec
 Secretos en user-secrets de la API (`ConnectionStrings:Postgres`, `ConnectionStrings:Redis` con 127.0.0.1, `Jwt:SigningKey`, `Seed:DevPassword`); nunca en appsettings. En Development la API migra y crea usuarios ficticios al arrancar (`DevelopmentBootstrap`). `dotnet ef` usa `DesignTimeDbContextFactory` (variable de entorno). Flujo Git: ramas `feature/*`, PR hacia `main`; `main` debe protegerse en GitHub.
 
 Advertencias tratadas como errores (`Directory.Build.props`).
+
+Cypress: `cd tests/cypress && CYPRESS_MEDICORE_PASSWORD=<Seed:DevPassword> npx cypress run --browser chrome` (requiere API y web en marcha; ver `tests/cypress/README.md`). Los archivos estáticos de la web (`wwwroot`) se publican con huella al compilar: tras cambiar un `.js` o `.css` hay que recompilar y reiniciar la web.
 
 La web usa `wwwroot/css/app.css` (tercer archivo, después de style.css y appearance.css) para ajustes propios; CSP estricta: sin estilos ni scripts en línea.

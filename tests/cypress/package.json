@@ -1,0 +1,13 @@
+{
+  "name": "medicore-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pruebas end-to-end de la web del personal de MediCore (Cypress)",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
+  },
+  "devDependencies": {
+    "cypress": "^16.2.0"
+  }
+}

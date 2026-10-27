@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="14.974" tests="8" failures="0">
+  <testsuite name="Root Suite" timestamp="2026-10-27T03:01:09" tests="0" file="e2e\recepcion-reserva.cy.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Recepción · reservar, consultar y cancelar citas" timestamp="2026-10-27T03:01:09" tests="8" time="14.973" failures="0">
+    <testcase name="Recepción · reservar, consultar y cancelar citas 1. inicia sesión como Recepción escribiendo en el formulario y pulsando el botón" time="1.553" classname="1. inicia sesión como Recepción escribiendo en el formulario y pulsando el botón">
+    </testcase>
+    <testcase name="Recepción · reservar, consultar y cancelar citas 2 y 3. elige médico, fecha, paciente y horario, y confirma con el botón de la interfaz" time="4.085" classname="2 y 3. elige médico, fecha, paciente y horario, y confirma con el botón de la interfaz">
+    </testcase>
+    <testcase name="Recepción · reservar, consultar y cancelar citas 4. abre &quot;Ver detalle&quot; desde la agenda" time="1.314" classname="4. abre &quot;Ver detalle&quot; desde la agenda">
+    </testcase>
+    <testcase name="Recepción · reservar, consultar y cancelar citas 5a. cancelar: si se RECHAZA la confirmación, la cita se conserva" time="1.366" classname="5a. cancelar: si se RECHAZA la confirmación, la cita se conserva">
+    </testcase>
+    <testcase name="Recepción · reservar, consultar y cancelar citas 5b. cancelar: si se ACEPTA la confirmación, la cita se cancela" time="0.338" classname="5b. cancelar: si se ACEPTA la confirmación, la cita se cancela">
+    </testcase>
+    <testcase name="Recepción · reservar, consultar y cancelar citas 6. el horario cancelado vuelve a estar disponible" time="3.543" classname="6. el horario cancelado vuelve a estar disponible">
+    </testcase>
+    <testcase name="Recepción · reservar, consultar y cancelar citas 7. un conflicto de horario muestra el aviso y conserva lo ingresado" time="0.829" classname="7. un conflicto de horario muestra el aviso y conserva lo ingresado">
+    </testcase>
+    <testcase name="Recepción · reservar, consultar y cancelar citas 8. cambia de mes en el calendario" time="1.729" classname="8. cambia de mes en el calendario">
+    </testcase>
+  </testsuite>
+</testsuites>
