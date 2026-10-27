@@ -209,6 +209,8 @@ SDK de Android (command-line tools, platform-tools, emulator y la imagen `androi
 | H7-11 | Prueba | En la primera pasada fallaron los flujos 01, 02 y 07. | 01: el texto de la tarjeta lleva un ícono delante; 02: se intentaba tocar un campo ya escrito; 07: el emulador quedó `offline` un instante (no la app). | Selectores con expresión regular (01), formulario reiniciado (02), repetición (07). | Suite completa 8/8. |
 | H7-12 | Herramienta | `maestro_run.py` no encontraba `maestro` en Windows y los subflujos exigían cabecera de configuración. | `maestro` es un `.bat`; Maestro exige `appId` y `---` también en subflujos. | `shutil.which` y cabecera en `subflows/login.yaml`. | Corregido. |
 
+**Mejora pendiente (H7-13): clave de firma de depuración estable.** Cada compilación en contenedor crea otra clave, por lo que hay que desinstalar la app antes de instalar un APK nuevo y se pierden sus datos locales (la sesión guardada). Pendiente: generar una vez un `debug.keystore` propio **fuera del repositorio** (por ejemplo en un volumen de Docker o en la carpeta de usuario), montarlo en `scripts/android-build-linux.sh` y configurar la firma (`AndroidSigningKeyStore`) para actualizar con `adb install -r`. No se versiona nunca la clave.
+
 Evidencia: `documentacion/evidencias/entrega-7-pruebas.md`.
 
 ## Entregas anteriores

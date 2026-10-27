@@ -40,3 +40,16 @@ NO se ejecutó ningún flujo. Falta:
   - adb (platform-tools del SDK de Android)
   - la variable MEDICORE_PASSWORD (Seed:DevPassword)
 ```)
+
+## xUnit: qué se ejecutó y cuándo (sin presentar resultados viejos como nuevos)
+
+| Momento | Qué se ejecutó | Resultado |
+|---|---|---|
+| **Antes** de las correcciones de Android (estado del commit `9f7d464`) | `scripts/dotnet-linux.sh test MediCore.slnx` (suite completa) | 293 superadas: 44 unitarias, 50 de la lógica móvil, 199 de integración |
+| **Después** (commit `f269f0c`) | **No se volvió a ejecutar xUnit** | — |
+
+Entre ambos commits cambiaron únicamente: `src/MediCore.Mobile/` (`App.xaml.cs`, `AppShell.xaml`, `MediCore.Mobile.csproj`, `AndroidManifest.xml`), `scripts/maestro_run.py`, `tests/maestro/` (flujos 01 y 02 y el subflujo) y documentación. **No cambió** `MediCore.Mobile.Core`, la API ni ningún proyecto de pruebas xUnit (`git diff --name-only 9f7d464 f269f0c`), y ninguno de esos proyectos compila el proyecto MAUI. Por eso los 293 resultados corresponden al mismo código xUnit, pero **no son una ejecución posterior a las últimas correcciones**. Lo que sí se ejecutó después es la compilación de la app (Build succeeded) y los 8 flujos Maestro en el emulador.
+
+## Ubicación de los artefactos
+- APK de desarrollo: `artifacts/com.medicore.paciente-Signed.apk` (≈84 MB, firmado con una clave de depuración; `com.medicore.paciente.apk` es el mismo sin firmar). **No está en Git** (carpeta `artifacts/` ignorada): se genera con `scripts/android-build-linux.sh`.
+- Resultado de Maestro: `documentacion/evidencias/entrega-7-maestro.md`. Registros y capturas de cada ejecución de Maestro: `%USERPROFILE%\.maestro\tests\<fecha>\` en el equipo donde se ejecutó (no versionados).
