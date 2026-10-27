@@ -83,7 +83,7 @@ Docs/  Referencias/     documento del proyecto y diseño aprobado (solo lectura)
 
 ## Estado de las pruebas
 
-Hoy: 128 pruebas xUnit superadas y 1 omitida a propósito (la relación médico–paciente por consulta, pendiente de la entrega 5), entre unitarias e integración con PostgreSQL y Redis reales. **Pendientes y obligatorios según el documento del proyecto**: Cypress (web), colección de Insomnia (API), Maestro (móvil) y pruebas de rendimiento con k6 o JMeter. Detalle en [documentacion/03-matriz-trazabilidad.md](documentacion/03-matriz-trazabilidad.md); los hallazgos y la verificación manual en [documentacion/04-registro-de-hallazgos.md](documentacion/04-registro-de-hallazgos.md).
+Hoy: 128 pruebas xUnit superadas y 1 omitida a propósito (la relación médico–paciente por consulta, pendiente de la entrega 5), entre unitarias e integración con PostgreSQL y Redis reales. Además, **Cypress** (`tests/cypress`) ya cubre el recorrido de Recepción (8 pruebas; ver su README). **Pendientes y obligatorios según el documento del proyecto**: ampliar Cypress (smoke, otros roles, regresión), colección de Insomnia (API), Maestro (móvil) y pruebas de rendimiento con k6 o JMeter. Detalle en [documentacion/03-matriz-trazabilidad.md](documentacion/03-matriz-trazabilidad.md); los hallazgos y la verificación manual en [documentacion/04-registro-de-hallazgos.md](documentacion/04-registro-de-hallazgos.md).
 
 ## Seguridad
 
