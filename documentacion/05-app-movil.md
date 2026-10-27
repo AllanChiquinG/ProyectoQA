@@ -138,7 +138,7 @@ $env:MEDICORE_PASSWORD = "<Seed:DevPassword>"; $env:MAESTRO_CLI_NO_ANALYTICS = "
 python scripts/maestro_run.py
 ```
 
-> **Desinstala antes de instalar:** cada compilación en contenedor genera una clave de depuración nueva; `adb install -r` falla con `INSTALL_FAILED_UPDATE_INCOMPATIBLE` y se seguiría probando la versión anterior.
+> **Desinstala antes de instalar:** cada compilación en contenedor genera una clave de depuración nueva; `adb install -r` falla con `INSTALL_FAILED_UPDATE_INCOMPATIBLE` y se seguiría probando la versión anterior. Al desinstalar se pierden los datos locales de la app (la sesión). **Mejora pendiente:** conservar una clave de depuración estable fuera del repositorio (ver H7-13 en `04-registro-de-hallazgos.md`).
 
 ### Defectos que solo aparecieron al ejecutar en Android (corregidos)
 1. **La app se cerraba al abrir** (`No assemblies found ... Fast Deployment`): el APK Debug no incluía los ensamblados. Ahora `EmbedAssembliesIntoApk=true` y `AndroidUseSharedRuntime=false` (el APK pesa ≈84 MB).
