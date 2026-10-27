@@ -11,6 +11,9 @@ scripts/qa.sh init && scripts/qa.sh up && scripts/qa.sh seed
 - Todos los servicios quedaron `healthy` (migrate terminó con código 0). La base **nueva** se migró desde cero con el paquete de EF (`LaboratorioYNotificaciones` fue la última migración aplicada).
 - Defectos encontrados al ejecutarlo y corregidos (ver hallazgos H8-01 y H8-02): permisos del volumen de claves de la web y orden de los sembradores en una base nueva.
 
+## 1b. Clon limpio
+Se clonó la rama desde GitHub en una carpeta temporal y, usando solo lo versionado, se ejecutaron `scripts/qa.sh init`, `docker compose config` y la construcción de las 4 imágenes: todo correcto. (Esta comprobación detectó que `.env.qa.example` estaba ignorado por `.gitignore` y no se versionaba; se corrigió.)
+
 ## 2. Pruebas de humo de web y API (`scripts/qa.sh smoke`, a través del proxy)
 
 11 comprobaciones, todas OK: liveness y readiness de la API (incluye PostgreSQL), la API exige autenticación (401), la web sirve `/Login` en español con CSP, la raíz redirige al inicio de sesión (302), la documentación OpenAPI no se expone en QA, inicio de sesión de Recepción por la API con los usuarios ficticios sembrados y listado de médicos autenticado.
