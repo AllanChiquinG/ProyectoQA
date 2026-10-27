@@ -73,10 +73,18 @@
         }
         else
         {
-            <div class="emptymsg" id="laboratorioPendiente">
-                <strong>Resultados de laboratorio: pendiente.</strong><br />
-                El módulo de laboratorio todavía no está disponible en MediCore, por eso aquí no se muestra ningún resultado.
-            </div>
+            @foreach (var lab in Model.LabResults)
+            {
+                <div class="mobcard">
+                    <h3>@lab.ExamType</h3>
+                    <p>@lab.Date.ToString("dd/MM/yyyy")</p>
+                    <a class="link" asp-page="/Laboratorio/Resultado" asp-route-id="@lab.Id">Ver resultado ↗</a>
+                </div>
+            }
+            @if (Model.LabResults.Count == 0)
+            {
+                <div class="emptymsg" id="sinResultados">Sin resultados registrados.</div>
+            }
         }
     </div>
 }

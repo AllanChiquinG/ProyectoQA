@@ -131,6 +131,53 @@ Decisiones y desviaciones del diseño en esta entrega (no son errores):
 | H5-09 | Prueba | Cada ejecución del spec del médico dejaba una consulta y una receta nuevas. | La información clínica no se borra por la API. | Tarea `db:cleanE2eClinical` al empezar y al terminar: borra consultas, recetas y citas **solo** de los pacientes `CYP-E2E-*`. | Sin acumulación; el estado vacío del expediente ahora se comprueba. |
 | H5-10 | Producto (diseño de código) | Con el expediente compartido, `PrescriptionAuthorizationHandler` necesitaba la relación de atención y la consulta estaba escrita dentro de otro manejador. | Duplicación. | Servicio `ICareRelationship` (usado por ambos manejadores; mismo criterio que el listado de pacientes). Las pruebas unitarias lo simulan sin base de datos. | 31 pruebas unitarias. |
 
+## Entrega 6 · laboratorio y notificaciones asíncronas
+
+### Qué se implementó, qué se ejecutó y qué no
+
+**Implementado:** resultados de laboratorio (dominio, migración `LaboratorioYNotificaciones`, `LabsController`, `LabResultAuthorizationHandler`), pantallas WEB-16/17/18 y la pestaña Laboratorio del expediente, outbox transaccional con publicador en segundo plano, consumidor de `LabResultReady` con reintentos, DLQ e idempotencia, API de notificaciones del paciente (para la futura app móvil), scripts de ejecución en contenedor Linux y de evidencia.
+
+**Ejecutado (todo con resultado real):**
+
+| Qué | Dónde | Resultado |
+|---|---|---|
+| `dotnet test MediCore.slnx` (`scripts/dotnet-linux.sh test MediCore.slnx`) | contenedor Linux `dotnet/sdk:10.0`, Testcontainers con PostgreSQL 17, Redis 7 y RabbitMQ 4 | **226/226**: 44 unitarias y 182 de integración (43 de `LaboratoryApiTests`, 8 de `MessagingTests`) |
+| Cypress `laboratorio-resultados`, `medico-expediente`, `recepcion-reserva` | Chrome 155 y Electron 146, contra la API y la web en contenedores Linux conectados al compose real | **26/26** en cada navegador (8 + 10 + 8) |
+| `scripts/evidencia_laboratorio.py` | RabbitMQ real de compose (se detiene y se vuelve a iniciar) | Escenarios A–D correctos; informe en `documentacion/evidencias/entrega-6-laboratorio.md` |
+| Migración | generada en el contenedor y aplicada a la base de desarrollo al arrancar la API (solo agrega tablas y una columna; no borra datos) | aplicada sin errores |
+
+**No ejecutado o no verificado:**
+- Nada se ejecutó de forma nativa en Windows: **Smart App Control** (activo) bloquea los `.dll` sin firma recién compilados; no se desactivó (ver H6-01). El código se compila y prueba en Linux.
+- `dotnet format --verify-no-changes` en Linux reporta diferencias de espacios en archivos que esta entrega no tocó (por ejemplo `AgendaDay.cs`), así que no es concluyente; **no se afirma** que el formato esté verificado.
+- No se midió rendimiento (k6/JMeter pendiente), accesibilidad ni uso móvil; no hay Insomnia ni Maestro.
+- El caso "RabbitMQ detenido" no se automatiza en Cypress (no controla Docker); se cubre con `MessagingTests` y con el script de evidencia.
+- No se probó la pérdida definitiva de la conexión con el broker más allá de detenerlo y volver a iniciarlo, ni varias instancias de la API publicando a la vez (la consulta usa `FOR UPDATE SKIP LOCKED`, pero no hay prueba con dos procesos).
+- Cambio de `docker-compose.yml` (nombre de nodo fijo `medicore-rabbitmq`) **sin aplicar**: el contenedor de RabbitMQ en ejecución no se recreó para no tocar los datos existentes; al recrearlo, RabbitMQ empieza con un almacén de colas vacío dentro del mismo volumen (los datos anteriores no se borran).
+
+### Decisiones y adaptaciones al diseño
+
+- **Quién ve qué en laboratorio:** Laboratorio ve todos los resultados (equipo compartido; decisión revisable hacia "solo los propios"); el Médico, solo con relación válida de atención; el Paciente, solo los suyos; Recepción y Administrador, ninguno. Acceso ajeno → 404 (no confirma existencia) + `clinical.access_denied`; rol sin permiso → 403.
+- **Resultados inmutables:** no hay edición ni borrado (PUT/PATCH/DELETE → 405); una corrección es un resultado nuevo, como las recetas.
+- **WEB-17:** el diseño tiene un solo parámetro; se permiten de 1 a 10 (filas que se agregan y quitan sin perder lo escrito, también sin JavaScript). Unidad y rango son opcionales (hay resultados cualitativos). Se agrega un filtro para elegir al paciente. **No se copió** la casilla "Simular envío de notificación pendiente" del prototipo: la notificación pendiente es un estado real (broker caído o consumidor con fallos), no una simulación.
+- **WEB-18:** "Reintentar notificación" aparece solo para Laboratorio y solo si la notificación sigue pendiente. El médico ve el detalle y vuelve a su expediente.
+- **Estado de la notificación:** "Enviada" = existe la notificación interna del paciente; "Pendiente" = todavía no (el resultado ya está guardado).
+- **El evento lleva solo identificadores**; el título y el cuerpo de la notificación (que incluye el tipo de examen) se arman al consumirlo y se guardan en la tabla `notifications`, que solo lee el propio paciente.
+- **Alcance de mensajería:** solo `LabResultReady`; los demás eventos siguen en la entrega 7 (ver plan).
+
+### Hallazgos
+
+| ID | Tipo | Qué ocurrió | Causa | Corrección | Resultado |
+|---|---|---|---|---|---|
+| H6-01 | Entorno | Migraciones, pruebas y API dejaron de cargar los `.dll` del proyecto: "Una directiva de Control de aplicaciones bloqueó este archivo" (0x800711C7). | Smart App Control (estado activo) de Windows bloquea binarios sin firma recién compilados; antes de esta sesión no bloqueaba. | **No se desactivó** (es un ajuste de seguridad del equipo). Se añadieron `scripts/dotnet-linux.sh` y `scripts/dev-stack-linux.sh`: build, migraciones, pruebas y la pila de desarrollo corren en contenedores Linux del SDK oficial, sin tocar volúmenes ni redes de compose. | Todo lo ejecutado en esta entrega usó ese camino; falta repetirlo de forma nativa en un equipo sin el bloqueo. |
+| H6-02 | Defecto de producto (detectado por `MessagingTests`) | Tras detener y volver a iniciar RabbitMQ, el consumidor dejaba de recibir mensajes y las notificaciones no se generaban. | El publicador, al ver la conexión cerrada mientras el cliente la recuperaba, creaba una conexión nueva y cerraba la anterior, que era la del consumidor. | `RabbitMqConnection` ya no reemplaza una conexión existente (se recupera sola, incluido el consumidor). | `Con_el_broker_detenido…` y las demás pruebas de mensajería pasan; la evidencia B lo repite contra el RabbitMQ real. |
+| H6-03 | Prueba | Tres pruebas fallaban con `operator does not exist: jsonb ~~ jsonb`. | `Payload.Contains(...)` sobre una columna `jsonb` se traduce a `LIKE`. | Ayudante `OutboxIdsForLabResultAsync` con `Payload->>'labResultId'`. | 43/43 de laboratorio. |
+| H6-04 | Prueba | `BrokerFixture` fallaba con "ports are not available ... Intento de acceso a un socket no permitido". | El puerto fijo elegido caía en un rango reservado por Windows (Hyper-V). | Puerto fijo aleatorio con reintento ante ese error (hace falta puerto fijo para detener y reiniciar el broker con la misma dirección). | 8/8 de mensajería. |
+| H6-05 | Prueba | La validación de los atributos de un `record` posicional no se detectaba con `Validator.TryValidateObject`. | Los atributos están en los parámetros del constructor, no en propiedades; ASP.NET Core sí los aplica. | Ayudante que valida el valor de cada parámetro contra sus atributos. | 12 pruebas unitarias de validación. |
+| H6-06 | Prueba existente | El recorrido 2 de Cypress del médico esperaba el aviso "laboratorio: pendiente". | La pestaña Laboratorio ahora lista resultados. | Espera "Sin resultados registrados." y el spec y la limpieza (`db:cleanE2eClinical`) incluyen resultados, notificaciones y eventos de laboratorio de los pacientes `CYP-E2E-*`. | 10/10 y regresión de Recepción 8/8. |
+| H6-07 | Riesgo abierto | `dotnet format` no es concluyente en Linux; el consumidor se probó con un solo proceso; el almacén de colas de RabbitMQ cambia al recrear el contenedor con el nuevo nombre de nodo. | Ver "No ejecutado o no verificado". | Documentado; sin corrección en esta entrega. | Abierto. |
+
+Evidencia reproducible: `documentacion/evidencias/entrega-6-laboratorio.md` (generada por `python scripts/evidencia_laboratorio.py`) y `documentacion/evidencias/entrega-6-pruebas.md` (comandos y resultados de las ejecuciones).
+
 ## Entregas anteriores
 
 Los hallazgos de las entregas 0 a 3 se trasladarán al registro formal de defectos en la entrega 14. Los principales: login con 503 por usar `localhost` para Redis (el cliente probaba IPv6 y Docker publica solo IPv4; corregido con `127.0.0.1`), una prueba que comparaba el `traceId` de dos respuestas de error, una prueba del catálogo de médicos afectada por la caché compartida con otras pruebas (se descarta la clave antes de insertar datos directos) y la interfaz de `IAsyncLifetime` de xUnit v2.

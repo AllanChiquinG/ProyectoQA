@@ -1,0 +1,91 @@
+@page
+@model MediCore.Web.Pages.Laboratorio.RegistrarModel
+@{
+    ViewData["Code"] = "WEB-17";
+    ViewData["Title"] = "Registrar resultado";
+    ViewData["Subtitle"] = "Registra los valores del examen realizado.";
+}
+
+<div class="panel panelpad">
+    <form method="get" class="toolbar" role="search" action="@Url.Page("/Laboratorio/Registrar")">
+        <input name="q" value="@Model.Q" placeholder="Filtrar pacientes por nombre o identificación…" aria-label="Filtrar pacientes" maxlength="100" />
+        <button class="btn secondary" type="submit">Filtrar</button>
+    </form>
+
+    <form method="post" action="@Url.Page("/Laboratorio/Registrar", new { q = Model.Q })" asp-antiforgery="true" novalidate id="formResultado">
+        <div asp-validation-summary="ModelOnly" class="err" role="alert"></div>
+        @if (Model.Error is not null)
+        {
+            <div class="err" role="alert">@Model.Error</div>
+        }
+
+        <div class="formgrid">
+            <label class="field">Paciente
+                <select asp-for="Input.PatientId" required>
+                    <option value="">Selecciona un paciente…</option>
+                    @foreach (var patient in Model.Patients)
+                    {
+                        <option value="@patient.Id" selected="@(patient.Id == Model.Input.PatientId)">@patient.FullName · @patient.IdentificationNumber</option>
+                    }
+                </select>
+                <span asp-validation-for="Input.PatientId" class="err"></span>
+            </label>
+            <label class="field">Tipo de examen
+                <input asp-for="Input.ExamType" required maxlength="120" autocomplete="off" />
+                <span asp-validation-for="Input.ExamType" class="err"></span>
+            </label>
+            <label class="field">Fecha
+                <input asp-for="Input.PerformedOn" type="date" required min="2000-01-01" max="@Model.Today.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Input.PerformedOn" class="err"></span>
+            </label>
+        </div>
+
+        @for (var i = 0; i < Model.Parameters.Count; i++)
+        {
+            <fieldset class="medicamento parametro">
+                <legend>Parámetro @(i + 1)</legend>
+                <div class="formgrid">
+                    <label class="field">Parámetro
+                        <input asp-for="Parameters[i].Name" required maxlength="80" autocomplete="off" />
+                        <span asp-validation-for="Parameters[i].Name" class="err"></span>
+                    </label>
+                    <label class="field">Valor
+                        <input asp-for="Parameters[i].Value" required maxlength="40" autocomplete="off" />
+                        <span asp-validation-for="Parameters[i].Value" class="err"></span>
+                    </label>
+                    <label class="field">Unidad
+                        <input asp-for="Parameters[i].Unit" maxlength="20" autocomplete="off" />
+                        <span asp-validation-for="Parameters[i].Unit" class="err"></span>
+                    </label>
+                    <label class="field">Rango de referencia
+                        <input asp-for="Parameters[i].ReferenceRange" maxlength="40" autocomplete="off" />
+                        <span asp-validation-for="Parameters[i].ReferenceRange" class="err"></span>
+                    </label>
+                </div>
+                @if (Model.Parameters.Count > 1)
+                {
+                    <button class="link" type="submit" asp-page-handler="Quitar" asp-route-index="@i" formnovalidate>Quitar este parámetro</button>
+                }
+            </fieldset>
+        }
+
+        @if (Model.Parameters.Count < MediCore.Web.Pages.Laboratorio.RegistrarModel.MaxParameters)
+        {
+            <button class="btn secondary add-medication" type="submit" asp-page-handler="Agregar" formnovalidate>＋ Agregar parámetro</button>
+        }
+
+        <div class="formgrid">
+            <label class="field span2">Observaciones
+                <textarea asp-for="Input.Notes" maxlength="1000"></textarea>
+                <span asp-validation-for="Input.Notes" class="err"></span>
+            </label>
+        </div>
+
+        <div class="notice">El resultado quedará guardado aunque la notificación esté pendiente.</div>
+
+        <div class="formfoot">
+            <a class="btn secondary" asp-page="/Laboratorio/Index">Cancelar</a>
+            <button class="btn" type="submit">Guardar resultado</button>
+        </div>
+    </form>
+</div>

@@ -74,6 +74,7 @@ builder.Services.AddScoped<ICareRelationship, DbCareRelationship>();
 builder.Services.AddScoped<IAuthorizationHandler, PatientAuthorizationHandler>();
 builder.Services.AddSingleton<IAuthorizationHandler, AppointmentAuthorizationHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, PrescriptionAuthorizationHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, LabResultAuthorizationHandler>();
 
 // Seguro por defecto: todo requiere usuario autenticado salvo lo marcado con [AllowAnonymous].
 builder.Services.AddAuthorizationBuilder()

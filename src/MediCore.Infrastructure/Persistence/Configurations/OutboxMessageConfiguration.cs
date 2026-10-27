@@ -15,7 +15,7 @@ internal sealed class OutboxMessageConfiguration : IEntityTypeConfiguration<Outb
         builder.Property(x => x.LastError).HasMaxLength(2000);
 
         // El publicador solo consulta los pendientes, en orden de llegada.
-        builder.HasIndex(x => x.OccurredAtUtc)
+        builder.HasIndex(x => x.NextAttemptAtUtc)
             .HasFilter("\"ProcessedAtUtc\" IS NULL")
             .HasDatabaseName("ix_outbox_messages_pending");
     }
