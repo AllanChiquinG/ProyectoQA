@@ -72,7 +72,7 @@ def main():
         if args.only and not flow.startswith(args.only):
             continue
         env = prep.prepare(scenario)
-        command = ['maestro', 'test']
+        command = [shutil.which('maestro'), 'test']
         for key, value in env.items():
             command += ['-e', f'{key}={value}']
         command.append(str(ROOT / 'tests' / 'maestro' / flow))

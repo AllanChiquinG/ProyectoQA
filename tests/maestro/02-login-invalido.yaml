@@ -17,9 +17,11 @@ name: 02 · Inicio de sesión inválido
 - hideKeyboard
 - tapOn: "Iniciar sesión →"
 - assertVisible: "Ingresa un correo electrónico válido."
-# Credenciales incorrectas: mensaje único, y no se entra.
-- tapOn: "no-es-un-correo"
-- eraseText: 30
+# Credenciales incorrectas: mensaje único, y no se entra. (Se reinicia la app para partir de un formulario limpio.)
+- launchApp:
+    clearState: true
+- assertVisible: "Bienvenida de nuevo"
+- tapOn: "correo@ejemplo.com"
 - inputText: ${EMAIL}
 - tapOn: "Tu contraseña"
 - inputText: "Contraseña-Incorrecta-1!"

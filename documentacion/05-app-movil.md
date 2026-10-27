@@ -51,19 +51,19 @@ Cada pantalla que carga datos muestra **cargando**, **error de conexión con "Re
 
 ## Compilar, instalar y ejecutar
 
-### Herramientas necesarias (estado de este equipo al 2026-10-27)
+### Herramientas necesarias (estado de este equipo al 2026-10-27, tras instalarlas)
 
 | Herramienta | Estado en este equipo | Para qué |
 |---|---|---|
 | .NET SDK 10.0.401 | instalado | todo |
 | JDK 17 (Eclipse Adoptium 17.0.20) | instalado | compilar Android y Maestro |
-| Workload `maui-android` | **falta** (`dotnet workload list` vacío) | compilar `src/MediCore.Mobile` |
-| SDK de Android (platform-tools, `platforms;android-36`, `build-tools;36.0.0`) | **falta** (no hay `ANDROID_HOME` ni carpeta) | compilar e instalar |
-| Emulador de Android + imagen del sistema (por ejemplo `system-images;android-35;google_apis;x86_64`) o un teléfono con depuración USB | **falta** | probar la app |
-| Maestro CLI | **falta** | ejecutar los flujos |
-| Aceleración de virtualización para el emulador | sin verificar (Docker/WSL2 sí funcionan) | rendimiento del emulador |
+| Workload `maui-android` | **no instalado en Windows a propósito** (la app se compila en el contenedor Linux; no hace falta para probar) | compilar `src/MediCore.Mobile` de forma nativa |
+| SDK de Android en `%LOCALAPPDATA%\Android\Sdk` (command-line tools, platform-tools y emulator, instalados de dl.google.com) | **instalado** (no había un SDK reutilizable: Visual Studio 18 Insiders no trae uno) | instalar y ejecutar |
+| Emulador `medicore_pixel` (Pixel 6, `system-images;android-35;google_apis;x86_64`) | **instalado y en uso** | probar la app |
+| Maestro CLI 2.12.0 en `%LOCALAPPDATA%\Maestro\maestro\bin` (release oficial de GitHub) | **instalado** | ejecutar los flujos |
+| Aceleración del emulador | **WHPX disponible** (`emulator -accel-check`): no hizo falta habilitar nada ni reiniciar | rendimiento |
 
-Espacio estimado: 8–10 GB (hay 50 GB libres). **No se instaló nada en el equipo**: la instalación de estas herramientas requiere tu aprobación (ver el reporte de la entrega).
+Instalación autorizada por la persona responsable; se aceptaron las licencias del SDK de Android. Smart App Control sigue activo.
 
 ### Pasos (cuando estén las herramientas)
 
@@ -123,3 +123,24 @@ python scripts/maestro_run.py            # todos los flujos; --only 03 para uno
 - **Notificaciones:** hoy el sistema genera solo `LabResultReady`; otros tipos (por ejemplo "Cita confirmada" o "Nueva receta" del diseño) llegarán con los eventos pendientes y la app los muestra sin enlace hasta entonces.
 - **Cerrar sesión** está en el Inicio (como el diseño).
 - **Tarjetas completas tocables** (además del enlace "Ver … →") para facilitar el uso táctil y la automatización.
+
+## Probar en el emulador (pasos reproducibles)
+
+```powershell
+$sdk = "$env:LOCALAPPDATA\Android\Sdk"
+& "$sdk\cmdline-tools\latest\bin\avdmanager.bat" create avd -n medicore_pixel -k "system-images;android-35;google_apis;x86_64" -d pixel_6
+Start-Process "$sdk\emulator\emulator.exe" -ArgumentList "-avd","medicore_pixel","-no-audio","-gpu","swiftshader_indirect"
+scripts/dev-stack-linux.sh up                                         # API real en Docker (127.0.0.1:5011 = 10.0.2.2 desde el emulador)
+scripts/android-build-linux.sh                                        # APK en artifacts/
+& "$sdk\platform-tools\adb.exe" uninstall com.medicore.paciente     # ¡siempre desinstalar antes!
+& "$sdk\platform-tools\adb.exe" install artifacts\com.medicore.paciente-Signed.apk
+$env:MEDICORE_PASSWORD = "<Seed:DevPassword>"; $env:MAESTRO_CLI_NO_ANALYTICS = "1"
+python scripts/maestro_run.py
+```
+
+> **Desinstala antes de instalar:** cada compilación en contenedor genera una clave de depuración nueva; `adb install -r` falla con `INSTALL_FAILED_UPDATE_INCOMPATIBLE` y se seguiría probando la versión anterior.
+
+### Defectos que solo aparecieron al ejecutar en Android (corregidos)
+1. **La app se cerraba al abrir** (`No assemblies found ... Fast Deployment`): el APK Debug no incluía los ensamblados. Ahora `EmbedAssembliesIntoApk=true` y `AndroidUseSharedRuntime=false` (el APK pesa ≈84 MB).
+2. **Bibliotecas nativas comprimidas** (`lib/x86_64 MUST be STORED`): se agregó `android:extractNativeLibs="true"` al manifiesto.
+3. `App` recibía `AppShell` por inyección antes de cargar los recursos; ahora lo crea `CreateWindow` y el Shell usa colores literales en su raíz.
