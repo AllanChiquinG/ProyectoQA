@@ -21,5 +21,8 @@ public class OutboxMessage
 
     public int Attempts { get; set; }
 
+    /// <summary>Instante a partir del cual se puede (re)intentar la publicación; crece con cada fallo (espera creciente).</summary>
+    public DateTime NextAttemptAtUtc { get; set; } = DateTime.UtcNow;
+
     public string? LastError { get; set; }
 }

@@ -1,5 +1,6 @@
 using MediCore.Contracts;
 using MediCore.Contracts.Clinical;
+using MediCore.Contracts.Laboratory;
 using MediCore.Contracts.Patients;
 using MediCore.Web.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MediCore.Web.Pages.Pacientes;
 
-/// <summary>WEB-12: expediente del paciente. Solo el médico con relación de atención; ve únicamente lo que él mismo escribió.</summary>
+/// <summary>WEB-12: expediente del paciente. Solo el médico con relación de atención; es un expediente compartido entre los médicos que atienden al paciente.</summary>
 [Authorize(Roles = Roles.Medico)]
 public class ExpedienteModel(IMediCoreApi api) : StaffPageModel
 {
@@ -29,6 +30,7 @@ public class ExpedienteModel(IMediCoreApi api) : StaffPageModel
     public PatientDto? Patient { get; private set; }
     public IReadOnlyList<ConsultationDto> Consultations { get; private set; } = [];
     public IReadOnlyList<PrescriptionDto> Prescriptions { get; private set; } = [];
+    public IReadOnlyList<LabResultSummaryDto> LabResults { get; private set; } = [];
     public string? Error { get; private set; }
     public string ActiveTab => Tabs.Contains(Tab) ? Tab! : TabConsultas;
 
@@ -55,6 +57,12 @@ public class ExpedienteModel(IMediCoreApi api) : StaffPageModel
             var prescriptions = await api.GetPatientPrescriptionsAsync(Id, ct);
             if (await HandleCommonAsync(prescriptions) is { } p) return p;
             if (prescriptions.IsOk) Prescriptions = prescriptions.Value!; else Error = "No se pudieron cargar las recetas.";
+        }
+        else
+        {
+            var labs = await api.GetPatientLabResultsAsync(Id, ct);
+            if (await HandleCommonAsync(labs) is { } l) return l;
+            if (labs.IsOk) LabResults = labs.Value!; else Error = "No se pudieron cargar los resultados de laboratorio.";
         }
 
         return Page();

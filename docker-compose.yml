@@ -1,5 +1,5 @@
 # Dependencias de desarrollo local. Las credenciales salen de .env (copiar de .env.example); no se versionan.
-# Los puertos se publican solo en 127.0.0.1.
+# Los puertos se publican solo en 127.0.0.1. Los volúmenes nombrados (postgres-data, redis-data, rabbitmq-data) conservan los datos entre reinicios.
 name: medicore
 
 services:
@@ -36,6 +36,9 @@ services:
 
   rabbitmq:
     image: rabbitmq:4-management-alpine
+    # Nombre de nodo fijo: RabbitMQ guarda sus colas durables en una carpeta con el nombre del host; con el nombre aleatorio de Docker,
+    # recrear el contenedor dejaría las colas (reintento y mensajes fallidos) huérfanas dentro del volumen.
+    hostname: medicore-rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-medicore}
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:?Define RABBITMQ_DEFAULT_PASS en .env}

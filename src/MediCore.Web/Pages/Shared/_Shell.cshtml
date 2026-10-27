@@ -12,7 +12,7 @@
     {
         Roles.Administrador => [("♧", "Pacientes", "/Pacientes", "/Pacientes/Index"), ("✚", "Médicos", "/Medicos", "/Medicos/Index"), ("⚿", "Usuarios y roles", "/Usuarios", "/Usuarios")],
         Roles.Medico => [("▦", "Mi agenda", "/MiAgenda", "/MiAgenda"), ("♧", "Pacientes autorizados", "/Pacientes", "/Pacientes/Index")],
-        Roles.Laboratorio => [("⚗", "Resultados de laboratorio", null, null)],
+        Roles.Laboratorio => [("⚗", "Resultados de laboratorio", "/Laboratorio", "/Laboratorio/Index")],
         _ => [("▦", "Agenda de citas", "/Agenda", "/Agenda/Index"), ("♧", "Pacientes", "/Pacientes", "/Pacientes/Index")],
     };
     var currentPage = ViewContext.RouteData.Values["page"] as string ?? "";
