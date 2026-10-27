@@ -17,7 +17,7 @@ using Testcontainers.Redis;
 namespace MediCore.Api.Tests.Infrastructure;
 
 /// <summary>API real contra PostgreSQL y Redis desechables en Docker, con migraciones aplicadas.</summary>
-public sealed class StackFixture : ApiFactory, IAsyncLifetime
+public class StackFixture : ApiFactory, IAsyncLifetime
 {
     public const string Password = "Prueba-Segura-123!";
 
@@ -26,7 +26,7 @@ public sealed class StackFixture : ApiFactory, IAsyncLifetime
 
     public string RedisConnectionString => _redis.GetConnectionString();
 
-    public async Task InitializeAsync()
+    public virtual async Task InitializeAsync()
     {
         await Task.WhenAll(_postgres.StartAsync(), _redis.StartAsync());
         using var scope = Services.CreateScope();
@@ -38,7 +38,11 @@ public sealed class StackFixture : ApiFactory, IAsyncLifetime
         base.ConfigureWebHost(builder);
         builder.UseSetting("ConnectionStrings:Postgres", _postgres.GetConnectionString());
         builder.UseSetting("ConnectionStrings:Redis", _redis.GetConnectionString());
+        ConfigureMessaging(builder);
     }
+
+    /// <summary>Por defecto no corren el publicador del outbox ni el consumidor (estas pruebas no usan RabbitMQ). <see cref="BrokerFixture"/> los activa.</summary>
+    protected virtual void ConfigureMessaging(IWebHostBuilder builder) => builder.UseSetting("Messaging:Enabled", "false");
 
     /// <summary>Crea un usuario nuevo y único (para que las pruebas no se afecten entre sí) y devuelve su correo.</summary>
     public async Task<(Guid Id, string Email)> CreateUserAsync(UserRole role, bool active = true)
@@ -141,6 +145,15 @@ public sealed class StackFixture : ApiFactory, IAsyncLifetime
         await db.Appointments.Where(a => a.Id == appointmentId).ExecuteUpdateAsync(s => s.SetProperty(a => a.Status, status));
     }
 
+    /// <summary>Identificadores de los eventos del outbox que corresponden a un resultado de laboratorio (el payload es jsonb).</summary>
+    public async Task<List<Guid>> OutboxIdsForLabResultAsync(Guid labResultId)
+    {
+        using var scope = Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<MediCoreDbContext>();
+        return await db.OutboxMessages.FromSqlInterpolated($"SELECT * FROM outbox_messages WHERE \"Payload\"->>'labResultId' = {labResultId.ToString()}")
+            .AsNoTracking().OrderBy(m => m.OccurredAtUtc).Select(m => m.Id).ToListAsync();
+    }
+
     /// <summary>Hora de la clínica (misma zona que la API en pruebas).</summary>
     public static DateTime ClinicNow => DateTime.SpecifyKind(TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.UtcNow, "America/Guatemala"), DateTimeKind.Unspecified);
 
@@ -173,9 +186,14 @@ public sealed class StackFixture : ApiFactory, IAsyncLifetime
 
     async Task IAsyncLifetime.DisposeAsync()
     {
+        await DisposeContainersAsync();
+        await base.DisposeAsync();
+    }
+
+    protected virtual async Task DisposeContainersAsync()
+    {
         await _postgres.DisposeAsync();
         await _redis.DisposeAsync();
-        await base.DisposeAsync();
     }
 }
 

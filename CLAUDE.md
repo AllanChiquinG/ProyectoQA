@@ -38,7 +38,9 @@ Plataforma hospitalaria (Proyecto 2 de `Docs/Proyecto Final QA.docx`, curso 048 
 - El paciente lee únicamente sus recetas, de cualquier médico (`PrescriptionAuthorizationHandler`: autor, médico con relación o paciente dueño; Recepción, Administrador y Laboratorio, nunca). Accesos ajenos → 404 + `clinical.access_denied`.
 - Contenido clínico (motivo, notas, diagnóstico, medicamentos, indicaciones): nunca va a `audit_entries`, a `Details` ni a las bitácoras; la auditoría guarda actor, recurso, acción y conteos (`count=n`, `items=n`). EF no registra valores de parámetros (no activar `EnableSensitiveDataLogging`). Hay una prueba que lo verifica.
 - Web: páginas de error vacías se muestran con `/Estado` (conserva el código HTTP). Los formularios con manejadores (`asp-page-handler`) llevan `action` explícito y `asp-antiforgery="true"`.
-- Pendiente: autorización por recurso de resultados de laboratorio (entrega 6).
+- Laboratorio (entrega 6): `LabResult` con 1–10 parámetros (nombre, valor; unidad y rango opcionales); no se editan ni se borran (corrección = resultado nuevo; PUT/PATCH/DELETE → 405). `LabsController`: `POST /api/labs/results`, listado/detalle, `labs/patients` (búsqueda mínima de pacientes para Laboratorio), `GET /api/patients/{id}/lab-results`, `GET /api/labs/results/me` y `POST /api/labs/results/{id}/notification/retry`. Autorización (`LabResultAuthorizationHandler`): **Laboratorio** registra y lee todos los resultados (equipo compartido; decisión revisable hacia "solo los propios"); el **Médico** solo con relación válida de atención (`ICareRelationship`); el **Paciente** solo los suyos (`Patient.UserId`); **Recepción y Administrador nunca**. Acceso ajeno → 404 + `clinical.access_denied`; rol sin permiso → 403. Auditoría `labs.*` sin tipo de examen, valores ni observaciones.
+- Mensajería (entrega 6, RabbitMQ real): **outbox transaccional**: el resultado y el evento `LabResultReady` (solo identificadores) se guardan en la misma transacción de PostgreSQL. `OutboxPublisherService` (segundo plano) lee los pendientes con `FOR UPDATE SKIP LOCKED`, publica con confirmación del broker y recién entonces marca `ProcessedAtUtc`; si el broker falla, el evento sigue pendiente con espera creciente (`NextAttemptAtUtc`, tope `Messaging:PublishMaxBackoff`) y se publica al volver el broker. Entrega al menos una vez; el consumidor es idempotente. Topología: exchange `medicore.events` (topic) → cola `medicore.notifications`; fallos → `medicore.notifications.retry` (espera por mensaje, vuelve a la cola de trabajo) → tras `Messaging:ConsumerMaxAttempts` a `medicore.notifications.dlq`; mensajes ilegibles o de resultados inexistentes van directo a la DLQ. `NotificationConsumerService` confirma (ack) solo tras guardar la `Notification`; unicidad en BD por (`Type`,`SourceId`) y por `EventId` (un mensaje reentregado no duplica). La conexión es `ConnectionStrings:RabbitMq` (user-secrets / variable de entorno); `Messaging:Enabled=false` apaga publicador y consumidor (lo usan las pruebas sin broker). La conexión con el broker se recupera sola (no se reemplaza mientras se recupera, para no dejar al consumidor sin canal). Bitácoras: solo id de mensaje, tipo de evento, intento y tipo de error.
+- Notificaciones del paciente (API para la futura app móvil, MOB-12): `GET /api/notifications` (`unreadOnly`, paginado), `GET /api/notifications/unread-count`, `POST /api/notifications/{id}/read` (idempotente). Solo el rol Paciente y solo las suyas (otra → 404). No hay portal web del paciente.
 
 ## Estructura
 
@@ -50,7 +52,8 @@ src/MediCore.Domain    entidades por módulo, sin dependencias externas
 src/MediCore.Infrastructure  EF Core/Npgsql, migraciones (Persistence/Migrations), Redis (sesiones, cache), agenda; futuro RabbitMQ
 docker-compose.yml     Postgres 17 (5433), Redis 7, RabbitMQ 4; credenciales desde .env
 src/MediCore.Web       Razor Pages (personal)
-tests/MediCore.Api.Tests  integración: WebApplicationFactory + Testcontainers (Postgres, Redis), entorno "Testing" (no lee user-secrets)
+tests/MediCore.Api.Tests  integración: WebApplicationFactory + Testcontainers (Postgres, Redis y, en `MessagingTests`, RabbitMQ), entorno "Testing" (no lee user-secrets)
+scripts/               ejecución en contenedor Linux (dotnet-linux.sh, dev-stack-linux.sh) y evidencia de laboratorio (evidencia_laboratorio.py)
 tests/MediCore.UnitTests  reglas de dominio
 tests/cypress          pruebas end-to-end de la web (Cypress)
 documentacion/         alcance, plan, trazabilidad (propios)
@@ -80,6 +83,14 @@ dotnet ef database update --project src/MediCore.Infrastructure --startup-projec
 Secretos en user-secrets de la API (`ConnectionStrings:Postgres`, `ConnectionStrings:Redis` con 127.0.0.1, `Jwt:SigningKey`, `Seed:DevPassword`); nunca en appsettings. En Development la API migra y crea usuarios ficticios al arrancar (`DevelopmentBootstrap`). `dotnet ef` usa `DesignTimeDbContextFactory` (variable de entorno). Flujo Git: ramas `feature/*`, PR hacia `main`; `main` debe protegerse en GitHub.
 
 Advertencias tratadas como errores (`Directory.Build.props`).
+
+**Equipos Windows con Smart App Control activado** (bloquea cargar los `.dll` sin firma recién compilados: migraciones, pruebas, API; no se desactiva): ejecutar en un contenedor Linux con el SDK oficial, sin tocar los volúmenes de compose:
+
+```bash
+scripts/dotnet-linux.sh test MediCore.slnx                 # build + todas las pruebas (usa el socket de Docker para Testcontainers)
+scripts/dotnet-linux.sh ef-migration <Nombre>              # genera la migración y la copia al repositorio
+scripts/dev-stack-linux.sh up                              # API (5011) y web (5298) en contenedores, para Cypress; "down" los elimina
+```
 
 Cypress: `cd tests/cypress && CYPRESS_MEDICORE_PASSWORD=<Seed:DevPassword> npx cypress run --browser chrome` (requiere API y web en marcha; ver `tests/cypress/README.md`). Los archivos estáticos de la web (`wwwroot`) se publican con huella al compilar: tras cambiar un `.js` o `.css` hay que recompilar y reiniciar la web.
 

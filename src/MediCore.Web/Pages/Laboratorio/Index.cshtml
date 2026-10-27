@@ -1,0 +1,67 @@
+@page
+@model MediCore.Web.Pages.Laboratorio.IndexModel
+@{
+    ViewData["Code"] = "WEB-16";
+    ViewData["Title"] = "Resultados de laboratorio";
+    ViewData["Subtitle"] = "Resultados organizados por paciente.";
+    ViewData["ActionText"] = "Registrar resultado";
+    ViewData["ActionPage"] = "/Laboratorio/Registrar";
+}
+
+@if (Model.Error is not null)
+{
+    <div class="err" role="alert">@Model.Error</div>
+}
+
+<div class="panel">
+    <form method="get" class="toolbar" role="search">
+        <input name="q" value="@Model.Q" placeholder="Buscar paciente o examen…" aria-label="Buscar resultado" maxlength="100" />
+        <button class="btn secondary" type="submit">Buscar</button>
+        <span class="sub">@Model.Result.Total @(Model.Result.Total == 1 ? "resultado" : "resultados")</span>
+    </form>
+    <table>
+        <thead>
+            <tr><th>Paciente</th><th>Examen</th><th>Fecha</th><th>Notificación</th><th></th></tr>
+        </thead>
+        <tbody>
+            @foreach (var result in Model.Result.Items)
+            {
+                <tr class="lab-row">
+                    <td>@result.PatientName</td>
+                    <td>@result.ExamType</td>
+                    <td>@result.Date.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        @if (result.NotificationStatus == MediCore.Contracts.Laboratory.NotificationStatuses.Sent)
+                        {
+                            <span class="badge" data-notification="enviada">Enviada</span>
+                        }
+                        else
+                        {
+                            <span class="badge gray" data-notification="pendiente">Pendiente</span>
+                        }
+                    </td>
+                    <td><a class="link" asp-page="/Laboratorio/Resultado" asp-route-id="@result.Id">Ver resultado ↗</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (Model.Result.Items.Count == 0 && Model.Error is null)
+    {
+        <div class="emptymsg">No se encontraron resultados.</div>
+    }
+</div>
+
+@if (Model.HasPrevious || Model.HasNext)
+{
+    <nav class="pager" aria-label="Paginación">
+        @if (Model.HasPrevious)
+        {
+            <a class="btn secondary" asp-page="/Laboratorio/Index" asp-route-q="@Model.Q" asp-route-pageNumber="@(Model.Result.Page - 1)">← Anterior</a>
+        }
+        <span class="sub">Página @Model.Result.Page</span>
+        @if (Model.HasNext)
+        {
+            <a class="btn secondary" asp-page="/Laboratorio/Index" asp-route-q="@Model.Q" asp-route-pageNumber="@(Model.Result.Page + 1)">Siguiente →</a>
+        }
+    </nav>
+}

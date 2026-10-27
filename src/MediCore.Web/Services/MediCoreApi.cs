@@ -6,6 +6,7 @@ using MediCore.Contracts;
 using MediCore.Contracts.Auth;
 using MediCore.Contracts.Clinical;
 using MediCore.Contracts.Doctors;
+using MediCore.Contracts.Laboratory;
 using MediCore.Contracts.Patients;
 using MediCore.Contracts.Scheduling;
 using MediCore.Contracts.Users;
@@ -58,6 +59,13 @@ public interface IMediCoreApi
     Task<ApiResult<PrescriptionDto>> CreatePrescriptionAsync(CreatePrescriptionRequest request, CancellationToken ct = default);
     Task<ApiResult<PrescriptionDto>> GetPrescriptionAsync(Guid id, CancellationToken ct = default);
     Task<ApiResult<IReadOnlyList<PrescriptionDto>>> GetPatientPrescriptionsAsync(Guid patientId, CancellationToken ct = default);
+
+    Task<ApiResult<PagedResult<LabResultSummaryDto>>> GetLabResultsAsync(string? query, int page, int pageSize = 20, CancellationToken ct = default);
+    Task<ApiResult<IReadOnlyList<LabPatientDto>>> GetLabPatientsAsync(string? query, CancellationToken ct = default);
+    Task<ApiResult<LabResultDto>> CreateLabResultAsync(CreateLabResultRequest request, CancellationToken ct = default);
+    Task<ApiResult<LabResultDto>> GetLabResultAsync(Guid id, CancellationToken ct = default);
+    Task<ApiResult<IReadOnlyList<LabResultSummaryDto>>> GetPatientLabResultsAsync(Guid patientId, CancellationToken ct = default);
+    Task<ApiResult<RetryNotificationResponse>> RetryLabNotificationAsync(Guid id, CancellationToken ct = default);
 }
 
 internal sealed class MediCoreApi(HttpClient http, IHttpContextAccessor accessor) : IMediCoreApi
@@ -177,6 +185,24 @@ internal sealed class MediCoreApi(HttpClient http, IHttpContextAccessor accessor
 
     public async Task<ApiResult<IReadOnlyList<PrescriptionDto>>> GetPatientPrescriptionsAsync(Guid patientId, CancellationToken ct = default)
         => AsReadOnly(await CallAsync<List<PrescriptionDto>>(HttpMethod.Get, $"api/patients/{patientId}/prescriptions", null, ct: ct));
+
+    public Task<ApiResult<PagedResult<LabResultSummaryDto>>> GetLabResultsAsync(string? query, int page, int pageSize = 20, CancellationToken ct = default)
+        => CallAsync<PagedResult<LabResultSummaryDto>>(HttpMethod.Get, $"api/labs/results?q={Uri.EscapeDataString(query ?? "")}&page={page}&pageSize={pageSize}", null, ct: ct);
+
+    public async Task<ApiResult<IReadOnlyList<LabPatientDto>>> GetLabPatientsAsync(string? query, CancellationToken ct = default)
+        => AsReadOnly(await CallAsync<List<LabPatientDto>>(HttpMethod.Get, $"api/labs/patients?q={Uri.EscapeDataString(query ?? "")}", null, ct: ct));
+
+    public Task<ApiResult<LabResultDto>> CreateLabResultAsync(CreateLabResultRequest request, CancellationToken ct = default)
+        => CallAsync<LabResultDto>(HttpMethod.Post, "api/labs/results", request, ct: ct);
+
+    public Task<ApiResult<LabResultDto>> GetLabResultAsync(Guid id, CancellationToken ct = default)
+        => CallAsync<LabResultDto>(HttpMethod.Get, $"api/labs/results/{id}", null, ct: ct);
+
+    public async Task<ApiResult<IReadOnlyList<LabResultSummaryDto>>> GetPatientLabResultsAsync(Guid patientId, CancellationToken ct = default)
+        => AsReadOnly(await CallAsync<List<LabResultSummaryDto>>(HttpMethod.Get, $"api/patients/{patientId}/lab-results", null, ct: ct));
+
+    public Task<ApiResult<RetryNotificationResponse>> RetryLabNotificationAsync(Guid id, CancellationToken ct = default)
+        => CallAsync<RetryNotificationResponse>(HttpMethod.Post, $"api/labs/results/{id}/notification/retry", null, ct: ct);
 
     private static ApiResult<IReadOnlyList<T>> AsReadOnly<T>(ApiResult<List<T>> result)
         => new(result.Status, result.Value, result.Message);
