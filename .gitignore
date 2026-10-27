@@ -485,6 +485,7 @@ $RECYCLE.BIN/
 .env
 .env.*
 !.env.example
+!.env.qa.example
 *.tfstate
 *.tfstate.*
 .terraform/
