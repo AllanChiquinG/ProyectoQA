@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MediCore.Mobile.Pages.AppointmentsPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MediCore.Mobile.Views"
+             xmlns:vm="clr-namespace:MediCore.Mobile.Core.ViewModels;assembly=MediCore.Mobile.Core"
+             Title="Citas">
+    <ContentPage.Resources>
+        <views:StatusColorConverter x:Key="StatusColor" />
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout>
+            <views:HeaderBar />
+            <VerticalStackLayout Padding="24,8,24,24" Spacing="8">
+                <Label Text="MOB-03 · PACIENTE" Style="{StaticResource Eyebrow}" />
+                <Label Text="Mis citas" Style="{StaticResource Title}" />
+                <Label Text="Un espacio para tu atención." Style="{StaticResource Sub}" />
+
+                <views:StateBanner />
+
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Items}" IsVisible="{Binding IsContent}" Spacing="2">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:AppointmentItem">
+                            <Border Style="{StaticResource CardBorder}" AutomationId="tarjeta_cita">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AppointmentsViewModel}}, Path=OpenCommand}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout Spacing="3">
+                                    <Label Text="{Binding DoctorName}" Style="{StaticResource CardTitle}" />
+                                    <Label Text="{Binding Specialty}" Style="{StaticResource CardText}" />
+                                    <Label Text="{Binding When}" Style="{StaticResource CardText}" />
+                                    <Border StrokeThickness="0" StrokeShape="RoundRectangle 5" Padding="8,4" HorizontalOptions="Start" Margin="0,6,0,0"
+                                            BackgroundColor="{Binding IsCancelled, Converter={StaticResource StatusColor}}">
+                                        <Label Text="{Binding StatusText}" FontSize="10" TextColor="{Binding IsCancelled, Converter={StaticResource StatusColor}, ConverterParameter=text}" />
+                                    </Border>
+                                    <Button Text="Ver detalle →" Style="{StaticResource LinkButton}" AutomationId="boton_ver_detalle_cita"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AppointmentsViewModel}}, Path=OpenCommand}" CommandParameter="{Binding .}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Button Text="＋ Solicitar cita" Command="{Binding BookCommand}" Margin="0,12,0,0" AutomationId="boton_solicitar_cita" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

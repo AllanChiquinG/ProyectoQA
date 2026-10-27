@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    App Android del paciente (.NET MAUI). Requiere el workload "maui-android", el SDK de Android y un JDK 17+ (ver documentacion/05-app-movil.md).
+    NO forma parte de MediCore.slnx para que "dotnet build MediCore.slnx" siga funcionando en equipos sin esas herramientas.
+    Compilar: dotnet build src/MediCore.Mobile -f net10.0-android -p:ApiBaseUrl=http://10.0.2.2:5011/
+  -->
+  <PropertyGroup>
+    <TargetFrameworks>net10.0-android</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MediCore.Mobile</RootNamespace>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <!-- Las advertencias de XAML/MAUI no deben impedir compilar la app; el resto de la solución sí las trata como errores. -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+    <ApplicationTitle>MediCore</ApplicationTitle>
+    <ApplicationId>com.medicore.paciente</ApplicationId>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+    <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <!-- El APK de desarrollo debe ser autónomo (adb install): sin esto, Debug usa Fast Deployment y la app se cierra al abrir. -->
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <!-- Emulador (x64) y teléfonos (arm64): el restore debe incluir ambos para poder empaquetar. -->
+    <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
+
+    <!-- Dirección de la API. Emulador de Android Studio: 10.0.2.2 es el equipo anfitrión. Dispositivo físico: IP del equipo en la red, o "adb reverse". -->
+    <ApiBaseUrl Condition="'$(ApiBaseUrl)' == ''">http://10.0.2.2:5011/</ApiBaseUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>ApiBaseUrl</_Parameter1>
+      <_Parameter2>$(ApiBaseUrl)</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#087F79" />
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#E4F2ED" BaseSize="128,128" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MediCore.Mobile.Core\MediCore.Mobile.Core.csproj" />
+  </ItemGroup>
+
+</Project>

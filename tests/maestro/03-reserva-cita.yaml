@@ -1,0 +1,35 @@
+# MOB-04, MOB-05, MOB-06, MOB-07. Escenario: cita. Reservar una cita en tres pasos y verla confirmada.
+# Variables extra: MEDICO, DIA (día del mes de la fecha elegida), MES_SIGUIENTE ("true" si cae en el mes siguiente), HORA.
+appId: com.medicore.paciente
+name: 03 · Reserva de cita
+---
+- runFlow: subflows/login.yaml
+- tapOn: "＋ Solicitar una cita"
+- assertVisible: "Selecciona tu médico"
+- assertVisible: "Paso 1 de 3 · Profesional"
+- tapOn: ${MEDICO}
+- assertVisible: "Paso 2 de 3 · Disponibilidad"
+# Sin elegir horario no se puede continuar.
+- tapOn: "Continuar →"
+- assertVisible: "Selecciona un horario para continuar."
+# Fecha: selector nativo de Android.
+- tapOn: "Fecha de la cita"      # descripción de accesibilidad del selector de fecha
+- runFlow:
+    when:
+      true: ${MES_SIGUIENTE == 'true'}
+    commands:
+      - tapOn:
+          id: "android:id/next"
+- tapOn: ${DIA}
+- tapOn: "OK|Aceptar"
+- tapOn: ${HORA}
+- tapOn: "Continuar →"
+- assertVisible: "Confirma tu cita"
+- assertVisible: "Paso 3 de 3 · Revisa los datos"
+- assertVisible: ${MEDICO}
+- assertVisible: "${HORA} h"
+# Confirmar una sola vez (la app ignora pulsaciones repetidas y envía una clave de idempotencia).
+- tapOn: "Confirmar cita"
+- assertVisible: "Detalle de cita"
+- assertVisible: "Confirmada"
+- assertVisible: ${MEDICO}

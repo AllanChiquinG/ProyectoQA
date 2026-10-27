@@ -1,0 +1,14 @@
+# MOB-02, MOB-01. Escenario: base. La sesión se conserva al reabrir la app y desaparece al cerrar sesión.
+appId: com.medicore.paciente
+name: 08 · Cierre de sesión
+---
+- runFlow: subflows/login.yaml
+- stopApp
+- launchApp
+- assertVisible: "Qué bueno tenerte por aquí."   # sesión conservada en el almacenamiento seguro
+- tapOn: "Cerrar sesión"
+- assertVisible: "Bienvenida de nuevo"
+- stopApp
+- launchApp
+- assertVisible: "Bienvenida de nuevo"            # sin sesión: vuelve al inicio de sesión
+- assertNotVisible: "Qué bueno tenerte por aquí."

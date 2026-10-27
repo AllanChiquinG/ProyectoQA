@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MediCore.Mobile.Pages.LabResultDetailPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MediCore.Mobile.Views"
+             xmlns:vm="clr-namespace:MediCore.Mobile.Core.ViewModels;assembly=MediCore.Mobile.Core"
+             Title="Detalle de resultado">
+    <ScrollView>
+        <VerticalStackLayout>
+            <views:HeaderBar ShowBack="True" />
+            <VerticalStackLayout Padding="24,8,24,24" Spacing="8">
+                <Label Text="MOB-09 · PACIENTE" Style="{StaticResource Eyebrow}" />
+                <Label Text="{Binding ExamType}" Style="{StaticResource Title}" AutomationId="resultado_examen" />
+                <Label Text="{Binding Subtitle}" Style="{StaticResource Sub}" />
+
+                <views:StateBanner />
+
+                <VerticalStackLayout IsVisible="{Binding IsContent}" Spacing="8">
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Parameters}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:ParameterItem">
+                                <Border Style="{StaticResource PanelBorder}" Margin="0,6" AutomationId="parametro">
+                                    <VerticalStackLayout Spacing="6">
+                                        <Label Text="{Binding Name}" Style="{StaticResource CardTitle}" />
+                                        <Label Text="{Binding ValueWithUnit}" FontSize="28" TextColor="{StaticResource Green}" />
+                                        <Label Text="{Binding ReferenceText}" Style="{StaticResource Sub}" IsVisible="{Binding HasReference}" />
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Label Text="Observaciones" Style="{StaticResource CardTitle}" Margin="0,14,0,0" />
+                    <Label Text="{Binding Notes}" Style="{StaticResource Sub}" AutomationId="resultado_observaciones" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

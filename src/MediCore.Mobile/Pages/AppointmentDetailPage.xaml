@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MediCore.Mobile.Pages.AppointmentDetailPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MediCore.Mobile.Views"
+             Title="Detalle de cita">
+    <ContentPage.Resources>
+        <views:StringNotEmptyConverter x:Key="NotEmpty" />
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout>
+            <views:HeaderBar ShowBack="True" />
+            <VerticalStackLayout Padding="24,8,24,24" Spacing="8">
+                <Label Text="MOB-07 · PACIENTE" Style="{StaticResource Eyebrow}" />
+                <Label Text="Detalle de cita" Style="{StaticResource Title}" />
+
+                <views:StateBanner />
+
+                <Border IsVisible="{Binding IsContent}" Style="{StaticResource PanelBorder}" Margin="0,8">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding DoctorName}" FontSize="17" FontAttributes="Bold" AutomationId="cita_medico" />
+                        <Label Text="{Binding Specialty}" Style="{StaticResource Sub}" />
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,14,0,0"><Label Text="Fecha" Style="{StaticResource SummaryLabel}" /><Label Grid.Column="1" Text="{Binding DateText}" Style="{StaticResource SummaryValue}" AutomationId="cita_fecha" /></Grid>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,10,0,0"><Label Text="Hora" Style="{StaticResource SummaryLabel}" /><Label Grid.Column="1" Text="{Binding TimeText}" Style="{StaticResource SummaryValue}" AutomationId="cita_hora" /></Grid>
+                        <Grid ColumnDefinitions="*,Auto" Margin="0,10,0,0"><Label Text="Estado" Style="{StaticResource SummaryLabel}" /><Label Grid.Column="1" Text="{Binding StatusText}" Style="{StaticResource SummaryValue}" AutomationId="cita_estado" /></Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="{Binding ActionError}" Style="{StaticResource ErrorText}" IsVisible="{Binding ActionError, Converter={StaticResource NotEmpty}}" AutomationId="error_cancelar" />
+                <Button Text="Cancelar cita" Command="{Binding CancelCommand}" IsVisible="{Binding CanCancel}" Style="{StaticResource DangerButton}" Margin="0,16,0,0" AutomationId="boton_cancelar_cita" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

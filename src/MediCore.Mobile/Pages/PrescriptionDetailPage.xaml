@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MediCore.Mobile.Pages.PrescriptionDetailPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MediCore.Mobile.Views"
+             xmlns:vm="clr-namespace:MediCore.Mobile.Core.ViewModels;assembly=MediCore.Mobile.Core"
+             Title="Detalle de receta">
+    <ScrollView>
+        <VerticalStackLayout>
+            <views:HeaderBar ShowBack="True" />
+            <VerticalStackLayout Padding="24,8,24,24" Spacing="8">
+                <Label Text="MOB-11 · PACIENTE" Style="{StaticResource Eyebrow}" />
+                <Label Text="Detalle de receta" Style="{StaticResource Title}" />
+                <Label Text="{Binding Subtitle}" Style="{StaticResource Sub}" AutomationId="receta_subtitulo" />
+
+                <views:StateBanner />
+
+                <VerticalStackLayout IsVisible="{Binding IsContent}" BindableLayout.ItemsSource="{Binding Medications}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:MedicationItem">
+                            <Border Style="{StaticResource PanelBorder}" Margin="0,8" AutomationId="medicamento">
+                                <VerticalStackLayout Spacing="8">
+                                    <Label Text="{Binding Name}" FontSize="17" FontAttributes="Bold" />
+                                    <Grid ColumnDefinitions="*,Auto"><Label Text="Dosis" Style="{StaticResource SummaryLabel}" /><Label Grid.Column="1" Text="{Binding Dose}" Style="{StaticResource SummaryValue}" /></Grid>
+                                    <Grid ColumnDefinitions="*,Auto"><Label Text="Frecuencia" Style="{StaticResource SummaryLabel}" /><Label Grid.Column="1" Text="{Binding Frequency}" Style="{StaticResource SummaryValue}" /></Grid>
+                                    <Grid ColumnDefinitions="*,Auto"><Label Text="Duración" Style="{StaticResource SummaryLabel}" /><Label Grid.Column="1" Text="{Binding Duration}" Style="{StaticResource SummaryValue}" /></Grid>
+                                    <Label Text="Indicaciones" Style="{StaticResource CardTitle}" Margin="0,8,0,0" />
+                                    <Label Text="{Binding Instructions}" Style="{StaticResource Sub}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

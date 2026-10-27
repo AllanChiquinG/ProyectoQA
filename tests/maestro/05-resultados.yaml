@@ -1,0 +1,15 @@
+# MOB-08, MOB-09. Escenario: resultados. Listar y abrir un resultado propio.
+appId: com.medicore.paciente
+name: 05 · Resultados de laboratorio
+---
+- runFlow: subflows/login.yaml
+- tapOn: "Resultados"
+- assertVisible: "Mis resultados"
+- assertVisible: ${EXAMEN}
+- tapOn: ${EXAMEN}
+- assertVisible: "Hemoglobina"
+- assertVisible: "13.2 g/dL"
+- assertVisible: "Rango de referencia: 12.0–16.0"
+- assertVisible: "Observaciones"
+- tapOn: "← Volver"
+- assertVisible: "Mis resultados"

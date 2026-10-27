@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView x:Class="MediCore.Mobile.Views.HeaderBar"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Name="Root">
+    <!-- Encabezado del diseño: marca MediCore, "← Volver" en las pantallas internas y la campana de notificaciones (MOB-12). -->
+    <Grid BackgroundColor="{StaticResource Header}" Padding="20,16" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+        <Button x:Name="BackButton" Grid.Column="0" Text="← Volver" Style="{StaticResource LinkButton}" IsVisible="{Binding ShowBack, Source={x:Reference Root}}"
+                AutomationId="boton_volver" Clicked="OnBack" />
+        <HorizontalStackLayout Grid.Column="0" Spacing="10" VerticalOptions="Center" IsVisible="{Binding ShowBrand, Source={x:Reference Root}}">
+            <Border BackgroundColor="{StaticResource Green}" StrokeShape="RoundRectangle 10" WidthRequest="36" HeightRequest="36" StrokeThickness="0">
+                <Label Text="+" TextColor="White" FontSize="26" HorizontalOptions="Center" VerticalOptions="Center" />
+            </Border>
+            <VerticalStackLayout VerticalOptions="Center">
+                <Label Text="MediCore" FontSize="20" FontAttributes="Bold" TextColor="#194F52" />
+                <Label Text="ATENCIÓN CONECTADA" FontSize="9" CharacterSpacing="1.5" TextColor="{StaticResource Muted}" />
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+        <Button Grid.Column="2" Text="♧" FontSize="20" BackgroundColor="Transparent" TextColor="#54716B" WidthRequest="48" Padding="0"
+                SemanticProperties.Description="Notificaciones" AutomationId="boton_notificaciones" Clicked="OnBell" IsVisible="{Binding ShowBell, Source={x:Reference Root}}" />
+    </Grid>
+</ContentView>

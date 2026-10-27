@@ -1,0 +1,10 @@
+# MOB-01 / MOB-02. Escenario: base. Un paciente con credenciales válidas entra y ve su inicio.
+appId: com.medicore.paciente
+name: 01 · Inicio de sesión válido
+---
+- runFlow: subflows/login.yaml
+- assertVisible: "Hola, ${NOMBRE}"
+- assertVisible: "TU PRÓXIMA CITA"
+- assertVisible: "Solicitar cita →"     # el escenario base no tiene citas
+- assertVisible: ".*Resultados de laboratorio.*"   # la tarjeta lleva un ícono antes del texto
+- assertVisible: ".*Mis recetas.*"
