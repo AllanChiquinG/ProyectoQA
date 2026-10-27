@@ -17,7 +17,7 @@ using Microsoft.EntityFrameworkCore;
 namespace MediCore.Api.Controllers;
 
 /// <summary>
-/// Expediente clínico: consultas y recetas. Información sensible: se entrega solo a quien corresponde y la auditoría registra
+/// Expediente clínico compartido entre médicos con relación de atención: consultas y recetas. Información sensible: se entrega solo a quien corresponde y la auditoría registra
 /// quién accedió a qué recurso y cuándo, nunca el contenido (motivo, notas, diagnóstico ni medicamentos).
 /// </summary>
 [ApiController]
@@ -100,27 +100,33 @@ public class ClinicalController(
         await audit.WriteAsync(new AuditRecord(AuditActions.ConsultationCreated, AuditOutcome.Success, userId, nameof(Consultation), consultation.Id.ToString(), ClientIp), ct);
         consultation.Appointment = appointment;
         consultation.Doctor = appointment.Doctor;
-        return CreatedAtAction(nameof(GetConsultation), new { id = consultation.Id }, ToDto(consultation));
+        return CreatedAtAction(nameof(GetConsultation), new { id = consultation.Id }, ToDto(consultation, userId));
     }
 
+    /// <summary>
+    /// Consulta por identificador. Expediente compartido: la lee cualquier médico con relación de atención con el paciente
+    /// (cita no cancelada o consulta registrada), no solo su autor. Ningún médico puede modificar la de otro.
+    /// </summary>
     [HttpGet("consultations/{id:guid}")]
     [Authorize(Roles = Roles.Medico)]
     public async Task<ActionResult<ConsultationDto>> GetConsultation(Guid id, CancellationToken ct)
     {
         var userId = User.UserId();
-        var consultation = await db.Consultations.AsNoTracking().Include(c => c.Appointment).Include(c => c.Doctor)
+        var consultation = await db.Consultations.AsNoTracking().Include(c => c.Appointment).Include(c => c.Doctor).Include(c => c.Patient)
             .FirstOrDefaultAsync(c => c.Id == id, ct);
         if (consultation is null) return NotFound();
-        if (consultation.Doctor.UserId != userId)
+        if (!(await authorization.AuthorizeAsync(User, consultation.Patient, PatientOperations.Read)).Succeeded)
             return await DeniedAsync(nameof(Consultation), id, "read_consultation", ct);
 
-        await audit.WriteAsync(new AuditRecord(AuditActions.ConsultationRead, AuditOutcome.Success, userId, nameof(Consultation), id.ToString(), ClientIp), ct);
-        return ToDto(consultation);
+        var isOwn = consultation.Doctor.UserId == userId;
+        await audit.WriteAsync(new AuditRecord(AuditActions.ConsultationRead, AuditOutcome.Success, userId, nameof(Consultation), id.ToString(), ClientIp,
+            isOwn ? null : "other_author"), ct);
+        return ToDto(consultation, userId);
     }
 
     /// <summary>
-    /// Consultas de un paciente. Requiere relación de atención con el paciente y devuelve solo las consultas
-    /// que escribió este médico (mínimo privilegio: no se exponen las notas de otros médicos).
+    /// Consultas de un paciente (expediente compartido). Requiere relación de atención con el paciente y devuelve las
+    /// consultas de todos los médicos; <c>IsOwn</c> marca las del médico que consulta.
     /// </summary>
     [HttpGet("patients/{patientId:guid}/consultations")]
     [Authorize(Roles = Roles.Medico)]
@@ -133,13 +139,13 @@ public class ClinicalController(
 
         var userId = User.UserId();
         var consultations = await db.Consultations.AsNoTracking().Include(c => c.Appointment).Include(c => c.Doctor)
-            .Where(c => c.PatientId == patientId && c.Doctor.UserId == userId)
+            .Where(c => c.PatientId == patientId)
             .OrderByDescending(c => c.Appointment.StartsAtLocal)
             .ToListAsync(ct);
 
         await audit.WriteAsync(new AuditRecord(AuditActions.ConsultationsListed, AuditOutcome.Success, userId, nameof(Patient), patientId.ToString(), ClientIp,
-            $"count={consultations.Count}"), ct);
-        return consultations.Select(ToDto).ToList();
+            $"count={consultations.Count};others={consultations.Count(c => c.Doctor.UserId != userId)}"), ct);
+        return consultations.Select(c => ToDto(c, userId)).ToList();
     }
 
     // ---- Recetas ---------------------------------------------------------------------------------------------------
@@ -179,10 +185,13 @@ public class ClinicalController(
             $"items={prescription.Items.Count}"), ct);
         prescription.Patient = consultation.Patient;
         prescription.Doctor = consultation.Doctor;
-        return CreatedAtAction(nameof(GetPrescription), new { id = prescription.Id }, ToDto(prescription));
+        return CreatedAtAction(nameof(GetPrescription), new { id = prescription.Id }, ToDto(prescription, userId));
     }
 
-    /// <summary>Receta por identificador: la lee el médico que la escribió o el paciente al que pertenece.</summary>
+    /// <summary>
+    /// Receta por identificador: la lee su autor, cualquier médico con relación de atención con el paciente (expediente
+    /// compartido) y el propio paciente. Nadie la modifica.
+    /// </summary>
     [HttpGet("prescriptions/{id:guid}")]
     [Authorize(Roles = $"{Roles.Medico},{Roles.Paciente}")]
     public async Task<ActionResult<PrescriptionDto>> GetPrescription(Guid id, CancellationToken ct)
@@ -194,8 +203,10 @@ public class ClinicalController(
         if (!(await authorization.AuthorizeAsync(User, prescription, PrescriptionOperations.Read)).Succeeded)
             return await DeniedAsync(nameof(Prescription), id, "read_prescription", ct);
 
-        await audit.WriteAsync(new AuditRecord(AuditActions.PrescriptionRead, AuditOutcome.Success, User.UserId(), nameof(Prescription), id.ToString(), ClientIp), ct);
-        return ToDto(prescription);
+        var userId = User.UserId();
+        await audit.WriteAsync(new AuditRecord(AuditActions.PrescriptionRead, AuditOutcome.Success, userId, nameof(Prescription), id.ToString(), ClientIp,
+            User.IsInRole(Roles.Medico) && prescription.Doctor.UserId != userId ? "other_author" : null), ct);
+        return ToDto(prescription, userId);
     }
 
     /// <summary>Recetas del paciente autenticado (la app móvil).</summary>
@@ -212,10 +223,10 @@ public class ClinicalController(
 
         await audit.WriteAsync(new AuditRecord(AuditActions.PrescriptionsListed, AuditOutcome.Success, userId, nameof(Prescription), IpAddress: ClientIp,
             Details: $"own;count={prescriptions.Count}"), ct);
-        return prescriptions.Select(ToDto).ToList();
+        return prescriptions.Select(p => ToDto(p, null)).ToList();
     }
 
-    /// <summary>Recetas de un paciente escritas por este médico (requiere relación de atención con el paciente).</summary>
+    /// <summary>Recetas de un paciente de todos los médicos (expediente compartido; requiere relación de atención con el paciente).</summary>
     [HttpGet("patients/{patientId:guid}/prescriptions")]
     [Authorize(Roles = Roles.Medico)]
     public async Task<ActionResult<IReadOnlyList<PrescriptionDto>>> PatientPrescriptions(Guid patientId, CancellationToken ct)
@@ -227,13 +238,13 @@ public class ClinicalController(
 
         var userId = User.UserId();
         var prescriptions = await db.Prescriptions.AsNoTracking().Include(p => p.Items).Include(p => p.Patient).Include(p => p.Doctor)
-            .Where(p => p.PatientId == patientId && p.Doctor.UserId == userId)
+            .Where(p => p.PatientId == patientId)
             .OrderByDescending(p => p.CreatedAtUtc)
             .ToListAsync(ct);
 
         await audit.WriteAsync(new AuditRecord(AuditActions.PrescriptionsListed, AuditOutcome.Success, userId, nameof(Patient), patientId.ToString(), ClientIp,
-            $"count={prescriptions.Count}"), ct);
-        return prescriptions.Select(ToDto).ToList();
+            $"count={prescriptions.Count};others={prescriptions.Count(p => p.Doctor.UserId != userId)}"), ct);
+        return prescriptions.Select(p => ToDto(p, userId)).ToList();
     }
 
     // ---- Apoyo -----------------------------------------------------------------------------------------------------
@@ -251,11 +262,13 @@ public class ClinicalController(
     private ActionResult Validation(string field, string message)
         => ValidationProblem(new ValidationProblemDetails(new Dictionary<string, string[]> { [field] = [message] }));
 
-    private static ConsultationDto ToDto(Consultation c) => new(
-        c.Id, c.PatientId, c.AppointmentId, DateOnly.FromDateTime(c.Appointment.StartsAtLocal), c.Doctor.FullName, c.Reason, c.Diagnosis, c.Notes);
+    private static ConsultationDto ToDto(Consultation c, Guid? userId) => new(
+        c.Id, c.PatientId, c.AppointmentId, DateOnly.FromDateTime(c.Appointment.StartsAtLocal), c.Doctor.FullName, c.Reason, c.Diagnosis, c.Notes,
+        userId is not null && c.Doctor.UserId == userId);
 
-    private PrescriptionDto ToDto(Prescription p) => new(
+    private PrescriptionDto ToDto(Prescription p, Guid? userId) => new(
         p.Id, p.PatientId, p.Patient.FullName, p.DoctorId, p.Doctor.FullName, p.ConsultationId,
         DateOnly.FromDateTime(clock.ToLocal(p.CreatedAtUtc)),
-        p.Items.OrderBy(i => i.Position).Select(i => new PrescriptionItemDto(i.Medication, i.Dose, i.Frequency, i.Duration, i.Instructions)).ToList());
+        p.Items.OrderBy(i => i.Position).Select(i => new PrescriptionItemDto(i.Medication, i.Dose, i.Frequency, i.Duration, i.Instructions)).ToList(),
+        userId is not null && p.Doctor.UserId == userId);
 }

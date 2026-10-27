@@ -2,7 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MediCore.Contracts.Clinical;
 
-/// <summary>Consulta médica. La fecha es la de la cita a la que pertenece.</summary>
+/// <summary>
+/// Consulta médica. La fecha es la de la cita a la que pertenece. <paramref name="IsOwn"/> indica si la escribió el médico que
+/// consulta (solo el autor puede crear recetas sobre ella; los demás médicos autorizados la leen).
+/// </summary>
 public record ConsultationDto(
     Guid Id,
     Guid PatientId,
@@ -11,7 +14,8 @@ public record ConsultationDto(
     string DoctorName,
     string Reason,
     string Diagnosis,
-    string Notes);
+    string Notes,
+    bool IsOwn);
 
 public record CreateConsultationRequest(
     [Required(ErrorMessage = ValidationMessages.Required)] Guid? AppointmentId,
@@ -45,4 +49,5 @@ public record PrescriptionDto(
     string DoctorName,
     Guid ConsultationId,
     DateOnly Date,
-    IReadOnlyList<PrescriptionItemDto> Items);
+    IReadOnlyList<PrescriptionItemDto> Items,
+    bool IsOwn);

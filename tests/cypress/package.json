@@ -8,6 +8,7 @@
     "cy:run": "cypress run"
   },
   "devDependencies": {
-    "cypress": "^16.2.0"
+    "cypress": "^16.2.0",
+    "pg": "^8.23.1"
   }
 }

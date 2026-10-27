@@ -174,27 +174,158 @@ public class ClinicalApiTests(StackFixture stack)
 
     // ---- Expediente: solo lo escrito por el propio médico -----------------------------------------------------------
 
+    // ---- Expediente compartido entre médicos con relación de atención -----------------------------------------------
+
+    /// <summary>Un colega con una cita no cancelada con el mismo paciente (relación de atención válida).</summary>
+    private async Task<(HttpClient Client, string Email, Guid DoctorId, Appointment Appointment)> NewColleagueAsync(Guid patientId, int daysAgo = 1)
+    {
+        var (userId, email) = await stack.CreateUserAsync(UserRole.Medico);
+        var doctor = await stack.CreateScheduledDoctorAsync(userId);
+        var appointment = await stack.CreateAppointmentAsync(patientId, doctor.Id, DateTime.UtcNow.Date.AddDays(-daysAgo).AddHours(9));
+        var (client, _) = await stack.LoginClientForAsync(email);
+        return (client, email, doctor.Id, appointment);
+    }
+
+    private async Task<(ConsultationDto Consultation, PrescriptionDto Prescription)> WriteClinicalAsync(Scenario author, string token)
+    {
+        var consultation = await RegisterConsultationAsync(author, token);
+        var prescription = (await (await author.Client.PostAsJsonAsync("/api/prescriptions",
+            new CreatePrescriptionRequest(consultation.Id, [Item($"Medicamento {token}")]))).Content.ReadFromJsonAsync<PrescriptionDto>())!;
+        return (consultation, prescription);
+    }
+
     [Fact]
-    public async Task Cada_medico_ve_en_el_expediente_solo_lo_que_el_escribio()
+    public async Task Expediente_compartido_un_medico_con_relacion_lee_las_consultas_y_recetas_de_otros_marcando_cuales_son_suyas()
     {
         var a = await NewScenarioAsync();
-        var (userB, emailB) = await stack.CreateUserAsync(UserRole.Medico);
-        var doctorB = await stack.CreateScheduledDoctorAsync(userB);
-        var appointmentB = await stack.CreateAppointmentAsync(a.Patient.Id, doctorB.Id, DateTime.UtcNow.Date.AddDays(-2).AddHours(9));
-        var (clientB, _) = await stack.LoginClientForAsync(emailB);
-        var consultationA = await RegisterConsultationAsync(a, "de A");
-        var consultationB = (await (await clientB.PostAsJsonAsync("/api/consultations", Consultation(appointmentB.Id, "de B"))).Content.ReadFromJsonAsync<ConsultationDto>())!;
-        await a.Client.PostAsJsonAsync("/api/prescriptions", new CreatePrescriptionRequest(consultationA.Id, [Item("Medicamento de A")]));
-        await clientB.PostAsJsonAsync("/api/prescriptions", new CreatePrescriptionRequest(consultationB.Id, [Item("Medicamento de B")]));
+        var (consultationA, prescriptionA) = await WriteClinicalAsync(a, "de A");
+        var b = await NewColleagueAsync(a.Patient.Id);
+        var consultationB = (await (await b.Client.PostAsJsonAsync("/api/consultations", Consultation(b.Appointment.Id, "de B"))).Content.ReadFromJsonAsync<ConsultationDto>())!;
 
+        var seenByB = await b.Client.GetFromJsonAsync<List<ConsultationDto>>($"/api/patients/{a.Patient.Id}/consultations");
         var seenByA = await a.Client.GetFromJsonAsync<List<ConsultationDto>>($"/api/patients/{a.Patient.Id}/consultations");
-        var seenByB = await clientB.GetFromJsonAsync<List<ConsultationDto>>($"/api/patients/{a.Patient.Id}/consultations");
-        var rxA = await a.Client.GetFromJsonAsync<List<PrescriptionDto>>($"/api/patients/{a.Patient.Id}/prescriptions");
 
-        Assert.Equal(consultationA.Id, Assert.Single(seenByA!).Id);
-        Assert.Equal(consultationB.Id, Assert.Single(seenByB!).Id);
-        Assert.Equal("Medicamento de A", Assert.Single(Assert.Single(rxA!).Items).Medication);
-        Assert.Equal(HttpStatusCode.NotFound, (await a.Client.GetAsync($"/api/consultations/{consultationB.Id}")).StatusCode);
+        Assert.Equal(new[] { consultationA.Id, consultationB.Id }.Order(), seenByB!.Select(c => c.Id).Order());
+        Assert.Equal(new[] { consultationA.Id, consultationB.Id }.Order(), seenByA!.Select(c => c.Id).Order());
+        Assert.True(seenByB!.Single(c => c.Id == consultationB.Id).IsOwn);
+        Assert.False(seenByB!.Single(c => c.Id == consultationA.Id).IsOwn);
+        Assert.True(seenByA!.Single(c => c.Id == consultationA.Id).IsOwn);
+        Assert.Equal("Diagnóstico de A", seenByB!.Single(c => c.Id == consultationA.Id).Diagnosis); // el contenido se lee completo
+
+        // Lectura individual y recetas.
+        var single = await b.Client.GetFromJsonAsync<ConsultationDto>($"/api/consultations/{consultationA.Id}");
+        Assert.False(single!.IsOwn);
+        var prescriptions = await b.Client.GetFromJsonAsync<List<PrescriptionDto>>($"/api/patients/{a.Patient.Id}/prescriptions");
+        var theirs = Assert.Single(prescriptions!);
+        Assert.Equal(prescriptionA.Id, theirs.Id);
+        Assert.False(theirs.IsOwn);
+        var fetched = await b.Client.GetFromJsonAsync<PrescriptionDto>($"/api/prescriptions/{prescriptionA.Id}");
+        Assert.Equal("Medicamento de A", Assert.Single(fetched!.Items).Medication);
+        Assert.True((await a.Client.GetFromJsonAsync<PrescriptionDto>($"/api/prescriptions/{prescriptionA.Id}"))!.IsOwn);
+
+        // La lectura de registros de otro profesional queda auditada como tal (sin contenido).
+        var audit = await AuditAsync();
+        Assert.Contains(audit, e => e.Action == "prescriptions.read" && e.ResourceId == prescriptionA.Id.ToString() && e.Details == "other_author");
+        Assert.Contains(audit, e => e.Action == "consultations.read" && e.ResourceId == consultationA.Id.ToString() && e.Details == "other_author");
+        Assert.Contains(audit, e => e.Action == "consultations.listed" && e.ResourceId == a.Patient.Id.ToString() && e.Details == "count=2;others=1");
+    }
+
+    [Fact]
+    public async Task Expediente_compartido_ningun_medico_modifica_ni_agrega_a_los_registros_de_otro()
+    {
+        var a = await NewScenarioAsync();
+        var (consultationA, prescriptionA) = await WriteClinicalAsync(a, "de A");
+        var b = await NewColleagueAsync(a.Patient.Id);
+
+        // No puede crear una receta sobre la consulta de otro ni registrar la consulta de la cita de otro.
+        Assert.Equal(HttpStatusCode.NotFound, (await b.Client.PostAsJsonAsync("/api/prescriptions", new CreatePrescriptionRequest(consultationA.Id, [Item()]))).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await b.Client.PostAsJsonAsync("/api/consultations", Consultation(a.Appointment.Id))).StatusCode);
+        Assert.Single((await a.Client.GetFromJsonAsync<List<PrescriptionDto>>($"/api/patients/{a.Patient.Id}/prescriptions"))!);
+
+        // No existe ninguna operación para modificar o borrar consultas o recetas, ni para su autor ni para otros.
+        foreach (var client in new[] { a.Client, b.Client })
+            foreach (var method in new[] { HttpMethod.Put, HttpMethod.Patch, HttpMethod.Delete })
+            {
+                Assert.Equal(HttpStatusCode.MethodNotAllowed, (await client.SendAsync(new HttpRequestMessage(method, $"/api/consultations/{consultationA.Id}") { Content = JsonContent.Create(new { }) })).StatusCode);
+                Assert.Equal(HttpStatusCode.MethodNotAllowed, (await client.SendAsync(new HttpRequestMessage(method, $"/api/prescriptions/{prescriptionA.Id}") { Content = JsonContent.Create(new { }) })).StatusCode);
+            }
+
+        var after = await b.Client.GetFromJsonAsync<ConsultationDto>($"/api/consultations/{consultationA.Id}");
+        Assert.Equal(("Motivo de A", "Notas de A", "Diagnóstico de A"), (after!.Reason, after.Notes, after.Diagnosis)); // intacta
+        Assert.Contains(await AuditAsync(), e => e.Action == "clinical.access_denied" && e.ResourceId == consultationA.Id.ToString());
+    }
+
+    [Fact]
+    public async Task Expediente_compartido_un_medico_sin_relacion_valida_no_lee_nada_de_un_colega()
+    {
+        var a = await NewScenarioAsync();
+        var (consultationA, prescriptionA) = await WriteClinicalAsync(a, "de A");
+        var (userC, emailC) = await stack.CreateUserAsync(UserRole.Medico);
+        await stack.CreateScheduledDoctorAsync(userC);
+        var (c, login) = await stack.LoginClientForAsync(emailC);
+
+        Assert.Equal(HttpStatusCode.NotFound, (await c.GetAsync($"/api/patients/{a.Patient.Id}/consultations")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await c.GetAsync($"/api/patients/{a.Patient.Id}/prescriptions")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await c.GetAsync($"/api/consultations/{consultationA.Id}")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await c.GetAsync($"/api/prescriptions/{prescriptionA.Id}")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await c.GetAsync($"/api/patients/{a.Patient.Id}")).StatusCode);
+
+        var denied = (await AuditAsync()).Where(e => e.Action == "clinical.access_denied" && e.ActorUserId == login.User.Id).Select(e => e.ResourceId).ToList();
+        Assert.Contains(consultationA.Id.ToString(), denied);
+        Assert.Contains(prescriptionA.Id.ToString(), denied);
+        Assert.Contains(a.Patient.Id.ToString(), denied);
+    }
+
+    [Fact]
+    public async Task Expediente_compartido_la_lectura_depende_de_que_la_relacion_siga_vigente()
+    {
+        var a = await NewScenarioAsync();
+        var (consultationA, prescriptionA) = await WriteClinicalAsync(a, "de A");
+        var b = await NewColleagueAsync(a.Patient.Id);
+        Assert.Equal(HttpStatusCode.OK, (await b.Client.GetAsync($"/api/prescriptions/{prescriptionA.Id}")).StatusCode);
+
+        await stack.SetAppointmentStatusAsync(b.Appointment.Id, AppointmentStatus.Cancelled); // el colega pierde su única relación
+
+        Assert.Equal(HttpStatusCode.NotFound, (await b.Client.GetAsync($"/api/prescriptions/{prescriptionA.Id}")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await b.Client.GetAsync($"/api/consultations/{consultationA.Id}")).StatusCode);
+        Assert.Equal(HttpStatusCode.NotFound, (await b.Client.GetAsync($"/api/patients/{a.Patient.Id}/consultations")).StatusCode);
+        // El autor conserva el acceso: tiene una consulta registrada.
+        Assert.Equal(HttpStatusCode.OK, (await a.Client.GetAsync($"/api/patients/{a.Patient.Id}/consultations")).StatusCode);
+    }
+
+    [Fact]
+    public async Task Expediente_compartido_el_acceso_por_una_consulta_propia_tambien_es_valido()
+    {
+        var a = await NewScenarioAsync();
+        var (_, prescriptionA) = await WriteClinicalAsync(a, "de A");
+        var b = await NewColleagueAsync(a.Patient.Id);
+        await b.Client.PostAsJsonAsync("/api/consultations", Consultation(b.Appointment.Id, "de B"));
+        await stack.SetAppointmentStatusAsync(b.Appointment.Id, AppointmentStatus.Cancelled); // sin cita, pero con consulta propia registrada
+
+        Assert.Equal(HttpStatusCode.OK, (await b.Client.GetAsync($"/api/prescriptions/{prescriptionA.Id}")).StatusCode);
+    }
+
+    [Fact]
+    public async Task Paciente_ve_sus_recetas_de_todos_sus_medicos_y_nada_mas()
+    {
+        var (patientUserId, patientEmail) = await stack.CreateUserAsync(UserRole.Paciente);
+        var a = await NewScenarioAsync(patientUserId);
+        var (_, prescriptionA) = await WriteClinicalAsync(a, "de A");
+        var otherPatient = await stack.CreatePatientAsync();
+        var b = await NewColleagueAsync(a.Patient.Id);
+        var consultationB = (await (await b.Client.PostAsJsonAsync("/api/consultations", Consultation(b.Appointment.Id, "de B"))).Content.ReadFromJsonAsync<ConsultationDto>())!;
+        var prescriptionB = (await (await b.Client.PostAsJsonAsync("/api/prescriptions", new CreatePrescriptionRequest(consultationB.Id, [Item("Medicamento de B")]))).Content.ReadFromJsonAsync<PrescriptionDto>())!;
+        var colleagueOfOther = await NewColleagueAsync(otherPatient.Id);
+        var otherConsultation = (await (await colleagueOfOther.Client.PostAsJsonAsync("/api/consultations", Consultation(colleagueOfOther.Appointment.Id, "ajena"))).Content.ReadFromJsonAsync<ConsultationDto>())!;
+        var foreignPrescription = (await (await colleagueOfOther.Client.PostAsJsonAsync("/api/prescriptions", new CreatePrescriptionRequest(otherConsultation.Id, [Item()]))).Content.ReadFromJsonAsync<PrescriptionDto>())!;
+        var (patient, _) = await stack.LoginClientForAsync(patientEmail);
+
+        var mine = await patient.GetFromJsonAsync<List<PrescriptionDto>>("/api/prescriptions/me");
+
+        Assert.Equal(new[] { prescriptionA.Id, prescriptionB.Id }.Order(), mine!.Select(p => p.Id).Order());
+        Assert.All(mine!, p => Assert.False(p.IsOwn));
+        Assert.Equal(HttpStatusCode.NotFound, (await patient.GetAsync($"/api/prescriptions/{foreignPrescription.Id}")).StatusCode);
+        Assert.Equal(HttpStatusCode.Forbidden, (await patient.GetAsync($"/api/patients/{a.Patient.Id}/consultations")).StatusCode);
     }
 
     [Fact]
@@ -314,22 +445,6 @@ public class ClinicalApiTests(StackFixture stack)
         var audit = await AuditAsync();
         Assert.Contains(audit, e => e.Action == "clinical.access_denied" && e.ActorUserId == strangerLogin.User.Id && e.ResourceId == prescription.Id.ToString());
         Assert.Contains(audit, e => e.Action == "prescriptions.read" && e.ActorUserId == ownerLogin.User.Id);
-    }
-
-    [Fact]
-    public async Task Otro_medico_con_relacion_con_el_paciente_no_lee_recetas_de_un_colega()
-    {
-        var a = await NewScenarioAsync();
-        var consultation = await RegisterConsultationAsync(a);
-        var prescription = (await (await a.Client.PostAsJsonAsync("/api/prescriptions", new CreatePrescriptionRequest(consultation.Id, [Item()]))).Content.ReadFromJsonAsync<PrescriptionDto>())!;
-        var (userB, emailB) = await stack.CreateUserAsync(UserRole.Medico);
-        var doctorB = await stack.CreateScheduledDoctorAsync(userB);
-        await stack.CreateAppointmentAsync(a.Patient.Id, doctorB.Id, DateTime.UtcNow.Date.AddDays(-1).AddHours(9));
-        var (clientB, _) = await stack.LoginClientForAsync(emailB);
-
-        Assert.Equal(HttpStatusCode.OK, (await clientB.GetAsync($"/api/patients/{a.Patient.Id}")).StatusCode); // sí es su paciente (tiene cita)
-        Assert.Equal(HttpStatusCode.NotFound, (await clientB.GetAsync($"/api/prescriptions/{prescription.Id}")).StatusCode); // pero no la receta de su colega
-        Assert.Empty((await clientB.GetFromJsonAsync<List<PrescriptionDto>>($"/api/patients/{a.Patient.Id}/prescriptions"))!);
     }
 
     [Fact]

@@ -61,7 +61,8 @@ Con la API en Development, el contrato OpenAPI está en `http://localhost:5011/o
 ## Expediente, consultas y recetas
 
 - El médico abre el expediente desde su agenda o desde "Pacientes autorizados". Cada consulta pertenece a una cita (una consulta por cita; de hoy o anteriores) y cada receta a una consulta, con 1 a 10 medicamentos.
-- El médico ve en el expediente **solo las consultas y recetas que él escribió** (mínimo privilegio). El paciente lee únicamente sus propias recetas (`GET /api/prescriptions/me`, para la app móvil).
+- **Expediente compartido:** un médico con relación de atención válida con el paciente (una cita no cancelada o una consulta registrada) lee las consultas y recetas que escribieron **otros médicos**, identificadas por autor. **Nadie modifica registros de otro profesional** (solo el autor crea recetas sobre su consulta; las consultas y recetas no se editan ni se borran). Sin relación válida no hay acceso. Recepción, Administrador y Laboratorio no acceden a la información clínica.
+- El paciente lee únicamente sus propias recetas, de cualquiera de sus médicos (`GET /api/prescriptions/me`, para la app móvil).
 - La sección Laboratorio del expediente indica que el módulo está pendiente y no muestra resultados.
 - La auditoría y las bitácoras registran quién accedió a qué recurso y cuándo, nunca el contenido clínico.
 
@@ -90,7 +91,7 @@ Docs/  Referencias/     documento del proyecto y diseño aprobado (solo lectura)
 
 ## Estado de las pruebas
 
-Hoy: 155 pruebas xUnit superadas (28 unitarias y 127 de integración con PostgreSQL y Redis reales). Además, **Cypress** (`tests/cypress`) ya cubre los recorridos de Recepción (8 pruebas) y Médico (7 pruebas); ver su README. **Pendientes y obligatorios según el documento del proyecto**: ampliar Cypress (smoke, Administrador y Laboratorio, regresión), colección de Insomnia (API), Maestro (móvil) y pruebas de rendimiento con k6 o JMeter. Detalle en [documentacion/03-matriz-trazabilidad.md](documentacion/03-matriz-trazabilidad.md); los hallazgos y la verificación manual en [documentacion/04-registro-de-hallazgos.md](documentacion/04-registro-de-hallazgos.md).
+Hoy: 162 pruebas xUnit superadas (31 unitarias y 131 de integración con PostgreSQL y Redis reales). Además, **Cypress** (`tests/cypress`) ya cubre los recorridos de Recepción (8 pruebas) y Médico (10 pruebas, con datos aislados y sin depender de la hora); ver su README. **Pendientes y obligatorios según el documento del proyecto**: ampliar Cypress (smoke, Administrador y Laboratorio, regresión), colección de Insomnia (API), Maestro (móvil) y pruebas de rendimiento con k6 o JMeter. Detalle en [documentacion/03-matriz-trazabilidad.md](documentacion/03-matriz-trazabilidad.md); los hallazgos y la verificación manual en [documentacion/04-registro-de-hallazgos.md](documentacion/04-registro-de-hallazgos.md).
 
 ## Seguridad
 
