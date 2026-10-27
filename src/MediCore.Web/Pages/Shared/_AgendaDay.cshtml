@@ -56,6 +56,10 @@
                                 {
                                     <a class="link" asp-page="/Agenda/Cita" asp-route-id="@appointment.Id">Ver detalle ↗</a>
                                 }
+                                else
+                                {
+                                    <a class="link" asp-page="/Pacientes/Expediente" asp-route-id="@appointment.PatientId" asp-route-cita="@appointment.Id">Abrir expediente ↗</a>
+                                }
                             </div>
                         </div>
                     }

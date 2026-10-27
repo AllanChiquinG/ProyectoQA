@@ -1,4 +1,5 @@
 import { addDays, clinicToday, firstOfMonth, monthLabel } from '../support/dates';
+import { snap } from '../support/screenshots';
 
 /**
  * Recorrido de Recepción (WEB-01, 02, 03, 04): reservar, ver detalle, cancelar con y sin confirmación,
@@ -82,7 +83,7 @@ describe('Recepción · reservar, consultar y cancelar citas', () => {
     cy.visit('/');
     cy.contains('.user', 'Elena Vargas').should('contain', 'Recepción');
     cy.contains('nav a.nav', 'Agenda de citas').should('be.visible');
-    cy.screenshot('01-sesion-recepcion', { capture: 'viewport' });
+    snap('01-sesion-recepcion');
   });
 
   it('2 y 3. elige médico, fecha, paciente y horario, y confirma con el botón de la interfaz', () => {
@@ -92,7 +93,7 @@ describe('Recepción · reservar, consultar y cancelar citas', () => {
 
     fillAgendaFilters();
     cy.contains('.daytitle', DOCTOR);
-    cy.screenshot('02-agenda-del-medico', { capture: 'viewport' });
+    snap('02-agenda-del-medico');
 
     cy.contains('a.btn', 'Reservar cita').click();
     cy.location('pathname').should('eq', '/Agenda/Reservar');
@@ -114,7 +115,7 @@ describe('Recepción · reservar, consultar y cancelar citas', () => {
 
     cy.contains('.times label', '09:00').click();
     cy.get('input[name=Time][value="09:00"]').should('be.checked');
-    cy.screenshot('03-formulario-de-reserva', { capture: 'viewport' });
+    snap('03-formulario-de-reserva');
 
     cy.contains('button', 'Confirmar cita').click();
 
@@ -125,7 +126,7 @@ describe('Recepción · reservar, consultar y cancelar citas', () => {
     cy.contains('.summaryline', 'Médico').should('contain', DOCTOR);
     cy.contains('.summaryline', 'Hora').should('contain', '09:00');
     cy.contains('.summaryline', 'Estado').should('contain', 'Confirmada');
-    cy.screenshot('04-cita-confirmada', { capture: 'viewport' });
+    snap('04-cita-confirmada');
   });
 
   it('4. abre "Ver detalle" desde la agenda', () => {
@@ -172,13 +173,13 @@ describe('Recepción · reservar, consultar y cancelar citas', () => {
     cy.get('#toast').should('contain', 'La cita fue cancelada');
     cy.contains('.summaryline', 'Estado').should('contain', 'Cancelada');
     cy.contains('button', 'Cancelar cita').should('not.exist');
-    cy.screenshot('05-cita-cancelada', { capture: 'viewport' });
+    snap('05-cita-cancelada');
   });
 
   it('6. el horario cancelado vuelve a estar disponible', () => {
     fillAgendaFilters();
     cy.contains('.slot', '09:00').should('contain', '＋ Horario disponible').and('not.contain', PATIENTS[0].name);
-    cy.screenshot('06-horario-liberado', { capture: 'viewport' });
+    snap('06-horario-liberado');
 
     // Y se puede volver a reservar desde ese mismo horario.
     cy.contains('.slot', '09:00').contains('a', 'Horario disponible').click();
@@ -207,7 +208,7 @@ describe('Recepción · reservar, consultar y cancelar citas', () => {
     cy.get('#Date').should('have.value', DATE);
     // ...y el horario ocupado ya no se puede elegir.
     cy.get(`input[name=Time][value="${takenTime}"]`).should('be.disabled').and('not.be.checked');
-    cy.screenshot('07-conflicto-de-horario', { capture: 'viewport' });
+    snap('07-conflicto-de-horario');
 
     // Se puede corregir y reservar otro horario sin volver a empezar.
     cy.contains('.times label', '10:30').click();
@@ -240,6 +241,6 @@ describe('Recepción · reservar, consultar y cancelar citas', () => {
     cy.get('.calgrid a').contains(/^15$/).click();
     cy.location('search').should('match', /date=\d{4}-\d{2}-15/);
     cy.get('.calgrid a.chosen').should('have.text', '15');
-    cy.screenshot('08-calendario', { capture: 'viewport' });
+    snap('08-calendario');
   });
 });

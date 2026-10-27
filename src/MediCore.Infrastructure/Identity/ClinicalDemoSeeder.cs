@@ -1,3 +1,4 @@
+using MediCore.Domain.Clinical;
 using MediCore.Domain.Doctors;
 using MediCore.Domain.Patients;
 using MediCore.Domain.Scheduling;
@@ -66,6 +67,33 @@ public static class ClinicalDemoSeeder
         }
 
         await db.SaveChangesAsync(ct);
+
+        // Una consulta y una receta ficticias de Ana García con la Dra. Méndez (las del diseño), de una cita ya pasada.
+        if (!await db.Consultations.AnyAsync(ct))
+        {
+            var lucia = await db.Doctors.SingleAsync(d => d.Email == "lucia.mendez@example.com", ct);
+            var ana = await db.Patients.SingleAsync(p => p.NormalizedIdentification == "PAC-001", ct);
+            var createdBy = await db.Users.OrderBy(u => u.NormalizedEmail).Select(u => u.Id).FirstAsync(ct);
+            var day = clock.Today.AddDays(-14);
+            while (day.DayOfWeek is DayOfWeek.Saturday or DayOfWeek.Sunday) day = day.AddDays(-1);
+            var (start, end) = Appointment.Range(day, new TimeOnly(8, 0));
+            var visit = new Appointment { PatientId = ana.Id, DoctorId = lucia.Id, StartsAtLocal = start, EndsAtLocal = end, Reason = "Consulta de seguimiento", CreatedByUserId = createdBy };
+            var consultation = new Consultation
+            {
+                PatientId = ana.Id, DoctorId = lucia.Id, AppointmentId = visit.Id,
+                Reason = "Consulta de seguimiento", Diagnosis = "Control general", Notes = "Consulta ficticia de demostración.",
+            };
+            var prescription = new Prescription
+            {
+                PatientId = ana.Id, DoctorId = lucia.Id, ConsultationId = consultation.Id,
+                Items =
+                [
+                    new PrescriptionItem { Position = 1, Medication = "Paracetamol", Dose = "500 mg", Frequency = "Cada 8 horas", Duration = "3 días", Instructions = "Receta ficticia para demostrar la interfaz." },
+                ],
+            };
+            db.AddRange(visit, consultation, prescription);
+            await db.SaveChangesAsync(ct);
+        }
     }
 
     private static Patient NewPatient(string name, string id, DateOnly birth, string phone, string email, Guid? userId = null) => new()

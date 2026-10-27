@@ -1,0 +1,32 @@
+@page "{id:guid}"
+@model MediCore.Web.Pages.Pacientes.RecetaModel
+@{
+    ViewData["Code"] = "WEB-15";
+    ViewData["Title"] = "Detalle de receta";
+    ViewData["Subtitle"] = "Indicaciones registradas en la consulta.";
+}
+
+@if (Model.Prescription is { } prescription)
+{
+    <div class="panel panelpad">
+        <div class="eyebrow">RECETA MÉDICA</div>
+        <h2>@prescription.PatientName</h2>
+        <p class="sub">@prescription.DoctorName · @prescription.Date.ToString("dd/MM/yyyy")</p>
+
+        @foreach (var item in prescription.Items)
+        {
+            <div class="mobcard medication-card">
+                <h2>@item.Medication</h2>
+                <div class="summaryline"><span>Dosis</span><strong>@item.Dose</strong></div>
+                <div class="summaryline"><span>Frecuencia</span><strong>@item.Frequency</strong></div>
+                <div class="summaryline"><span>Duración</span><strong>@item.Duration</strong></div>
+                <h3>Indicaciones</h3>
+                <p>@item.Instructions</p>
+            </div>
+        }
+
+        <div class="formfoot">
+            <a class="btn secondary" asp-page="/Pacientes/Expediente" asp-route-id="@prescription.PatientId" asp-route-tab="Recetas">Volver al expediente</a>
+        </div>
+    </div>
+}

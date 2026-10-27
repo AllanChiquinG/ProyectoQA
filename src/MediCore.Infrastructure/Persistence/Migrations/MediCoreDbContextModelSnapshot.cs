@@ -71,6 +71,125 @@ namespace MediCore.Infrastructure.Persistence.Migrations
                     b.ToTable("audit_entries", (string)null);
                 });
 
+            modelBuilder.Entity("MediCore.Domain.Clinical.Consultation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AppointmentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Diagnosis")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<Guid>("PatientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId")
+                        .IsUnique();
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId", "DoctorId");
+
+                    b.ToTable("consultations", (string)null);
+                });
+
+            modelBuilder.Entity("MediCore.Domain.Clinical.Prescription", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ConsultationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PatientId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsultationId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId", "DoctorId");
+
+                    b.ToTable("prescriptions", (string)null);
+                });
+
+            modelBuilder.Entity("MediCore.Domain.Clinical.PrescriptionItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Dose")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
+                    b.Property<string>("Duration")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
+                    b.Property<string>("Frequency")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)");
+
+                    b.Property<string>("Instructions")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("Medication")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("PrescriptionId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PrescriptionId", "Position")
+                        .IsUnique();
+
+                    b.ToTable("prescription_items", (string)null);
+                });
+
             modelBuilder.Entity("MediCore.Domain.Doctors.Doctor", b =>
                 {
                     b.Property<Guid>("Id")
@@ -346,6 +465,69 @@ namespace MediCore.Infrastructure.Persistence.Migrations
                     b.ToTable("doctor_schedules", (string)null);
                 });
 
+            modelBuilder.Entity("MediCore.Domain.Clinical.Consultation", b =>
+                {
+                    b.HasOne("MediCore.Domain.Scheduling.Appointment", "Appointment")
+                        .WithMany()
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("MediCore.Domain.Doctors.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("MediCore.Domain.Patients.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("MediCore.Domain.Clinical.Prescription", b =>
+                {
+                    b.HasOne("MediCore.Domain.Clinical.Consultation", "Consultation")
+                        .WithMany()
+                        .HasForeignKey("ConsultationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("MediCore.Domain.Doctors.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("MediCore.Domain.Patients.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Consultation");
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("MediCore.Domain.Clinical.PrescriptionItem", b =>
+                {
+                    b.HasOne("MediCore.Domain.Clinical.Prescription", null)
+                        .WithMany("Items")
+                        .HasForeignKey("PrescriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("MediCore.Domain.Scheduling.Appointment", b =>
                 {
                     b.HasOne("MediCore.Domain.Doctors.Doctor", "Doctor")
@@ -372,6 +554,11 @@ namespace MediCore.Infrastructure.Persistence.Migrations
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MediCore.Domain.Clinical.Prescription", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

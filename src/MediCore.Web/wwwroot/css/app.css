@@ -50,3 +50,15 @@ a.appointment { text-decoration: none; }
 .times input:focus-visible + span { outline: 3px solid #77c6bf; outline-offset: 3px; }
 .refresh-times { margin-top: 14px; }
 .hide-with-js .refresh-times { display: none; }
+
+/* Expediente y recetas (WEB-12 a WEB-15) */
+.tabs a { padding: 16px 0; color: #526e76; font-weight: 600; text-decoration: none; border-bottom: 2px solid transparent; }
+.tabs a:hover { color: #076c64; }
+.tabs a.on { border-bottom-color: #087f79; }
+.notice-top { margin-top: 0; margin-bottom: 25px; }
+fieldset.medicamento { border: 1px solid #cbdfdc; border-radius: 12px; padding: 18px 20px 14px; margin: 0 0 20px; }
+fieldset.medicamento legend { font: 700 14px Manrope, sans-serif; color: #245548; padding: 0 8px; }
+fieldset.medicamento .link { margin-top: 8px; }
+.add-medication { margin-bottom: 4px; }
+.medication-card { cursor: default; }
+.medication-card:hover { border-color: #c6dcd3; background: #f9fcf7; }

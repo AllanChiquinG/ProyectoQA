@@ -62,4 +62,13 @@ public static class AuditActions
     public const string AppointmentRead = "appointments.read";
     public const string AppointmentAgendaViewed = "appointments.agenda_viewed";
     public const string AppointmentAccessDenied = "appointments.access_denied";
+
+    // Información clínica: la auditoría registra QUIÉN, QUÉ recurso y CUÁNDO; nunca el contenido (motivo, notas, diagnóstico, medicamentos).
+    public const string ConsultationCreated = "consultations.created";
+    public const string ConsultationsListed = "consultations.listed";
+    public const string ConsultationRead = "consultations.read";
+    public const string PrescriptionCreated = "prescriptions.created";
+    public const string PrescriptionRead = "prescriptions.read";
+    public const string PrescriptionsListed = "prescriptions.listed";
+    public const string ClinicalAccessDenied = "clinical.access_denied";
 }

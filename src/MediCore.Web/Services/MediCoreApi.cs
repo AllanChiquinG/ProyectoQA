@@ -4,6 +4,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using MediCore.Contracts;
 using MediCore.Contracts.Auth;
+using MediCore.Contracts.Clinical;
 using MediCore.Contracts.Doctors;
 using MediCore.Contracts.Patients;
 using MediCore.Contracts.Scheduling;
@@ -49,6 +50,14 @@ public interface IMediCoreApi
     Task<ApiResult<AppointmentDto>> GetAppointmentAsync(Guid id, CancellationToken ct = default);
     Task<ApiResult<AppointmentDto>> CreateAppointmentAsync(CreateAppointmentRequest request, string idempotencyKey, CancellationToken ct = default);
     Task<ApiResult> CancelAppointmentAsync(Guid id, CancellationToken ct = default);
+
+    Task<ApiResult<IReadOnlyList<ConsultableAppointmentDto>>> GetConsultableAppointmentsAsync(Guid patientId, CancellationToken ct = default);
+    Task<ApiResult<ConsultationDto>> CreateConsultationAsync(CreateConsultationRequest request, CancellationToken ct = default);
+    Task<ApiResult<ConsultationDto>> GetConsultationAsync(Guid id, CancellationToken ct = default);
+    Task<ApiResult<IReadOnlyList<ConsultationDto>>> GetPatientConsultationsAsync(Guid patientId, CancellationToken ct = default);
+    Task<ApiResult<PrescriptionDto>> CreatePrescriptionAsync(CreatePrescriptionRequest request, CancellationToken ct = default);
+    Task<ApiResult<PrescriptionDto>> GetPrescriptionAsync(Guid id, CancellationToken ct = default);
+    Task<ApiResult<IReadOnlyList<PrescriptionDto>>> GetPatientPrescriptionsAsync(Guid patientId, CancellationToken ct = default);
 }
 
 internal sealed class MediCoreApi(HttpClient http, IHttpContextAccessor accessor) : IMediCoreApi
@@ -147,6 +156,27 @@ internal sealed class MediCoreApi(HttpClient http, IHttpContextAccessor accessor
 
     public Task<ApiResult> CancelAppointmentAsync(Guid id, CancellationToken ct = default)
         => CallAsync(HttpMethod.Post, $"api/appointments/{id}/cancel", null, ct: ct);
+
+    public async Task<ApiResult<IReadOnlyList<ConsultableAppointmentDto>>> GetConsultableAppointmentsAsync(Guid patientId, CancellationToken ct = default)
+        => AsReadOnly(await CallAsync<List<ConsultableAppointmentDto>>(HttpMethod.Get, $"api/appointments/consultable?patientId={patientId}", null, ct: ct));
+
+    public Task<ApiResult<ConsultationDto>> CreateConsultationAsync(CreateConsultationRequest request, CancellationToken ct = default)
+        => CallAsync<ConsultationDto>(HttpMethod.Post, "api/consultations", request, ct: ct);
+
+    public Task<ApiResult<ConsultationDto>> GetConsultationAsync(Guid id, CancellationToken ct = default)
+        => CallAsync<ConsultationDto>(HttpMethod.Get, $"api/consultations/{id}", null, ct: ct);
+
+    public async Task<ApiResult<IReadOnlyList<ConsultationDto>>> GetPatientConsultationsAsync(Guid patientId, CancellationToken ct = default)
+        => AsReadOnly(await CallAsync<List<ConsultationDto>>(HttpMethod.Get, $"api/patients/{patientId}/consultations", null, ct: ct));
+
+    public Task<ApiResult<PrescriptionDto>> CreatePrescriptionAsync(CreatePrescriptionRequest request, CancellationToken ct = default)
+        => CallAsync<PrescriptionDto>(HttpMethod.Post, "api/prescriptions", request, ct: ct);
+
+    public Task<ApiResult<PrescriptionDto>> GetPrescriptionAsync(Guid id, CancellationToken ct = default)
+        => CallAsync<PrescriptionDto>(HttpMethod.Get, $"api/prescriptions/{id}", null, ct: ct);
+
+    public async Task<ApiResult<IReadOnlyList<PrescriptionDto>>> GetPatientPrescriptionsAsync(Guid patientId, CancellationToken ct = default)
+        => AsReadOnly(await CallAsync<List<PrescriptionDto>>(HttpMethod.Get, $"api/patients/{patientId}/prescriptions", null, ct: ct));
 
     private static ApiResult<IReadOnlyList<T>> AsReadOnly<T>(ApiResult<List<T>> result)
         => new(result.Status, result.Value, result.Message);

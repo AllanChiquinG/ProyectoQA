@@ -38,6 +38,10 @@
                         {
                             <a class="link" asp-page="/Pacientes/Formulario" asp-route-id="@patient.Id">Consultar / editar ↗</a>
                         }
+                        else
+                        {
+                            <a class="link" asp-page="/Pacientes/Expediente" asp-route-id="@patient.Id">Abrir expediente ↗</a>
+                        }
                     </td>
                 </tr>
             }

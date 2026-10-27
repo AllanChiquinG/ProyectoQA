@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\MediCore.Domain\MediCore.Domain.csproj" />
     <ProjectReference Include="..\..\src\MediCore.Contracts\MediCore.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\MediCore.Api\MediCore.Api.csproj" />
   </ItemGroup>
 
 </Project>

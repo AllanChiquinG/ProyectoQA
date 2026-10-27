@@ -1,0 +1,57 @@
+@page "{id:guid}"
+@model MediCore.Web.Pages.Pacientes.RegistrarConsultaModel
+@{
+    ViewData["Code"] = "WEB-13";
+    ViewData["Title"] = "Registrar consulta";
+    ViewData["Subtitle"] = "Documenta la atención del paciente.";
+}
+
+@if (Model.Patient is { } patient)
+{
+    <form method="post" action="@Url.Page("/Pacientes/RegistrarConsulta", new { id = patient.Id })" asp-antiforgery="true" class="panel panelpad" novalidate>
+        <div class="notice notice-top">Paciente: @patient.FullName · @Model.DoctorName · @Model.Today.ToString("dd/MM/yyyy")</div>
+        <div asp-validation-summary="ModelOnly" class="err" role="alert"></div>
+        @if (Model.Error is not null)
+        {
+            <div class="err" role="alert">@Model.Error</div>
+        }
+        @if (Model.Appointments.Count == 0)
+        {
+            <div class="notice" id="sinCitas">Este paciente no tiene citas pendientes de consulta (la cita debe estar confirmada y ser de hoy o anterior).</div>
+        }
+        else
+        {
+            <div class="formgrid">
+                <label class="field span2">Cita atendida
+                    <select asp-for="Input.AppointmentId" required>
+                        @foreach (var appointment in Model.Appointments)
+                        {
+                            <option value="@appointment.Id" selected="@(appointment.Id == Model.Input.AppointmentId)">@appointment.Date.ToString("dd/MM/yyyy") · @appointment.Time</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Input.AppointmentId" class="err"></span>
+                </label>
+                <label class="field span2">Motivo de consulta
+                    <textarea asp-for="Input.Reason" required maxlength="200"></textarea>
+                    <span asp-validation-for="Input.Reason" class="err"></span>
+                </label>
+                <label class="field span2">Notas clínicas
+                    <textarea asp-for="Input.Notes" required maxlength="4000"></textarea>
+                    <span asp-validation-for="Input.Notes" class="err"></span>
+                </label>
+                <label class="field span2">Diagnóstico
+                    <textarea asp-for="Input.Diagnosis" required maxlength="500"></textarea>
+                    <span asp-validation-for="Input.Diagnosis" class="err"></span>
+                </label>
+            </div>
+        }
+        <div class="formfoot">
+            <a class="btn secondary" asp-page="/Pacientes/Expediente" asp-route-id="@patient.Id">Cancelar</a>
+            @if (Model.Appointments.Count > 0)
+            {
+                <button class="btn secondary" type="submit" name="Action" value="save">Guardar consulta</button>
+                <button class="btn" type="submit" name="Action" value="@MediCore.Web.Pages.Pacientes.RegistrarConsultaModel.GuardarYCrearReceta">Guardar y crear receta →</button>
+            }
+        </div>
+    </form>
+}

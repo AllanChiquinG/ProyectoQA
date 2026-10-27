@@ -90,6 +90,31 @@ Con esta suite quedan **sustituidas** las comprobaciones con JavaScript de reser
 
 Falta ampliar Cypress (smoke, otros roles, regresión y más escenarios negativos) y la revisión de accesibilidad con Lighthouse o axe.
 
+## Entrega 5 · expediente, consultas y recetas
+
+| ID | Tipo | Qué ocurrió | Causa | Corrección | Resultado |
+|---|---|---|---|---|---|
+| H5-01 | Entorno / proceso | Se indicó que el PR de la entrega 4 estaba fusionado, pero `origin/main` seguía en la fusión del PR #3 (`00e510d`). | La fusión no llegó a `origin/main` (no se verifica con `gh`; se comprobó con `git ls-remote`). | La rama `feature/entrega-5-consultas-recetas` se creó **sobre `feature/entrega-4-agenda-citas`** (rama apilada) para no perder la entrega 4. | Al fusionar el PR de la entrega 4, el de la 5 mostrará solo sus cambios. **Pendiente de tu confirmación.** |
+| H5-02 | Prueba | Al ejecutar varias suites seguidas, las preparaciones por API fallaban con `429 Too Many Requests` y todo quedaba en 0 pruebas. | El límite de intentos de inicio de sesión (10 por minuto por IP) funcionó como debe; las suites hacen muchos inicios de sesión. | En Development el límite sube a 60 por minuto (`appsettings.Development.json`); en otros ambientes sigue en 10. | 15/15 pruebas, 4 ejecuciones seguidas por navegador. |
+| H5-03 | Herramienta | La captura de pantalla de Electron se colgaba de forma intermitente (cerca de 2 de cada 6 ejecuciones) y hacía fallar pruebas funcionales que sí pasaban. | Electron está obsoleto en Cypress 16; el problema es de la captura, no de la aplicación. | Las capturas de evidencia se toman solo en navegadores reales (Chrome); en Electron se ejecutan todas las aserciones. | Sin fallos en 4 ejecuciones seguidas en Electron. |
+| H5-04 | Producto (web) | Abrir el expediente de un paciente sin relación mostraba una página en blanco (404 sin cuerpo). | Las respuestas vacías no tenían página. | Página `/Estado` con `UseStatusCodePagesWithReExecute`: mensaje en español y se conserva el código HTTP. | Cypress paso 8: estado 404 y "No encontramos lo que buscas", sin datos del paciente. |
+| H5-05 | Prueba | Riesgo de falso negativo en la prueba de bitácoras: si el capturador no recibiera nada, "no contiene el dato" pasaría igual. | — | Se agregó un control: se escribe un texto conocido en la bitácora y se exige que el capturador lo vea antes de comprobar que el contenido clínico no aparece. | Pasa y es significativa. |
+| H5-06 | Herramienta | Una edición de archivo fue rechazada ("modified since read") tras cambiar de rama. | El archivo cambió al cambiar de rama. | Se volvió a leer y a escribir. | Sin efecto en el resultado. |
+
+Decisiones y desviaciones del diseño en esta entrega (no son errores):
+
+- **Varios medicamentos (WEB-14):** el diseño muestra un solo medicamento; se agregó "＋ Agregar medicamento" y "Quitar este medicamento" (hasta 10), cada uno con dosis, frecuencia, duración e indicaciones, como se pidió. Funciona sin JavaScript.
+- **Cita atendida (WEB-13):** se agregó la lista "Cita atendida" para asociar la consulta a la cita (requisito); se propone la cita desde la que se abrió el expediente.
+- **"Crear receta ↗"** en cada consulta del expediente (el diseño solo ofrece "Guardar y crear receta" al registrar).
+- **Laboratorio:** el diseño dice "Sin resultados registrados"; como el módulo no existe, se indica que está **pendiente** y no se muestra nada.
+- **Qué ve el médico:** en el expediente solo lo que él escribió, no las notas de otros médicos del mismo paciente (mínimo privilegio). Es una decisión de seguridad que puedes cambiar.
+
+### Verificación de la entrega 5
+
+- **Cypress `medico-expediente.cy.js` (7 pruebas), sin inyectar JavaScript:** iniciar sesión como Médico; abrir el expediente desde la agenda; recorrer Consultas, Recetas y Laboratorio (pendiente); guardar una consulta incompleta (errores); registrar la consulta; crear una receta con dos medicamentos (agregar y quitar filas conservando lo escrito); ver el detalle; volver al expediente y abrir la receta desde su tarjeta; comprobar que la cita ya no admite otra consulta; y que un paciente sin relación devuelve 404. **7/7 en Chrome 155 y Electron 146.**
+- **Regresión de Recepción `recepcion-reserva.cy.js` (8 pruebas):** 8/8 en ambos navegadores, tras los cambios de esta entrega.
+- **Límites:** Cypress dispara eventos del navegador (no es una persona con teclado físico); `confirm()` no interviene en este recorrido; no se midió accesibilidad ni móvil; cada ejecución agrega una consulta y una receta de prueba (la información clínica no se borra) con un texto único.
+
 ## Entregas anteriores
 
 Los hallazgos de las entregas 0 a 3 se trasladarán al registro formal de defectos en la entrega 14. Los principales: login con 503 por usar `localhost` para Redis (el cliente probaba IPv6 y Docker publica solo IPv4; corregido con `127.0.0.1`), una prueba que comparaba el `traceId` de dos respuestas de error, una prueba del catálogo de médicos afectada por la caché compartida con otras pruebas (se descarta la clave antes de insertar datos directos) y la interfaz de `IAsyncLifetime` de xUnit v2.

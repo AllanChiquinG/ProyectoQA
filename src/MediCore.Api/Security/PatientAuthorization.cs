@@ -18,19 +18,21 @@ public static class PatientOperations
 public static class PatientAccess
 {
     /// <summary>
-    /// Relación de atención del médico: el paciente tiene al menos una cita no cancelada con ese médico (la cuenta del médico
-    /// es <c>Doctor.UserId</c>). Cuando existan las consultas (entrega 5) también cuentan. Es la única fuente de acceso del médico.
+    /// Relación de atención del médico (la cuenta del médico es <c>Doctor.UserId</c>): el paciente tiene al menos una cita no
+    /// cancelada con ese médico O el médico registró una consulta de ese paciente. Cancelar una cita solo retira el acceso si no
+    /// queda ninguna otra de las dos. Es la única fuente de acceso del médico (listado y detalle).
     /// </summary>
     public static Expression<Func<Patient, bool>> HasCareRelationship(MediCoreDbContext db, Guid doctorUserId)
         => patient => db.Appointments.Any(a => a.PatientId == patient.Id
                                                && a.Status == AppointmentStatus.Confirmed
-                                               && a.Doctor.UserId == doctorUserId);
+                                               && a.Doctor.UserId == doctorUserId)
+                      || db.Consultations.Any(c => c.PatientId == patient.Id && c.Doctor.UserId == doctorUserId);
 }
 
 /// <summary>
 /// Autorización a nivel de recurso: decide si ESTE usuario puede actuar sobre ESTE paciente.
 /// Deniega por defecto. Un rol correcto no basta: un paciente solo accede a su propio registro y un médico solo a
-/// pacientes con quienes tiene una cita registrada.
+/// pacientes con quienes tiene una cita no cancelada o una consulta registrada.
 /// </summary>
 public sealed class PatientAuthorizationHandler(IServiceProvider services) : AuthorizationHandler<OperationAuthorizationRequirement, Patient>
 {
@@ -51,7 +53,7 @@ public sealed class PatientAuthorizationHandler(IServiceProvider services) : Aut
                 context.Succeed(requirement);
                 break;
 
-            // El médico solo puede leer pacientes con quienes tiene una cita registrada.
+            // El médico solo puede leer pacientes con quienes tiene una cita no cancelada o una consulta registrada.
             case Roles.Medico when requirement == PatientOperations.Read && userId is not null:
                 // El contexto se obtiene solo cuando hace falta: esta clase se instancia en cada evaluación de autorización.
                 var db = services.GetRequiredService<MediCoreDbContext>();
