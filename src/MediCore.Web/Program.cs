@@ -27,6 +27,7 @@ builder.Services.Configure<Microsoft.AspNetCore.Mvc.MvcOptions>(options =>
 });
 
 builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddSingleton<ClinicCalendar>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient<IMediCoreApi, MediCoreApi>(client =>
 {

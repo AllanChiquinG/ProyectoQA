@@ -1,6 +1,7 @@
 using MediCore.Domain.Identity;
 using MediCore.Infrastructure.Identity;
 using MediCore.Infrastructure.Persistence;
+using MediCore.Infrastructure.Scheduling;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,7 +33,7 @@ public static class DevelopmentBootstrap
                 if (created > 0) logger.LogInformation("Se crearon {Count} usuarios ficticios de desarrollo.", created);
             }
 
-            await ClinicalDemoSeeder.SeedAsync(db);
+            await ClinicalDemoSeeder.SeedAsync(db, scope.ServiceProvider.GetRequiredService<IClinicClock>());
         }
         catch (Exception ex)
         {

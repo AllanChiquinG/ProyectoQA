@@ -7,7 +7,7 @@ Estados: ✔ hecho y verificado · ◐ parcial · ○ pendiente. "Implementació
 | ID | Requisito (fuente) | Pantallas | Implementación | Pruebas previstas | Entrega | Estado |
 |---|---|---|---|---|---|---|
 | RF-01 | Gestión de pacientes y médicos (P2) | WEB-05…08 | `PatientsController`, `DoctorsController`, `Pages/Pacientes`, `Pages/Medicos` | `PatientsApiTests`, `DoctorsApiTests`, `PatientRulesTests`; Cypress pendiente | 3 | ◐ |
-| RF-02 | Agenda y reserva de citas (P2) | WEB-02…04, 11; MOB-03…07 | — | Unit; concurrencia; API; Cypress; Maestro | 4 | ○ |
+| RF-02 | Agenda y reserva de citas (P2) | WEB-02, 03, 04, 09, 11; MOB-03…07 (API lista) | `AppointmentsController`, `DoctorSchedulesController`, `Pages/Agenda`, `Pages/MiAgenda`, `Pages/Medicos/Disponibilidad` | `AppointmentsApiTests`, `AvailabilityApiTests`, `SchedulingRulesTests`; Cypress y Maestro pendientes | 4 | ◐ |
 | RF-03 | Consultas médicas (P2) | WEB-12, 13 | — | Unit; API; Cypress | 5 | ○ |
 | RF-04 | Recetas (P2) | WEB-14, 15; MOB-10, 11 | — | Unit; API; Maestro | 5 | ○ |
 | RF-05 | Registro/consulta de resultados de laboratorio (P2) | WEB-16…18; MOB-08, 09 | — | Unit; integración; API; Maestro | 6 | ○ |
@@ -23,8 +23,8 @@ Estados: ✔ hecho y verificado · ◐ parcial · ○ pendiente. "Implementació
 | API-A1 | `POST /api/auth/login`, `/refresh`, `/logout`, `GET /api/auth/me` (base de MOB-01) | `AuthController` | `IdentityApiTests` | 2 | ✔ |
 | API-A2 | `GET /api/users`, `PUT /api/users/{id}/role`, `GET /api/audit` (administrador) | `UsersController`, `AuditController` | `IdentityApiTests` | 2 | ✔ |
 | API-01 | `GET /api/doctors` (+ `GET/POST/PUT /api/doctors/{id}`, administrador) | `DoctorsController` | `DoctorsApiTests`; Insomnia pendiente | 3 | ✔ |
-| API-02 | `GET /api/doctors/{id}/availability` | — | Insomnia; cache HIT/MISS/TTL | 4 | ○ |
-| API-03 | `POST /api/appointments` | — | Insomnia; concurrencia doble reserva | 4 | ○ |
+| API-02 | `GET /api/doctors/{id}/availability?date=` (+ `GET/PUT /api/doctors/{id}/schedule`) | `DoctorSchedulesController`, `AvailabilityService` | `AvailabilityApiTests`; Insomnia pendiente | 4 | ✔ |
+| API-03 | `POST /api/appointments` (+ `GET` agenda, `GET /{id}`, `GET /me`, `POST /{id}/cancel`) con `Idempotency-Key` | `AppointmentsController` | `AppointmentsApiTests` (concurrencia, idempotencia, cancelación, autorización, datos inválidos); Insomnia pendiente | 4 | ✔ |
 | API-04 | `GET /api/patients/{id}` (+ listado/búsqueda, `me`, alta y edición) | `PatientsController`, `PatientAuthorizationHandler` | `PatientsApiTests` (IDOR, roles, duplicados, concurrencia); Insomnia pendiente | 3 | ✔ |
 | API-05 | `POST /api/labs/results` | — | Insomnia; caída de RabbitMQ | 6 | ○ |
 | API-06 | `GET /api/prescriptions/{id}` | — | Insomnia; IDOR | 5 | ○ |
@@ -33,10 +33,10 @@ Estados: ✔ hecho y verificado · ◐ parcial · ○ pendiente. "Implementació
 
 | ID | Requisito | Implementación | Pruebas previstas | Entrega | Estado |
 |---|---|---|---|---|---|
-| RED-01 | Cache de disponibilidad médica (TTL, invalidación al reservar/cancelar) | — | Integración API↔Redis: HIT, MISS, TTL, invalidación | 4 | ○ |
+| RED-01 | Cache de disponibilidad médica (TTL, invalidación al reservar/cancelar o cambiar el horario) | `Infrastructure/Scheduling/AvailabilityService.cs`, `CacheKeys.Availability`, `RemoveByPrefixAsync` | `AvailabilityApiTests`: MISS, HIT, TTL, invalidación, prefijo por médico | 4 | ✔ |
 | RED-02 | Cache de catálogos y consultas frecuentes | Catálogo de médicos: `Infrastructure/Caching/CacheService.cs`, TTL 5 min, invalida al crear/editar | `DoctorsApiTests`: MISS, HIT, TTL, invalidación | 3–4 | ◐ (falta disponibilidad: entrega 4) |
 | RED-03 | Sesiones en Redis | `Infrastructure/Identity/SessionStore.cs` | `IdentityApiTests`: logout, refresh, reutilización, Redis caído | 2 | ✔ |
-| RED-04 | Recuperación si Redis no está disponible (degradar a BD) | El cache falla abierto y consulta PostgreSQL; las sesiones fallan cerrado (RED-03) | `DoctorsApiTests.Si_Redis_no_esta_disponible…`, `IdentityApiTests` | 3–4 | ◐ |
+| RED-04 | Recuperación si Redis no está disponible (degradar a BD) | El cache falla abierto y consulta PostgreSQL (catálogo y disponibilidad); las sesiones fallan cerrado (RED-03) | `DoctorsApiTests` y `AvailabilityApiTests` (consulta y reserva con Redis inalcanzable), `IdentityApiTests` | 3–4 | ✔ |
 | MQ-01 | Eventos AppointmentCreated / AppointmentCancelled | — | Integración API↔RabbitMQ | 7 | ○ |
 | MQ-02 | LabResultReady, PrescriptionCreated, PatientNotification | — | Integración | 7 | ○ |
 | MQ-03 | Consumidor con reintentos, DLQ e idempotencia | — | Integración consumidor↔RabbitMQ; mensaje duplicado/envenenado | 7 | ○ |
@@ -46,15 +46,15 @@ Estados: ✔ hecho y verificado · ◐ parcial · ○ pendiente. "Implementació
 
 | ID | Requisito | Implementación | Pruebas previstas | Entrega | Estado |
 |---|---|---|---|---|---|
-| CRI-01 | Sin doble reserva ni colisión de horario bajo alta demanda | — | Prueba de concurrencia (N solicitudes simultáneas al mismo horario); k6 | 4, 13 | ○ |
+| CRI-01 | Sin doble reserva ni colisión de horario bajo alta demanda | Restricciones de exclusión en PostgreSQL (médico y paciente) + candados de asesoría por horario + reintento ante deadlock | `AppointmentsApiTests`: 12 solicitudes al mismo horario → 1 reserva; 24 pacientes por 4 horarios + lecturas; mismo paciente con 6 médicos; reenvíos simultáneos con la misma clave. Carga con k6 pendiente (entrega 13) | 4, 13 | ◐ |
 | CRI-02 | Consistencia con lecturas concurrentes de agenda/expediente | — | k6 mixto | 13 | ○ |
 | CRI-03 | RabbitMQ interrumpido después de registrar un resultado | — | Integración | 7 | ○ |
 | SEC-01 | RBAC por rol clínico/administrativo | `[Authorize(Roles)]`, política fallback, `Contracts/Roles.cs` | `IdentityApiTests.Solo_el_administrador…`, `BasicEndpointTests` | 2 | ◐ (roles clínicos con sus módulos) |
-| SEC-02 | Autorización a nivel de recurso (IDOR) | `PatientAuthorizationHandler` (paciente solo lo propio, 404 y auditoría ante intento ajeno); médico sin acceso hasta tener relación de atención | `PatientsApiTests.Paciente_lee_su_propio_registro…`, `Medico_sin_relacion…` | 3–6 | ◐ (citas, consultas, recetas y resultados en 4–6) |
+| SEC-02 | Autorización a nivel de recurso (IDOR) | `PatientAuthorizationHandler` (paciente solo lo propio; médico solo con cita activa), `AppointmentAuthorizationHandler`; 404 y auditoría ante intento ajeno | `PatientsApiTests`, `AppointmentsApiTests` (citas y pacientes ajenos, médico con/sin relación, cancelar la cita retira el acceso) | 3–6 | ◐ (consultas, recetas y resultados en 5–6) |
 | SEC-03 | Exposición de datos sensibles (respuestas, logs, errores) | Paciente no ve contacto de médicos; auditoría sin datos personales; ProblemDetails | `DoctorsApiTests.Paciente_ve_nombre…`, `PatientsApiTests` (auditoría sin PII) | 3–6 | ◐ |
 | SEC-04 | Sesiones y autenticación (expiración, bloqueo, logout) | `AuthController`, JWT, `User` (bloqueo) | `IdentityApiTests` (expiración, manipulación, bloqueo, logout), `UserTests`; Cypress negativo pendiente | 2 | ✔ |
 | SEC-05 | Seguridad de API (validación, rate limit, CORS, cabeceras) | ProblemDetails, validación de entrada, rate limit en login/refresh, CSP y cabeceras en la web | `IdentityApiTests.Login_se_limita_por_ip`; Insomnia y ZAP pendientes | 1–2 | ◐ |
-| SEC-06 | Trazabilidad y auditoría de accesos y cambios clínicos | `audit_entries`, `IAuditLogger`, `GET /api/audit` | `IdentityApiTests` (login, cambio de rol); lecturas, altas, cambios y accesos denegados de pacientes y médicos (`PatientsApiTests`) | 2–6 | ◐ |
+| SEC-06 | Trazabilidad y auditoría de accesos y cambios clínicos | `audit_entries`, `IAuditLogger`, `GET /api/audit` | `IdentityApiTests`; pacientes y médicos (`PatientsApiTests`); citas: creadas, reenviadas, conflictos, canceladas, leídas, agenda consultada, accesos denegados, horario cambiado (`AppointmentsApiTests`, `AvailabilityApiTests`) | 2–6 | ◐ |
 | SEC-07 | Secretos fuera del repositorio | `.gitignore`, `.env.example` | Revisión + escaneo en pipeline | 0 | ◐ |
 
 ## Generales / DevSecOps / documentos

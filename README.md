@@ -1,6 +1,6 @@
 # MediCore
 
-Plataforma hospitalaria: web del personal (Razor Pages), API (ASP.NET Core) y app móvil del paciente (.NET MAUI, Android). Proyecto 2 del Proyecto Final de QA. **Estado: entrega 3 (pacientes y médicos) en curso.** Ver el plan en [documentacion/02-plan-de-trabajo.md](documentacion/02-plan-de-trabajo.md).
+Plataforma hospitalaria: web del personal (Razor Pages), API (ASP.NET Core) y app móvil del paciente (.NET MAUI, Android). Proyecto 2 del Proyecto Final de QA. **Estado: entrega 4 (disponibilidad, agenda y citas) en curso.** Ver el plan en [documentacion/02-plan-de-trabajo.md](documentacion/02-plan-de-trabajo.md).
 
 ## Requisitos
 
@@ -41,7 +41,7 @@ dotnet user-secrets set "Seed:DevPassword" "<contraseña de desarrollo para los 
 
 Usa `127.0.0.1` y no `localhost` para Redis: Docker publica el puerto solo en IPv4 y el cliente puede intentar IPv6 primero.
 
-Al arrancar la API en Development se aplican las migraciones y, si la tabla de usuarios está vacía, se crean usuarios ficticios con la contraseña de `Seed:DevPassword`: `elena.vargas@example.com` (Recepción), `lucia.mendez@example.com` (Médico), `daniela.reyes@example.com` (Laboratorio), `admin@example.com` (Administrador) y `ana.garcia@example.com` (Paciente, solo móvil). También se crean 4 pacientes y 3 médicos ficticios del diseño (Ana García queda vinculada a su cuenta y la Dra. Lucía Méndez a la suya).
+Al arrancar la API en Development se aplican las migraciones y, si la tabla de usuarios está vacía, se crean usuarios ficticios con la contraseña de `Seed:DevPassword`: `elena.vargas@example.com` (Recepción), `lucia.mendez@example.com` (Médico), `daniela.reyes@example.com` (Laboratorio), `admin@example.com` (Administrador) y `ana.garcia@example.com` (Paciente, solo móvil). También se crean 4 pacientes y 3 médicos ficticios del diseño (Ana García queda vinculada a su cuenta y la Dra. Lucía Méndez a la suya). Cada médico recibe un horario de lunes a viernes de 08:00 a 12:00 y la Dra. Méndez cuatro citas el próximo día hábil, como en la agenda del diseño.
 
 El puerto 5433 evita choques con un PostgreSQL local en 5432 (cámbialo con `POSTGRES_PORT`).
 
@@ -57,6 +57,13 @@ dotnet run --project src/MediCore.Web --launch-profile http   # http://localhost
 ```
 
 Con la API en Development, el contrato OpenAPI está en `http://localhost:5011/openapi/v1.json`.
+
+## Agenda y citas
+
+- Las horas son del reloj de la clínica (`Clinic:TimeZone`, por defecto `America/Guatemala`); se puede reservar desde hoy hasta `Scheduling:MaxDaysAhead` días (90). Las citas duran 30 minutos.
+- La disponibilidad se cachea en Redis (`Cache:AvailabilityTtl`, 2 min) y se invalida al reservar, cancelar o cambiar el horario del médico.
+- Para reintentar sin duplicar, `POST /api/appointments` acepta el encabezado `Idempotency-Key` (8 a 64 caracteres, letras, números, `-` y `_`). La web lo genera en cada formulario de reserva.
+- Una cita no se puede solapar con otra activa del mismo médico ni del mismo paciente: lo garantiza PostgreSQL (extensión `btree_gist`, que incluye la imagen oficial de Docker; en Azure Database for PostgreSQL debe habilitarse en la lista de extensiones permitidas).
 
 ## Estructura
 

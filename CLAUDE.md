@@ -28,7 +28,11 @@ Plataforma hospitalaria (Proyecto 2 de `Docs/Proyecto Final QA.docx`, curso 048 
 - Autorización por recurso (entrega 3): `PatientAuthorizationHandler` (IAuthorizationService, `PatientOperations.Read/Update`). Recepción y Administrador gestionan todo; el Paciente solo lee su propio registro (`Patient.UserId`); el Médico NO accede hasta que exista relación de atención (se añade con las citas, entrega 4); Laboratorio no accede. Un acceso ajeno devuelve 404 (no confirma existencia) y se audita como `patients.access_denied`. Toda lectura de datos de pacientes se audita (`patients.read`, `patients.searched`) sin guardar datos personales.
 - Cache (entrega 3): `ICacheService` falla abierto (sin Redis consulta PostgreSQL); el catálogo de médicos se cachea 5 min (`Cache:DoctorCatalogTtl`) y se invalida al crear/editar. Las sesiones, en cambio, fallan cerrado.
 - Unicidad de la identificación del paciente: índice único en PostgreSQL (maneja altas simultáneas); la API responde 409.
-- Pendiente: autorización por recurso de citas, consultas, recetas y resultados (entregas 4–6).
+- Agenda (entrega 4): citas de 30 minutos con hora de reloj de la clínica (`timestamp without time zone`; `IClinicClock`, `Clinic:TimeZone`). PostgreSQL impide el solapamiento con dos `EXCLUDE USING gist` (médico y paciente, solo citas `Confirmed`) creadas por SQL en la migración `AgendaYCitas`. Como las exclusiones concurrentes pueden acabar en deadlock, la alta se serializa con `pg_advisory_xact_lock` por horario del médico y por paciente y se reintenta ante 40P01/40001; la restricción sigue siendo la garantía final. La cancelación es un `UPDATE` condicional (idempotente, sin pérdida de actualizaciones).
+- Idempotencia de reservas: encabezado `Idempotency-Key` (índice único por usuario y clave); sin clave, repetir la misma reserva (mismo paciente, médico y hora) devuelve la cita existente. Otra clave con distinta solicitud → 409.
+- Acceso a citas (`AppointmentAuthorizationHandler`): Recepción todas; Médico solo las de su agenda (lectura); Paciente solo las suyas (lectura y cancelación); Administrador y Laboratorio, ninguna. Relación médico–paciente: el médico lee pacientes con quienes tiene una cita `Confirmed` (`PatientAccess.HasCareRelationship`); cancelarla retira el acceso. Accesos ajenos → 404 + `appointments.access_denied`/`patients.access_denied`.
+- Cache de disponibilidad: `AvailabilityService` guarda por médico y fecha los horarios y ocupados; lo que depende de la hora actual (horarios ya pasados) se calcula al responder. Reservar o cancelar invalida el día; cambiar el horario del médico invalida todas sus fechas (`RemoveByPrefixAsync`). Las citas ya reservadas no se cancelan al cambiar el horario.
+- Pendiente: autorización por recurso de consultas, recetas y resultados (entregas 5–6).
 
 ## Estructura
 
@@ -37,7 +41,7 @@ MediCore.slnx          solución (abrir en Visual Studio)
 src/MediCore.Api       Web API
 src/MediCore.Contracts  DTO y nombres de rol compartidos (API, Web, móvil)
 src/MediCore.Domain    entidades por módulo, sin dependencias externas
-src/MediCore.Infrastructure  EF Core/Npgsql, migraciones (Persistence/Migrations), futuros Redis/RabbitMQ
+src/MediCore.Infrastructure  EF Core/Npgsql, migraciones (Persistence/Migrations), Redis (sesiones, cache), agenda; futuro RabbitMQ
 docker-compose.yml     Postgres 17 (5433), Redis 7, RabbitMQ 4; credenciales desde .env
 src/MediCore.Web       Razor Pages (personal)
 tests/MediCore.Api.Tests  integración: WebApplicationFactory + Testcontainers (Postgres, Redis), entorno "Testing" (no lee user-secrets)
