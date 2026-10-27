@@ -1,0 +1,24 @@
+# MOB-03, MOB-07. Escenario: cancelar (el paciente ya tiene una cita confirmada). Consultar, no cancelar, cancelar.
+appId: com.medicore.paciente
+name: 04 · Consulta y cancelación de cita
+---
+- runFlow: subflows/login.yaml
+- assertVisible: "Ver mi cita →"          # MOB-02: aparece la próxima cita
+- tapOn: "Citas"
+- assertVisible: "Mis citas"
+- assertVisible: ${MEDICO}
+- assertVisible: "Confirmada"
+- tapOn: ${MEDICO}
+- assertVisible: "Detalle de cita"
+# Cancelar pide confirmación; "No, conservarla" no cambia nada.
+- tapOn: "Cancelar cita"
+- assertVisible: "¿Seguro que quieres cancelar esta cita?.*"
+- tapOn: "No, conservarla"
+- assertVisible: "Confirmada"
+# Cancelar de verdad.
+- tapOn: "Cancelar cita"
+- tapOn: "Sí, cancelar"
+- assertVisible: "Cancelada"
+- assertNotVisible: "Cancelar cita"
+- tapOn: "← Volver"
+- assertVisible: "Cancelada"

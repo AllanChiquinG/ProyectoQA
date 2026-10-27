@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MediCore.Mobile.Pages.ConfirmPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MediCore.Mobile.Views"
+             Title="Confirmar cita">
+    <ContentPage.Resources>
+        <views:StringNotEmptyConverter x:Key="NotEmpty" />
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout>
+            <views:HeaderBar ShowBack="True" />
+            <VerticalStackLayout Padding="24,8,24,24" Spacing="8">
+                <Label Text="MOB-06 · PACIENTE" Style="{StaticResource Eyebrow}" />
+                <Label Text="Confirma tu cita" Style="{StaticResource Title}" />
+                <Label Text="Paso 3 de 3 · Revisa los datos" Style="{StaticResource Sub}" />
+
+                <Border Style="{StaticResource PanelBorder}" Margin="0,10">
+                    <VerticalStackLayout Spacing="12">
+                        <Grid ColumnDefinitions="*,Auto"><Label Text="Paciente" Style="{StaticResource SummaryLabel}" /><Label Grid.Column="1" Text="{Binding PatientName}" Style="{StaticResource SummaryValue}" AutomationId="resumen_paciente" /></Grid>
+                        <Grid ColumnDefinitions="*,Auto"><Label Text="Médico" Style="{StaticResource SummaryLabel}" /><Label Grid.Column="1" Text="{Binding DoctorName}" Style="{StaticResource SummaryValue}" AutomationId="resumen_medico" /></Grid>
+                        <Grid ColumnDefinitions="*,Auto"><Label Text="Fecha" Style="{StaticResource SummaryLabel}" /><Label Grid.Column="1" Text="{Binding DateText}" Style="{StaticResource SummaryValue}" AutomationId="resumen_fecha" /></Grid>
+                        <Grid ColumnDefinitions="*,Auto"><Label Text="Hora" Style="{StaticResource SummaryLabel}" /><Label Grid.Column="1" Text="{Binding TimeText}" Style="{StaticResource SummaryValue}" AutomationId="resumen_hora" /></Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Border IsVisible="{Binding ConfirmError, Converter={StaticResource NotEmpty}}" Style="{StaticResource CardBorder}" BackgroundColor="{StaticResource DangerBackground}" Stroke="{StaticResource DangerBorder}">
+                    <Label Text="{Binding ConfirmError}" TextColor="{StaticResource DangerText}" AutomationId="mensaje_error_reserva" />
+                </Border>
+
+                <Button Text="Confirmar cita" Command="{Binding ConfirmCommand}" Margin="0,16,0,0" AutomationId="boton_confirmar_cita" />
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{StaticResource Green}" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

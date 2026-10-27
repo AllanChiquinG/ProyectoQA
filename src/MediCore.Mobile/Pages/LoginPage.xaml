@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MediCore.Mobile.Pages.LoginPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MediCore.Mobile.Views"
+             Title="Inicio de sesión">
+    <ContentPage.Resources>
+        <views:StringNotEmptyConverter x:Key="NotEmpty" />
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout>
+            <views:HeaderBar ShowBell="False" />
+            <VerticalStackLayout Padding="24,20" Spacing="6">
+                <Label Text="MOB-01 · PACIENTE" Style="{StaticResource Eyebrow}" />
+                <Label Text="Bienvenida de nuevo" Style="{StaticResource Title}" />
+                <Label Text="Tu atención, en un mismo lugar." Style="{StaticResource Sub}" />
+
+                <Border IsVisible="{Binding FormError, Converter={StaticResource NotEmpty}}" Style="{StaticResource CardBorder}" BackgroundColor="{StaticResource DangerBackground}"
+                        Stroke="{StaticResource DangerBorder}" Margin="0,14,0,0">
+                    <Label Text="{Binding FormError}" TextColor="{StaticResource DangerText}" AutomationId="mensaje_error_login" SemanticProperties.Description="Error de inicio de sesión" />
+                </Border>
+
+                <Label Text="Correo electrónico" Margin="0,18,0,0" />
+                <Entry Text="{Binding Email}" Keyboard="Email" Placeholder="correo@ejemplo.com" AutomationId="campo_correo" SemanticProperties.Description="Correo electrónico" />
+                <Label Text="{Binding EmailError}" Style="{StaticResource ErrorText}" IsVisible="{Binding EmailError, Converter={StaticResource NotEmpty}}" AutomationId="error_correo" />
+
+                <Label Text="Contraseña" Margin="0,12,0,0" />
+                <Entry Text="{Binding Password}" IsPassword="True" Placeholder="Tu contraseña" AutomationId="campo_contrasena" SemanticProperties.Description="Contraseña" ReturnCommand="{Binding LoginCommand}" />
+                <Label Text="{Binding PasswordError}" Style="{StaticResource ErrorText}" IsVisible="{Binding PasswordError, Converter={StaticResource NotEmpty}}" AutomationId="error_contrasena" />
+
+                <Button Text="Iniciar sesión →" Command="{Binding LoginCommand}" Margin="0,22,0,0" AutomationId="boton_iniciar_sesion" />
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{StaticResource Green}" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

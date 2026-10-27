@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell x:Class="MediCore.Mobile.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:pages="clr-namespace:MediCore.Mobile.Pages"
+       Shell.TabBarBackgroundColor="White"
+       Shell.TabBarForegroundColor="{StaticResource Green}"
+       Shell.TabBarTitleColor="{StaticResource Green}"
+       Shell.TabBarUnselectedColor="#9BAAA1">
+
+    <!-- Al iniciar, StartupPage decide si va al inicio de sesión (MOB-01) o directo al inicio (MOB-02). -->
+    <ShellContent Route="startup" ContentTemplate="{DataTemplate pages:StartupPage}" />
+    <ShellContent Route="login" ContentTemplate="{DataTemplate pages:LoginPage}" />
+
+    <!-- Barra inferior del diseño: Inicio, Citas, Resultados, Recetas. -->
+    <TabBar Route="main">
+        <ShellContent Title="Inicio" Route="home" ContentTemplate="{DataTemplate pages:HomePage}" />
+        <ShellContent Title="Citas" Route="appointments" ContentTemplate="{DataTemplate pages:AppointmentsPage}" />
+        <ShellContent Title="Resultados" Route="results" ContentTemplate="{DataTemplate pages:LabResultsPage}" />
+        <ShellContent Title="Recetas" Route="prescriptions" ContentTemplate="{DataTemplate pages:PrescriptionsPage}" />
+    </TabBar>
+</Shell>

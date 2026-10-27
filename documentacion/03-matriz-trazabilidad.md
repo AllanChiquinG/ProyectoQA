@@ -4,13 +4,13 @@ Estados: ✔ hecho y verificado · ◐ parcial · ○ pendiente. "Implementació
 
 ## Entregables obligatorios PENDIENTES (las pruebas actuales no los sustituyen)
 
-Las 226 pruebas xUnit actuales (44 unitarias y 182 de integración contra PostgreSQL, Redis y RabbitMQ reales; ninguna omitida) son complementarias. El documento del proyecto exige, además, los siguientes entregables, **todavía no iniciados**:
+Las 293 pruebas xUnit actuales (44 unitarias, 50 de la lógica móvil y 199 de integración contra PostgreSQL, Redis y RabbitMQ reales; ninguna omitida) son complementarias. El documento del proyecto exige, además, los siguientes entregables, **todavía no iniciados**:
 
 | Entregable (documento, secciones 4, 8 y 12) | ID | Qué exige | Estado | Entrega |
 |---|---|---|---|---|
 | **Cypress** (web) | GEN-10 | Smoke, flujo funcional crítico, regresión y al menos un escenario negativo | ◐ **INICIADO** — `tests/cypress`: 3 specs y 26 pruebas (Recepción: 8; Médico: 10; Laboratorio: 8, con notificación asíncrona real vía RabbitMQ), 26/26 en Chrome 155 y en Electron 146 (ejecutadas contra la API y la web en contenedores Linux). Incluye varios negativos (conflicto de horario, consulta incompleta, resultado incompleto, médico sin relación, Recepción sin acceso a laboratorio). **Faltan**: smoke general, flujos de Administrador, regresión formal y más negativos | 10 |
 | **Insomnia** (API) | GEN-17 | Colección con pruebas positivas, negativas, de autenticación, autorización y errores | ○ **PENDIENTE** — no existe la colección | 10 |
-| **Maestro** (móvil) | GEN-11 | Entre 5 y 8 flujos de la app, con al menos un escenario negativo | ○ **PENDIENTE** — la app móvil aún no existe | 9–10 |
+| **Maestro** (móvil) | GEN-11 | Entre 5 y 8 flujos de la app, con al menos un escenario negativo | ◐ **ESCRITO, SIN EJECUTAR** — `tests/maestro`: 8 flujos (login válido, login inválido, reserva, consulta y cancelación, resultados, recetas, notificaciones, cierre de sesión; 3 con escenarios negativos) y su preparación de datos aislados (`scripts/maestro_prepare.py`, verificada contra la API real). **No se han ejecutado en Android** (faltan Maestro, SDK de Android y emulador/dispositivo); no cuentan como aprobados | 7, 10 |
 | **Rendimiento con k6 o JMeter** | GEN-12, CRI-01, CRI-02 | Load, Stress y Spike con umbrales declarados antes de ejecutar (p95, tasa de error, throughput) y el escenario de alta demanda de citas con lecturas de agenda | ○ **PENDIENTE** — no hay scripts ni resultados | 13 |
 
 Cypress ya existe para el recorrido de Recepción (WEB-01 a WEB-04), el de Médico (WEB-11 a WEB-15) y el de Laboratorio (WEB-16 a WEB-18), pero **no cubre** el smoke general ni a Administrador, ni una regresión formal; el caso "RabbitMQ detenido" no es automatizable desde Cypress (se cubre con `MessagingTests` y `scripts/evidencia_laboratorio.py`).
@@ -22,12 +22,12 @@ Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 sol
 | ID | Requisito (fuente) | Pantallas | Implementación | Pruebas previstas | Entrega | Estado |
 |---|---|---|---|---|---|---|
 | RF-01 | Gestión de pacientes y médicos (P2) | WEB-05…08 | `PatientsController`, `DoctorsController`, `Pages/Pacientes`, `Pages/Medicos` | `PatientsApiTests`, `DoctorsApiTests`, `PatientRulesTests`; Cypress pendiente | 3 | ◐ |
-| RF-02 | Agenda y reserva de citas (P2) | WEB-02, 03, 04, 09, 11; MOB-03…07 (API lista) | `AppointmentsController`, `DoctorSchedulesController`, `Pages/Agenda`, `Pages/MiAgenda`, `Pages/Medicos/Disponibilidad` | `AppointmentsApiTests`, `AvailabilityApiTests`, `SchedulingRulesTests`; Cypress: recorrido de Recepción (`recepcion-reserva.cy.js`, 8 pruebas); Maestro pendiente | 4 | ◐ |
+| RF-02 | Agenda y reserva de citas (P2) | WEB-02, 03, 04, 09, 11; MOB-03…07 (app: `Pages/Appointments*`, `Doctors`, `Slots`, `Confirm`) | `AppointmentsController`, `DoctorSchedulesController`, `Pages/Agenda`, `Pages/MiAgenda`, `Pages/Medicos/Disponibilidad` | `AppointmentsApiTests`, `AvailabilityApiTests`, `SchedulingRulesTests`; Cypress: recorrido de Recepción (`recepcion-reserva.cy.js`, 8 pruebas); Maestro pendiente | 4 | ◐ |
 | RF-03 | Consultas médicas (P2) | WEB-12, 13 | `ClinicalController` (consultas), `Pages/Pacientes/Expediente`, `RegistrarConsulta`; entidad `Consultation` (una por cita, con paciente, médico y cita) | `ClinicalApiTests`, `ResourceAuthorizationTests`; Cypress `medico-expediente.cy.js` | 5 | ◐ (la lectura por el paciente no está en el diseño) |
-| RF-04 | Recetas (P2) | WEB-14, 15; MOB-10, 11 (API lista) | `ClinicalController` (recetas con 1 a 10 medicamentos), `Pages/Pacientes/CrearReceta`, `Receta`; `GET /api/prescriptions/me` para el móvil | `ClinicalApiTests`, `ResourceAuthorizationTests`; Cypress `medico-expediente.cy.js`; Maestro pendiente | 5, 9 | ◐ |
-| RF-05 | Registro/consulta de resultados de laboratorio (P2) | WEB-16…18; MOB-08, 09 (API lista) | `LabsController`, `LabResultAuthorizationHandler`, `Pages/Laboratorio`, pestaña Laboratorio de `Pages/Pacientes/Expediente` | `LaboratoryApiTests` (registro, validación, roles, IDOR, atomicidad, reintento, auditoría sin contenido), `LabResultAuthorizationTests`, `LabResultRequestValidationTests`; Cypress `laboratorio-resultados.cy.js`; Insomnia y Maestro pendientes | 6 | ✔ (web y API; móvil pendiente) |
-| RF-06 | Notificaciones al paciente (P2) | WEB-18; MOB-12 (API lista) | `NotificationsController` (`GET /api/notifications`, `unread-count`, `POST /{id}/read`), `Notification`, `NotificationConsumerService` | `LaboratoryApiTests` (notificaciones propias y ajenas), `MessagingTests` (notificación asíncrona real); Maestro pendiente | 6 | ◐ (falta la app móvil) |
-| RF-07 | Aplicación móvil para pacientes (P2) | MOB-01…12 | — | Maestro 5–8 flujos | 9 | ○ |
+| RF-04 | Recetas (P2) | WEB-14, 15; MOB-10, 11 (app: `Pages/Prescription*`) | `ClinicalController` (recetas con 1 a 10 medicamentos), `Pages/Pacientes/CrearReceta`, `Receta`; `GET /api/prescriptions/me` para el móvil | `ClinicalApiTests`, `ResourceAuthorizationTests`; Cypress `medico-expediente.cy.js`; Maestro pendiente | 5, 9 | ◐ |
+| RF-05 | Registro/consulta de resultados de laboratorio (P2) | WEB-16…18; MOB-08, 09 (app: `Pages/LabResult*`) | `LabsController`, `LabResultAuthorizationHandler`, `Pages/Laboratorio`, pestaña Laboratorio de `Pages/Pacientes/Expediente` | `LaboratoryApiTests` (registro, validación, roles, IDOR, atomicidad, reintento, auditoría sin contenido), `LabResultAuthorizationTests`, `LabResultRequestValidationTests`; Cypress `laboratorio-resultados.cy.js`; Insomnia y Maestro pendientes | 6 | ✔ (web y API; móvil pendiente) |
+| RF-06 | Notificaciones al paciente (P2) | WEB-18; MOB-12 (app: `Pages/NotificationsPage`) | `NotificationsController` (`GET /api/notifications`, `unread-count`, `POST /{id}/read`), `Notification`, `NotificationConsumerService` | `LaboratoryApiTests` (notificaciones propias y ajenas), `MessagingTests` (notificación asíncrona real); Maestro pendiente | 6 | ◐ (falta la app móvil) |
+| RF-07 | Aplicación móvil para pacientes (P2) | MOB-01…12 | `src/MediCore.Mobile.Core` (cliente, sesión, ViewModels), `src/MediCore.Mobile` (vistas MAUI) | `MediCore.Mobile.Tests` (50), `MobileApiIntegrationTests` (17, API real); Maestro escrito, **sin ejecutar** | 7 | ◐ (implementada; compilada en Linux, no probada en Android) |
 | RF-08 | Usuarios y roles (diseño) | WEB-10 | `UsersController`, `Pages/Usuarios.cshtml` | `IdentityApiTests` (RBAC, cambio de rol); Cypress pendiente | 2 | ◐ |
 
 ## API de referencia
@@ -86,7 +86,7 @@ Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 sol
 | GEN-08 | Fortify, Dependency-Check, npm audit | — | 11 | ○ |
 | GEN-09 | OWASP ZAP sobre QA | — | 11 | ○ |
 | GEN-10 | Cypress (smoke, crítico, regresión, negativo) | `tests/cypress/e2e/recepcion-reserva.cy.js`, `medico-expediente.cy.js` y `laboratorio-resultados.cy.js` (ver pendientes arriba) | 10 | ◐ |
-| GEN-11 | Maestro (5–8 flujos) | — | 10 | ○ |
+| GEN-11 | Maestro (5–8 flujos) | `tests/maestro/*.yaml` (8 flujos), `scripts/maestro_run.py` — **sin ejecutar en Android** | 7, 10 | ◐ |
 | GEN-12 | k6/JMeter: Load, Stress, Spike con umbrales previos | — | 13 | ○ |
 | GEN-13 | Usabilidad (≥5 participantes) + Lighthouse/axe | — | 13 | ○ |
 | GEN-14 | Registro de defectos con evidencia | — | continuo | ○ |

@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Lógica de la app móvil sin dependencias de MAUI: cliente de la API, sesión y ViewModels. Se compila y prueba con el SDK de .NET (sin el workload de Android). -->
+  <ItemGroup>
+    <ProjectReference Include="..\MediCore.Contracts\MediCore.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

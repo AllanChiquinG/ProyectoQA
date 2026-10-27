@@ -15,6 +15,9 @@ root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -W 2>/dev/null || pwd)"
 image="${DOTNET_SDK_IMAGE:-mcr.microsoft.com/dotnet/sdk:10.0}"
 network="${COMPOSE_NETWORK:-medicore_default}"
 envfile="${TMPDIR:-${TEMP:-/tmp}}/medicore-dev-stack.env"
+# Dirección en que se publican la API y la web. 127.0.0.1 (por defecto) sirve al emulador de Android (10.0.2.2) y a "adb reverse";
+# para un dispositivo físico por Wi-Fi usa DEV_STACK_BIND=0.0.0.0 (queda expuesto en tu red local: solo en una red de confianza).
+bind="${DEV_STACK_BIND:-127.0.0.1}"
 
 action="${1:?Indica: up | down | logs | status}"
 
@@ -28,9 +31,9 @@ case "$action" in
     MSYS_NO_PATHCONV=1 docker rm -f medicore-dev-api medicore-dev-web >/dev/null 2>&1 || true
     common=(-d --network "$network" -v "$root:/repo:ro" -v medicore-nuget:/root/.nuget/packages --env-file "$envfile")
     prepare='set -e; mkdir -p /work; tar -C /repo --exclude=./.git --exclude="*/bin" --exclude="*/obj" --exclude=node_modules --exclude=./reports -cf - . | tar -C /work -xf -; cd /work; rm -f global.json'
-    MSYS_NO_PATHCONV=1 docker run "${common[@]}" --name medicore-dev-api -p 127.0.0.1:5011:5011 -e ASPNETCORE_URLS=http://0.0.0.0:5011 "$image" \
+    MSYS_NO_PATHCONV=1 docker run "${common[@]}" --name medicore-dev-api -p "$bind:5011:5011" -e ASPNETCORE_URLS=http://0.0.0.0:5011 "$image" \
       bash -c "$prepare; dotnet build src/MediCore.Api -v q && dotnet run --no-build --no-launch-profile --project src/MediCore.Api" >/dev/null
-    MSYS_NO_PATHCONV=1 docker run "${common[@]}" --name medicore-dev-web -p 127.0.0.1:5298:5298 -e ASPNETCORE_URLS=http://0.0.0.0:5298 -e Api__BaseUrl=http://medicore-dev-api:5011 "$image" \
+    MSYS_NO_PATHCONV=1 docker run "${common[@]}" --name medicore-dev-web -p "$bind:5298:5298" -e ASPNETCORE_URLS=http://0.0.0.0:5298 -e Api__BaseUrl=http://medicore-dev-api:5011 "$image" \
       bash -c "$prepare; dotnet build src/MediCore.Web -v q && dotnet run --no-build --no-launch-profile --project src/MediCore.Web" >/dev/null
     echo "Esperando a que la API y la web respondan..."
     for i in $(seq 1 90); do

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="MediCore.Mobile.Pages.NotificationsPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MediCore.Mobile.Views"
+             xmlns:vm="clr-namespace:MediCore.Mobile.Core.ViewModels;assembly=MediCore.Mobile.Core"
+             Title="Notificaciones">
+    <ScrollView>
+        <VerticalStackLayout>
+            <views:HeaderBar ShowBack="True" ShowBell="False" />
+            <VerticalStackLayout Padding="24,8,24,24" Spacing="8">
+                <Label Text="MOB-12 · PACIENTE" Style="{StaticResource Eyebrow}" />
+                <Label Text="Notificaciones" Style="{StaticResource Title}" />
+                <Label Text="Novedades sobre tu atención." Style="{StaticResource Sub}" />
+
+                <views:StateBanner />
+
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding Items}" IsVisible="{Binding IsContent}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="vm:NotificationItem">
+                            <Border Style="{StaticResource CardBorder}" AutomationId="tarjeta_notificacion">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:NotificationsViewModel}}, Path=OpenCommand}" CommandParameter="{Binding .}" />
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout Spacing="3">
+                                    <Label Text="{Binding TitleText}" Style="{StaticResource CardTitle}" />
+                                    <Label Text="{Binding Body}" Style="{StaticResource CardText}" />
+                                    <Label Text="{Binding StateText}" Style="{StaticResource CardText}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

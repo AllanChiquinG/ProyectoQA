@@ -1,0 +1,17 @@
+# MOB-12 -> MOB-09. Escenario: notificaciones (hay un resultado y su notificación sin leer). Abrirla lleva al resultado y la marca como leída.
+appId: com.medicore.paciente
+name: 07 · Notificaciones
+---
+- runFlow: subflows/login.yaml
+- assertVisible: "● Tienes notificaciones sin leer"
+- tapOn: "Notificaciones"          # la campana del encabezado (descripción de accesibilidad)
+- assertVisible: "Novedades sobre tu atención."
+- assertVisible: "● Tu resultado está disponible"
+- assertVisible: "Sin leer.*"
+- tapOn: "● Tu resultado está disponible"
+- assertVisible: ${EXAMEN}
+- assertVisible: "Hemoglobina"
+- tapOn: "← Volver"
+- assertVisible: "Tu resultado está disponible"
+- assertNotVisible: "● Tu resultado está disponible"
+- assertVisible: "Leída.*"

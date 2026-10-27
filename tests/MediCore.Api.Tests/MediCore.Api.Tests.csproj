@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\MediCore.Api\MediCore.Api.csproj" />
     <ProjectReference Include="..\..\src\MediCore.Contracts\MediCore.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\MediCore.Mobile.Core\MediCore.Mobile.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,29 @@
+# MOB-01. Escenario: base. Negativo: formulario vacío, correo con formato inválido y contraseña incorrecta.
+appId: com.medicore.paciente
+name: 02 · Inicio de sesión inválido
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Bienvenida de nuevo"
+# Formulario vacío: validación local, sin llamar a la API.
+- tapOn: "Iniciar sesión →"
+- assertVisible: "Ingresa tu correo electrónico."
+- assertVisible: "Ingresa tu contraseña."
+# Correo con formato inválido.
+- tapOn: "correo@ejemplo.com"
+- inputText: "no-es-un-correo"
+- tapOn: "Tu contraseña"
+- inputText: "cualquiera"
+- hideKeyboard
+- tapOn: "Iniciar sesión →"
+- assertVisible: "Ingresa un correo electrónico válido."
+# Credenciales incorrectas: mensaje único, y no se entra.
+- tapOn: "no-es-un-correo"
+- eraseText: 30
+- inputText: ${EMAIL}
+- tapOn: "Tu contraseña"
+- inputText: "Contraseña-Incorrecta-1!"
+- hideKeyboard
+- tapOn: "Iniciar sesión →"
+- assertVisible: "El correo o la contraseña no son correctos."
+- assertNotVisible: "Qué bueno tenerte por aquí."
