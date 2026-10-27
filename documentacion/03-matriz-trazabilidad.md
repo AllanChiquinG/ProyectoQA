@@ -2,6 +2,19 @@
 
 Estados: ✔ hecho y verificado · ◐ parcial · ○ pendiente. "Implementación" y "Pruebas" apuntan a rutas reales cuando existan; hoy solo hay lo de la entrega 0.
 
+## Entregables obligatorios PENDIENTES (las pruebas actuales no los sustituyen)
+
+Las 129 pruebas xUnit actuales (128 superadas y 1 omitida a propósito; unitarias y de integración contra PostgreSQL y Redis reales) son complementarias. El documento del proyecto exige, además, los siguientes entregables, **todavía no iniciados**:
+
+| Entregable (documento, secciones 4, 8 y 12) | ID | Qué exige | Estado | Entrega |
+|---|---|---|---|---|
+| **Cypress** (web) | GEN-10 | Smoke, flujo funcional crítico, regresión y al menos un escenario negativo | ○ **PENDIENTE** — no hay ni una prueba Cypress | 10 |
+| **Insomnia** (API) | GEN-17 | Colección con pruebas positivas, negativas, de autenticación, autorización y errores | ○ **PENDIENTE** — no existe la colección | 10 |
+| **Maestro** (móvil) | GEN-11 | Entre 5 y 8 flujos de la app, con al menos un escenario negativo | ○ **PENDIENTE** — la app móvil aún no existe | 9–10 |
+| **Rendimiento con k6 o JMeter** | GEN-12, CRI-01, CRI-02 | Load, Stress y Spike con umbrales declarados antes de ejecutar (p95, tasa de error, throughput) y el escenario de alta demanda de citas con lecturas de agenda | ○ **PENDIENTE** — no hay scripts ni resultados | 13 |
+
+Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 solicitudes al mismo horario, 24 pacientes por 4 horarios con lecturas simultáneas), que sirven como base del escenario pero **no cuentan como prueba de rendimiento** (no miden p95 ni throughput y no usan umbrales previos). La verificación manual en navegador está descrita en `04-registro-de-hallazgos.md` y tampoco sustituye a Cypress.
+
 ## Funcionales
 
 | ID | Requisito (fuente) | Pantallas | Implementación | Pruebas previstas | Entrega | Estado |
