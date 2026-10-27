@@ -22,6 +22,9 @@
     <ApplicationVersion>1</ApplicationVersion>
     <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <!-- El APK de desarrollo debe ser autónomo (adb install): sin esto, Debug usa Fast Deployment y la app se cierra al abrir. -->
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
     <!-- Emulador (x64) y teléfonos (arm64): el restore debe incluir ambos para poder empaquetar. -->
     <RuntimeIdentifiers>android-arm64;android-x64</RuntimeIdentifiers>
 

@@ -1,4 +1,6 @@
 # Inicio de sesión reutilizable. Variables: EMAIL, PASSWORD (la contraseña no se guarda en el repositorio: se pasa con -e al ejecutar).
+appId: com.medicore.paciente
+---
 - launchApp:
     clearState: true
 - assertVisible: "Bienvenida de nuevo"

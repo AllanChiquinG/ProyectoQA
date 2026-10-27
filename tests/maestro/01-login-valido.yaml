@@ -6,5 +6,5 @@ name: 01 · Inicio de sesión válido
 - assertVisible: "Hola, ${NOMBRE}"
 - assertVisible: "TU PRÓXIMA CITA"
 - assertVisible: "Solicitar cita →"     # el escenario base no tiene citas
-- assertVisible: "Resultados de laboratorio ↗"
-- assertVisible: "Mis recetas ↗"
+- assertVisible: ".*Resultados de laboratorio.*"   # la tarjeta lleva un ícono antes del texto
+- assertVisible: ".*Mis recetas.*"

@@ -82,7 +82,7 @@ Windows con Smart App Control en modo activo bloquea la carga de los `.dll` sin 
 
 ## App móvil del paciente (entrega 7)
 
-App Android con .NET MAUI (`src/MediCore.Mobile`) sobre la API real: inicio y cierre de sesión, próxima cita, mis citas y detalle, reserva en tres pasos, cancelación, resultados, recetas y notificaciones (MOB-01 a MOB-12). La lógica está en `src/MediCore.Mobile.Core` y se prueba sin Android. **Cómo compilar, instalar, conectar con la API en Docker y ejecutar Maestro: [documentacion/05-app-movil.md](documentacion/05-app-movil.md).** Para compilar en el equipo hacen falta el workload `maui-android` y el SDK de Android, y para probar, un emulador o dispositivo y Maestro; en este equipo faltan (ver el documento). Sin instalar nada: `scripts/android-build-linux.sh` compila el APK de desarrollo en un contenedor Linux (compila, **no prueba** en Android).
+App Android con .NET MAUI (`src/MediCore.Mobile`) sobre la API real: inicio y cierre de sesión, próxima cita, mis citas y detalle, reserva en tres pasos, cancelación, resultados, recetas y notificaciones (MOB-01 a MOB-12). La lógica está en `src/MediCore.Mobile.Core` y se prueba sin Android. **Cómo compilar, instalar, conectar con la API en Docker y ejecutar Maestro: [documentacion/05-app-movil.md](documentacion/05-app-movil.md).** La app se compila con `scripts/android-build-linux.sh` (contenedor Linux) y se prueba en un emulador con Maestro; las herramientas (SDK de Android, emulador, Maestro) ya están instaladas en este equipo. Pasos exactos en el documento.
 
 ## Agenda y citas
 
@@ -109,7 +109,7 @@ Docs/  Referencias/     documento del proyecto y diseño aprobado (solo lectura)
 
 ## Estado de las pruebas
 
-Hoy: 293 pruebas xUnit superadas (44 unitarias, 50 de la lógica móvil y 199 de integración con PostgreSQL, Redis y RabbitMQ reales; ver `documentacion/evidencias/`). Los 8 flujos Maestro están escritos pero **no se han ejecutado en Android**. Además, **Cypress** (`tests/cypress`) ya cubre los recorridos de Recepción (8 pruebas), Médico (10, con datos aislados y sin depender de la hora) y Laboratorio (8, con notificación asíncrona real); ver su README. **Pendientes y obligatorios según el documento del proyecto**: ampliar Cypress (smoke, Administrador y Laboratorio, regresión), colección de Insomnia (API), Maestro (móvil) y pruebas de rendimiento con k6 o JMeter. Detalle en [documentacion/03-matriz-trazabilidad.md](documentacion/03-matriz-trazabilidad.md); los hallazgos y la verificación manual en [documentacion/04-registro-de-hallazgos.md](documentacion/04-registro-de-hallazgos.md).
+Hoy: 293 pruebas xUnit superadas (44 unitarias, 50 de la lógica móvil y 199 de integración con PostgreSQL, Redis y RabbitMQ reales; ver `documentacion/evidencias/`). **Maestro: 8 flujos, 8/8 aprobados en el emulador Android 35** (`documentacion/evidencias/entrega-7-maestro.md`). Además, **Cypress** (`tests/cypress`) ya cubre los recorridos de Recepción (8 pruebas), Médico (10, con datos aislados y sin depender de la hora) y Laboratorio (8, con notificación asíncrona real); ver su README. **Pendientes y obligatorios según el documento del proyecto**: ampliar Cypress (smoke, Administrador y Laboratorio, regresión), colección de Insomnia (API), Maestro (móvil) y pruebas de rendimiento con k6 o JMeter. Detalle en [documentacion/03-matriz-trazabilidad.md](documentacion/03-matriz-trazabilidad.md); los hallazgos y la verificación manual en [documentacion/04-registro-de-hallazgos.md](documentacion/04-registro-de-hallazgos.md).
 
 ## Seguridad
 

@@ -30,11 +30,13 @@ Resultado: **Build succeeded**; `artifacts/com.medicore.paciente-Signed.apk` (SH
 
 ## Android (ejecución)
 
-**No ejecutado.** `python scripts/maestro_run.py` sin herramientas responde, sin escribir evidencia:
+**Ejecutado en el emulador `medicore_pixel`:** los 8 flujos Maestro pasan (8/8, una sola ejecución). Resultado completo en `entrega-7-maestro.md`.
+
+(Registro previo, antes de instalar las herramientas: `python scripts/maestro_run.py` sin herramientas responde, sin escribir evidencia:
 
 ```
 NO se ejecutó ningún flujo. Falta:
   - Maestro CLI (comando "maestro" en el PATH)
   - adb (platform-tools del SDK de Android)
   - la variable MEDICORE_PASSWORD (Seed:DevPassword)
-```
+```)

@@ -2,13 +2,13 @@ namespace MediCore.Mobile;
 
 public partial class App : Application
 {
-    private readonly AppShell _shell;
+    private readonly IServiceProvider _services;
 
-    public App(AppShell shell)
+    public App(IServiceProvider services)
     {
-        InitializeComponent();
-        _shell = shell;
+        InitializeComponent(); // los recursos (colores y estilos) deben cargarse antes de crear el Shell
+        _services = services;
     }
 
-    protected override Window CreateWindow(IActivationState? activationState) => new(_shell);
+    protected override Window CreateWindow(IActivationState? activationState) => new(_services.GetRequiredService<AppShell>());
 }

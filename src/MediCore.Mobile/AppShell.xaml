@@ -4,8 +4,8 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:pages="clr-namespace:MediCore.Mobile.Pages"
        Shell.TabBarBackgroundColor="White"
-       Shell.TabBarForegroundColor="{StaticResource Green}"
-       Shell.TabBarTitleColor="{StaticResource Green}"
+       Shell.TabBarForegroundColor="#087F79"
+       Shell.TabBarTitleColor="#087F79"
        Shell.TabBarUnselectedColor="#9BAAA1">
 
     <!-- Al iniciar, StartupPage decide si va al inicio de sesión (MOB-01) o directo al inicio (MOB-02). -->
