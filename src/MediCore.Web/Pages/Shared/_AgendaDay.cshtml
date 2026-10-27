@@ -1,0 +1,116 @@
+@using MediCore.Contracts.Scheduling
+@using MediCore.Web.Services
+@model MediCore.Web.Models.AgendaDay
+@{
+    string? DoctorParam() => Model.IsReception ? Model.DoctorId.ToString() : null;
+    string DayUrl(DateOnly d) => Url.Page(Model.PagePath, new { date = d.ToString("yyyy-MM-dd"), doctorId = DoctorParam() })!;
+    var grid = ClinicCalendar.MonthGrid(Model.Date);
+    var previousMonth = new DateOnly(Model.Date.Year, Model.Date.Month, 1).AddMonths(-1);
+    var nextMonth = new DateOnly(Model.Date.Year, Model.Date.Month, 1).AddMonths(1);
+}
+
+<div class="agenda">
+    <div class="panel">
+        <form method="get" action="@Url.Page(Model.PagePath)" class="toolbar" data-autosubmit>
+            <div class="toolbar-date">
+                <strong>@ClinicCalendar.DayLabel(Model.Date)</strong>
+                <input aria-label="Fecha de agenda" name="date" type="date" value="@Model.Date.ToString("yyyy-MM-dd")" />
+            </div>
+            @if (Model.IsReception)
+            {
+                <select name="doctorId" aria-label="Filtrar médico">
+                    @foreach (var doctor in Model.Doctors)
+                    {
+                        <option value="@doctor.Id" selected="@(doctor.Id == Model.DoctorId)">@doctor.FullName</option>
+                    }
+                </select>
+            }
+            else
+            {
+                <span>Vista del día</span>
+            }
+            <noscript><button class="btn secondary" type="submit">Ver</button></noscript>
+        </form>
+        <div class="schedule">
+            <div class="daytitle"><strong>@Model.DoctorName</strong><span class="sub">@Model.AppointmentCount @(Model.AppointmentCount == 1 ? "cita programada" : "citas programadas")</span></div>
+            @if (!Model.IsWorkingDay)
+            {
+                <div class="emptymsg">
+                    @(Model.Date < Model.Today ? "No hubo citas este día." : "El médico no atiende este día.")
+                </div>
+            }
+            @foreach (var row in Model.Rows)
+            {
+                <div class="slot">
+                    <span class="time">@row.Time</span>
+                    @if (row.Appointment is { } appointment)
+                    {
+                        <div class="appointment">
+                            <div>
+                                <strong>@appointment.PatientName</strong>
+                                <small>@(appointment.Reason ?? "Consulta general") · @appointment.DurationMinutes min</small>
+                            </div>
+                            <div>
+                                <span class="badge">@AppointmentStatuses.Mostrar(appointment.Status)</span>
+                                @if (Model.IsReception)
+                                {
+                                    <a class="link" asp-page="/Agenda/Cita" asp-route-id="@appointment.Id">Ver detalle ↗</a>
+                                }
+                                else
+                                {
+                                    <a class="link" asp-page="/Pacientes/Expediente" asp-route-id="@appointment.PatientId" asp-route-cita="@appointment.Id">Abrir expediente ↗</a>
+                                }
+                            </div>
+                        </div>
+                    }
+                    else if (row.Available && Model.IsReception)
+                    {
+                        <a class="appointment empty" asp-page="/Agenda/Reservar" asp-route-doctorId="@Model.DoctorId" asp-route-date="@Model.Date.ToString("yyyy-MM-dd")" asp-route-time="@row.Time">＋ Horario disponible</a>
+                    }
+                    else if (row.Available)
+                    {
+                        <span class="appointment empty static">Horario disponible</span>
+                    }
+                    else
+                    {
+                        <span class="appointment empty static">Horario no disponible</span>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    <div class="rightcol">
+        <div class="panel calendar">
+            <div class="eyebrow">TU CALENDARIO</div>
+            <div class="calhead">
+                <strong>@ClinicCalendar.MonthLabel(Model.Date)</strong>
+                <span>
+                    <a href="@DayUrl(previousMonth)" aria-label="Mes anterior">‹</a> &nbsp;
+                    <a href="@DayUrl(nextMonth)" aria-label="Mes siguiente">›</a>
+                </span>
+            </div>
+            <div class="calgrid">
+                @foreach (var letter in new[] { "L", "M", "M", "J", "V", "S", "D" })
+                {
+                    <span>@letter</span>
+                }
+                @foreach (var (day, inMonth) in grid)
+                {
+                    if (inMonth)
+                    {
+                        <a href="@DayUrl(day)" class="@(day == Model.Date ? "chosen" : "")" aria-label="@ClinicCalendar.DayLabel(day)" aria-current="@(day == Model.Date ? "date" : null)">@day.Day</a>
+                    }
+                    else
+                    {
+                        <span class="faded">@day.Day</span>
+                    }
+                }
+            </div>
+            <div class="legend"><span><i class="dot"></i>Confirmada</span></div>
+        </div>
+        <div class="note">
+            <h3>Todo listo para atender</h3>
+            <p>Consulta la disponibilidad antes de confirmar una cita. Cada paciente tiene su propio espacio.</p>
+        </div>
+    </div>
+</div>

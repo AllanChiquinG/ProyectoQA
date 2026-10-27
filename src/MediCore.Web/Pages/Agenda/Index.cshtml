@@ -1,0 +1,26 @@
+@page
+@model MediCore.Web.Pages.Agenda.IndexModel
+@{
+    ViewData["Code"] = "WEB-02";
+    ViewData["Title"] = "Agenda de citas";
+    ViewData["Subtitle"] = "Organiza la atención, un horario a la vez.";
+    if (Model.Day is { } day)
+    {
+        ViewData["ActionText"] = "Reservar cita";
+        ViewData["ActionUrl"] = Url.Page("/Agenda/Reservar", new { doctorId = day.DoctorId, date = day.Date.ToString("yyyy-MM-dd") });
+    }
+}
+
+@if (Model.Error is not null)
+{
+    <div class="err" role="alert">@Model.Error</div>
+}
+
+@if (Model.Day is not null)
+{
+    <partial name="_AgendaDay" model="Model.Day" />
+}
+
+@section Scripts {
+    <script src="~/js/autosubmit.js" asp-append-version="true"></script>
+}

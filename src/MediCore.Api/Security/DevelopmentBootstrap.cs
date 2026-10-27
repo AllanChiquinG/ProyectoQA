@@ -1,6 +1,7 @@
 using MediCore.Domain.Identity;
 using MediCore.Infrastructure.Identity;
 using MediCore.Infrastructure.Persistence;
+using MediCore.Infrastructure.Scheduling;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,11 +29,15 @@ public static class DevelopmentBootstrap
             }
             else
             {
-                var created = await UserSeeder.SeedAsync(db, scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>(), password);
+                var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
+                var created = await UserSeeder.SeedAsync(db, hasher, password);
                 if (created > 0) logger.LogInformation("Se crearon {Count} usuarios ficticios de desarrollo.", created);
+
+                // Médicos dedicados a las pruebas end-to-end (no se tocan los médicos de uso normal).
+                await E2eFixtureSeeder.SeedAsync(db, hasher, password);
             }
 
-            await ClinicalDemoSeeder.SeedAsync(db);
+            await ClinicalDemoSeeder.SeedAsync(db, scope.ServiceProvider.GetRequiredService<IClinicClock>());
         }
         catch (Exception ex)
         {

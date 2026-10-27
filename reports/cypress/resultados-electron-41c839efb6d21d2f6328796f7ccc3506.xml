@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="6.102" tests="7" failures="0">
+  <testsuite name="Root Suite" timestamp="2026-10-27T03:36:45" tests="0" file="e2e\medico-expediente.cy.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Médico · expediente, consulta y receta" timestamp="2026-10-27T03:36:45" tests="7" time="6.100" failures="0">
+    <testcase name="Médico · expediente, consulta y receta 1. inicia sesión como Médico y ve su agenda con la cita del paciente" time="2.157" classname="1. inicia sesión como Médico y ve su agenda con la cita del paciente">
+    </testcase>
+    <testcase name="Médico · expediente, consulta y receta 2. abre el expediente desde la agenda y recorre las secciones (laboratorio: pendiente)" time="0.396" classname="2. abre el expediente desde la agenda y recorre las secciones (laboratorio: pendiente)">
+    </testcase>
+    <testcase name="Médico · expediente, consulta y receta 3. no guarda una consulta incompleta y muestra los errores" time="0.287" classname="3. no guarda una consulta incompleta y muestra los errores">
+    </testcase>
+    <testcase name="Médico · expediente, consulta y receta 4 y 5. registra la consulta, crea una receta con dos medicamentos y la consulta" time="2.446" classname="4 y 5. registra la consulta, crea una receta con dos medicamentos y la consulta">
+    </testcase>
+    <testcase name="Médico · expediente, consulta y receta 6. el expediente muestra la consulta y la receta, y la receta se abre desde su tarjeta" time="0.351" classname="6. el expediente muestra la consulta y la receta, y la receta se abre desde su tarjeta">
+    </testcase>
+    <testcase name="Médico · expediente, consulta y receta 7. la cita ya tiene consulta: no se puede registrar otra" time="0.087" classname="7. la cita ya tiene consulta: no se puede registrar otra">
+    </testcase>
+    <testcase name="Médico · expediente, consulta y receta 8. un paciente sin cita ni consulta con este médico no se puede abrir" time="0.094" classname="8. un paciente sin cita ni consulta con este médico no se puede abrir">
+    </testcase>
+  </testsuite>
+</testsuites>

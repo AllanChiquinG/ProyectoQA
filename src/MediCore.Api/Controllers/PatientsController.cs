@@ -17,7 +17,7 @@ public class PatientsController(MediCoreDbContext db, IAuthorizationService auth
 {
     private string? ClientIp => HttpContext.Connection.RemoteIpAddress?.ToString();
 
-    /// <summary>Búsqueda por nombre o identificación. El médico solo ve pacientes autorizados (hoy ninguno, ver <see cref="PatientAuthorizationHandler"/>).</summary>
+    /// <summary>Búsqueda por nombre o identificación. El médico solo ve pacientes con quienes tiene una cita (ver <see cref="PatientAuthorizationHandler"/>).</summary>
     [HttpGet]
     [Authorize(Roles = $"{Roles.Recepcion},{Roles.Administrador},{Roles.Medico}")]
     public async Task<ActionResult<PagedResult<PatientDto>>> List([FromQuery] string? q, [FromQuery] int page = 1, [FromQuery] int pageSize = 20, CancellationToken ct = default)
@@ -28,27 +28,23 @@ public class PatientsController(MediCoreDbContext db, IAuthorizationService auth
         if (q is { Length: > 100 })
             return ValidationProblem(new ValidationProblemDetails(new Dictionary<string, string[]> { ["q"] = ["La búsqueda es demasiado larga."] }));
 
-        PagedResult<PatientDto> result;
+        // Recepción y Administrador ven todos; el médico solo pacientes con quienes tiene una cita registrada.
+        var query = db.Patients.AsNoTracking();
         if (User.IsInRole(Roles.Medico))
-        {
-            result = new PagedResult<PatientDto>([], 0, page, pageSize);
-        }
-        else
-        {
-            var query = db.Patients.AsNoTracking();
-            if (!string.IsNullOrEmpty(q))
-            {
-                var pattern = $"%{EscapeLike(q)}%";
-                query = query.Where(p => EF.Functions.ILike(p.FullName, pattern) || EF.Functions.ILike(p.IdentificationNumber, pattern));
-            }
+            query = query.Where(PatientAccess.HasCareRelationship(db, User.UserId() ?? Guid.Empty));
 
-            var total = await query.CountAsync(ct);
-            var items = await query.OrderBy(p => p.FullName).ThenBy(p => p.Id)
-                .Skip((page - 1) * pageSize).Take(pageSize)
-                .Select(p => new PatientDto(p.Id, p.FullName, p.IdentificationNumber, p.BirthDate, p.Phone, p.Email))
-                .ToListAsync(ct);
-            result = new PagedResult<PatientDto>(items, total, page, pageSize);
+        if (!string.IsNullOrEmpty(q))
+        {
+            var pattern = $"%{EscapeLike(q)}%";
+            query = query.Where(p => EF.Functions.ILike(p.FullName, pattern) || EF.Functions.ILike(p.IdentificationNumber, pattern));
         }
+
+        var total = await query.CountAsync(ct);
+        var items = await query.OrderBy(p => p.FullName).ThenBy(p => p.Id)
+            .Skip((page - 1) * pageSize).Take(pageSize)
+            .Select(p => new PatientDto(p.Id, p.FullName, p.IdentificationNumber, p.BirthDate, p.Phone, p.Email))
+            .ToListAsync(ct);
+        var result = new PagedResult<PatientDto>(items, total, page, pageSize);
 
         // Se audita la consulta de datos de pacientes (sin registrar el texto buscado, que puede ser un nombre).
         await audit.WriteAsync(new AuditRecord(AuditActions.PatientSearched, AuditOutcome.Success, User.UserId(), nameof(Patient), IpAddress: ClientIp,

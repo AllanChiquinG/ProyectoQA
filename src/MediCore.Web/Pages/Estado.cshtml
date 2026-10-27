@@ -1,0 +1,23 @@
+@page
+@model EstadoModel
+@{
+    Layout = User.Identity?.IsAuthenticated == true ? "_Shell" : "_Layout";
+    ViewData["Code"] = Model.Codigo.ToString();
+    ViewData["Title"] = Model.Titulo;
+    ViewData["Subtitle"] = Model.Mensaje;
+}
+
+<div class="@(User.Identity?.IsAuthenticated == true ? "panel panelpad narrow" : "content")">
+    @if (User.Identity?.IsAuthenticated != true)
+    {
+        <div class="eyebrow">@Model.Codigo</div>
+        <h1>@Model.Titulo</h1>
+        <p class="sub">@Model.Mensaje</p>
+    }
+    else
+    {
+        <h2>@Model.Titulo</h2>
+        <p class="sub">@Model.Mensaje</p>
+    }
+    <div class="formfoot"><a class="btn" href="/">Volver al inicio</a></div>
+</div>

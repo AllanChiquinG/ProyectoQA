@@ -3,6 +3,7 @@ using MediCore.Infrastructure.Auditing;
 using MediCore.Infrastructure.Caching;
 using MediCore.Infrastructure.Identity;
 using MediCore.Infrastructure.Persistence;
+using MediCore.Infrastructure.Scheduling;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -46,6 +47,8 @@ public static class DependencyInjection
         }));
         services.AddSingleton<ISessionStore, RedisSessionStore>();
         services.AddSingleton<ICacheService, RedisCacheService>();
+        services.AddSingleton<IClinicClock, ClinicClock>();
+        services.AddScoped<IAvailabilityService, AvailabilityService>();
 
         services.AddScoped<IAuditLogger, AuditLogger>();
         return services;

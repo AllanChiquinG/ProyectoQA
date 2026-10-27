@@ -1,7 +1,11 @@
+using System.Linq.Expressions;
 using MediCore.Contracts;
 using MediCore.Domain.Patients;
+using MediCore.Domain.Scheduling;
+using MediCore.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediCore.Api.Security;
 
@@ -11,13 +15,40 @@ public static class PatientOperations
     public static readonly OperationAuthorizationRequirement Update = new() { Name = nameof(Update) };
 }
 
+public static class PatientAccess
+{
+    /// <summary>
+    /// Relación de atención del médico (la cuenta del médico es <c>Doctor.UserId</c>): el paciente tiene al menos una cita no
+    /// cancelada con ese médico O el médico registró una consulta de ese paciente. Cancelar una cita solo retira el acceso si no
+    /// queda ninguna otra de las dos. Es la única fuente de acceso del médico (listado y detalle).
+    /// </summary>
+    public static Expression<Func<Patient, bool>> HasCareRelationship(MediCoreDbContext db, Guid doctorUserId)
+        => patient => db.Appointments.Any(a => a.PatientId == patient.Id
+                                               && a.Status == AppointmentStatus.Confirmed
+                                               && a.Doctor.UserId == doctorUserId)
+                      || db.Consultations.Any(c => c.PatientId == patient.Id && c.Doctor.UserId == doctorUserId);
+}
+
+/// <summary>Consulta si un médico tiene relación de atención con un paciente (ver <see cref="PatientAccess.HasCareRelationship"/>).</summary>
+public interface ICareRelationship
+{
+    Task<bool> ExistsAsync(Guid doctorUserId, Guid patientId, CancellationToken ct = default);
+}
+
+public sealed class DbCareRelationship(MediCoreDbContext db) : ICareRelationship
+{
+    public Task<bool> ExistsAsync(Guid doctorUserId, Guid patientId, CancellationToken ct = default)
+        => db.Patients.Where(p => p.Id == patientId).Where(PatientAccess.HasCareRelationship(db, doctorUserId)).AnyAsync(ct);
+}
+
 /// <summary>
 /// Autorización a nivel de recurso: decide si ESTE usuario puede actuar sobre ESTE paciente.
-/// Deniega por defecto. Un rol correcto no basta: un paciente solo accede a su propio registro.
+/// Deniega por defecto. Un rol correcto no basta: un paciente solo accede a su propio registro y un médico solo a
+/// pacientes con quienes tiene una cita no cancelada o una consulta registrada.
 /// </summary>
-public sealed class PatientAuthorizationHandler : AuthorizationHandler<OperationAuthorizationRequirement, Patient>
+public sealed class PatientAuthorizationHandler(IServiceProvider services) : AuthorizationHandler<OperationAuthorizationRequirement, Patient>
 {
-    protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, OperationAuthorizationRequirement requirement, Patient patient)
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, OperationAuthorizationRequirement requirement, Patient patient)
     {
         var role = context.User.FindFirst(ClaimNames.Role)?.Value;
         var userId = context.User.UserId();
@@ -34,10 +65,14 @@ public sealed class PatientAuthorizationHandler : AuthorizationHandler<Operation
                 context.Succeed(requirement);
                 break;
 
-            // Médico: se autorizará por relación de atención (cita o consulta con ese paciente) cuando existan las citas
-            // (entrega 4). Mientras tanto no se concede acceso. Laboratorio no accede a pacientes.
-        }
+            // El médico solo puede leer pacientes con quienes tiene una cita no cancelada o una consulta registrada.
+            case Roles.Medico when requirement == PatientOperations.Read && userId is not null:
+                // El servicio se obtiene solo cuando hace falta: esta clase se instancia en cada evaluación de autorización.
+                if (await services.GetRequiredService<ICareRelationship>().ExistsAsync(userId.Value, patient.Id))
+                    context.Succeed(requirement);
+                break;
 
-        return Task.CompletedTask;
+            // Laboratorio no accede a pacientes.
+        }
     }
 }

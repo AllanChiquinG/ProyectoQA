@@ -15,11 +15,22 @@ public interface ICacheService
 
     /// <summary>Invalida una clave. Si Redis no responde, el dato vencerá por TTL.</summary>
     Task RemoveAsync(string key, CancellationToken ct = default);
+
+    /// <summary>Invalida todas las claves que empiezan con el prefijo. Si Redis no responde, vencerán por TTL.</summary>
+    Task RemoveByPrefixAsync(string prefix, CancellationToken ct = default);
 }
 
 public static class CacheKeys
 {
     public const string DoctorCatalog = "medicore:cache:doctors:v1";
+
+    private const string AvailabilityRoot = "medicore:cache:availability:v1:";
+
+    /// <summary>Disponibilidad (horarios y ocupados) de un médico en una fecha.</summary>
+    public static string Availability(Guid doctorId, DateOnly date) => $"{AvailabilityPrefix(doctorId)}{date:yyyy-MM-dd}";
+
+    /// <summary>Todas las fechas cacheadas de un médico (para invalidar al cambiar su horario de atención).</summary>
+    public static string AvailabilityPrefix(Guid doctorId) => $"{AvailabilityRoot}{doctorId:N}:";
 }
 
 internal sealed class RedisCacheService(Lazy<IConnectionMultiplexer> redis, ILogger<RedisCacheService> logger) : ICacheService
@@ -63,6 +74,27 @@ internal sealed class RedisCacheService(Lazy<IConnectionMultiplexer> redis, ILog
         catch (Exception ex) when (IsRedisFailure(ex))
         {
             logger.LogWarning(ex, "No se pudo invalidar {Key}; vencerá por TTL.", key);
+        }
+    }
+
+    public async Task RemoveByPrefixAsync(string prefix, CancellationToken ct = default)
+    {
+        try
+        {
+            var multiplexer = redis.Value;
+            var db = multiplexer.GetDatabase();
+            foreach (var endpoint in multiplexer.GetEndPoints())
+            {
+                var server = multiplexer.GetServer(endpoint);
+                if (server.IsReplica || !server.IsConnected) continue;
+                var keys = server.KeysAsync(pattern: prefix + "*", pageSize: 250);
+                await foreach (var key in keys.WithCancellation(ct))
+                    await db.KeyDeleteAsync(key);
+            }
+        }
+        catch (Exception ex) when (IsRedisFailure(ex))
+        {
+            logger.LogWarning(ex, "No se pudo invalidar el prefijo {Prefix}; vencerá por TTL.", prefix);
         }
     }
 
