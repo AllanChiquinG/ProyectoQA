@@ -1,0 +1,9 @@
+---
+# Copia a vault.yml, completa los valores y cífralo:  ansible-vault encrypt group_vars/qa/vault.yml
+# (vault.yml sin cifrar y el archivo de contraseña de Vault están en .gitignore). Genera contraseñas aleatorias, por ejemplo con
+#   python -c "import secrets; print(secrets.token_hex(20))"      (solo letras y números: es lo más seguro para las cadenas de conexión)
+vault_postgres_password: "CAMBIAR"
+vault_redis_password: "CAMBIAR"
+vault_rabbitmq_password: "CAMBIAR"
+vault_jwt_signing_key: "CAMBIAR-MINIMO-32-CARACTERES"
+vault_seed_password: "CAMBIAR"      # contraseña de los usuarios ficticios de QA; solo se usa si medicore_seed es true

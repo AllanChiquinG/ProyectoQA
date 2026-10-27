@@ -1,0 +1,3 @@
+# Copia a inventory/qa.ini (ignorado por Git). "terraform output ansible_inventory" imprime esta línea con tus valores.
+[qa]
+medicore-qa ansible_host=medicore-qa-xxxxx.eastus.cloudapp.azure.com ansible_user=azureuser medicore_site_address=medicore-qa-xxxxx.eastus.cloudapp.azure.com

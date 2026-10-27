@@ -1,0 +1,8 @@
+# Estado remoto de Terraform (Azure Blob Storage). Copia a backend.hcl (ignorado por Git) con los valores que imprime ../bootstrap.
+# Sin claves: la autenticación es con Microsoft Entra ID (az login), por eso no hay secretos aquí.
+#   terraform init -backend-config=backend.hcl
+resource_group_name  = "medicore-tfstate-rg"
+storage_account_name = "medicoretfstateXXXXX"
+container_name       = "tfstate"
+key                  = "qa.terraform.tfstate"
+use_azuread_auth     = true

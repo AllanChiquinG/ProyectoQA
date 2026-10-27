@@ -1,0 +1,29 @@
+# Proxy inverso de MediCore (Caddy). ÚNICO punto de entrada: PostgreSQL, Redis, RabbitMQ, la API y la web no publican puertos.
+#   SITE_ADDRESS=:80                                       local: HTTP en el puerto del proxy (sin certificado)
+#   SITE_ADDRESS=medicore-qa.<region>.cloudapp.azure.com   QA en Azure: HTTPS automático (Let's Encrypt) con el nombre DNS de la IP pública
+{$SITE_ADDRESS::80} {
+	encode zstd gzip
+
+	# Rutas de la API; todo lo demás es la web del personal.
+	@api path /api/*
+	handle @api {
+		reverse_proxy api:8080 {
+			health_uri /api/health
+			health_interval 15s
+		}
+	}
+	handle {
+		reverse_proxy web:8080
+	}
+
+	header {
+		-Server
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+	}
+
+	log {
+		output stdout
+		format json
+	}
+}

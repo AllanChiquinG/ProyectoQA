@@ -1,0 +1,14 @@
+# Copia este archivo a terraform.tfvars (ignorado por Git) y completa tus valores. NO contiene secretos: la clave es la PÚBLICA.
+subscription_id = "00000000-0000-0000-0000-000000000000"
+location        = "eastus"
+vm_size         = "Standard_B2s"
+
+# ssh-keygen -t ed25519 -f ~/.ssh/medicore-qa   (la privada se queda en tu equipo)
+ssh_public_key = "ssh-ed25519 AAAA... usuario@equipo"
+
+# Tu IP pública con /32 (por ejemplo, la que muestra https://ifconfig.me). Nunca 0.0.0.0/0.
+admin_cidrs = ["203.0.113.10/32"]
+
+data_disk_size_gb     = 32
+auto_shutdown_enabled = true
+auto_shutdown_time    = "0400"
