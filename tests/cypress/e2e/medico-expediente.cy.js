@@ -93,7 +93,7 @@ describe('Médicos · expediente compartido, consulta y receta', () => {
       snap('10-medico-mi-agenda');
     });
 
-    it('2. abre el expediente desde la agenda y recorre las secciones vacías (laboratorio: pendiente)', () => {
+    it('2. abre el expediente desde la agenda y recorre las secciones vacías (consultas, recetas y laboratorio)', () => {
       cy.visit(`/MiAgenda?date=${ctx.pastDate}`);
       cy.contains('.slot', PATIENT_WITH_RELATION.name).contains('a', 'Abrir expediente').click();
 
@@ -111,9 +111,9 @@ describe('Médicos · expediente compartido, consulta y receta', () => {
 
       cy.contains('.tabs a', 'Laboratorio').click();
       cy.contains('.tabs a.on', 'Laboratorio');
-      cy.get('#laboratorioPendiente').should('contain', 'pendiente').and('contain', 'todavía no está disponible');
+      cy.get('#sinResultados').should('contain', 'Sin resultados registrados.');
       cy.get('.mobcard').should('not.exist'); // no se inventa ningún resultado
-      snap('12-expediente-laboratorio-pendiente');
+      snap('12-expediente-laboratorio-vacio');
     });
 
     it('3. no guarda una consulta incompleta y muestra los errores', () => {

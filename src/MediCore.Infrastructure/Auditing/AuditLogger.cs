@@ -71,4 +71,13 @@ public static class AuditActions
     public const string PrescriptionRead = "prescriptions.read";
     public const string PrescriptionsListed = "prescriptions.listed";
     public const string ClinicalAccessDenied = "clinical.access_denied";
+
+    // Laboratorio y notificaciones: igual que lo clínico, sin contenido (ni tipo de examen ni valores).
+    public const string LabResultCreated = "labs.created";
+    public const string LabResultRead = "labs.read";
+    public const string LabResultsListed = "labs.listed";
+    public const string LabPatientsSearched = "labs.patients_searched";
+    public const string LabNotificationRetried = "labs.notification_retried";
+    public const string NotificationsListed = "notifications.listed";
+    public const string NotificationRead = "notifications.read";
 }

@@ -2,6 +2,7 @@ using MediCore.Domain.Identity;
 using MediCore.Infrastructure.Auditing;
 using MediCore.Infrastructure.Caching;
 using MediCore.Infrastructure.Identity;
+using MediCore.Infrastructure.Messaging;
 using MediCore.Infrastructure.Persistence;
 using MediCore.Infrastructure.Scheduling;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 
 namespace MediCore.Infrastructure;
@@ -51,6 +53,18 @@ public static class DependencyInjection
         services.AddScoped<IAvailabilityService, AvailabilityService>();
 
         services.AddScoped<IAuditLogger, AuditLogger>();
+
+        // Mensajería (RabbitMQ) con outbox transaccional: el publicador y el consumidor corren en segundo plano.
+        services.AddOptions<MessagingOptions>().Bind(configuration.GetSection(MessagingOptions.SectionName));
+        services.AddSingleton<IRabbitMqConnection, RabbitMqConnection>();
+        services.AddScoped<ILabResultReadyHandler, LabResultReadyHandler>();
+        if (configuration.GetValue(MessagingOptions.SectionName + ":Enabled", true))
+        {
+            services.AddSingleton<OutboxPublisherService>();
+            services.AddHostedService(sp => sp.GetRequiredService<OutboxPublisherService>());
+            services.AddHostedService<NotificationConsumerService>();
+        }
+
         return services;
     }
 }

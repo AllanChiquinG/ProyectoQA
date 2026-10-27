@@ -69,10 +69,14 @@ const tasks = {
     });
   },
 
-  /** Borra la información clínica y las citas de los pacientes de prueba (identificación CYP-E2E-*). No toca a nadie más. */
+  /** Borra la información clínica (incluidos resultados de laboratorio y notificaciones) y las citas de los pacientes de prueba (identificación CYP-E2E-*). No toca a nadie más. */
   async 'db:cleanE2eClinical'() {
     return withDb(async (db) => {
       const ids = `select "Id" from patients where "IdentificationNumber" like 'CYP-E2E-%'`;
+      // Laboratorio: notificaciones, eventos del outbox (solo los de estos pacientes) y resultados (los parámetros se borran en cascada).
+      await db.query(`delete from notifications where "PatientId" in (${ids})`);
+      await db.query(`delete from outbox_messages where "Type" = 'LabResultReady' and "Payload"->>'patientId' in (select "Id"::text from patients where "IdentificationNumber" like 'CYP-E2E-%')`);
+      await db.query(`delete from lab_results where "PatientId" in (${ids})`);
       await db.query(`delete from prescriptions where "PatientId" in (${ids})`); // las líneas de la receta se borran en cascada
       await db.query(`delete from consultations where "PatientId" in (${ids})`);
       await db.query(`delete from appointments where "PatientId" in (${ids})`);

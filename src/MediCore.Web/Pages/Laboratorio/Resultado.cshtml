@@ -1,0 +1,64 @@
+@page "{id:guid}"
+@model MediCore.Web.Pages.Laboratorio.ResultadoModel
+@{
+    ViewData["Code"] = "WEB-18";
+    ViewData["Title"] = "Detalle de resultado";
+    ViewData["Subtitle"] = "Información del examen y sus parámetros.";
+}
+
+@if (Model.Error is not null)
+{
+    <div class="err" role="alert">@Model.Error</div>
+}
+
+@if (Model.Result is { } result)
+{
+    <div class="panel panelpad">
+        <div class="eyebrow">RESULTADO DE LABORATORIO</div>
+        <h2>@result.ExamType</h2>
+        <p class="sub">@result.PatientName · @result.Date.ToString("dd/MM/yyyy")</p>
+
+        <div class="tablewrap">
+            <table>
+                <thead>
+                    <tr><th>Parámetro</th><th>Resultado</th><th>Unidad</th><th>Referencia</th></tr>
+                </thead>
+                <tbody>
+                    @foreach (var parameter in result.Parameters)
+                    {
+                        <tr>
+                            <td>@parameter.Name</td>
+                            <td><strong>@parameter.Value</strong></td>
+                            <td>@parameter.Unit</td>
+                            <td>@parameter.ReferenceRange</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Observaciones</h3>
+        <p>@(string.IsNullOrWhiteSpace(result.Notes) ? "Sin observaciones." : result.Notes)</p>
+
+        <div class="notice" id="estadoNotificacion" data-status="@(Model.IsPending ? "pendiente" : "enviada")">
+            Resultado guardado · Notificación @(Model.IsPending ? "pendiente de envío" : "enviada al paciente")
+        </div>
+
+        <div class="formfoot">
+            @if (Model.IsLab)
+            {
+                <a class="btn secondary" asp-page="/Laboratorio/Index">Volver</a>
+                @if (Model.IsPending)
+                {
+                    <form method="post" action="@Url.Page("/Laboratorio/Resultado", "Reintentar", new { id = result.Id })" asp-antiforgery="true">
+                        <button class="btn" type="submit" id="retryNotification">Reintentar notificación</button>
+                    </form>
+                }
+            }
+            else
+            {
+                <a class="btn secondary" asp-page="/Pacientes/Expediente" asp-route-id="@result.PatientId" asp-route-tab="Laboratorio">Volver</a>
+            }
+        </div>
+    </div>
+}
