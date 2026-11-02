@@ -63,3 +63,14 @@ fieldset.medicamento .link { margin-top: 8px; }
 .mobcard .author { font-size: 11px; font-style: italic; margin-top: 8px; }
 .medication-card { cursor: default; }
 .medication-card:hover { border-color: #c6dcd3; background: #f9fcf7; }
+
+.shortcut { display: block; text-decoration: none; color: inherit; max-width: 520px; }
+.shortcut:hover h3 { text-decoration: underline; }
+
+/* Tablas anchas (médicos, usuarios, pacientes, resultados) en pantallas pequeñas: se desplazan dentro de su panel en lugar de ensanchar la página. */
+.panel:has(> table) { overflow-x: auto; }
+
+/* En pantallas pequeñas la columna única no debe crecer con el menú horizontal (el del administrador tiene más enlaces): el menú se desplaza en su propia franja. */
+@media (max-width: 700px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+}

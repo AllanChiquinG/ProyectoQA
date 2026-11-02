@@ -20,7 +20,7 @@
             <span asp-validation-for="Input.IdentificationNumber" class="err"></span>
         </label>
         <label class="field">Fecha de nacimiento *
-            <input asp-for="Input.BirthDate" type="date" required min="1900-01-01" max="@DateTime.UtcNow:yyyy-MM-dd" />
+            <input asp-for="Input.BirthDate" type="date" required min="1900-01-01" max="@DateTime.UtcNow.ToString("yyyy-MM-dd")" />
             <span asp-validation-for="Input.BirthDate" class="err"></span>
         </label>
         <label class="field">Teléfono *
