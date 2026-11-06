@@ -92,7 +92,7 @@ def main():
     out = ROOT / args.out
     out.parent.mkdir(parents=True, exist_ok=True)
     stamp = datetime.datetime.now().astimezone().strftime('%Y-%m-%d %H:%M:%S %z')
-    lines = [f'# {args.title}', '', f'Ejecutado el {stamp} con `scripts/maestro_run.py` en un dispositivo Android real o emulado, contra la API y RabbitMQ de desarrollo.', '',
+    lines = [f'# {args.title}', '', f'Ejecutado el {stamp} con `scripts/maestro_run.py` en un dispositivo Android real o emulado, contra la API de {prep.API} y su RabbitMQ.', '',
              '| Flujo | Escenario | Resultado | Duración |', '|---|---|---|---|']
     for flow, scenario, passed, seconds, _ in results:
         lines.append(f'| `{flow}` | {scenario} | {"APROBADO" if passed else "FALLIDO"} | {seconds:.0f} s |')
