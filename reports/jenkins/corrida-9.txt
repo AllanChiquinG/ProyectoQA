@@ -3927,3 +3927,34 @@ Commit message: "Ansible: simulación repetida con el servicio de respaldos"
 [Pipeline] input
 [2026-11-06T21:46:47.988Z] ¿Aprobar el despliegue final?
 [2026-11-06T21:46:47.988Z] Aprobar or Abort
+[2026-11-06T23:21:15.325Z] Approved by admin
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (18. Deploy final)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+[2026-11-06T23:21:15.411Z] Sin servidor de Azure definido: el despliegue final se limita al ambiente QA local.
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] archiveArtifacts
+[2026-11-06T23:21:15.455Z] Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: UNSTABLE

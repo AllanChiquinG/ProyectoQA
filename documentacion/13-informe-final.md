@@ -26,7 +26,7 @@ La decisión final corresponde al equipo.
 | Rendimiento | k6 | Umbrales cumplidos | Declarados antes | Cumple |
 | Accesibilidad | axe-core | 14 pantallas, 0 infracciones | 0 | Cumple |
 | Usabilidad | Prueba con personas | No aplicada | 5 participantes | **Pendiente** |
-| Pipeline | Jenkins | Corrida 9: criterios de salida cumplidos, etapa 17 a la espera de aprobación humana | Bloquea si falla | Cumple |
+| Pipeline | Jenkins | Corrida 9: 18 etapas completas, con criterios de salida cumplidos y aprobación humana en la etapa 17 | Bloquea si falla | Cumple |
 | Infraestructura | Terraform y Ansible sin Azure | Terraform 3 de 3 con proveedor simulado; Ansible sin fallas en Ubuntu desechable | Reproducible | Cumple en simulación |
 | Nube | Azure | Sin desplegar: el equipo decidió no usar recursos de pago | Exigido | **Pendiente** |
 
@@ -92,11 +92,11 @@ PostgreSQL se respalda cada 6 horas, con cifrado y verificación. En un simulacr
 | 6 | Falló | `SIMULAR_FALLO` detuvo el pipeline: no se ejecutaron Aprobación ni Deploy final |
 | 7 | Falló | SonarQube rechazó 8 incidencias nuevas y un punto de seguridad sin revisar. La puerta no se bajó |
 | 8 | Falló | SonarQube rechazó 1 incidencia y otro punto de seguridad. Lo demás de la etapa 16 cumplió |
-| 9 | Inestable | Puerta de SonarQube y criterios de salida cumplidos, con los respaldos incluidos. Fortify y Maestro quedan como aviso. La etapa 17 espera la aprobación de Diego |
+| 9 | Inestable | Puerta de SonarQube y criterios de salida cumplidos, con los respaldos incluidos. Fortify y Maestro quedan como aviso. Diego aprobó la etapa 17 y la etapa 18 registró que no hay servidor de Azure |
 
 La corrida 5 terminó inestable a propósito: Fortify y Maestro no se ejecutaron y el pipeline no los oculta. La aprobación de la etapa 17 se dio de forma automatizada, y la etapa 18 solo registró que no hay servidor de Azure.
 
-En la corrida 9 la aprobación es de una persona y no se automatizó. Jenkins numera esa corrida como 3 porque perdió su historial al reiniciar Docker (HJ-04).
+En la corrida 9 la aprobación la dio una persona desde Jenkins, sin automatizarla. Jenkins numera esa corrida como 3 porque perdió su historial al reiniciar Docker (HJ-04).
 
 Las consolas están en `reports/jenkins/`.
 

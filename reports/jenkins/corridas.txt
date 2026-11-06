@@ -6,4 +6,4 @@
 6 FAILURE 14.0 min
 7 FAILURE 15.3 min
 8 FAILURE 15.0 min
-9 UNSTABLE esperando aprobación en la etapa 17 (15,2 min hasta ahí)
+9 UNSTABLE 15,2 min hasta la etapa 17; aprobada por Diego y terminada a los 109,7 min
