@@ -57,7 +57,7 @@ Inicia sesión en la web y detén Redis:
 docker stop medicore-qa-redis-1
 ```
 
-**Qué ocurre:** el inicio de sesión responde 503 y los tokens dejan de aceptarse. No se devuelve un error 500.
+**Qué ocurre:** el inicio de sesión responde 503 y un token activo responde 401. No aparece un error 500.
 
 **Qué decir:** el cache falla abierto y la sesión falla cerrado. Si no podemos comprobar una sesión, no entregamos datos clínicos.
 
@@ -75,7 +75,7 @@ Detén el Worker, que publica y consume eventos:
 docker stop medicore-qa-worker-1
 ```
 
-Registra un resultado de laboratorio en la web. Sigue guardado y su notificación queda pendiente.
+Registra un resultado de laboratorio en la web. Sigue guardado y su notificación queda en `Pending`.
 
 Vuelve a iniciar el Worker:
 
@@ -83,7 +83,7 @@ Vuelve a iniciar el Worker:
 docker start medicore-qa-worker-1
 ```
 
-En menos de un minuto la notificación aparece como enviada.
+La notificación aparece como enviada. En el ensayo tardó segundos: ver `documentacion/evidencias/resiliencia-qa.md`.
 
 Para detener el broker, usa `medicore-qa-rabbitmq-1` en lugar del Worker. El resultado también queda guardado.
 
@@ -103,7 +103,7 @@ Para detener el broker, usa `medicore-qa-rabbitmq-1` en lugar del Worker. El res
 
 El p95 es el tiempo que cumplen 95 de cada 100 peticiones. Refleja mejor la experiencia que el promedio, porque un promedio esconde a los usuarios más lentos.
 
-**Ejemplo:** en Load, el p95 de reserva fue 11,4 ms. El 95 % de las reservas respondió en ese tiempo o menos, frente a un umbral de 1000 ms.
+**Ejemplo:** en Load, el p95 de reserva fue 8,9 ms. El 95 % de las reservas respondió en ese tiempo o menos, frente a un umbral de 1000 ms.
 
 **Límite:** k6, la API y la base de datos corrieron en el mismo equipo, sin red real. Los números no representan una VM de Azure.
 

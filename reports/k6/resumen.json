@@ -1,14 +1,14 @@
 [
   {
     "perfil": "load",
-    "peticiones": 20699,
-    "por_segundo": 75.8,
-    "p95_lectura_ms": 6.9,
-    "p95_reserva_ms": 11.4,
-    "p95_global_ms": 9.2,
+    "peticiones": 20399,
+    "por_segundo": 75.2,
+    "p95_lectura_ms": 5.3,
+    "p95_reserva_ms": 8.9,
+    "p95_global_ms": 6.9,
     "error_inesperado_pct": 0,
-    "reservas": 3197,
-    "conflictos_409": 34,
+    "reservas": 3260,
+    "conflictos_409": 41,
     "umbrales_incumplidos": []
   },
   {

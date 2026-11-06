@@ -10,8 +10,8 @@ La severidad y la prioridad siguen la sección 17 del [plan de pruebas](10-plan-
 |---|---|---|
 | Crítica | 0 | 0 |
 | Alta | 6 | 1 |
-| Media | 10 | 1 |
-| Baja | 3 | 1 |
+| Media | 10 | 0 |
+| Baja | 3 | 2 |
 
 ## Defectos cerrados
 
@@ -42,7 +42,7 @@ La severidad y la prioridad siguen la sección 17 del [plan de pruebas](10-plan-
 | ID | Módulo | Severidad | Prioridad | Pasos | Esperado | Obtenido | Decisión | Evidencia |
 |---|---|---|---|---|---|---|---|---|
 | H8-08 | Datos | Alta | P1 antes de producción | Revisar la infraestructura | Copias automáticas | No hay respaldos | Abierto, bloquea producción | R-16 |
-| HQ-01 | Datos QA | Media | P2 | Revisar `.env.qa` | Contraseña sembrada fuerte | Contraseña de demostración débil | Ficticia y solo local. Cambiar antes de un QA expuesto en Azure | `.env.qa` (no versionado) |
+| HQ-01 | Datos QA | Baja | P2 | Revisar `.env.qa` | Contraseña sembrada fuerte | Contraseña de demostración de 5 letras | Ficticia y solo local. Regenerar con `qa.sh init` antes de exponer QA | `.env.qa` (no versionado) |
 | HZ-03 | Web | Baja | P3 | Ejecutar ZAP | Cabeceras COEP y COOP | No están | Aceptado en QA; revisar con HTTPS | `reports/zap/zap.html` |
 
 ## Falsos positivos

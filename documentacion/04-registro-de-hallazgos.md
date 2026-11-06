@@ -263,6 +263,28 @@ Prioridad cambiada: se pausó Azure/Terraform/Ansible/Jenkins y la app móvil (s
 
 Evidencia: `documentacion/evidencias/entrega-8-verificacion.md` y `entrega-8-maestro-qa.md`.
 
+## Cierre · rendimiento, seguridad y pipeline (2026-11-06)
+
+El registro formal, con pasos, severidad y prioridad, está en [12-registro-de-defectos.md](12-registro-de-defectos.md).
+
+| ID | Tipo | Qué ocurrió | Causa | Corrección | Resultado |
+|---|---|---|---|---|---|
+| HP-01 | Prueba | Stress y Spike aprobaron casi sin reservas. | Load había llenado las agendas. | Cada corrida crea sus médicos, y falla si no reserva. | Corridas válidas. |
+| HP-02 | Producto | Quedaron 14 405 eventos pendientes después del pico. | El outbox publicaba 20 eventos cada 2 s. | Lote de 200 y drenado continuo. | 0 pendientes. |
+| HS-01 | Producto | SonarQube encontró bugs S1751. | Bucles que salían en la primera vuelta. | Lectura corregida. | 0 bugs. |
+| HS-02 | Producto | La puerta rechazó el código nuevo. | Duplicación entre web y móvil, sin pruebas. | `ProblemDetailsReader` compartido y 4 pruebas. | Puerta aprobada. |
+| HS-03 | Prueba | La puerta por defecto aprobaba sin condiciones. | Era un proyecto sin puerta asignada. | Puerta propia "MediCore". | La puerta exige condiciones reales. |
+| HA-01 | Producto | axe encontró contraste insuficiente en el calendario. | Colores del diseño. | Colores en `app.css`. | 0 infracciones. |
+| HZ-01 | Producto | Un carácter nulo provocaba un error 500. | PostgreSQL rechaza NUL en texto. | `InvalidTextExceptionHandler` responde 400. | Prueba de regresión. |
+| HZ-02 | Producto | ZAP reportó cabeceras faltantes. | No estaban en Caddy. | Agregadas. | 0 fallas en ZAP. |
+| HZ-04 | Prueba | ZAP API recibía casi solo 401. | Probaba cerrar sesión y perdía la sesión. | Rutas de sesión excluidas. | Análisis con sesión, parcial en rutas clínicas. |
+| HC-01 | Producto | 7 archivos fallaban `dotnet format` en Jenkins. | La validación nunca se había ejecutado. | Formato aplicado. | Etapa 3 aprobada. |
+| HJ-01 | Entorno | Jenkins no tenía `docker`. | Debian separa el cliente en `docker-cli`. | Paquete correcto. | Corre etapas. |
+| HJ-02 | Entorno | El smoke fallaba en Jenkins. | `127.0.0.1` era el propio contenedor. | Jenkins entra a la red del proxy. | Etapa 10 aprobada. |
+| HJ-03 | Prueba | Insomnia falló en Jenkins sin horarios libres. | QA acumuló 761 médicos y 34 655 citas de k6 y ZAP. | QA se recrea en cada corrida y la fecha varía. | 65 de 65. |
+| HD-01 | Herramienta | Dependency-Check reportó 4 críticas. | Confundió bibliotecas cliente con servidores. | Revisadas y aceptadas con motivo. | Ver reporte de seguridad. |
+| HE-01 | Error propio | Se borraron capturas antiguas de Cypress que no estaban en Git (unos 9,7 MB). | Una limpieza con `rm -rf`. | No se pueden recuperar. Cypress genera capturas nuevas si una prueba falla. | Sin efecto en las pruebas. |
+
 ## Entregas anteriores
 
 Los hallazgos de las entregas 0 a 3 se trasladarán al registro formal de defectos en la entrega 14. Los principales: login con 503 por usar `localhost` para Redis (el cliente probaba IPv6 y Docker publica solo IPv4; corregido con `127.0.0.1`), una prueba que comparaba el `traceId` de dos respuestas de error, una prueba del catálogo de médicos afectada por la caché compartida con otras pruebas (se descarta la clave antes de insertar datos directos) y la interfaz de `IAsyncLifetime` de xUnit v2.

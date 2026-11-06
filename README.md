@@ -1,6 +1,6 @@
 # MediCore
 
-Plataforma hospitalaria: web del personal (Razor Pages), API (ASP.NET Core) y app móvil del paciente (.NET MAUI, Android). Proyecto 2 del Proyecto Final de QA. **Estado: entrega 5 (expediente, consultas y recetas) en curso.** Ver el plan en [documentacion/02-plan-de-trabajo.md](documentacion/02-plan-de-trabajo.md).
+Plataforma hospitalaria: web del personal (Razor Pages), API (ASP.NET Core) y app móvil del paciente (.NET MAUI, Android). Proyecto 2 del Proyecto Final de QA. **Estado: aplicación, pruebas y pipeline completos en QA local.** Propuesta actual: NO-GO para producción y GO condicionado para QA ([informe final](documentacion/13-informe-final.md)).
 
 ## Requisitos
 
@@ -9,9 +9,9 @@ Plataforma hospitalaria: web del personal (Razor Pages), API (ASP.NET Core) y ap
 | .NET SDK | compilar y ejecutar (hoy) | 10.0.x |
 | Git | control de versiones | cualquiera reciente |
 | Visual Studio 2022 17.14+ o 2026 | IDE (soporta `.slnx`) | opcional |
-| Docker Desktop | PostgreSQL, Redis, RabbitMQ y pruebas de integración | necesario desde la entrega 1 |
-| Workload MAUI + Android SDK | app móvil (entrega 9) | opcional por ahora |
-| Terraform, Ansible | infraestructura (entrega 12) | opcional por ahora |
+| Docker Desktop | ambiente QA, pruebas y pipeline | necesario |
+| Workload MAUI + Android SDK | app móvil y Maestro | opcional |
+| Terraform, Ansible | infraestructura en Azure | opcional; la validación corre en contenedores |
 
 ## Ejecutar
 
@@ -123,7 +123,41 @@ Docs/  Referencias/     documento del proyecto y diseño aprobado (solo lectura)
 
 ## Estado de las pruebas
 
-Hoy: 293 pruebas xUnit superadas (44 unitarias, 50 de la lógica móvil y 199 de integración con PostgreSQL, Redis y RabbitMQ reales; ver `documentacion/evidencias/`). **Maestro: 8 flujos, 8/8 aprobados en el emulador Android 35** (`documentacion/evidencias/entrega-7-maestro.md`). Además, **Cypress** (`tests/cypress`) ya cubre los recorridos de Recepción (8 pruebas), Médico (10, con datos aislados y sin depender de la hora) y Laboratorio (8, con notificación asíncrona real); ver su README. **Pendientes y obligatorios según el documento del proyecto**: ampliar Cypress (smoke, Administrador y Laboratorio, regresión), colección de Insomnia (API), Maestro (móvil) y pruebas de rendimiento con k6 o JMeter. Detalle en [documentacion/03-matriz-trazabilidad.md](documentacion/03-matriz-trazabilidad.md); los hallazgos y la verificación manual en [documentacion/04-registro-de-hallazgos.md](documentacion/04-registro-de-hallazgos.md).
+| Suite | Resultado |
+|---|---|
+| xUnit | 304/304 (48 unitarias, 50 móviles, 206 de integración) |
+| Insomnia | 65/65 comprobaciones en 61 solicitudes |
+| Cypress en Chrome | 116/116, incluidas 14 pantallas con axe |
+| Maestro | 8/8 antes de agregar eventos, falta repetir |
+| k6 | Load, Stress y Spike dentro de umbrales, en equipo local |
+| SonarQube | Puerta aprobada, 0 bugs, 74,2 % de cobertura |
+| ZAP | 0 alertas altas en web y API; rutas clínicas parciales |
+| Fortify | Sin ejecutar: falta licencia |
+| Usabilidad | Definida, sin aplicar a personas |
+
+## Documentos de entrega
+
+| Documento | Contenido |
+|---|---|
+| [Plan de pruebas](documentacion/10-plan-de-pruebas.md) | Las 20 secciones exigidas |
+| [Matriz de riesgos](documentacion/09-matriz-de-riesgos.md) | Confidencialidad, integridad y disponibilidad |
+| [Casos de prueba](documentacion/11-casos-de-prueba.md) | Casos críticos con su evidencia |
+| [Registro de defectos](documentacion/12-registro-de-defectos.md) | Pasos, severidad, prioridad y evidencia |
+| [Informe final](documentacion/13-informe-final.md) | Métricas y decisión GO / NO-GO |
+| [Guion de defensa](documentacion/14-guion-de-defensa.md) | Demostraciones en vivo |
+| [Seguridad y accesibilidad](documentacion/15-seguridad-y-accesibilidad.md) | Hallazgos y su tratamiento |
+
+## Pipeline
+
+Jenkins y SonarQube corren en contenedores:
+
+```bash
+docker compose -p medicore-ci --env-file ci/.env.ci -f ci/docker-compose.ci.yml up -d --build
+```
+
+Jenkins queda en `http://127.0.0.1:8090` y SonarQube en `http://127.0.0.1:9000`. `ci/.env.ci` no se versiona y define `JENKINS_ADMIN_PASSWORD`, `SONAR_ADMIN_PASSWORD`, `SONAR_TOKEN` y `MEDICORE_BRANCH`. Para crear la puerta de calidad, usa `scripts/sonar-setup.sh`.
+
+**Cada corrida borra los datos de QA y los vuelve a sembrar.** Solo afecta los volúmenes `medicore-qa_*`.
 
 ## Seguridad
 

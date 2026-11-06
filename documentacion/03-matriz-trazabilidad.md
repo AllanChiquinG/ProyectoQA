@@ -2,16 +2,16 @@
 
 Estados: ✔ hecho y verificado · ◐ parcial · ○ pendiente. "Implementación" y "Pruebas" apuntan a rutas reales cuando existan; hoy solo hay lo de la entrega 0.
 
-## Entregables obligatorios PENDIENTES (las pruebas actuales no los sustituyen)
+## Entregables de pruebas obligatorios
 
-Las 293 pruebas xUnit actuales (44 unitarias, 50 de la lógica móvil y 199 de integración contra PostgreSQL, Redis y RabbitMQ reales; ninguna omitida) son complementarias. El documento del proyecto exige, además, los siguientes entregables, **todavía no iniciados**:
+Las 304 pruebas xUnit (48 unitarias, 50 de la lógica móvil y 206 de integración con PostgreSQL, Redis y RabbitMQ reales; ninguna omitida) son complementarias. El documento exige además estos entregables:
 
 | Entregable (documento, secciones 4, 8 y 12) | ID | Qué exige | Estado | Entrega |
 |---|---|---|---|---|
-| **Cypress** (web) | GEN-10 | Smoke, flujo funcional crítico, regresión y al menos un escenario negativo | ◐ **AMPLIADO (web)** — `tests/cypress`: 10 specs y 102 pruebas, **102/102 en Chrome 155** contra la API y la web en contenedores Linux (acceso y permisos 19; Recepción: pacientes 12, agenda y reserva 12 + recorrido 8; Administrador 10; Médico: recorrido 10 + agenda, pacientes y receta 8; Laboratorio: recorrido 8 + listado, registro y notificación pendiente 8; pantalla pequeña 7). Incluye negativos (conflicto y doble reserva, validaciones, accesos ajenos 404/403, sesión vencida, rol cambiado). **No se re-ejecutó en Electron** tras la ampliación (las 26 anteriores sí pasaron en Electron 146). **Faltan**: smoke formal en el pipeline, auditoría de accesibilidad con axe/Lighthouse y la caída de servicios (se comprobó a mano con `scripts/web_conexion.py`, no con Cypress) | 10 |
-| **Insomnia** (API) | GEN-17 | Colección con pruebas positivas, negativas, de autenticación, autorización y errores | ○ **PENDIENTE** — no existe la colección | 10 |
+| **Cypress** (web) | GEN-10 | Smoke, flujo funcional crítico, regresión y al menos un escenario negativo | ✔ **EJECUTADO** — 11 specs, 116/116 en Chrome contra QA (102 funcionales y 14 de accesibilidad). Electron y dispositivo físico sin repetir | 10 |
+| **Insomnia** (API) | GEN-17 | Colección con pruebas positivas, negativas, de autenticación, autorización y errores | ✔ **EJECUTADO** — 61 solicitudes, 65/65 comprobaciones contra QA | 10 |
 | **Maestro** (móvil) | GEN-11 | Entre 5 y 8 flujos de la app, con al menos un escenario negativo | ✔ **EJECUTADO** — `tests/maestro`: 8 flujos (login válido e inválido, reserva, consulta y cancelación, resultados, recetas, notificaciones, cierre de sesión; con negativos) **8/8 aprobados en el emulador Android 35** (`documentacion/evidencias/entrega-7-maestro.md`). Límites: un emulador, sin dispositivo físico | 7, 10 |
-| **Rendimiento con k6 o JMeter** | GEN-12, CRI-01, CRI-02 | Load, Stress y Spike con umbrales declarados antes de ejecutar (p95, tasa de error, throughput) y el escenario de alta demanda de citas con lecturas de agenda | ○ **PENDIENTE** — no hay scripts ni resultados | 13 |
+| **Rendimiento con k6 o JMeter** | GEN-12, CRI-01, CRI-02 | Load, Stress y Spike con umbrales declarados antes de ejecutar | ✔ **EJECUTADO** — umbrales cumplidos, 0 solapes y 0 pendientes; medición local (`07-rendimiento.md`) | 13 |
 
 Cypress cubre ahora los recorridos web de Acceso, Recepción, Administrador, Médico y Laboratorio (ver fila GEN-10); **no cubre** el smoke del pipeline ni una auditoría de accesibilidad automatizada; el caso "RabbitMQ detenido" no es automatizable desde Cypress (se cubre con `MessagingTests` y `scripts/evidencia_laboratorio.py`) y la caída de la API se comprobó con `scripts/web_conexion.py`.
 
@@ -62,7 +62,7 @@ Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 sol
 | ID | Requisito | Implementación | Pruebas previstas | Entrega | Estado |
 |---|---|---|---|---|---|
 | CRI-01 | Sin doble reserva ni colisión de horario bajo alta demanda | Restricciones de exclusión en PostgreSQL (médico y paciente) + candados de asesoría por horario + reintento ante deadlock | `AppointmentsApiTests`: 12 solicitudes al mismo horario → 1 reserva; 24 pacientes por 4 horarios + lecturas; mismo paciente con 6 médicos; reenvíos simultáneos con la misma clave. Carga con k6 pendiente (entrega 13) | 4, 13 | ◐ |
-| CRI-02 | Consistencia con lecturas concurrentes de agenda/expediente | — | k6 mixto | 13 | ○ |
+| CRI-02 | Consistencia con lecturas concurrentes de agenda/expediente | `tests/k6/medicore.js`, `scripts/perf-integridad.sh` | k6 mixto: 0 errores inesperados y 0 solapes | 13 | ✔ |
 | CRI-03 | RabbitMQ interrumpido después de registrar un resultado | Ver MQ-04 | `MessagingTests.Con_el_broker_detenido…`, evidencia `documentacion/evidencias/entrega-6-laboratorio.md` (sección B) | 6 | ✔ |
 | SEC-01 | RBAC por rol clínico/administrativo | `[Authorize(Roles)]`, política fallback, `Contracts/Roles.cs` | `IdentityApiTests.Solo_el_administrador…`, `BasicEndpointTests` | 2 | ◐ (roles clínicos con sus módulos) |
 | SEC-02 | Autorización a nivel de recurso (IDOR) | Pacientes, citas, recetas, consultas y resultados de laboratorio: `PatientAuthorizationHandler`, `AppointmentAuthorizationHandler`, `PrescriptionAuthorizationHandler`, `LabResultAuthorizationHandler` y `ICareRelationship`. **Laboratorio:** Laboratorio lee todos los resultados, el médico solo con relación válida, el paciente solo los suyos, Recepción y Administrador nunca (403); ajeno → 404 + `clinical.access_denied`. **Expediente compartido:** el médico con relación de atención válida (cita no cancelada o consulta registrada) lee los registros de otros médicos; sin relación, 404; nadie modifica lo de otro (solo el autor crea recetas sobre su consulta; no hay edición ni borrado); 404 y auditoría ante intento ajeno | `PatientsApiTests`, `AppointmentsApiTests`, `ClinicalApiTests` (`Expediente_compartido_*`), `ResourceAuthorizationTests` (unitarias, sin BD); Cypress `medico-expediente.cy.js` (colega) | 3–6 | ◐ (falta laboratorio: entrega 6) |
@@ -77,19 +77,19 @@ Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 sol
 | ID | Requisito | Implementación | Entrega | Estado |
 |---|---|---|---|---|
 | GEN-01 | Repo GitHub: ramas, PR, Issues, Releases, protección de `main` | Remoto en GitHub, ramas `feature/*` y PR #1 fusionado; falta protección de `main`, Issues y Releases | 0, 11 | ◐ |
-| GEN-02 | Jenkinsfile con las 18 etapas + bloqueo por Quality Gate | — | 11 | ○ |
+| GEN-02 | Jenkinsfile con las 18 etapas + bloqueo por Quality Gate | `Jenkinsfile`, `ci/`, `scripts/quality-gate.py`; 18 etapas ejecutadas (corrida 5) y bloqueo demostrado (corrida 6), `reports/jenkins/` | 11 | ✔ |
 | GEN-03 | Dockerfiles + docker-compose | `docker/{api,web,worker,migrator}.Dockerfile`, `docker-compose.yml` (dependencias) + `docker-compose.qa.yml` (aplicación, proxy `deploy/caddy/Caddyfile`), `scripts/qa.sh`; verificado: ambiente levantado, humo, persistencia (`documentacion/evidencias/entrega-8-verificacion.md`) | 1, 8 | ✔ (local) |
 | GEN-04 | Azure + Terraform (aprovisionar, modificar, destruir) | `infrastructure/terraform/{bootstrap,azure}` (estado remoto protegido, VM, red, NSG, IP, discos). **Validado** (`fmt`/`validate`); **sin `plan`/`apply`**: no hay despliegue demostrado | 8, 12 | ◐ |
 | GEN-05 | Ansible (SO, Docker, reverse proxy) | `infrastructure/ansible` (roles `base`, `docker`, `medicore`; proxy Caddy en el Compose). **Sintaxis y `ansible-lint` correctos**; **sin ejecutar contra un servidor** | 8, 12 | ◐ |
 | GEN-06 | API REST documentada (OpenAPI) | `AddOpenApi` + `/openapi/v1.json` en Development (sin esquema Bearer ni comentarios aún) | 1 | ◐ |
-| GEN-07 | SonarQube + Quality Gate | — | 11 | ○ |
-| GEN-08 | Fortify, Dependency-Check, npm audit | — | 11 | ○ |
-| GEN-09 | OWASP ZAP sobre QA | — | 11 | ○ |
+| GEN-07 | SonarQube + Quality Gate | Puerta "MediCore" aprobada; rechazó código nuevo en la corrida 2; `reports/sonarqube/` | 11 | ✔ |
+| GEN-08 | Fortify, Dependency-Check, npm audit | Dependency-Check, npm audit y NuGet ejecutados. **Fortify sin ejecutar: falta licencia** (`scripts/sec-fortify.sh`) | 11 | ◐ |
+| GEN-09 | OWASP ZAP sobre QA | Web y API con sesión real: 0 alertas altas; rutas clínicas parciales; `reports/zap/` | 11 | ✔ |
 | GEN-10 | Cypress (smoke, crítico, regresión, negativo) | `tests/cypress/e2e/*.cy.js` (10 specs; ver fila superior y `tests/cypress/README.md`) | 10 | ◐ |
-| GEN-11 | Maestro (5–8 flujos) | `tests/maestro/*.yaml` (8 flujos), `scripts/maestro_run.py` — 8/8 aprobados en emulador | 7, 10 | ✔ |
-| GEN-12 | k6/JMeter: Load, Stress, Spike con umbrales previos | — | 13 | ○ |
-| GEN-13 | Usabilidad (≥5 participantes) + Lighthouse/axe | — | 13 | ○ |
-| GEN-14 | Registro de defectos con evidencia | — | continuo | ○ |
-| GEN-15 | Plan de pruebas (20 secciones), riesgos C/I/D, casos, informe GO / NO-GO | — | 14 | ○ |
+| GEN-11 | Maestro (5–8 flujos) | `tests/maestro/*.yaml` (8 flujos), `scripts/maestro_run.py` — 8/8 en emulador antes de agregar los eventos; **falta repetir** | 7, 10 | ◐ |
+| GEN-12 | k6/JMeter: Load, Stress, Spike con umbrales previos | `tests/k6/medicore.js`, `documentacion/07-rendimiento.md`, `reports/k6/`; umbrales cumplidos, solo en equipo local | 13 | ✔ |
+| GEN-13 | Usabilidad (≥5 participantes) + Lighthouse/axe | axe: 14 pantallas, 0 infracciones. **Usabilidad definida en `08-usabilidad.md`, sin aplicar a personas** | 13 | ◐ |
+| GEN-14 | Registro de defectos con evidencia | `documentacion/12-registro-de-defectos.md`, plantilla `.github/ISSUE_TEMPLATE/defecto.yml`. Issues en GitHub sin crear | continuo | ◐ |
+| GEN-15 | Plan de pruebas (20 secciones), riesgos C/I/D, casos, informe GO / NO-GO | `10-plan-de-pruebas.md`, `09-matriz-de-riesgos.md`, `11-casos-de-prueba.md`, `13-informe-final.md` | 14 | ✔ |
 | GEN-16 | Ambiente reproducible desde código y documentación | README + `documentacion/06-infraestructura.md` + `scripts/qa.sh` + Compose + migraciones por contenedor; reproducido localmente desde cero. Falta reproducirlo en Azure | 1, 8, 12 | ◐ |
-| GEN-17 | Insomnia: colección +/−/authz | — | 10 | ○ |
+| GEN-17 | Insomnia: colección +/−/authz | `tests/insomnia/medicore.insomnia.json`, `scripts/api-tests.sh`; 61 solicitudes, 65/65 | 10 | ✔ |

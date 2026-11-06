@@ -1,0 +1,1246 @@
+Started by user admin
+Checking out git file:///repo into /var/jenkins_home/workspace/MediCore@script/82661ee11d5a24fb4b5a6c798533b976f17116c7d36d4951fe956f7ef40cb792 to read Jenkinsfile
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/MediCore@script/82661ee11d5a24fb4b5a6c798533b976f17116c7d36d4951fe956f7ef40cb792/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url file:///repo # timeout=10
+Fetching upstream changes from file:///repo
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- file:///repo +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/Dev_Diego^{commit} # timeout=10
+Checking out Revision 031145aa3cfda1ddb6b46bfe341ec66552e5e402 (refs/remotes/origin/Dev_Diego)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 031145aa3cfda1ddb6b46bfe341ec66552e5e402 # timeout=10
+Commit message: "Plan de pruebas, casos de prueba y registro de defectos"
+ > git rev-list --no-walk 2692f084a30083df17ceeab468299ed6a8b9f745 # timeout=10
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/MediCore
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/MediCore/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url file:///repo # timeout=10
+Fetching upstream changes from file:///repo
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- file:///repo +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/Dev_Diego^{commit} # timeout=10
+Checking out Revision 031145aa3cfda1ddb6b46bfe341ec66552e5e402 (refs/remotes/origin/Dev_Diego)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 031145aa3cfda1ddb6b46bfe341ec66552e5e402 # timeout=10
+Commit message: "Plan de pruebas, casos de prueba y registro de defectos"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] timeout
+[2026-11-06T07:16:28.867Z] Timeout set to expire in 3 hr 0 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (1. Checkout)
+[Pipeline] checkout
+[2026-11-06T07:16:28.893Z] The recommended git tool is: NONE
+[2026-11-06T07:16:28.893Z] No credentials specified
+[2026-11-06T07:16:28.894Z]  > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/MediCore/.git # timeout=10
+[2026-11-06T07:16:28.898Z] Fetching changes from the remote Git repository
+[2026-11-06T07:16:28.899Z]  > git config remote.origin.url file:///repo # timeout=10
+[2026-11-06T07:16:28.902Z] Fetching upstream changes from file:///repo
+[2026-11-06T07:16:28.902Z]  > git --version # timeout=10
+[2026-11-06T07:16:28.906Z]  > git --version # 'git version 2.47.3'
+[2026-11-06T07:16:28.906Z]  > git fetch --tags --force --progress -- file:///repo +refs/heads/*:refs/remotes/origin/* # timeout=10
+[2026-11-06T07:16:28.965Z]  > git rev-parse refs/remotes/origin/Dev_Diego^{commit} # timeout=10
+[2026-11-06T07:16:28.969Z] Checking out Revision 031145aa3cfda1ddb6b46bfe341ec66552e5e402 (refs/remotes/origin/Dev_Diego)
+[2026-11-06T07:16:28.969Z]  > git config core.sparsecheckout # timeout=10
+[2026-11-06T07:16:28.972Z]  > git checkout -f 031145aa3cfda1ddb6b46bfe341ec66552e5e402 # timeout=10
+[2026-11-06T07:16:28.980Z] Commit message: "Plan de pruebas, casos de prueba y registro de defectos"
+[Pipeline] sh
+[2026-11-06T07:16:29.237Z] + git log -1 --oneline
+[2026-11-06T07:16:29.237Z] 031145a Plan de pruebas, casos de prueba y registro de defectos
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (2. Dependencias)
+[Pipeline] sh
+[2026-11-06T07:16:29.517Z] + bash scripts/dotnet-linux.sh build MediCore.slnx
+[2026-11-06T07:16:30.429Z]   Determining projects to restore...
+[2026-11-06T07:16:30.980Z]   Restored /work/src/MediCore.Domain/MediCore.Domain.csproj (in 92 ms).
+[2026-11-06T07:16:30.980Z]   Restored /work/src/MediCore.Contracts/MediCore.Contracts.csproj (in 92 ms).
+[2026-11-06T07:16:30.980Z]   Restored /work/src/MediCore.Web/MediCore.Web.csproj (in 99 ms).
+[2026-11-06T07:16:30.980Z]   Restored /work/src/MediCore.Mobile.Core/MediCore.Mobile.Core.csproj (in 99 ms).
+[2026-11-06T07:16:31.230Z]   Restored /work/tests/MediCore.Mobile.Tests/MediCore.Mobile.Tests.csproj (in 431 ms).
+[2026-11-06T07:16:31.230Z]   Restored /work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj (in 431 ms).
+[2026-11-06T07:16:31.230Z]   Restored /work/src/MediCore.Worker/MediCore.Worker.csproj (in 431 ms).
+[2026-11-06T07:16:31.230Z]   Restored /work/tests/MediCore.UnitTests/MediCore.UnitTests.csproj (in 431 ms).
+[2026-11-06T07:16:31.230Z]   Restored /work/tests/MediCore.Api.Tests/MediCore.Api.Tests.csproj (in 431 ms).
+[2026-11-06T07:16:31.230Z]   Restored /work/src/MediCore.Api/MediCore.Api.csproj (in 453 ms).
+[2026-11-06T07:16:33.714Z]   MediCore.Domain -> /work/src/MediCore.Domain/bin/Debug/net10.0/MediCore.Domain.dll
+[2026-11-06T07:16:33.715Z]   MediCore.Contracts -> /work/src/MediCore.Contracts/bin/Debug/net10.0/MediCore.Contracts.dll
+[2026-11-06T07:16:34.268Z]   MediCore.Mobile.Core -> /work/src/MediCore.Mobile.Core/bin/Debug/net10.0/MediCore.Mobile.Core.dll
+[2026-11-06T07:16:34.819Z]   MediCore.Infrastructure -> /work/src/MediCore.Infrastructure/bin/Debug/net10.0/MediCore.Infrastructure.dll
+[2026-11-06T07:16:34.819Z]   MediCore.Mobile.Tests -> /work/tests/MediCore.Mobile.Tests/bin/Debug/net10.0/MediCore.Mobile.Tests.dll
+[2026-11-06T07:16:35.070Z]   MediCore.Worker -> /work/src/MediCore.Worker/bin/Debug/net10.0/MediCore.Worker.dll
+[2026-11-06T07:16:35.985Z]   MediCore.Api -> /work/src/MediCore.Api/bin/Debug/net10.0/MediCore.Api.dll
+[2026-11-06T07:16:36.236Z]   MediCore.Web -> /work/src/MediCore.Web/bin/Debug/net10.0/MediCore.Web.dll
+[2026-11-06T07:16:36.483Z]   MediCore.UnitTests -> /work/tests/MediCore.UnitTests/bin/Debug/net10.0/MediCore.UnitTests.dll
+[2026-11-06T07:16:37.035Z]   MediCore.Api.Tests -> /work/tests/MediCore.Api.Tests/bin/Debug/net10.0/MediCore.Api.Tests.dll
+[2026-11-06T07:16:37.035Z] 
+[2026-11-06T07:16:37.035Z] Build succeeded.
+[2026-11-06T07:16:37.035Z]     0 Warning(s)
+[2026-11-06T07:16:37.035Z]     0 Error(s)
+[2026-11-06T07:16:37.035Z] 
+[2026-11-06T07:16:37.035Z] Time Elapsed 00:00:07.15
+[Pipeline] sh
+[2026-11-06T07:16:37.842Z] + docker run --rm -v /var/jenkins_home/workspace/MediCore/tests/cypress:/app -w /app node:22-alpine npm ci --ignore-scripts
+[2026-11-06T07:16:41.071Z] 
+[2026-11-06T07:16:41.071Z] added 186 packages, and audited 187 packages in 3s
+[2026-11-06T07:16:41.071Z] 
+[2026-11-06T07:16:41.071Z] 53 packages are looking for funding
+[2026-11-06T07:16:41.071Z]   run `npm fund` for details
+[2026-11-06T07:16:41.071Z] 
+[2026-11-06T07:16:41.071Z] found 0 vulnerabilities
+[2026-11-06T07:16:41.071Z] npm notice
+[2026-11-06T07:16:41.071Z] npm notice New major version of npm available! 10.9.9 -> 12.2.2
+[2026-11-06T07:16:41.071Z] npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.2
+[2026-11-06T07:16:41.071Z] npm notice To update run: npm install -g npm@12.2.2
+[2026-11-06T07:16:41.071Z] npm notice
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (3. Lint y validaciones)
+[Pipeline] sh
+[2026-11-06T07:16:41.351Z] + bash scripts/dotnet-linux.sh format
+[Pipeline] sh
+[2026-11-06T07:16:56.375Z] + bash scripts/validate-iac.sh
+[2026-11-06T07:16:56.375Z] 
+[2026-11-06T07:16:56.375Z] === Terraform (hashicorp/terraform:1.12): fmt, init -backend=false, validate
+[2026-11-06T07:16:56.375Z] Unable to find image 'hashicorp/terraform:1.12' locally
+[2026-11-06T07:16:57.287Z] 1.12: Pulling from hashicorp/terraform
+[2026-11-06T07:16:57.838Z] b6f01947d0cf: Pulling fs layer
+[2026-11-06T07:16:57.838Z] 0b7bc71b010c: Pulling fs layer
+[2026-11-06T07:16:57.838Z] 0b69355a7baa: Pulling fs layer
+[2026-11-06T07:16:57.838Z] 5eed50af5076: Pulling fs layer
+[2026-11-06T07:16:58.389Z] 5eed50af5076: Download complete
+[2026-11-06T07:16:58.389Z] 0b7bc71b010c: Download complete
+[2026-11-06T07:16:58.389Z] 0b7bc71b010c: Pull complete
+[2026-11-06T07:17:00.251Z] 0b69355a7baa: Download complete
+[2026-11-06T07:17:00.502Z] 5eed50af5076: Pull complete
+[2026-11-06T07:17:00.502Z] 0b69355a7baa: Pull complete
+[2026-11-06T07:17:01.846Z] b6f01947d0cf: Download complete
+[2026-11-06T07:17:02.097Z] b6f01947d0cf: Pull complete
+[2026-11-06T07:17:02.097Z] Digest: sha256:f5ac787eee9d292b6a3b97d40f04019ce08189d356233fc73d5ec7ef8529cce2
+[2026-11-06T07:17:02.097Z] Status: Downloaded newer image for hashicorp/terraform:1.12
+[2026-11-06T07:17:03.008Z] Terraform v1.12.2
+[2026-11-06T07:17:03.008Z] fmt: formato correcto
+[2026-11-06T07:17:15.103Z] validate azure: Success! The configuration is valid.
+[2026-11-06T07:17:24.980Z] validate bootstrap: Success! The configuration is valid.
+[2026-11-06T07:17:24.980Z] 
+[2026-11-06T07:17:24.980Z] === Ansible (ansible-core + ansible-lint): sintaxis y lint
+[2026-11-06T07:17:24.980Z] Unable to find image 'python:3.12-slim' locally
+[2026-11-06T07:17:25.891Z] 3.12-slim: Pulling from library/python
+[2026-11-06T07:17:26.142Z] 37fb86c2a767: Pulling fs layer
+[2026-11-06T07:17:26.142Z] 05e0eee5572e: Pulling fs layer
+[2026-11-06T07:17:26.142Z] 2dc99d2d0a39: Pulling fs layer
+[2026-11-06T07:17:26.142Z] 68bced9e0afa: Pulling fs layer
+[2026-11-06T07:17:26.142Z] 05e0eee5572e: Download complete
+[2026-11-06T07:17:28.004Z] 68bced9e0afa: Download complete
+[2026-11-06T07:17:29.348Z] 37fb86c2a767: Download complete
+[2026-11-06T07:17:30.259Z] 37fb86c2a767: Pull complete
+[2026-11-06T07:17:30.259Z] 68bced9e0afa: Pull complete
+[2026-11-06T07:17:30.811Z] 2dc99d2d0a39: Download complete
+[2026-11-06T07:17:31.061Z] 05e0eee5572e: Pull complete
+[2026-11-06T07:17:31.061Z] 2dc99d2d0a39: Pull complete
+[2026-11-06T07:17:31.061Z] Digest: sha256:4840d514c583a4d3d8cad3940e68dee6f0f6f3635c12fcd0a3d74c21a5b93a54
+[2026-11-06T07:17:31.061Z] Status: Downloaded newer image for python:3.12-slim
+[2026-11-06T07:18:52.297Z] ansible [core 2.21.6]
+[2026-11-06T07:18:52.297Z] 
+[2026-11-06T07:18:52.297Z] playbook: site.yml
+[2026-11-06T07:18:52.297Z] 
+[2026-11-06T07:18:52.297Z] Passed: 0 failure(s), 0 warning(s) in 6 files processed of 6 encountered. Last profile that met the validation criteria was 'production'.
+[2026-11-06T07:18:52.297Z] ansible-lint: sin problemas
+[2026-11-06T07:18:52.297Z] 
+[2026-11-06T07:18:52.297Z] === Dockerfiles (hadolint)
+[2026-11-06T07:18:52.297Z] docker/api.Dockerfile: Unable to find image 'hadolint/hadolint:latest' locally
+[2026-11-06T07:18:52.297Z] latest: Pulling from hadolint/hadolint
+[2026-11-06T07:18:52.297Z] 83cf56c1bf8f: Pulling fs layer
+[2026-11-06T07:18:52.297Z] 83cf56c1bf8f: Download complete
+[2026-11-06T07:18:52.297Z] 83cf56c1bf8f: Pull complete
+[2026-11-06T07:18:52.297Z] Digest: sha256:32dac94127fd60b7b7e3fbfc65e1383b9b5e25c9bfd7b8536de7a539fe68a12d
+[2026-11-06T07:18:52.297Z] Status: Downloaded newer image for hadolint/hadolint:latest
+[2026-11-06T07:18:52.297Z] -:23 DL3066 [92minfo[0m: Non-numeric user-id may not be resolvable by host system
+[2026-11-06T07:18:52.297Z] sin advertencias ni errores (los avisos informativos DL3066 listados arriba son esperados: se usa el UID numérico de la imagen)
+[2026-11-06T07:18:52.297Z] docker/web.Dockerfile: -:20 DL3066 [92minfo[0m: Non-numeric user-id may not be resolvable by host system
+[2026-11-06T07:18:52.297Z] sin advertencias ni errores (los avisos informativos DL3066 listados arriba son esperados: se usa el UID numérico de la imagen)
+[2026-11-06T07:18:52.297Z] docker/worker.Dockerfile: -:19 DL3066 [92minfo[0m: Non-numeric user-id may not be resolvable by host system
+[2026-11-06T07:18:52.297Z] sin advertencias ni errores (los avisos informativos DL3066 listados arriba son esperados: se usa el UID numérico de la imagen)
+[2026-11-06T07:18:52.297Z] docker/migrator.Dockerfile: -:22 DL3066 [92minfo[0m: Non-numeric user-id may not be resolvable by host system
+[2026-11-06T07:18:52.297Z] sin advertencias ni errores (los avisos informativos DL3066 listados arriba son esperados: se usa el UID numérico de la imagen)
+[2026-11-06T07:18:52.297Z] 
+[2026-11-06T07:18:52.298Z] === Docker Compose del ambiente QA (config)
+[2026-11-06T07:18:52.298Z] compose config: válido
+[2026-11-06T07:18:52.298Z] 
+[2026-11-06T07:18:52.298Z] Validación de archivos correcta (NO es un despliegue en Azure).
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (4. Pruebas unitarias e integración)
+[Pipeline] sh
+[2026-11-06T07:18:52.581Z] + bash scripts/dotnet-linux.sh test MediCore.slnx
+[2026-11-06T07:18:53.928Z]   Determining projects to restore...
+[2026-11-06T07:18:54.179Z]   Restored /work/src/MediCore.Domain/MediCore.Domain.csproj (in 118 ms).
+[2026-11-06T07:18:54.179Z]   Restored /work/src/MediCore.Contracts/MediCore.Contracts.csproj (in 118 ms).
+[2026-11-06T07:18:54.179Z]   Restored /work/src/MediCore.Mobile.Core/MediCore.Mobile.Core.csproj (in 124 ms).
+[2026-11-06T07:18:54.179Z]   Restored /work/src/MediCore.Web/MediCore.Web.csproj (in 124 ms).
+[2026-11-06T07:18:54.730Z]   Restored /work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj (in 583 ms).
+[2026-11-06T07:18:54.730Z]   Restored /work/tests/MediCore.Mobile.Tests/MediCore.Mobile.Tests.csproj (in 576 ms).
+[2026-11-06T07:18:54.730Z]   Restored /work/src/MediCore.Worker/MediCore.Worker.csproj (in 582 ms).
+[2026-11-06T07:18:54.730Z]   Restored /work/tests/MediCore.UnitTests/MediCore.UnitTests.csproj (in 583 ms).
+[2026-11-06T07:18:54.730Z]   Restored /work/tests/MediCore.Api.Tests/MediCore.Api.Tests.csproj (in 583 ms).
+[2026-11-06T07:18:54.730Z]   Restored /work/src/MediCore.Api/MediCore.Api.csproj (in 599 ms).
+[2026-11-06T07:18:56.593Z]   MediCore.Domain -> /work/src/MediCore.Domain/bin/Debug/net10.0/MediCore.Domain.dll
+[2026-11-06T07:18:56.593Z]   MediCore.Contracts -> /work/src/MediCore.Contracts/bin/Debug/net10.0/MediCore.Contracts.dll
+[2026-11-06T07:18:57.144Z]   MediCore.Mobile.Core -> /work/src/MediCore.Mobile.Core/bin/Debug/net10.0/MediCore.Mobile.Core.dll
+[2026-11-06T07:18:57.695Z]   MediCore.Infrastructure -> /work/src/MediCore.Infrastructure/bin/Debug/net10.0/MediCore.Infrastructure.dll
+[2026-11-06T07:18:57.695Z]   MediCore.Mobile.Tests -> /work/tests/MediCore.Mobile.Tests/bin/Debug/net10.0/MediCore.Mobile.Tests.dll
+[2026-11-06T07:18:57.695Z] Test run for /work/tests/MediCore.Mobile.Tests/bin/Debug/net10.0/MediCore.Mobile.Tests.dll (.NETCoreApp,Version=v10.0)
+[2026-11-06T07:18:57.945Z] A total of 1 test files matched the specified pattern.
+[2026-11-06T07:18:58.496Z] 
+[2026-11-06T07:18:58.496Z] Passed!  - Failed:     0, Passed:    50, Skipped:     0, Total:    50, Duration: 177 ms - MediCore.Mobile.Tests.dll (net10.0)
+[2026-11-06T07:18:58.747Z]   MediCore.Api -> /work/src/MediCore.Api/bin/Debug/net10.0/MediCore.Api.dll
+[2026-11-06T07:18:59.300Z]   MediCore.UnitTests -> /work/tests/MediCore.UnitTests/bin/Debug/net10.0/MediCore.UnitTests.dll
+[2026-11-06T07:18:59.300Z] Test run for /work/tests/MediCore.UnitTests/bin/Debug/net10.0/MediCore.UnitTests.dll (.NETCoreApp,Version=v10.0)
+[2026-11-06T07:18:59.300Z] A total of 1 test files matched the specified pattern.
+[2026-11-06T07:18:59.851Z]   MediCore.Api.Tests -> /work/tests/MediCore.Api.Tests/bin/Debug/net10.0/MediCore.Api.Tests.dll
+[2026-11-06T07:18:59.851Z] Test run for /work/tests/MediCore.Api.Tests/bin/Debug/net10.0/MediCore.Api.Tests.dll (.NETCoreApp,Version=v10.0)
+[2026-11-06T07:18:59.851Z] A total of 1 test files matched the specified pattern.
+[2026-11-06T07:18:59.851Z] 
+[2026-11-06T07:18:59.851Z] Passed!  - Failed:     0, Passed:    44, Skipped:     0, Total:    44, Duration: 54 ms - MediCore.UnitTests.dll (net10.0)
+[2026-11-06T07:20:07.346Z] 
+[2026-11-06T07:20:07.346Z] Passed!  - Failed:     0, Passed:   206, Skipped:     0, Total:   206, Duration: 1 m 3 s - MediCore.Api.Tests.dll (net10.0)
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (5. SonarQube)
+[Pipeline] withCredentials
+[2026-11-06T07:20:07.392Z] Masking supported pattern matches of $SONAR_TOKEN
+[Pipeline] {
+[Pipeline] sh
+[2026-11-06T07:20:07.657Z] + SONAR_HOST_URL=http://sonarqube:9000 bash scripts/sec-sonar.sh
+[2026-11-06T07:20:07.657Z] DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+[2026-11-06T07:20:07.657Z]             Install the buildx component to build images with BuildKit:
+[2026-11-06T07:20:07.657Z]             https://docs.docker.com/go/buildx/
+[2026-11-06T07:20:07.657Z] 
+[2026-11-06T07:20:46.213Z] SonarScanner for MSBuild 10.3
+[2026-11-06T07:20:46.214Z] Using the .NET Core version of the Scanner for MSBuild
+[2026-11-06T07:20:46.214Z] Pre-processing started.
+[2026-11-06T07:20:46.214Z] Preparing working directories...
+[2026-11-06T07:20:46.214Z] 07:20:40.107  Updating build integration targets...
+[2026-11-06T07:20:46.214Z] 07:20:40.171  Using SonarQube v25.5.0.107428.
+[2026-11-06T07:20:46.214Z] 07:20:40.186  Fetching analysis configuration settings...
+[2026-11-06T07:20:46.214Z] 07:20:40.497  Provisioning analyzer assemblies for cs...
+[2026-11-06T07:20:46.214Z] 07:20:40.497  Installing required Roslyn analyzers...
+[2026-11-06T07:20:46.214Z] 07:20:40.497  Processing plugin: csharp version 10.9.0.115408
+[2026-11-06T07:20:46.214Z] 07:20:40.702  Provisioning analyzer assemblies for vbnet...
+[2026-11-06T07:20:46.214Z] 07:20:40.703  Installing required Roslyn analyzers...
+[2026-11-06T07:20:46.214Z] 07:20:40.703  Processing plugin: vbnet version 10.9.0.115408
+[2026-11-06T07:20:46.214Z] 07:20:40.726  Incremental PR analysis: Base branch parameter was not provided.
+[2026-11-06T07:20:46.214Z] 07:20:40.726  Cache data is empty. A full analysis will be performed.
+[2026-11-06T07:20:46.214Z] 07:20:40.741  Pre-processing succeeded.
+[2026-11-06T07:20:46.214Z]   Determining projects to restore...
+[2026-11-06T07:20:46.214Z]   Restored /work/src/MediCore.Domain/MediCore.Domain.csproj (in 116 ms).
+[2026-11-06T07:20:46.214Z]   Restored /work/src/MediCore.Web/MediCore.Web.csproj (in 121 ms).
+[2026-11-06T07:20:46.214Z]   Restored /work/src/MediCore.Contracts/MediCore.Contracts.csproj (in 116 ms).
+[2026-11-06T07:20:46.214Z]   Restored /work/src/MediCore.Mobile.Core/MediCore.Mobile.Core.csproj (in 121 ms).
+[2026-11-06T07:20:46.214Z]   Restored /work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj (in 495 ms).
+[2026-11-06T07:20:46.214Z]   Restored /work/tests/MediCore.Mobile.Tests/MediCore.Mobile.Tests.csproj (in 495 ms).
+[2026-11-06T07:20:46.214Z]   Restored /work/src/MediCore.Worker/MediCore.Worker.csproj (in 495 ms).
+[2026-11-06T07:20:46.214Z]   Restored /work/tests/MediCore.UnitTests/MediCore.UnitTests.csproj (in 495 ms).
+[2026-11-06T07:20:46.214Z]   Restored /work/tests/MediCore.Api.Tests/MediCore.Api.Tests.csproj (in 495 ms).
+[2026-11-06T07:20:46.214Z]   Restored /work/src/MediCore.Api/MediCore.Api.csproj (in 511 ms).
+[2026-11-06T07:20:46.214Z] /work/src/MediCore.Contracts/Roles.cs(18,82): warning S3358: Extract this nested ternary operation into an independent statement. (https://rules.sonarsource.com/csharp/RSPEC-3358) [/work/src/MediCore.Contracts/MediCore.Contracts.csproj]
+[2026-11-06T07:20:46.214Z]   MediCore.Domain -> /work/src/MediCore.Domain/bin/Release/net10.0/MediCore.Domain.dll
+[2026-11-06T07:20:46.214Z]   MediCore.Contracts -> /work/src/MediCore.Contracts/bin/Release/net10.0/MediCore.Contracts.dll
+[2026-11-06T07:20:46.214Z]   Sonar: (MediCore.Domain.csproj) Project processed successfully
+[2026-11-06T07:20:46.214Z]   Sonar: (MediCore.Contracts.csproj) Project processed successfully
+[2026-11-06T07:20:47.125Z] /work/src/MediCore.Mobile.Core/ViewModels/AppointmentViewModels.cs(146,129): warning S1135: Complete the task associated to this 'TODO' comment. (https://rules.sonarsource.com/csharp/RSPEC-1135) [/work/src/MediCore.Mobile.Core/MediCore.Mobile.Core.csproj]
+[2026-11-06T07:20:47.125Z] /work/src/MediCore.Mobile.Core/ViewModels/SessionViewModels.cs(57,15): warning S3358: Extract this nested ternary operation into an independent statement. (https://rules.sonarsource.com/csharp/RSPEC-3358) [/work/src/MediCore.Mobile.Core/MediCore.Mobile.Core.csproj]
+[2026-11-06T07:20:47.376Z]   MediCore.Mobile.Core -> /work/src/MediCore.Mobile.Core/bin/Release/net10.0/MediCore.Mobile.Core.dll
+[2026-11-06T07:20:47.376Z]   Sonar: (MediCore.Mobile.Core.csproj) Project processed successfully
+[2026-11-06T07:20:48.288Z] /work/src/MediCore.Infrastructure/Identity/SessionStore.cs(29,70): warning S1135: Complete the task associated to this 'TODO' comment. (https://rules.sonarsource.com/csharp/RSPEC-1135) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Identity/ClinicalDemoSeeder.cs(18,72): warning S1192: Define a constant instead of using this literal 'lucia.mendez@example.com' 4 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Identity/E2eFixtureSeeder.cs(14,21): warning S101: Rename class 'E2eFixtureSeeder' to match pascal case naming rules, consider using 'E2EFixtureSeeder'. (https://rules.sonarsource.com/csharp/RSPEC-101) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261015024156_IdentidadYAuditoria.cs(16,23): warning S1192: Define a constant instead of using this literal 'audit_entries' 4 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261015042825_PacientesYMedicos.cs(24,65): warning S1192: Define a constant instead of using this literal 'timestamp with time zone' 4 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261015042825_PacientesYMedicos.cs(33,23): warning S1192: Define a constant instead of using this literal 'patients' 5 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027032020_ConsultasYRecetas.cs(15,23): warning S1192: Define a constant instead of using this literal 'consultations' 6 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027032020_ConsultasYRecetas.cs(51,23): warning S1192: Define a constant instead of using this literal 'prescriptions' 6 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027032020_ConsultasYRecetas.cs(116,25): warning S1192: Define a constant instead of using this literal 'DoctorId' 4 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027013426_AgendaYCitas.cs(15,23): warning S1192: Define a constant instead of using this literal 'appointments' 5 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs(15,23): warning S1192: Define a constant instead of using this literal 'ix_outbox_messages_pending' 4 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs(16,24): warning S1192: Define a constant instead of using this literal 'outbox_messages' 6 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs(21,23): warning S1192: Define a constant instead of using this literal 'timestamp with time zone' 4 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs(26,23): warning S1192: Define a constant instead of using this literal 'lab_results' 5 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs(49,23): warning S1192: Define a constant instead of using this literal 'notifications' 5 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Messaging/OutboxPublisher.cs(34,100): warning S108: Either remove or fill this block of code. (https://rules.sonarsource.com/csharp/RSPEC-108) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Messaging/OutboxPublisher.cs(43,17): warning S6667: Logging in a catch clause should pass the caught exception as a parameter. (https://rules.sonarsource.com/csharp/RSPEC-6667) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Messaging/NotificationConsumer.cs(56,17): warning S6667: Logging in a catch clause should pass the caught exception as a parameter. (https://rules.sonarsource.com/csharp/RSPEC-6667) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Messaging/NotificationConsumer.cs(98,33): warning S2325: Make 'ParseEvent' a static method. (https://rules.sonarsource.com/csharp/RSPEC-2325) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Messaging/OutboxPublisher.cs(89,21): warning S6667: Logging in a catch clause should pass the caught exception as a parameter. (https://rules.sonarsource.com/csharp/RSPEC-6667) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z] /work/src/MediCore.Infrastructure/Messaging/NotificationConsumer.cs(145,13): warning S6667: Logging in a catch clause should pass the caught exception as a parameter. (https://rules.sonarsource.com/csharp/RSPEC-6667) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:48.289Z]   MediCore.Infrastructure -> /work/src/MediCore.Infrastructure/bin/Release/net10.0/MediCore.Infrastructure.dll
+[2026-11-06T07:20:48.289Z]   Sonar: (MediCore.Infrastructure.csproj) Project processed successfully
+[2026-11-06T07:20:48.289Z]   MediCore.Mobile.Tests -> /work/tests/MediCore.Mobile.Tests/bin/Release/net10.0/MediCore.Mobile.Tests.dll
+[2026-11-06T07:20:48.540Z]   Sonar: (MediCore.Mobile.Tests.csproj) Project processed successfully
+[2026-11-06T07:20:49.093Z] /work/src/MediCore.Worker/HeartbeatService.cs(24,17): warning S6667: Logging in a catch clause should pass the caught exception as a parameter. (https://rules.sonarsource.com/csharp/RSPEC-6667) [/work/src/MediCore.Worker/MediCore.Worker.csproj]
+[2026-11-06T07:20:49.093Z]   MediCore.Worker -> /work/src/MediCore.Worker/bin/Release/net10.0/MediCore.Worker.dll
+[2026-11-06T07:20:49.093Z]   Sonar: (MediCore.Worker.csproj) Project processed successfully
+[2026-11-06T07:20:50.957Z] /work/src/MediCore.Api/Program.cs(81,24): warning S1135: Complete the task associated to this 'TODO' comment. (https://rules.sonarsource.com/csharp/RSPEC-1135) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:50.957Z] /work/src/MediCore.Api/Program.cs(1,1): warning S3776: Refactor this top-level file to reduce its Cognitive Complexity from 17 to the 15 allowed. (https://rules.sonarsource.com/csharp/RSPEC-3776) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:50.957Z] /work/src/MediCore.Api/Program.cs(145,22): warning S1118: Add a 'protected' constructor or the 'static' keyword to the class declaration. (https://rules.sonarsource.com/csharp/RSPEC-1118) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:50.957Z] /work/src/MediCore.Api/Security/AppointmentAuthorization.cs(31,13): warning S1871: Either merge this case with the identical one on line 27 or change one of the implementations. (https://rules.sonarsource.com/csharp/RSPEC-1871) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:50.957Z] /work/src/MediCore.Api/Security/AppointmentAuthorization.cs(35,13): warning S1871: Either merge this case with the identical one on line 31 or change one of the implementations. (https://rules.sonarsource.com/csharp/RSPEC-1871) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:50.958Z] /work/src/MediCore.Api/Security/PatientAuthorization.cs(64,13): warning S1871: Either merge this case with the identical one on line 59 or change one of the implementations. (https://rules.sonarsource.com/csharp/RSPEC-1871) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:50.958Z] /work/src/MediCore.Api/Security/LabResultAuthorization.cs(34,13): warning S1871: Either merge this case with the identical one on line 31 or change one of the implementations. (https://rules.sonarsource.com/csharp/RSPEC-1871) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:50.958Z] /work/src/MediCore.Api/Security/LabResultAuthorization.cs(37,13): warning S1871: Either merge this case with the identical one on line 34 or change one of the implementations. (https://rules.sonarsource.com/csharp/RSPEC-1871) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:50.958Z] /work/src/MediCore.Api/Program.cs(142,1): warning S6966: Await RunAsync instead. (https://rules.sonarsource.com/csharp/RSPEC-6966) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:50.958Z] /work/src/MediCore.Api/Controllers/LabsController.cs(246,26): warning S2325: Make 'ToDto' a static method. (https://rules.sonarsource.com/csharp/RSPEC-2325) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:50.958Z] /work/src/MediCore.Api/Controllers/AppointmentsController.cs(112,53): warning S3776: Refactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed. (https://rules.sonarsource.com/csharp/RSPEC-3776) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:50.958Z] /work/src/MediCore.Api/Controllers/AppointmentsController.cs(177,9): warning S1994: This loop's stop incrementer updates 'attempt' but the stop condition doesn't test any variables. (https://rules.sonarsource.com/csharp/RSPEC-1994) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:50.958Z] /work/src/MediCore.Web/Program.cs(10,28): warning S1135: Complete the task associated to this 'TODO' comment. (https://rules.sonarsource.com/csharp/RSPEC-1135) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.958Z] /work/src/MediCore.Web/Pages/Error.cshtml.cs(8,2): warning S4502: Make sure disabling CSRF protection is safe here. (https://rules.sonarsource.com/csharp/RSPEC-4502) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.958Z] /work/src/MediCore.Web/Pages/Estado.cshtml.cs(7,2): warning S4502: Make sure disabling CSRF protection is safe here. (https://rules.sonarsource.com/csharp/RSPEC-4502) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.959Z] /work/src/MediCore.Web/Program.cs(23,59): warning S1192: Define a constant instead of using this literal 'El valor ingresado no es válido.' 5 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.959Z] /work/src/MediCore.Web/Pages/Agenda/Cita.cshtml.cs(18,51): warning S6580: Use a format provider when parsing date and time. (https://rules.sonarsource.com/csharp/RSPEC-6580) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.959Z] /work/src/MediCore.Web/Pages/Index.cshtml.cs(8,17): warning S1186: Add a nested comment explaining why this method is empty, throw a 'NotSupportedException' or complete the implementation. (https://rules.sonarsource.com/csharp/RSPEC-1186) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.959Z] /work/src/MediCore.Web/Models/AgendaDay.cs(37,76): warning S107: Method has 8 parameters, which is greater than the 7 authorized. (https://rules.sonarsource.com/csharp/RSPEC-107) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.959Z] /work/src/MediCore.Web/Pages/Agenda/Reservar.cshtml.cs(53,69): warning S3358: Extract this nested ternary operation into an independent statement. (https://rules.sonarsource.com/csharp/RSPEC-3358) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.959Z] /work/src/MediCore.Web/Pages/Pacientes/Expediente.cshtml.cs(37,38): warning S3776: Refactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed. (https://rules.sonarsource.com/csharp/RSPEC-3776) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.959Z] /work/src/MediCore.Web/Pages/Laboratorio/Resultado.cshtml.cs(44,15): warning S3358: Extract this nested ternary operation into an independent statement. (https://rules.sonarsource.com/csharp/RSPEC-3358) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.959Z] /work/src/MediCore.Web/Pages/Index.cshtml(13,11): warning S3358: Extract this nested ternary operation into an independent statement. (https://rules.sonarsource.com/csharp/RSPEC-3358) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.959Z] /work/src/MediCore.Web/Pages/Index.cshtml(15,15): warning S3358: Extract this nested ternary operation into an independent statement. (https://rules.sonarsource.com/csharp/RSPEC-3358) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.959Z] /work/src/MediCore.Web/Pages/Agenda/Reservar.cshtml.cs(78,39): warning S3776: Refactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed. (https://rules.sonarsource.com/csharp/RSPEC-3776) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.959Z] /work/src/MediCore.Web/Program.cs(39,57): warning S1075: Remove this hardcoded path-delimiter. (https://rules.sonarsource.com/csharp/RSPEC-1075) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.959Z] /work/src/MediCore.Web/Program.cs(110,1): warning S6966: Await RunAsync instead. (https://rules.sonarsource.com/csharp/RSPEC-6966) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:50.959Z]   MediCore.Api -> /work/src/MediCore.Api/bin/Release/net10.0/MediCore.Api.dll
+[2026-11-06T07:20:50.959Z]   Sonar: (MediCore.Api.csproj) Project processed successfully
+[2026-11-06T07:20:50.959Z]   MediCore.Web -> /work/src/MediCore.Web/bin/Release/net10.0/MediCore.Web.dll
+[2026-11-06T07:20:50.959Z]   Sonar: (MediCore.Web.csproj) Project processed successfully
+[2026-11-06T07:20:51.873Z]   MediCore.UnitTests -> /work/tests/MediCore.UnitTests/bin/Release/net10.0/MediCore.UnitTests.dll
+[2026-11-06T07:20:51.873Z]   Sonar: (MediCore.UnitTests.csproj) Project processed successfully
+[2026-11-06T07:20:52.124Z]   MediCore.Api.Tests -> /work/tests/MediCore.Api.Tests/bin/Release/net10.0/MediCore.Api.Tests.dll
+[2026-11-06T07:20:52.124Z]   Sonar: (MediCore.Api.Tests.csproj) Project processed successfully
+[2026-11-06T07:20:52.124Z] 
+[2026-11-06T07:20:52.124Z] Build succeeded.
+[2026-11-06T07:20:52.124Z] 
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Contracts/Roles.cs(18,82): warning S3358: Extract this nested ternary operation into an independent statement. (https://rules.sonarsource.com/csharp/RSPEC-3358) [/work/src/MediCore.Contracts/MediCore.Contracts.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Mobile.Core/ViewModels/AppointmentViewModels.cs(146,129): warning S1135: Complete the task associated to this 'TODO' comment. (https://rules.sonarsource.com/csharp/RSPEC-1135) [/work/src/MediCore.Mobile.Core/MediCore.Mobile.Core.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Mobile.Core/ViewModels/SessionViewModels.cs(57,15): warning S3358: Extract this nested ternary operation into an independent statement. (https://rules.sonarsource.com/csharp/RSPEC-3358) [/work/src/MediCore.Mobile.Core/MediCore.Mobile.Core.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Identity/SessionStore.cs(29,70): warning S1135: Complete the task associated to this 'TODO' comment. (https://rules.sonarsource.com/csharp/RSPEC-1135) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Identity/ClinicalDemoSeeder.cs(18,72): warning S1192: Define a constant instead of using this literal 'lucia.mendez@example.com' 4 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Identity/E2eFixtureSeeder.cs(14,21): warning S101: Rename class 'E2eFixtureSeeder' to match pascal case naming rules, consider using 'E2EFixtureSeeder'. (https://rules.sonarsource.com/csharp/RSPEC-101) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261015024156_IdentidadYAuditoria.cs(16,23): warning S1192: Define a constant instead of using this literal 'audit_entries' 4 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261015042825_PacientesYMedicos.cs(24,65): warning S1192: Define a constant instead of using this literal 'timestamp with time zone' 4 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261015042825_PacientesYMedicos.cs(33,23): warning S1192: Define a constant instead of using this literal 'patients' 5 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027032020_ConsultasYRecetas.cs(15,23): warning S1192: Define a constant instead of using this literal 'consultations' 6 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027032020_ConsultasYRecetas.cs(51,23): warning S1192: Define a constant instead of using this literal 'prescriptions' 6 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027032020_ConsultasYRecetas.cs(116,25): warning S1192: Define a constant instead of using this literal 'DoctorId' 4 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027013426_AgendaYCitas.cs(15,23): warning S1192: Define a constant instead of using this literal 'appointments' 5 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs(15,23): warning S1192: Define a constant instead of using this literal 'ix_outbox_messages_pending' 4 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs(16,24): warning S1192: Define a constant instead of using this literal 'outbox_messages' 6 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs(21,23): warning S1192: Define a constant instead of using this literal 'timestamp with time zone' 4 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs(26,23): warning S1192: Define a constant instead of using this literal 'lab_results' 5 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs(49,23): warning S1192: Define a constant instead of using this literal 'notifications' 5 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Messaging/OutboxPublisher.cs(34,100): warning S108: Either remove or fill this block of code. (https://rules.sonarsource.com/csharp/RSPEC-108) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Messaging/OutboxPublisher.cs(43,17): warning S6667: Logging in a catch clause should pass the caught exception as a parameter. (https://rules.sonarsource.com/csharp/RSPEC-6667) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Messaging/NotificationConsumer.cs(56,17): warning S6667: Logging in a catch clause should pass the caught exception as a parameter. (https://rules.sonarsource.com/csharp/RSPEC-6667) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Messaging/NotificationConsumer.cs(98,33): warning S2325: Make 'ParseEvent' a static method. (https://rules.sonarsource.com/csharp/RSPEC-2325) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.124Z] /work/src/MediCore.Infrastructure/Messaging/OutboxPublisher.cs(89,21): warning S6667: Logging in a catch clause should pass the caught exception as a parameter. (https://rules.sonarsource.com/csharp/RSPEC-6667) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Infrastructure/Messaging/NotificationConsumer.cs(145,13): warning S6667: Logging in a catch clause should pass the caught exception as a parameter. (https://rules.sonarsource.com/csharp/RSPEC-6667) [/work/src/MediCore.Infrastructure/MediCore.Infrastructure.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Worker/HeartbeatService.cs(24,17): warning S6667: Logging in a catch clause should pass the caught exception as a parameter. (https://rules.sonarsource.com/csharp/RSPEC-6667) [/work/src/MediCore.Worker/MediCore.Worker.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Api/Program.cs(81,24): warning S1135: Complete the task associated to this 'TODO' comment. (https://rules.sonarsource.com/csharp/RSPEC-1135) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Api/Program.cs(1,1): warning S3776: Refactor this top-level file to reduce its Cognitive Complexity from 17 to the 15 allowed. (https://rules.sonarsource.com/csharp/RSPEC-3776) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Api/Program.cs(145,22): warning S1118: Add a 'protected' constructor or the 'static' keyword to the class declaration. (https://rules.sonarsource.com/csharp/RSPEC-1118) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Api/Security/AppointmentAuthorization.cs(31,13): warning S1871: Either merge this case with the identical one on line 27 or change one of the implementations. (https://rules.sonarsource.com/csharp/RSPEC-1871) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Api/Security/AppointmentAuthorization.cs(35,13): warning S1871: Either merge this case with the identical one on line 31 or change one of the implementations. (https://rules.sonarsource.com/csharp/RSPEC-1871) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Api/Security/PatientAuthorization.cs(64,13): warning S1871: Either merge this case with the identical one on line 59 or change one of the implementations. (https://rules.sonarsource.com/csharp/RSPEC-1871) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Api/Security/LabResultAuthorization.cs(34,13): warning S1871: Either merge this case with the identical one on line 31 or change one of the implementations. (https://rules.sonarsource.com/csharp/RSPEC-1871) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Api/Security/LabResultAuthorization.cs(37,13): warning S1871: Either merge this case with the identical one on line 34 or change one of the implementations. (https://rules.sonarsource.com/csharp/RSPEC-1871) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Api/Program.cs(142,1): warning S6966: Await RunAsync instead. (https://rules.sonarsource.com/csharp/RSPEC-6966) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Api/Controllers/LabsController.cs(246,26): warning S2325: Make 'ToDto' a static method. (https://rules.sonarsource.com/csharp/RSPEC-2325) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Api/Controllers/AppointmentsController.cs(112,53): warning S3776: Refactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed. (https://rules.sonarsource.com/csharp/RSPEC-3776) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Api/Controllers/AppointmentsController.cs(177,9): warning S1994: This loop's stop incrementer updates 'attempt' but the stop condition doesn't test any variables. (https://rules.sonarsource.com/csharp/RSPEC-1994) [/work/src/MediCore.Api/MediCore.Api.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Program.cs(10,28): warning S1135: Complete the task associated to this 'TODO' comment. (https://rules.sonarsource.com/csharp/RSPEC-1135) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Pages/Error.cshtml.cs(8,2): warning S4502: Make sure disabling CSRF protection is safe here. (https://rules.sonarsource.com/csharp/RSPEC-4502) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Pages/Estado.cshtml.cs(7,2): warning S4502: Make sure disabling CSRF protection is safe here. (https://rules.sonarsource.com/csharp/RSPEC-4502) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Program.cs(23,59): warning S1192: Define a constant instead of using this literal 'El valor ingresado no es válido.' 5 times. (https://rules.sonarsource.com/csharp/RSPEC-1192) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Pages/Agenda/Cita.cshtml.cs(18,51): warning S6580: Use a format provider when parsing date and time. (https://rules.sonarsource.com/csharp/RSPEC-6580) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Pages/Index.cshtml.cs(8,17): warning S1186: Add a nested comment explaining why this method is empty, throw a 'NotSupportedException' or complete the implementation. (https://rules.sonarsource.com/csharp/RSPEC-1186) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Models/AgendaDay.cs(37,76): warning S107: Method has 8 parameters, which is greater than the 7 authorized. (https://rules.sonarsource.com/csharp/RSPEC-107) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Pages/Agenda/Reservar.cshtml.cs(53,69): warning S3358: Extract this nested ternary operation into an independent statement. (https://rules.sonarsource.com/csharp/RSPEC-3358) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Pages/Pacientes/Expediente.cshtml.cs(37,38): warning S3776: Refactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed. (https://rules.sonarsource.com/csharp/RSPEC-3776) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Pages/Laboratorio/Resultado.cshtml.cs(44,15): warning S3358: Extract this nested ternary operation into an independent statement. (https://rules.sonarsource.com/csharp/RSPEC-3358) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Pages/Index.cshtml(13,11): warning S3358: Extract this nested ternary operation into an independent statement. (https://rules.sonarsource.com/csharp/RSPEC-3358) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Pages/Index.cshtml(15,15): warning S3358: Extract this nested ternary operation into an independent statement. (https://rules.sonarsource.com/csharp/RSPEC-3358) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Pages/Agenda/Reservar.cshtml.cs(78,39): warning S3776: Refactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed. (https://rules.sonarsource.com/csharp/RSPEC-3776) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Program.cs(39,57): warning S1075: Remove this hardcoded path-delimiter. (https://rules.sonarsource.com/csharp/RSPEC-1075) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z] /work/src/MediCore.Web/Program.cs(110,1): warning S6966: Await RunAsync instead. (https://rules.sonarsource.com/csharp/RSPEC-6966) [/work/src/MediCore.Web/MediCore.Web.csproj]
+[2026-11-06T07:20:52.125Z]     52 Warning(s)
+[2026-11-06T07:20:52.125Z]     0 Error(s)
+[2026-11-06T07:20:52.125Z] 
+[2026-11-06T07:20:52.125Z] Time Elapsed 00:00:11.21
+[2026-11-06T07:20:53.469Z] Test run for /work/tests/MediCore.UnitTests/bin/Release/net10.0/MediCore.UnitTests.dll (.NETCoreApp,Version=v10.0)
+[2026-11-06T07:20:53.469Z] Test run for /work/tests/MediCore.Mobile.Tests/bin/Release/net10.0/MediCore.Mobile.Tests.dll (.NETCoreApp,Version=v10.0)
+[2026-11-06T07:20:53.469Z] Test run for /work/tests/MediCore.Api.Tests/bin/Release/net10.0/MediCore.Api.Tests.dll (.NETCoreApp,Version=v10.0)
+[2026-11-06T07:20:53.469Z] A total of 1 test files matched the specified pattern.
+[2026-11-06T07:20:53.469Z] A total of 1 test files matched the specified pattern.
+[2026-11-06T07:20:53.469Z] A total of 1 test files matched the specified pattern.
+[2026-11-06T07:20:54.813Z] 
+[2026-11-06T07:20:54.813Z] Passed!  - Failed:     0, Passed:    50, Skipped:     0, Total:    50, Duration: 88 ms - MediCore.Mobile.Tests.dll (net10.0)
+[2026-11-06T07:20:55.063Z] 
+[2026-11-06T07:20:55.063Z] Passed!  - Failed:     0, Passed:    44, Skipped:     0, Total:    44, Duration: 54 ms - MediCore.UnitTests.dll (net10.0)
+[2026-11-06T07:22:02.560Z] 
+[2026-11-06T07:22:02.560Z] Passed!  - Failed:     0, Passed:   206, Skipped:     0, Total:   206, Duration: 57 s - MediCore.Api.Tests.dll (net10.0)
+[2026-11-06T07:22:02.560Z] 
+[2026-11-06T07:22:02.560Z] Attachments:
+[2026-11-06T07:22:02.560Z]   /work/tests/MediCore.UnitTests/TestResults/bb6a9068-dfb0-48ac-a250-2636e110871f/coverage.opencover.xml
+[2026-11-06T07:22:02.560Z]   /work/tests/MediCore.Api.Tests/TestResults/21dfb1ab-ac3d-4486-8813-09514e607666/coverage.opencover.xml
+[2026-11-06T07:22:02.560Z]   /work/tests/MediCore.Mobile.Tests/TestResults/5fe2de06-fadf-450e-80c6-74a80fae761e/coverage.opencover.xml
+[2026-11-06T07:22:02.560Z] SonarScanner for MSBuild 10.3
+[2026-11-06T07:22:02.560Z] Using the .NET Core version of the Scanner for MSBuild
+[2026-11-06T07:22:02.560Z] Post-processing started.
+[2026-11-06T07:22:02.560Z] 07:21:54.231  Starting with Scanner for .NET v8 the way the `sonar.projectBaseDir` property is automatically detected has changed and this has an impact on the files that are analyzed and other properties that are resolved relative to it like `sonar.exclusions` and `sonar.test.exclusions`. If you would like to customize the behavior, please set the `sonar.projectBaseDir` property to point to a directory that contains all the source code you want to analyze. The path may be relative (to the directory from which the analysis was started) or absolute.
+[2026-11-06T07:22:02.560Z] Calling the SonarScanner CLI...
+[2026-11-06T07:22:02.560Z] INFO: Scanner configuration file: /root/.dotnet/tools/.store/dotnet-sonarscanner/10.3.0/dotnet-sonarscanner/10.3.0/tools/netcoreapp3.1/any/sonar-scanner-5.0.2.4997/conf/sonar-scanner.properties
+[2026-11-06T07:22:02.560Z] INFO: Project root configuration file: /work/.sonarqube/out/sonar-project.properties
+[2026-11-06T07:22:02.560Z] INFO: SonarScanner 5.0.2.4997
+[2026-11-06T07:22:02.560Z] INFO: Java 21.0.12.1 Ubuntu (64-bit)
+[2026-11-06T07:22:02.560Z] INFO: Linux 6.6.87.2-microsoft-standard-WSL2 amd64
+[2026-11-06T07:22:02.560Z] INFO: SONAR_SCANNER_OPTS=-D<sensitive data removed>
+[2026-11-06T07:22:02.560Z] INFO: User cache: /root/.sonar/cache
+[2026-11-06T07:22:02.560Z] INFO: Analyzing on SonarQube server 25.5.0.107428
+[2026-11-06T07:22:02.560Z] INFO: Default locale: "en_US", source code encoding: "UTF-8" (analysis is platform dependent)
+[2026-11-06T07:22:02.560Z] INFO: Load global settings
+[2026-11-06T07:22:02.560Z] INFO: Load global settings (done) | time=40ms
+[2026-11-06T07:22:02.560Z] INFO: Server id: 147B411E-AaGvdFmN6WPCwUksNeTa
+[2026-11-06T07:22:02.560Z] INFO: Loading required plugins
+[2026-11-06T07:22:02.560Z] INFO: Load plugins index
+[2026-11-06T07:22:02.560Z] INFO: Load plugins index (done) | time=26ms
+[2026-11-06T07:22:02.560Z] INFO: Load/download plugins
+[2026-11-06T07:22:02.560Z] INFO: Load/download plugins (done) | time=272ms
+[2026-11-06T07:22:02.560Z] INFO: Process project properties
+[2026-11-06T07:22:02.560Z] INFO: Process project properties (done) | time=16ms
+[2026-11-06T07:22:02.560Z] INFO: Project key: medicore
+[2026-11-06T07:22:02.560Z] INFO: Base dir: /work
+[2026-11-06T07:22:02.560Z] INFO: Working dir: /work/.sonarqube/out/.sonar
+[2026-11-06T07:22:02.560Z] INFO: Load project settings for component key: 'medicore'
+[2026-11-06T07:22:02.560Z] INFO: Load project settings for component key: 'medicore' (done) | time=10ms
+[2026-11-06T07:22:02.560Z] INFO: Load quality profiles
+[2026-11-06T07:22:02.560Z] INFO: Load quality profiles (done) | time=30ms
+[2026-11-06T07:22:02.560Z] WARN: SCM provider autodetection failed. Please use "sonar.scm.provider" to define SCM of your project, or disable the SCM Sensor in the project settings.
+[2026-11-06T07:22:02.560Z] INFO: Load active rules
+[2026-11-06T07:22:02.560Z] INFO: Load active rules (done) | time=198ms
+[2026-11-06T07:22:02.560Z] INFO: Load analysis cache
+[2026-11-06T07:22:02.560Z] INFO: Load analysis cache | time=20ms
+[2026-11-06T07:22:02.560Z] INFO: Preprocessing files...
+[2026-11-06T07:22:02.560Z] INFO: 9 languages detected in 354 preprocessed files
+[2026-11-06T07:22:02.560Z] INFO: 17 files ignored because of inclusion/exclusion patterns
+[2026-11-06T07:22:02.560Z] INFO: Loading plugins for detected languages
+[2026-11-06T07:22:02.560Z] INFO: Load/download plugins
+[2026-11-06T07:22:02.560Z] INFO: Load/download plugins (done) | time=876ms
+[2026-11-06T07:22:02.560Z] INFO: Executing phase 2 project builders
+[2026-11-06T07:22:02.560Z] INFO: Executing phase 2 project builders (done) | time=19ms
+[2026-11-06T07:22:02.560Z] INFO: Load project repositories
+[2026-11-06T07:22:02.560Z] INFO: Load project repositories (done) | time=67ms
+[2026-11-06T07:22:02.560Z] INFO: Indexing files...
+[2026-11-06T07:22:02.560Z] INFO: Project configuration:
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources: **/Migrations/**, **/wwwroot/css/style.css, **/wwwroot/css/appearance.css, tests/cypress/node_modules/**, tests/**/TestResults/**/coverage.opencover.xml
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources for coverage: tests/**, scripts/**, ci/**, infrastructure/**, src/MediCore.Mobile/**, **/wwwroot/**, **/*.cshtml
+[2026-11-06T07:22:02.560Z] INFO: Indexing files of module 'MediCore.Api.Tests'
+[2026-11-06T07:22:02.560Z] INFO:   Base dir: /work/tests/MediCore.Api.Tests
+[2026-11-06T07:22:02.560Z] INFO:   Test paths: obj/project.assets.json, obj/MediCore.Api.Tests.csproj.nuget.dg...
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources: **/Migrations/**, **/wwwroot/css/style.css, **/wwwroot/css/appearance.css, tests/cypress/node_modules/**, tests/**/TestResults/**/coverage.opencover.xml
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources for coverage: tests/**, scripts/**, ci/**, infrastructure/**, src/MediCore.Mobile/**, **/wwwroot/**, **/*.cshtml
+[2026-11-06T07:22:02.560Z] WARN: Encoding detected by Roslyn and encoding used by SonarQube do not match for file file:///work/tests/MediCore.Api.Tests/PatientsApiTests.cs. SonarQube encoding is 'windows-1252', Roslyn encoding is 'UTF-8'. File will be skipped.
+[2026-11-06T07:22:02.560Z] INFO: Indexing files of module 'MediCore.Api'
+[2026-11-06T07:22:02.560Z] INFO:   Base dir: /work/src/MediCore.Api
+[2026-11-06T07:22:02.560Z] INFO:   Source paths: appsettings.Development.json, appsettings.json, obj/project.a...
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources: **/Migrations/**, **/wwwroot/css/style.css, **/wwwroot/css/appearance.css, tests/cypress/node_modules/**, tests/**/TestResults/**/coverage.opencover.xml
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources for coverage: tests/**, scripts/**, ci/**, infrastructure/**, src/MediCore.Mobile/**, **/wwwroot/**, **/*.cshtml
+[2026-11-06T07:22:02.560Z] INFO: Indexing files of module 'MediCore.Domain'
+[2026-11-06T07:22:02.560Z] INFO:   Base dir: /work/src/MediCore.Domain
+[2026-11-06T07:22:02.560Z] INFO:   Source paths: obj/MediCore.Domain.csproj.nuget.dgspec.json, obj/project.ass...
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources: **/Migrations/**, **/wwwroot/css/style.css, **/wwwroot/css/appearance.css, tests/cypress/node_modules/**, tests/**/TestResults/**/coverage.opencover.xml
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources for coverage: tests/**, scripts/**, ci/**, infrastructure/**, src/MediCore.Mobile/**, **/wwwroot/**, **/*.cshtml
+[2026-11-06T07:22:02.560Z] INFO: Indexing files of module 'MediCore.UnitTests'
+[2026-11-06T07:22:02.560Z] INFO:   Base dir: /work/tests/MediCore.UnitTests
+[2026-11-06T07:22:02.560Z] INFO:   Test paths: obj/project.assets.json, obj/MediCore.UnitTests.csproj.nuget.dg...
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources: **/Migrations/**, **/wwwroot/css/style.css, **/wwwroot/css/appearance.css, tests/cypress/node_modules/**, tests/**/TestResults/**/coverage.opencover.xml
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources for coverage: tests/**, scripts/**, ci/**, infrastructure/**, src/MediCore.Mobile/**, **/wwwroot/**, **/*.cshtml
+[2026-11-06T07:22:02.560Z] INFO: Indexing files of module 'MediCore.Infrastructure'
+[2026-11-06T07:22:02.560Z] INFO:   Base dir: /work/src/MediCore.Infrastructure
+[2026-11-06T07:22:02.560Z] INFO:   Source paths: Auditing/AuditLogger.cs, Caching/CacheService.cs, DependencyI...
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources: **/Migrations/**, **/wwwroot/css/style.css, **/wwwroot/css/appearance.css, tests/cypress/node_modules/**, tests/**/TestResults/**/coverage.opencover.xml
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources for coverage: tests/**, scripts/**, ci/**, infrastructure/**, src/MediCore.Mobile/**, **/wwwroot/**, **/*.cshtml
+[2026-11-06T07:22:02.560Z] INFO: Indexing files of module 'MediCore.Mobile.Core'
+[2026-11-06T07:22:02.560Z] INFO:   Base dir: /work/src/MediCore.Mobile.Core
+[2026-11-06T07:22:02.560Z] INFO:   Source paths: obj/project.assets.json, obj/MediCore.Mobile.Core.csproj.nuge...
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources: **/Migrations/**, **/wwwroot/css/style.css, **/wwwroot/css/appearance.css, tests/cypress/node_modules/**, tests/**/TestResults/**/coverage.opencover.xml
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources for coverage: tests/**, scripts/**, ci/**, infrastructure/**, src/MediCore.Mobile/**, **/wwwroot/**, **/*.cshtml
+[2026-11-06T07:22:02.560Z] INFO: Indexing files of module 'MediCore.Web'
+[2026-11-06T07:22:02.560Z] INFO:   Base dir: /work/src/MediCore.Web
+[2026-11-06T07:22:02.560Z] INFO:   Source paths: appsettings.Development.json, appsettings.json, Pages/_ViewIm...
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources: **/Migrations/**, **/wwwroot/css/style.css, **/wwwroot/css/appearance.css, tests/cypress/node_modules/**, tests/**/TestResults/**/coverage.opencover.xml
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources for coverage: tests/**, scripts/**, ci/**, infrastructure/**, src/MediCore.Mobile/**, **/wwwroot/**, **/*.cshtml
+[2026-11-06T07:22:02.560Z] INFO: Indexing files of module 'MediCore.Mobile.Tests'
+[2026-11-06T07:22:02.560Z] INFO:   Base dir: /work/tests/MediCore.Mobile.Tests
+[2026-11-06T07:22:02.560Z] INFO:   Test paths: obj/project.assets.json, obj/MediCore.Mobile.Tests.csproj.nuget...
+[2026-11-06T07:22:02.560Z] INFO:   Excluded sources: **/Migrations/**, **/wwwroot/css/style.css, **/wwwroot/css/appearance.css, tests/cypress/node_modules/**, tests/**/TestResults/**/coverage.opencover.xml
+[2026-11-06T07:22:02.561Z] INFO:   Excluded sources for coverage: tests/**, scripts/**, ci/**, infrastructure/**, src/MediCore.Mobile/**, **/wwwroot/**, **/*.cshtml
+[2026-11-06T07:22:02.561Z] INFO: Indexing files of module 'MediCore.Worker'
+[2026-11-06T07:22:02.561Z] INFO:   Base dir: /work/src/MediCore.Worker
+[2026-11-06T07:22:02.561Z] INFO:   Source paths: appsettings.json, obj/project.assets.json, obj/MediCore.Worke...
+[2026-11-06T07:22:02.561Z] INFO:   Excluded sources: **/Migrations/**, **/wwwroot/css/style.css, **/wwwroot/css/appearance.css, tests/cypress/node_modules/**, tests/**/TestResults/**/coverage.opencover.xml
+[2026-11-06T07:22:02.561Z] INFO:   Excluded sources for coverage: tests/**, scripts/**, ci/**, infrastructure/**, src/MediCore.Mobile/**, **/wwwroot/**, **/*.cshtml
+[2026-11-06T07:22:02.561Z] INFO: Indexing files of module 'MediCore.Contracts'
+[2026-11-06T07:22:02.561Z] INFO:   Base dir: /work/src/MediCore.Contracts
+[2026-11-06T07:22:02.561Z] INFO:   Source paths: obj/project.assets.json, obj/MediCore.Contracts.csproj.nuget....
+[2026-11-06T07:22:02.561Z] INFO:   Excluded sources: **/Migrations/**, **/wwwroot/css/style.css, **/wwwroot/css/appearance.css, tests/cypress/node_modules/**, tests/**/TestResults/**/coverage.opencover.xml
+[2026-11-06T07:22:02.561Z] INFO:   Excluded sources for coverage: tests/**, scripts/**, ci/**, infrastructure/**, src/MediCore.Mobile/**, **/wwwroot/**, **/*.cshtml
+[2026-11-06T07:22:02.561Z] INFO: Indexing files of module 'MediCore'
+[2026-11-06T07:22:02.561Z] INFO:   Base dir: /work
+[2026-11-06T07:22:02.561Z] INFO:   Source paths: deploy/healthcheck-http.sh, ci/docker-compose.ci.yml, ci/tcp-...
+[2026-11-06T07:22:02.561Z] INFO:   Excluded sources: **/Migrations/**, **/wwwroot/css/style.css, **/wwwroot/css/appearance.css, tests/cypress/node_modules/**, tests/**/TestResults/**/coverage.opencover.xml
+[2026-11-06T07:22:02.561Z] INFO:   Excluded sources for coverage: tests/**, scripts/**, ci/**, infrastructure/**, src/MediCore.Mobile/**, **/wwwroot/**, **/*.cshtml
+[2026-11-06T07:22:02.561Z] INFO: 342 files indexed
+[2026-11-06T07:22:02.561Z] INFO: Quality profile for cs: Sonar way
+[2026-11-06T07:22:02.561Z] INFO: Quality profile for css: Sonar way
+[2026-11-06T07:22:02.561Z] INFO: Quality profile for docker: Sonar way
+[2026-11-06T07:22:02.561Z] INFO: Quality profile for js: Sonar way
+[2026-11-06T07:22:02.561Z] INFO: Quality profile for json: Sonar way
+[2026-11-06T07:22:02.561Z] INFO: Quality profile for py: Sonar way
+[2026-11-06T07:22:02.561Z] INFO: Quality profile for terraform: Sonar way
+[2026-11-06T07:22:02.561Z] INFO: Quality profile for web: Sonar way
+[2026-11-06T07:22:02.561Z] INFO: Quality profile for yaml: Sonar way
+[2026-11-06T07:22:02.561Z] INFO: ------------- Run sensors on module MediCore.Worker
+[2026-11-06T07:22:02.561Z] INFO: Load metrics repository
+[2026-11-06T07:22:02.561Z] INFO: Load metrics repository (done) | time=13ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Project Type Information [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Project Type Information [csharp] (done) | time=2ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Analysis Log [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Roslyn version: 5.9.0.0
+[2026-11-06T07:22:02.561Z] INFO: Language version: CSharp14
+[2026-11-06T07:22:02.561Z] INFO: Concurrent execution: enabled
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Analysis Log [csharp] (done) | time=4ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Method Declarations [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Telemetry [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Telemetry [csharp] (done) | time=2ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Properties [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Properties [csharp] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor Python Dependency Sensor [python]
+[2026-11-06T07:22:02.561Z] INFO: Sensor Python Dependency Sensor [python] (done) | time=3ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor HTML [web]
+[2026-11-06T07:22:02.561Z] INFO: Sensor HTML [web] (done) | time=1ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor JaCoCo XML Report Importer [jacoco]
+[2026-11-06T07:22:02.561Z] INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+[2026-11-06T07:22:02.561Z] INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+[2026-11-06T07:22:02.561Z] INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=1ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC CloudFormation Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC CloudFormation Sensor [iac] (done) | time=17ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC AzureResourceManager Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC AzureResourceManager Sensor [iac] (done) | time=38ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor Java Config Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor Java Config Sensor [iac] (done) | time=6ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor CSS Rules [javascript]
+[2026-11-06T07:22:02.561Z] INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+[2026-11-06T07:22:02.561Z] INFO: Sensor CSS Rules [javascript] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC Docker Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC Docker Sensor [iac] (done) | time=19ms
+[2026-11-06T07:22:02.561Z] INFO: ------------- Run sensors on module MediCore.UnitTests
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Project Type Information [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Project Type Information [csharp] (done) | time=1ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Analysis Log [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Roslyn version: 5.9.0.0
+[2026-11-06T07:22:02.561Z] INFO: Language version: CSharp14
+[2026-11-06T07:22:02.561Z] INFO: Concurrent execution: enabled
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Method Declarations [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Method Declarations [csharp] (done) | time=2ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Telemetry [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Properties [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Properties [csharp] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor Python Dependency Sensor [python]
+[2026-11-06T07:22:02.561Z] INFO: Sensor Python Dependency Sensor [python] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor JaCoCo XML Report Importer [jacoco]
+[2026-11-06T07:22:02.561Z] INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+[2026-11-06T07:22:02.561Z] INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+[2026-11-06T07:22:02.561Z] INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC CloudFormation Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC CloudFormation Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC AzureResourceManager Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC AzureResourceManager Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor Java Config Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor CSS Rules [javascript]
+[2026-11-06T07:22:02.561Z] INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+[2026-11-06T07:22:02.561Z] INFO: Sensor CSS Rules [javascript] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC Docker Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+[2026-11-06T07:22:02.561Z] INFO: ------------- Run sensors on module MediCore.Mobile.Tests
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Project Type Information [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Analysis Log [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Roslyn version: 5.9.0.0
+[2026-11-06T07:22:02.561Z] INFO: Language version: CSharp14
+[2026-11-06T07:22:02.561Z] INFO: Concurrent execution: enabled
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Method Declarations [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Method Declarations [csharp] (done) | time=1ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Telemetry [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Properties [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Properties [csharp] (done) | time=1ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor Python Dependency Sensor [python]
+[2026-11-06T07:22:02.561Z] INFO: Sensor Python Dependency Sensor [python] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor JaCoCo XML Report Importer [jacoco]
+[2026-11-06T07:22:02.561Z] INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+[2026-11-06T07:22:02.561Z] INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+[2026-11-06T07:22:02.561Z] INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC CloudFormation Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC CloudFormation Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC AzureResourceManager Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC AzureResourceManager Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor Java Config Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor CSS Rules [javascript]
+[2026-11-06T07:22:02.561Z] INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+[2026-11-06T07:22:02.561Z] INFO: Sensor CSS Rules [javascript] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC Docker Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC Docker Sensor [iac] (done) | time=3ms
+[2026-11-06T07:22:02.561Z] INFO: ------------- Run sensors on module MediCore.Web
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Project Type Information [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Analysis Log [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Roslyn version: 5.9.0.0
+[2026-11-06T07:22:02.561Z] INFO: Language version: CSharp14
+[2026-11-06T07:22:02.561Z] INFO: Concurrent execution: enabled
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Method Declarations [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Telemetry [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Properties [csharp]
+[2026-11-06T07:22:02.561Z] INFO: Sensor C# Properties [csharp] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor Python Dependency Sensor [python]
+[2026-11-06T07:22:02.561Z] INFO: Sensor Python Dependency Sensor [python] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor HTML [web]
+[2026-11-06T07:22:02.561Z] INFO: Sensor HTML [web] (done) | time=169ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor JaCoCo XML Report Importer [jacoco]
+[2026-11-06T07:22:02.561Z] INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+[2026-11-06T07:22:02.561Z] INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+[2026-11-06T07:22:02.561Z] INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC CloudFormation Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC CloudFormation Sensor [iac] (done) | time=11ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC AzureResourceManager Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor IaC AzureResourceManager Sensor [iac] (done) | time=3ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor Java Config Sensor [iac]
+[2026-11-06T07:22:02.561Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:02.561Z] INFO: Sensor Java Config Sensor [iac] (done) | time=3ms
+[2026-11-06T07:22:02.561Z] INFO: Sensor JavaScript/TypeScript analysis [javascript]
+[2026-11-06T07:22:02.561Z] INFO: Detected os: Linux arch: amd64 alpine: false. Platform: LINUX_X64
+[2026-11-06T07:22:02.561Z] INFO: Deploy location /root/.sonar/js/node-runtime, tagetRuntime: /root/.sonar/js/node-runtime/node,  version: /root/.sonar/js/node-runtime/version.txt
+[2026-11-06T07:22:02.561Z] INFO: Using embedded Node.js runtime.
+[2026-11-06T07:22:02.561Z] INFO: Using Node.js executable: '/root/.sonar/js/node-runtime/node'.
+[2026-11-06T07:22:02.561Z] INFO: Memory configuration: OS (15545 MB), Node.js (4144 MB).
+[2026-11-06T07:22:02.561Z] INFO: Found 0 tsconfig.json file(s): []
+[2026-11-06T07:22:02.561Z] INFO: Creating TypeScript program
+[2026-11-06T07:22:02.561Z] INFO: TypeScript configuration file /tmp/tsconfig-WTK0nh.json
+[2026-11-06T07:22:02.561Z] INFO: 4 source files to be analyzed
+[2026-11-06T07:22:02.561Z] INFO: Starting analysis with current program
+[2026-11-06T07:22:02.812Z] INFO: Analyzed 4 file(s) with current program
+[2026-11-06T07:22:02.812Z] INFO: 4/4 source files have been analyzed
+[2026-11-06T07:22:02.812Z] INFO: Hit the cache for 0 out of 4
+[2026-11-06T07:22:02.812Z] INFO: Miss the cache for 4 out of 4: ANALYSIS_MODE_INELIGIBLE [4/4]
+[2026-11-06T07:22:02.813Z] INFO: Sensor JavaScript/TypeScript analysis [javascript] (done) | time=4282ms
+[2026-11-06T07:22:02.813Z] INFO: Sensor JavaScript inside HTML analysis [javascript]
+[2026-11-06T07:22:02.813Z] INFO: No input files found for analysis
+[2026-11-06T07:22:02.813Z] INFO: Hit the cache for 0 out of 0
+[2026-11-06T07:22:02.813Z] INFO: Miss the cache for 0 out of 0
+[2026-11-06T07:22:02.813Z] INFO: Sensor JavaScript inside HTML analysis [javascript] (done) | time=1ms
+[2026-11-06T07:22:02.813Z] INFO: Sensor CSS Rules [javascript]
+[2026-11-06T07:22:02.813Z] INFO: 1 source file to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 1/1 source file has been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Hit the cache for 0 out of 0
+[2026-11-06T07:22:03.063Z] INFO: Miss the cache for 0 out of 0
+[2026-11-06T07:22:03.063Z] INFO: Sensor CSS Rules [javascript] (done) | time=60ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor CSS Metrics [javascript]
+[2026-11-06T07:22:03.063Z] INFO: Sensor CSS Metrics [javascript] (done) | time=11ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC Docker Sensor [iac]
+[2026-11-06T07:22:03.063Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC Docker Sensor [iac] (done) | time=4ms
+[2026-11-06T07:22:03.063Z] INFO: ------------- Run sensors on module MediCore.Api.Tests
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Project Type Information [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Analysis Log [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Roslyn version: 5.9.0.0
+[2026-11-06T07:22:03.063Z] INFO: Language version: CSharp14
+[2026-11-06T07:22:03.063Z] INFO: Concurrent execution: enabled
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Method Declarations [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Telemetry [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Properties [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Properties [csharp] (done) | time=1ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor Python Dependency Sensor [python]
+[2026-11-06T07:22:03.063Z] INFO: Sensor Python Dependency Sensor [python] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor JaCoCo XML Report Importer [jacoco]
+[2026-11-06T07:22:03.063Z] INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+[2026-11-06T07:22:03.063Z] INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+[2026-11-06T07:22:03.063Z] INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC CloudFormation Sensor [iac]
+[2026-11-06T07:22:03.063Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC CloudFormation Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC AzureResourceManager Sensor [iac]
+[2026-11-06T07:22:03.063Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC AzureResourceManager Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor Java Config Sensor [iac]
+[2026-11-06T07:22:03.063Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor CSS Rules [javascript]
+[2026-11-06T07:22:03.063Z] INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+[2026-11-06T07:22:03.063Z] INFO: Sensor CSS Rules [javascript] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC Docker Sensor [iac]
+[2026-11-06T07:22:03.063Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC Docker Sensor [iac] (done) | time=3ms
+[2026-11-06T07:22:03.063Z] INFO: ------------- Run sensors on module MediCore.Infrastructure
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Project Type Information [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Analysis Log [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Roslyn version: 5.9.0.0
+[2026-11-06T07:22:03.063Z] INFO: Language version: CSharp14
+[2026-11-06T07:22:03.063Z] INFO: Concurrent execution: enabled
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Analysis Log [csharp] (done) | time=2ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Method Declarations [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Telemetry [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Properties [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Properties [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor Python Dependency Sensor [python]
+[2026-11-06T07:22:03.063Z] INFO: Sensor Python Dependency Sensor [python] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor HTML [web]
+[2026-11-06T07:22:03.063Z] INFO: Sensor HTML [web] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor JaCoCo XML Report Importer [jacoco]
+[2026-11-06T07:22:03.063Z] INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+[2026-11-06T07:22:03.063Z] INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+[2026-11-06T07:22:03.063Z] INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC CloudFormation Sensor [iac]
+[2026-11-06T07:22:03.063Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC CloudFormation Sensor [iac] (done) | time=20ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC AzureResourceManager Sensor [iac]
+[2026-11-06T07:22:03.063Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC AzureResourceManager Sensor [iac] (done) | time=2ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor Java Config Sensor [iac]
+[2026-11-06T07:22:03.063Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor CSS Rules [javascript]
+[2026-11-06T07:22:03.063Z] INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+[2026-11-06T07:22:03.063Z] INFO: Sensor CSS Rules [javascript] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC Docker Sensor [iac]
+[2026-11-06T07:22:03.063Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC Docker Sensor [iac] (done) | time=3ms
+[2026-11-06T07:22:03.063Z] INFO: ------------- Run sensors on module MediCore.Contracts
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Project Type Information [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Analysis Log [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Roslyn version: 5.9.0.0
+[2026-11-06T07:22:03.063Z] INFO: Language version: CSharp14
+[2026-11-06T07:22:03.063Z] INFO: Concurrent execution: enabled
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Method Declarations [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Telemetry [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Telemetry [csharp] (done) | time=1ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Properties [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Properties [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor Python Dependency Sensor [python]
+[2026-11-06T07:22:03.063Z] INFO: Sensor Python Dependency Sensor [python] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor HTML [web]
+[2026-11-06T07:22:03.063Z] INFO: Sensor HTML [web] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor JaCoCo XML Report Importer [jacoco]
+[2026-11-06T07:22:03.063Z] INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+[2026-11-06T07:22:03.063Z] INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+[2026-11-06T07:22:03.063Z] INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC CloudFormation Sensor [iac]
+[2026-11-06T07:22:03.063Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC CloudFormation Sensor [iac] (done) | time=6ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC AzureResourceManager Sensor [iac]
+[2026-11-06T07:22:03.063Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC AzureResourceManager Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor Java Config Sensor [iac]
+[2026-11-06T07:22:03.063Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor CSS Rules [javascript]
+[2026-11-06T07:22:03.063Z] INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+[2026-11-06T07:22:03.063Z] INFO: Sensor CSS Rules [javascript] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC Docker Sensor [iac]
+[2026-11-06T07:22:03.063Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.063Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.063Z] INFO: Sensor IaC Docker Sensor [iac] (done) | time=3ms
+[2026-11-06T07:22:03.063Z] INFO: ------------- Run sensors on module MediCore.Api
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Project Type Information [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Analysis Log [csharp]
+[2026-11-06T07:22:03.063Z] INFO: Roslyn version: 5.9.0.0
+[2026-11-06T07:22:03.063Z] INFO: Language version: CSharp14
+[2026-11-06T07:22:03.063Z] INFO: Concurrent execution: enabled
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.063Z] INFO: Sensor C# Method Declarations [csharp]
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Telemetry [csharp]
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Telemetry [csharp] (done) | time=1ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Properties [csharp]
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Properties [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor Python Dependency Sensor [python]
+[2026-11-06T07:22:03.064Z] INFO: Sensor Python Dependency Sensor [python] (done) | time=0ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor HTML [web]
+[2026-11-06T07:22:03.064Z] INFO: Sensor HTML [web] (done) | time=0ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor JaCoCo XML Report Importer [jacoco]
+[2026-11-06T07:22:03.064Z] INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+[2026-11-06T07:22:03.064Z] INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+[2026-11-06T07:22:03.064Z] INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor IaC CloudFormation Sensor [iac]
+[2026-11-06T07:22:03.064Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.064Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.064Z] INFO: Sensor IaC CloudFormation Sensor [iac] (done) | time=30ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor IaC AzureResourceManager Sensor [iac]
+[2026-11-06T07:22:03.064Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.064Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.064Z] INFO: Sensor IaC AzureResourceManager Sensor [iac] (done) | time=2ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor Java Config Sensor [iac]
+[2026-11-06T07:22:03.064Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.064Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.064Z] INFO: Sensor Java Config Sensor [iac] (done) | time=0ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor CSS Rules [javascript]
+[2026-11-06T07:22:03.064Z] INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+[2026-11-06T07:22:03.064Z] INFO: Sensor CSS Rules [javascript] (done) | time=1ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor IaC Docker Sensor [iac]
+[2026-11-06T07:22:03.064Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.064Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.064Z] INFO: Sensor IaC Docker Sensor [iac] (done) | time=2ms
+[2026-11-06T07:22:03.064Z] INFO: ------------- Run sensors on module MediCore.Mobile.Core
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Project Type Information [csharp]
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Project Type Information [csharp] (done) | time=1ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Analysis Log [csharp]
+[2026-11-06T07:22:03.064Z] INFO: Roslyn version: 5.9.0.0
+[2026-11-06T07:22:03.064Z] INFO: Language version: CSharp14
+[2026-11-06T07:22:03.064Z] INFO: Concurrent execution: enabled
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Method Declarations [csharp]
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Method Declarations [csharp] (done) | time=1ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Telemetry [csharp]
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Properties [csharp]
+[2026-11-06T07:22:03.064Z] INFO: Sensor C# Properties [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor Python Dependency Sensor [python]
+[2026-11-06T07:22:03.064Z] INFO: Sensor Python Dependency Sensor [python] (done) | time=0ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor HTML [web]
+[2026-11-06T07:22:03.064Z] INFO: Sensor HTML [web] (done) | time=1ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor JaCoCo XML Report Importer [jacoco]
+[2026-11-06T07:22:03.064Z] INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+[2026-11-06T07:22:03.064Z] INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+[2026-11-06T07:22:03.064Z] INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor IaC CloudFormation Sensor [iac]
+[2026-11-06T07:22:03.064Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.064Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.064Z] INFO: Sensor IaC CloudFormation Sensor [iac] (done) | time=8ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor IaC AzureResourceManager Sensor [iac]
+[2026-11-06T07:22:03.064Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.064Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.064Z] INFO: Sensor IaC AzureResourceManager Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor Java Config Sensor [iac]
+[2026-11-06T07:22:03.064Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.064Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.064Z] INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor CSS Rules [javascript]
+[2026-11-06T07:22:03.064Z] INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+[2026-11-06T07:22:03.064Z] INFO: Sensor CSS Rules [javascript] (done) | time=0ms
+[2026-11-06T07:22:03.064Z] INFO: Sensor IaC Docker Sensor [iac]
+[2026-11-06T07:22:03.064Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.064Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.064Z] INFO: Sensor IaC Docker Sensor [iac] (done) | time=3ms
+[2026-11-06T07:22:03.064Z] INFO: ------------- Run sensors on module MediCore.Domain
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Project Type Information [csharp]
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Analysis Log [csharp]
+[2026-11-06T07:22:03.314Z] INFO: Roslyn version: 5.9.0.0
+[2026-11-06T07:22:03.314Z] INFO: Language version: CSharp14
+[2026-11-06T07:22:03.314Z] INFO: Concurrent execution: enabled
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Analysis Log [csharp] (done) | time=1ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Method Declarations [csharp]
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Telemetry [csharp]
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Telemetry [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Properties [csharp]
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Properties [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor Python Dependency Sensor [python]
+[2026-11-06T07:22:03.314Z] INFO: Sensor Python Dependency Sensor [python] (done) | time=0ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor HTML [web]
+[2026-11-06T07:22:03.314Z] INFO: Sensor HTML [web] (done) | time=0ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor JaCoCo XML Report Importer [jacoco]
+[2026-11-06T07:22:03.314Z] INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+[2026-11-06T07:22:03.314Z] INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+[2026-11-06T07:22:03.314Z] INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=1ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor IaC CloudFormation Sensor [iac]
+[2026-11-06T07:22:03.314Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.314Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.314Z] INFO: Sensor IaC CloudFormation Sensor [iac] (done) | time=3ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor IaC AzureResourceManager Sensor [iac]
+[2026-11-06T07:22:03.314Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.314Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.314Z] INFO: Sensor IaC AzureResourceManager Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor Java Config Sensor [iac]
+[2026-11-06T07:22:03.314Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.314Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.314Z] INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor CSS Rules [javascript]
+[2026-11-06T07:22:03.314Z] INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+[2026-11-06T07:22:03.314Z] INFO: Sensor CSS Rules [javascript] (done) | time=0ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor IaC Docker Sensor [iac]
+[2026-11-06T07:22:03.314Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:03.314Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:03.314Z] INFO: Sensor IaC Docker Sensor [iac] (done) | time=3ms
+[2026-11-06T07:22:03.314Z] INFO: ------------- Run sensors on module MediCore
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Project Type Information [csharp]
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Project Type Information [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Analysis Log [csharp]
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Analysis Log [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Method Declarations [csharp]
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Method Declarations [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Properties [csharp]
+[2026-11-06T07:22:03.314Z] INFO: Sensor C# Properties [csharp] (done) | time=0ms
+[2026-11-06T07:22:03.314Z] INFO: Sensor Python Sensor [python]
+[2026-11-06T07:22:03.314Z] WARN: Your code is analyzed as compatible with all Python 3 versions by default. You can get a more precise analysis by setting the exact Python version in your configuration via the parameter "sonar.python.version"
+[2026-11-06T07:22:03.314Z] INFO: Caching will be disabled for this analysis due to the use of the "sonar.modules" property.
+[2026-11-06T07:22:03.314Z] INFO: Starting global symbols computation
+[2026-11-06T07:22:03.314Z] INFO: 10 source files to be analyzed
+[2026-11-06T07:22:03.865Z] INFO: 10/10 source files have been analyzed
+[2026-11-06T07:22:03.865Z] INFO: Starting rules execution
+[2026-11-06T07:22:03.865Z] INFO: 10 source files to be analyzed
+[2026-11-06T07:22:04.776Z] INFO: 10/10 source files have been analyzed
+[2026-11-06T07:22:04.776Z] INFO: The Python analyzer was able to leverage cached data from previous analyses for 0 out of 10 files. These files were not parsed.
+[2026-11-06T07:22:04.776Z] INFO: Sensor Python Sensor [python] (done) | time=1460ms
+[2026-11-06T07:22:04.776Z] INFO: Sensor Cobertura Sensor for Python coverage [python]
+[2026-11-06T07:22:04.776Z] INFO: Sensor Cobertura Sensor for Python coverage [python] (done) | time=32ms
+[2026-11-06T07:22:04.776Z] INFO: Sensor PythonXUnitSensor [python]
+[2026-11-06T07:22:04.776Z] INFO: Sensor PythonXUnitSensor [python] (done) | time=21ms
+[2026-11-06T07:22:04.776Z] INFO: Sensor Python Dependency Sensor [python]
+[2026-11-06T07:22:04.776Z] INFO: Sensor Python Dependency Sensor [python] (done) | time=0ms
+[2026-11-06T07:22:04.776Z] INFO: Sensor HTML [web]
+[2026-11-06T07:22:04.776Z] INFO: Sensor HTML [web] (done) | time=1ms
+[2026-11-06T07:22:04.776Z] INFO: Sensor JaCoCo XML Report Importer [jacoco]
+[2026-11-06T07:22:04.776Z] INFO: 'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+[2026-11-06T07:22:04.776Z] INFO: No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+[2026-11-06T07:22:04.776Z] INFO: Sensor JaCoCo XML Report Importer [jacoco] (done) | time=0ms
+[2026-11-06T07:22:04.776Z] INFO: Sensor IaC Terraform Sensor [iac]
+[2026-11-06T07:22:04.776Z] INFO: 5 source files to be analyzed
+[2026-11-06T07:22:04.776Z] INFO: 5/5 source files have been analyzed
+[2026-11-06T07:22:04.776Z] INFO: Sensor IaC Terraform Sensor [iac] (done) | time=100ms
+[2026-11-06T07:22:04.776Z] INFO: Sensor IaC CloudFormation Sensor [iac]
+[2026-11-06T07:22:04.776Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:04.776Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:04.776Z] INFO: Sensor IaC CloudFormation Sensor [iac] (done) | time=21ms
+[2026-11-06T07:22:04.776Z] INFO: Sensor IaC Kubernetes Sensor [iac]
+[2026-11-06T07:22:05.027Z] INFO: 0 source files to be parsed
+[2026-11-06T07:22:05.027Z] INFO: 0/0 source files have been parsed
+[2026-11-06T07:22:05.027Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:05.027Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:05.027Z] INFO: 0 source files to be checked
+[2026-11-06T07:22:05.027Z] INFO: 0/0 source files have been checked
+[2026-11-06T07:22:05.027Z] INFO: Sensor IaC Kubernetes Sensor [iac] (done) | time=49ms
+[2026-11-06T07:22:05.027Z] INFO: Sensor IaC AzureResourceManager Sensor [iac]
+[2026-11-06T07:22:05.027Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:05.027Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:05.027Z] INFO: Sensor IaC AzureResourceManager Sensor [iac] (done) | time=2ms
+[2026-11-06T07:22:05.027Z] INFO: Sensor Java Config Sensor [iac]
+[2026-11-06T07:22:05.027Z] INFO: 0 source files to be analyzed
+[2026-11-06T07:22:05.027Z] INFO: 0/0 source files have been analyzed
+[2026-11-06T07:22:05.027Z] INFO: Sensor Java Config Sensor [iac] (done) | time=1ms
+[2026-11-06T07:22:05.027Z] INFO: Sensor JavaScript/TypeScript analysis [javascript]
+[2026-11-06T07:22:05.027Z] INFO: Found 0 tsconfig.json file(s): []
+[2026-11-06T07:22:05.027Z] INFO: Creating TypeScript program
+[2026-11-06T07:22:05.027Z] INFO: TypeScript configuration file /tmp/tsconfig-recp2F.json
+[2026-11-06T07:22:05.027Z] INFO: 19 source files to be analyzed
+[2026-11-06T07:22:05.027Z] INFO: Starting analysis with current program
+[2026-11-06T07:22:08.252Z] INFO: Analyzed 19 file(s) with current program
+[2026-11-06T07:22:08.252Z] INFO: 19/19 source files have been analyzed
+[2026-11-06T07:22:08.252Z] INFO: Hit the cache for 0 out of 19
+[2026-11-06T07:22:08.252Z] INFO: Miss the cache for 19 out of 19: ANALYSIS_MODE_INELIGIBLE [19/19]
+[2026-11-06T07:22:08.252Z] INFO: Sensor JavaScript/TypeScript analysis [javascript] (done) | time=2840ms
+[2026-11-06T07:22:08.252Z] INFO: Sensor JavaScript inside YAML analysis [javascript]
+[2026-11-06T07:22:08.252Z] INFO: No input files found for analysis
+[2026-11-06T07:22:08.252Z] INFO: Hit the cache for 0 out of 0
+[2026-11-06T07:22:08.252Z] INFO: Miss the cache for 0 out of 0
+[2026-11-06T07:22:08.252Z] INFO: Sensor JavaScript inside YAML analysis [javascript] (done) | time=6ms
+[2026-11-06T07:22:08.252Z] INFO: Sensor CSS Rules [javascript]
+[2026-11-06T07:22:08.252Z] INFO: No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+[2026-11-06T07:22:08.252Z] INFO: Sensor CSS Rules [javascript] (done) | time=1ms
+[2026-11-06T07:22:08.252Z] INFO: Sensor IaC Docker Sensor [iac]
+[2026-11-06T07:22:08.252Z] INFO: 7 source files to be analyzed
+[2026-11-06T07:22:08.252Z] INFO: 7/7 source files have been analyzed
+[2026-11-06T07:22:08.252Z] INFO: Sensor IaC Docker Sensor [iac] (done) | time=59ms
+[2026-11-06T07:22:08.252Z] INFO: Sensor TextAndSecretsSensor [text]
+[2026-11-06T07:22:08.252Z] INFO: Available processors: 12
+[2026-11-06T07:22:08.252Z] INFO: Using 12 threads for analysis.
+[2026-11-06T07:22:08.252Z] INFO: The property "sonar.tests" is not set. To improve the analysis accuracy, we categorize a file as a test file if any of the following is true:
+[2026-11-06T07:22:08.252Z]   * The filename starts with "test"
+[2026-11-06T07:22:08.252Z]   * The filename contains "test." or "tests."
+[2026-11-06T07:22:08.252Z]   * Any directory in the file path is named: "doc", "docs", "test" or "tests"
+[2026-11-06T07:22:08.252Z]   * Any directory in the file path has a name ending in "test" or "tests"
+[2026-11-06T07:22:08.252Z] 
+[2026-11-06T07:22:08.252Z] INFO: Using git CLI to retrieve untracked files
+[2026-11-06T07:22:08.252Z] WARN: Analyzing only language associated files, make sure to run the analysis inside a git repository to make use of inclusions specified via "sonar.text.inclusions"
+[2026-11-06T07:22:08.252Z] INFO: 320 source files to be analyzed
+[2026-11-06T07:22:08.252Z] INFO: 320/320 source files have been analyzed
+[2026-11-06T07:22:08.252Z] INFO: Sensor TextAndSecretsSensor [text] (done) | time=456ms
+[2026-11-06T07:22:08.252Z] INFO: ------------- Run sensors on project
+[2026-11-06T07:22:08.252Z] INFO: Sensor C# Telemetry processor [csharp]
+[2026-11-06T07:22:08.252Z] INFO: Sensor C# Telemetry processor [csharp] (done) | time=2ms
+[2026-11-06T07:22:08.252Z] INFO: Sensor C# [csharp]
+[2026-11-06T07:22:08.252Z] INFO: Importing results from 8 proto files in '/work/.sonarqube/out/6/output-cs'
+[2026-11-06T07:22:08.502Z] INFO: Importing results from 8 proto files in '/work/.sonarqube/out/8/output-cs'
+[2026-11-06T07:22:08.502Z] INFO: Importing results from 8 proto files in '/work/.sonarqube/out/5/output-cs'
+[2026-11-06T07:22:08.502Z] INFO: Importing results from 8 proto files in '/work/.sonarqube/out/4/output-cs'
+[2026-11-06T07:22:08.502Z] INFO: Importing results from 8 proto files in '/work/.sonarqube/out/9/output-cs'
+[2026-11-06T07:22:08.502Z] WARN: File '/work/tests/MediCore.Api.Tests/PatientsApiTests.cs' referenced by the protobuf 'TokenTypeInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.502Z] WARN: File '/work/tests/MediCore.Api.Tests/PatientsApiTests.cs' referenced by the protobuf 'SymbolReferenceInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.502Z] INFO: Importing results from 8 proto files in '/work/.sonarqube/out/3/output-cs'
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261106054004_EventosDelPaciente.cs' referenced by the protobuf 'MetricsInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs' referenced by the protobuf 'MetricsInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261027032020_ConsultasYRecetas.cs' referenced by the protobuf 'MetricsInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261015024156_IdentidadYAuditoria.cs' referenced by the protobuf 'MetricsInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261015042825_PacientesYMedicos.cs' referenced by the protobuf 'MetricsInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261027013426_AgendaYCitas.cs' referenced by the protobuf 'MetricsInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261015023126_Inicial.cs' referenced by the protobuf 'MetricsInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261106054004_EventosDelPaciente.cs' referenced by the protobuf 'TokenTypeInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs' referenced by the protobuf 'TokenTypeInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261027032020_ConsultasYRecetas.cs' referenced by the protobuf 'TokenTypeInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261015024156_IdentidadYAuditoria.cs' referenced by the protobuf 'TokenTypeInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261015042825_PacientesYMedicos.cs' referenced by the protobuf 'TokenTypeInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261027013426_AgendaYCitas.cs' referenced by the protobuf 'TokenTypeInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261015023126_Inicial.cs' referenced by the protobuf 'TokenTypeInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261106054004_EventosDelPaciente.cs' referenced by the protobuf 'SymbolReferenceInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs' referenced by the protobuf 'SymbolReferenceInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261027032020_ConsultasYRecetas.cs' referenced by the protobuf 'SymbolReferenceInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261015024156_IdentidadYAuditoria.cs' referenced by the protobuf 'SymbolReferenceInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261015042825_PacientesYMedicos.cs' referenced by the protobuf 'SymbolReferenceInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261027013426_AgendaYCitas.cs' referenced by the protobuf 'SymbolReferenceInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261015023126_Inicial.cs' referenced by the protobuf 'SymbolReferenceInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261106054004_EventosDelPaciente.cs' referenced by the protobuf 'CopyPasteTokenInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261027182336_LaboratorioYNotificaciones.cs' referenced by the protobuf 'CopyPasteTokenInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261027032020_ConsultasYRecetas.cs' referenced by the protobuf 'CopyPasteTokenInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261027013426_AgendaYCitas.cs' referenced by the protobuf 'CopyPasteTokenInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261015042825_PacientesYMedicos.cs' referenced by the protobuf 'CopyPasteTokenInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261015024156_IdentidadYAuditoria.cs' referenced by the protobuf 'CopyPasteTokenInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] WARN: File '/work/src/MediCore.Infrastructure/Persistence/Migrations/20261015023126_Inicial.cs' referenced by the protobuf 'CopyPasteTokenInfo' does not exist in the analysis context
+[2026-11-06T07:22:08.503Z] INFO: Importing results from 8 proto files in '/work/.sonarqube/out/1/output-cs'
+[2026-11-06T07:22:08.503Z] INFO: Importing results from 8 proto files in '/work/.sonarqube/out/7/output-cs'
+[2026-11-06T07:22:08.503Z] INFO: Importing results from 8 proto files in '/work/.sonarqube/out/2/output-cs'
+[2026-11-06T07:22:08.503Z] INFO: Importing results from 8 proto files in '/work/.sonarqube/out/0/output-cs'
+[2026-11-06T07:22:08.503Z] INFO: Importing 10 Roslyn reports
+[2026-11-06T07:22:08.753Z] INFO: Found 10 MSBuild C# projects: 7 MAIN projects. 3 TEST projects.
+[2026-11-06T07:22:08.753Z] INFO: Sensor C# [csharp] (done) | time=263ms
+[2026-11-06T07:22:08.753Z] INFO: Sensor Analysis Warnings import [csharp]
+[2026-11-06T07:22:08.753Z] INFO: Sensor Analysis Warnings import [csharp] (done) | time=1ms
+[2026-11-06T07:22:08.753Z] INFO: Sensor C# File Caching Sensor [csharp]
+[2026-11-06T07:22:08.753Z] INFO: Sensor C# File Caching Sensor [csharp] (done) | time=19ms
+[2026-11-06T07:22:08.753Z] INFO: Sensor C# Tests Coverage Report Import [csharp]
+[2026-11-06T07:22:08.753Z] INFO: Parsing the OpenCover report /work/./tests/MediCore.Api.Tests/TestResults/21dfb1ab-ac3d-4486-8813-09514e607666/coverage.opencover.xml
+[2026-11-06T07:22:08.753Z] INFO: Adding this code coverage report to the cache for later reuse: /work/./tests/MediCore.Api.Tests/TestResults/21dfb1ab-ac3d-4486-8813-09514e607666/coverage.opencover.xml
+[2026-11-06T07:22:08.753Z] INFO: Parsing the OpenCover report /work/./tests/MediCore.UnitTests/TestResults/bb6a9068-dfb0-48ac-a250-2636e110871f/coverage.opencover.xml
+[2026-11-06T07:22:08.753Z] INFO: Adding this code coverage report to the cache for later reuse: /work/./tests/MediCore.UnitTests/TestResults/bb6a9068-dfb0-48ac-a250-2636e110871f/coverage.opencover.xml
+[2026-11-06T07:22:08.753Z] INFO: Parsing the OpenCover report /work/./tests/MediCore.Mobile.Tests/TestResults/5fe2de06-fadf-450e-80c6-74a80fae761e/coverage.opencover.xml
+[2026-11-06T07:22:08.753Z] INFO: Adding this code coverage report to the cache for later reuse: /work/./tests/MediCore.Mobile.Tests/TestResults/5fe2de06-fadf-450e-80c6-74a80fae761e/coverage.opencover.xml
+[2026-11-06T07:22:08.753Z] INFO: Coverage Report Statistics: 79 files, 79 main files, 79 main files with coverage, 0 test files, 0 project excluded files, 0 other language files.
+[2026-11-06T07:22:08.753Z] INFO: Sensor C# Tests Coverage Report Import [csharp] (done) | time=130ms
+[2026-11-06T07:22:08.753Z] INFO: Sensor Zero Coverage Sensor
+[2026-11-06T07:22:08.753Z] INFO: Sensor Zero Coverage Sensor (done) | time=4ms
+[2026-11-06T07:22:08.753Z] INFO: ------------- Gather SCA dependencies on project
+[2026-11-06T07:22:08.753Z] INFO: Dependency analysis skipped
+[2026-11-06T07:22:08.753Z] INFO: SCM Publisher No SCM system was detected. You can use the 'sonar.scm.provider' property to explicitly specify it.
+[2026-11-06T07:22:08.753Z] INFO: CPD Executor 20 files had no CPD blocks
+[2026-11-06T07:22:08.753Z] INFO: CPD Executor Calculating CPD for 154 files
+[2026-11-06T07:22:08.753Z] INFO: CPD Executor CPD calculation finished (done) | time=37ms
+[2026-11-06T07:22:09.004Z] INFO: Analysis report generated in 77ms, dir size=2.1 MB
+[2026-11-06T07:22:09.254Z] INFO: Analysis report compressed in 274ms, zip size=937.4 kB
+[2026-11-06T07:22:09.254Z] INFO: Analysis report uploaded in 22ms
+[2026-11-06T07:22:09.254Z] INFO: ANALYSIS SUCCESSFUL, you can find the results at: http://sonarqube:9000/dashboard?id=medicore
+[2026-11-06T07:22:09.254Z] INFO: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+[2026-11-06T07:22:09.254Z] INFO: More about the report processing at http://sonarqube:9000/api/ce/task?id=4e850b30-dbb4-4274-8aaa-02a24c3eba05
+[2026-11-06T07:22:09.505Z] INFO: Analysis total time: 13.392 s
+[2026-11-06T07:22:09.505Z] INFO: ------------------------------------------------------------------------
+[2026-11-06T07:22:09.505Z] INFO: EXECUTION SUCCESS
+[2026-11-06T07:22:09.505Z] INFO: ------------------------------------------------------------------------
+[2026-11-06T07:22:09.505Z] INFO: Total time: 14.873s
+[2026-11-06T07:22:09.505Z] INFO: Final Memory: 38M/154M
+[2026-11-06T07:22:09.505Z] INFO: ------------------------------------------------------------------------
+[2026-11-06T07:22:09.505Z] The SonarScanner CLI has finished
+[2026-11-06T07:22:09.505Z] 07:22:09.386  Post-processing succeeded.
+[2026-11-06T07:22:17.530Z] {"projectStatus":{"status":"ERROR","conditions":[{"status":"OK","metricKey":"reliability_rating","comparator":"GT","errorThreshold":"2","actualValue":"1"},{"status":"OK","metricKey":"security_rating","comparator":"GT","errorThreshold":"1","actualValue":"1"},{"status":"OK","metricKey":"sqale_rating","comparator":"GT","errorThreshold":"1","actualValue":"1"},{"status":"ERROR","metricKey":"new_coverage","comparator":"LT","errorThreshold":"80","actualValue":"49.0"},{"status":"OK","metricKey":"coverage","comparator":"LT","errorThreshold":"60","actualValue":"70.4"},{"status":"ERROR","metricKey":"new_duplicated_lines_density","comparator":"GT","errorThreshold":"3","actualValue":"9.34579"},{"status":"OK","metricKey":"duplicated_lines_density","comparator":"GT","errorThreshold":"3","actualValue":"0.5"},{"status":"OK","metricKey":"new_violations","comparator":"GT","errorThreshold":"0","actualValue":"0"},{"status":"OK","metricKey":"vulnerabilities","comparator":"GT","errorThreshold":"0","actualValue":"0"}],"ignoredConditions":false,"period":{"mode":"PREVIOUS_VERSION","date":"2026-11-06T06:33:47+0000"},"caycStatus":"over-compliant"}}
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (6. npm audit)
+[Pipeline] sh
+[2026-11-06T07:22:17.821Z] + bash scripts/sec-npm-audit.sh
+[2026-11-06T07:22:19.164Z] {'info': 0, 'low': 0, 'moderate': 0, 'high': 0, 'critical': 0, 'total': 0}
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (7. OWASP Dependency-Check)
+[Pipeline] sh
+[2026-11-06T07:22:19.444Z] + bash scripts/sec-dependency-check.sh
+[2026-11-06T07:22:41.240Z] [ERROR] One or more fatal errors occurred
+[2026-11-06T07:22:41.240Z] [ERROR] Unable to connect to the database - if this error persists it may be due to a corrupt database. Consider running `purge` to delete the existing database
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (8. Fortify)
+Stage "8. Fortify" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (9. Docker Build)
+Stage "9. Docker Build" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (10. Deploy a QA)
+Stage "10. Deploy a QA" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (11. Pruebas API)
+Stage "11. Pruebas API" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (12. Cypress)
+Stage "12. Cypress" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (13. Maestro)
+Stage "13. Maestro" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (14. OWASP ZAP)
+Stage "14. OWASP ZAP" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (15. Rendimiento)
+Stage "15. Rendimiento" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (16. Quality Gate)
+Stage "16. Quality Gate" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (17. Aprobación)
+Stage "17. Aprobación" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (18. Deploy final)
+Stage "18. Deploy final" skipped due to earlier failure(s)
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] archiveArtifacts
+[2026-11-06T07:22:41.738Z] Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+ERROR: script returned exit code 13
+Finished: FAILURE

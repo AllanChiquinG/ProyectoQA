@@ -16,7 +16,7 @@ Una reserva rechazada con 409 es el comportamiento correcto (horario ocupado) y 
 
 | Perfil | Peticiones | req/s | p95 lectura | p95 reserva | Error inesperado | Reservas | 409 | Umbrales |
 |---|---|---|---|---|---|---|---|---|
-| load | 20699 | 75.8 | 6.9 ms | 11.4 ms | 0 % | 3197 | 34 | cumplidos |
+| load | 20399 | 75.2 | 5.3 ms | 8.9 ms | 0 % | 3260 | 41 | cumplidos |
 | stress | 41620 | 196.4 | 6.2 ms | 8.6 ms | 0 % | 6672 | 186 | cumplidos |
 | spike | 43478 | 328.0 | 7.4 ms | 11.5 ms | 0 % | 6954 | 188 | cumplidos |
 
