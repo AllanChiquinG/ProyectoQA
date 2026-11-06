@@ -79,7 +79,7 @@ def wait_sent(token, result_id, seconds=180):
 
 
 def notifications_for(token, result_id):
-    code, body = call("GET", "/api/notifications?pageSize=100", token)
+    _, body = call("GET", "/api/notifications?pageSize=100", token)
     items = (body or {}).get("items", [])
     return sum(1 for item in items if str(item.get("targetId", "")).lower() == result_id.lower())
 

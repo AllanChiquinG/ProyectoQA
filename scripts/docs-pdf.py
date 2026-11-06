@@ -42,7 +42,7 @@ blockquote { border-left: 4px solid #2a6f63; margin: 8px 0; padding: 2px 12px; b
 
 def links_to_pdf(text):
     """Los enlaces a otros documentos apuntan a su PDF, no al Markdown."""
-    return re.sub(r"\]\(([^)#\s]+)\.md(#[^)]*)?\)", lambda m: f"]({m.group(1)}.pdf{m.group(2) or ''})", text)
+    return text.replace(".md)", ".pdf)").replace(".md#", ".pdf#")
 
 
 def render(page, source, target):
