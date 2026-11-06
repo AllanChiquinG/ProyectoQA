@@ -15,7 +15,7 @@ public class MessagingOptions
     /// <summary>Cada cuánto busca el publicador eventos pendientes.</summary>
     public TimeSpan PublishPollInterval { get; set; } = TimeSpan.FromSeconds(2);
 
-    public int PublishBatchSize { get; set; } = 20;
+    public int PublishBatchSize { get; set; } = 200;
 
     /// <summary>Espera máxima entre reintentos de publicación cuando el broker no responde (crece 1 s, 2 s, 4 s… hasta este tope).</summary>
     public TimeSpan PublishMaxBackoff { get; set; } = TimeSpan.FromSeconds(30);

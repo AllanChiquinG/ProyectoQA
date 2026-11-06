@@ -508,3 +508,8 @@ infrastructure/terraform/**/*.tfvars
 infrastructure/ansible/inventory/qa.ini
 infrastructure/ansible/group_vars/**/vault.yml
 infrastructure/ansible/.vault_pass*
+
+# CI local y salidas pesadas de los análisis
+ci/.env.ci
+reports/dependency-check/*.html
+reports/dependency-check/publicado/

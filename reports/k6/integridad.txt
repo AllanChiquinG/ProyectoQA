@@ -1,0 +1,8 @@
+citas confirmadas | 34647
+solapes por medico | 0
+solapes por paciente | 0
+eventos pendientes | 0
+notificaciones | 34648
+medicore.notifications.dlq	0
+medicore.notifications	0
+medicore.notifications.retry	0

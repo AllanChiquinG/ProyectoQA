@@ -1,0 +1,21 @@
+
+load: 20699 peticiones, 75.8 req/s
+load rc=0
+solapes por medico | 0
+solapes por paciente | 0
+eventos pendientes | 0
+eventos pendientes | 0
+
+stress: 41620 peticiones, 196.4 req/s
+stress rc=0
+solapes por medico | 0
+solapes por paciente | 0
+eventos pendientes | 0
+eventos pendientes | 0
+
+spike: 43478 peticiones, 328.0 req/s
+spike rc=0
+solapes por medico | 0
+solapes por paciente | 0
+eventos pendientes | 0
+eventos pendientes | 0

@@ -30,7 +30,8 @@ public sealed class OutboxPublisherService(
         {
             try
             {
-                await PublishPendingAsync(stoppingToken);
+                // Si el lote salió completo puede haber más: se sigue sin esperar para que la cola no crezca bajo alta demanda.
+                while (await PublishPendingAsync(stoppingToken) >= options.Value.PublishBatchSize) { }
             }
             catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
             {
