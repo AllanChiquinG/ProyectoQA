@@ -16,7 +16,7 @@ Selección de casos de los temas exigidos por el documento: roles, citas, labora
 | CP-06 | A | Cancelar libera el horario | Otro paciente puede reservar | `Cancelar_libera_el_horario_para_otro_paciente_y_es_idempotente` | Aprobado |
 | CP-07 | M | Cancelaciones simultáneas | Sin errores ni dobles cambios | `Cancelaciones_simultaneas_de_la_misma_cita_son_seguras` | Aprobado |
 | CP-08 | A | Reservas con 200 usuarios mientras se consulta | 0 solapes y 0 % de error inesperado | k6 `spike`, `reports/k6/integridad.txt` | Aprobado |
-| CP-09 | A | Recepción ve un horario tomado por otro usuario | Aviso sin perder la selección | Cypress, `Prevención de doble reserva` | Aprobado |
+| CP-09 | A | Dos reservas al mismo horario, una tras otra, en la web | La segunda se rechaza | Cypress, `Prevención de doble reserva` | Aprobado |
 
 ## Redis
 
@@ -37,7 +37,7 @@ Selección de casos de los temas exigidos por el documento: roles, citas, labora
 | CP-17 | A | Broker detenido al reservar | Se guarda y la notificación llega al volver | `Con_el_broker_detenido_la_cita_se_guarda_y_la_notificacion_llega_al_volver_el_broker` | Aprobado |
 | CP-18 | A | Mensaje repetido | No duplica la notificación | `Un_mensaje_reentregado_no_duplica_la_notificacion`, `Un_evento_repetido_no_duplica_la_notificacion` | Aprobado |
 | CP-19 | M | El consumidor falla dos veces | Se reintenta y termina procesado | `Si_el_consumidor_falla_dos_veces_el_mensaje_se_reintenta_y_termina_procesado` | Aprobado |
-| CP-20 | A | Registrar, consultar y notificar | El médico y el paciente lo ven | Cypress, `Laboratorio · registrar, consultar y notificar un resultado` | Aprobado |
+| CP-20 | A | Registrar, consultar y notificar | Laboratorio y el médico lo ven, con su estado de notificación | Cypress, `Laboratorio · registrar, consultar y notificar un resultado` | Aprobado |
 | CP-21 | M | Reintento de notificación | No duplica | `Reintentar_si_la_notificacion_ya_existe_no_hace_nada` | Aprobado |
 
 ## Roles, recursos y sesión

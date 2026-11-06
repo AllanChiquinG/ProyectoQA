@@ -21,7 +21,7 @@ MSYS_NO_PATHCONV=1 docker run --rm --network "$network" \
     tar -C /repo --exclude=./.git --exclude='*/bin' --exclude='*/obj' --exclude=node_modules --exclude=./reports --exclude=./artifacts --exclude=./.vs --exclude=./Referencias -cf - . | tar -C /work -xf -
     cd /work && rm -f global.json
     dotnet sonarscanner begin /k:$key /n:MediCore /d:sonar.host.url=$host /d:sonar.token=\$SONAR_TOKEN \
-      /d:sonar.exclusions='**/Migrations/**,**/wwwroot/css/style.css,**/wwwroot/css/appearance.css,tests/cypress/node_modules/**' /d:sonar.scanner.skipJreProvisioning=true       /d:sonar.cs.opencover.reportsPaths='tests/**/TestResults/**/coverage.opencover.xml'       /d:sonar.coverage.exclusions='tests/**,scripts/**,ci/**,infrastructure/**,src/MediCore.Mobile/**,**/wwwroot/**,**/*.cshtml'
+      /d:sonar.exclusions='**/Migrations/**,**/wwwroot/css/style.css,**/wwwroot/css/appearance.css,tests/cypress/node_modules/**' /d:sonar.scanner.skipJreProvisioning=true       /d:sonar.cs.opencover.reportsPaths='tests/**/TestResults/**/coverage.opencover.xml'       /d:sonar.coverage.exclusions='tests/**,scripts/**,ci/**,infrastructure/**,src/MediCore.Mobile/**,**/wwwroot/**,**/*.cshtml,**/*Seeder.cs,**/DevelopmentBootstrap.cs'
     dotnet build MediCore.slnx -c Release
     dotnet test MediCore.slnx -c Release --no-build --collect:'XPlat Code Coverage' -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
     dotnet sonarscanner end /d:sonar.token=\$SONAR_TOKEN

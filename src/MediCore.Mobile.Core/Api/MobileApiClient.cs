@@ -245,14 +245,7 @@ public sealed class MobileApiClient(HttpClient http, ISessionStore store, TimePr
         try
         {
             using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync(ct), cancellationToken: ct);
-            var root = document.RootElement;
-            if (root.TryGetProperty("errors", out var errors) && errors.ValueKind == JsonValueKind.Object)
-            {
-                var first = errors.EnumerateObject().SelectMany(field => field.Value.EnumerateArray()).FirstOrDefault();
-                if (first.ValueKind == JsonValueKind.String) return first.GetString();
-            }
-
-            return root.TryGetProperty("detail", out var detail) ? detail.GetString() : null;
+            return ProblemDetailsReader.FirstMessage(document.RootElement);
         }
         catch (Exception ex) when (ex is JsonException or InvalidOperationException or HttpRequestException)
         {
