@@ -25,9 +25,15 @@ public class Notification
     public required string Body { get; set; }
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
     public DateTime? ReadAtUtc { get; set; }
+
+    /// <summary>Cuándo se procesó su evento <c>PatientNotification</c>: la notificación quedó lista para los canales del paciente.</summary>
+    public DateTime? DispatchedAtUtc { get; set; }
 }
 
 public static class NotificationTypes
 {
     public const string LabResultReady = "LabResultReady";
+    public const string AppointmentCreated = "AppointmentCreated";
+    public const string AppointmentCancelled = "AppointmentCancelled";
+    public const string PrescriptionCreated = "PrescriptionCreated";
 }

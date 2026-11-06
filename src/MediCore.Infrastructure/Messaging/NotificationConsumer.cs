@@ -10,7 +10,7 @@ using RabbitMQ.Client.Events;
 namespace MediCore.Infrastructure.Messaging;
 
 /// <summary>
-/// Consumidor de <c>LabResultReady</c>: genera la notificación interna persistida del paciente.
+/// Consumidor de los eventos del paciente: genera su notificación interna persistida y procesa <c>PatientNotification</c>.
 /// <list type="bullet">
 /// <item>Confirmación manual: el mensaje se confirma (ack) solo después de guardar la notificación.</item>
 /// <item>Duplicados: un mensaje reentregado no crea otra notificación (índices únicos + comprobación previa).</item>
@@ -75,11 +75,12 @@ public sealed class NotificationConsumerService(
         try
         {
             if (messageId == Guid.Empty) throw new PermanentMessageException("El mensaje no trae identificador.");
-            var evt = ParseEvent(delivery);
 
             await using var scope = scopes.CreateAsyncScope();
-            var handler = scope.ServiceProvider.GetRequiredService<ILabResultReadyHandler>();
-            var outcome = await handler.HandleAsync(messageId, evt, ct);
+            var eventType = delivery.BasicProperties.Type ?? EventTypes.LabResultReady;
+            var outcome = eventType == EventTypes.LabResultReady
+                ? await scope.ServiceProvider.GetRequiredService<ILabResultReadyHandler>().HandleAsync(messageId, ParseEvent(delivery), ct)
+                : await scope.ServiceProvider.GetRequiredService<IPatientEventHandler>().HandleAsync(messageId, eventType, Encoding.UTF8.GetString(delivery.Body.Span), ct);
 
             if (outcome == HandleOutcome.Duplicate)
                 logger.LogInformation("Mensaje {MessageId} repetido: la notificación ya existía, se confirma sin crear otra.", messageId);

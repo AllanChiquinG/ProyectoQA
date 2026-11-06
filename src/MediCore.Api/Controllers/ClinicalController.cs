@@ -7,6 +7,7 @@ using MediCore.Domain.Clinical;
 using MediCore.Domain.Doctors;
 using MediCore.Domain.Patients;
 using MediCore.Domain.Scheduling;
+using MediCore.Infrastructure.Messaging;
 using MediCore.Infrastructure.Auditing;
 using MediCore.Infrastructure.Persistence;
 using MediCore.Infrastructure.Scheduling;
@@ -179,6 +180,7 @@ public class ClinicalController(
             }).ToList(),
         };
         db.Prescriptions.Add(prescription);
+        db.OutboxMessages.Add(OutboxEvents.PrescriptionCreated(prescription.Id, prescription.PatientId, prescription.CreatedAtUtc));
         await db.SaveChangesAsync(ct);
 
         await audit.WriteAsync(new AuditRecord(AuditActions.PrescriptionCreated, AuditOutcome.Success, userId, nameof(Prescription), prescription.Id.ToString(), ClientIp,

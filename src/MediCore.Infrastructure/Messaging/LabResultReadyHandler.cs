@@ -36,7 +36,7 @@ public sealed class LabResultReadyHandler(MediCoreDbContext db, TimeProvider tim
             .FirstOrDefaultAsync(ct)
             ?? throw new PermanentMessageException("El resultado de laboratorio del evento no existe.");
 
-        db.Notifications.Add(new Notification
+        var notification = new Notification
         {
             PatientId = message.PatientId,
             Type = NotificationTypes.LabResultReady,
@@ -45,7 +45,9 @@ public sealed class LabResultReadyHandler(MediCoreDbContext db, TimeProvider tim
             Title = "Tu resultado está disponible",
             Body = $"Ya puedes consultar tu resultado de {result.ExamType}.",
             CreatedAtUtc = time.GetUtcNow().UtcDateTime,
-        });
+        };
+        db.Notifications.Add(notification);
+        db.OutboxMessages.Add(OutboxEvents.PatientNotification(notification));
 
         try
         {
