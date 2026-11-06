@@ -2,6 +2,10 @@
 
 Pasos para responder en vivo lo que pide el documento: ejecutar el pipeline, provocar una falla, detener Redis o el consumidor, mostrar un hallazgo de ZAP, explicar el p95, recrear infraestructura y justificar la decisión GO / NO-GO.
 
+## Presentación
+
+Diapositivas con notas por sección: https://claude.ai/artifact/1bNnrBdRYNPbqvP6RzfK5c
+
 ## Antes de presentar
 
 Hazlo con 30 minutos de anticipación. Docker Desktop debe estar encendido.
