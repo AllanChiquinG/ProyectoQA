@@ -89,7 +89,8 @@ Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 sol
 | GEN-11 | Maestro (5–8 flujos) | `tests/maestro/*.yaml` (8 flujos), `scripts/maestro_run.py` — 8/8 con el código final en emulador, contra QA | 7, 10 | ✔ |
 | GEN-12 | k6/JMeter: Load, Stress, Spike con umbrales previos | `tests/k6/medicore.js`, `documentacion/07-rendimiento.md`, `reports/k6/`; umbrales cumplidos, solo en equipo local | 13 | ✔ |
 | GEN-13 | Usabilidad (≥5 participantes) + Lighthouse/axe | axe: 14 pantallas, 0 infracciones. **Usabilidad definida en `08-usabilidad.md`, sin aplicar a personas** | 13 | ◐ |
-| GEN-14 | Registro de defectos con evidencia | `documentacion/12-registro-de-defectos.md`, plantilla `.github/ISSUE_TEMPLATE/defecto.yml`. Issues en GitHub sin crear | continuo | ◐ |
+| GEN-14 | Registro de defectos con evidencia | `documentacion/12-registro-de-defectos.md`, plantilla `.github/ISSUE_TEMPLATE/defecto.yml`. 26 Issues creados en GitHub con `scripts/crear-issues.py` (23 cerrados y 3 abiertos, una vez cerrado H8-08) | continuo | ◐ |
 | GEN-15 | Plan de pruebas (20 secciones), riesgos C/I/D, casos, informe GO / NO-GO | `10-plan-de-pruebas.md`, `09-matriz-de-riesgos.md`, `11-casos-de-prueba.md`, `13-informe-final.md` | 14 | ✔ |
 | GEN-16 | Ambiente reproducible desde código y documentación | README + `documentacion/06-infraestructura.md` + `scripts/qa.sh` + Compose + migraciones por contenedor; reproducido localmente desde cero. Falta reproducirlo en Azure | 1, 8, 12 | ◐ |
+| GEN-18 | Respaldos y restauración (R-16, H8-08; requisito de continuidad) | `deploy/respaldos/respaldo.sh`, `scripts/simulacro-respaldo.sh`, `documentacion/evidencias/respaldos.md`; 14 tablas idénticas tras pérdida total | 14 | ✔ |
 | GEN-17 | Insomnia: colección +/−/authz | `tests/insomnia/medicore.insomnia.json`, `scripts/api-tests.sh`; 61 solicitudes, 65/65 | 10 | ✔ |

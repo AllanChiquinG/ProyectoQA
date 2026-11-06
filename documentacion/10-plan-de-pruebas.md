@@ -209,7 +209,7 @@ Los resultados de cada herramienta, con su fecha y reporte, están en [13-inform
 
 ## 19. Riesgos residuales
 
-Se detallan en el informe final y en la matriz de riesgos. Los principales son la falta de respaldos automáticos (R-16), el servidor único (R-17) y el ambiente de Azure sin aprovisionar (R-18).
+Se detallan en el informe final y en la matriz de riesgos. Los principales son las copias en el mismo disco (R-16), el servidor único (R-17) y el ambiente de Azure sin aprovisionar (R-18).
 
 ## 20. Decisión GO / NO-GO
 

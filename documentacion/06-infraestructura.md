@@ -54,6 +54,11 @@ scripts/qa.sh smoke       # pruebas de humo de web y API a través del proxy
 scripts/qa.sh restart     # reinicia sin borrar volúmenes
 scripts/qa.sh down        # elimina contenedores y red; CONSERVA los volúmenes
 scripts/qa.sh destroy     # además BORRA los volúmenes medicore-qa_* (pide escribir el nombre del proyecto)
+scripts/qa.sh backup      # respaldo inmediato; los automáticos corren cada 6 horas
+scripts/qa.sh backups     # lista los respaldos del volumen medicore-qa-respaldos (sobrevive a destroy)
+scripts/qa.sh export <carpeta>   # copia los respaldos fuera de Docker
+scripts/qa.sh import <archivo>   # trae un respaldo exportado
+scripts/qa.sh restore <archivo>  # REEMPLAZA la base (pide confirmación)
 ```
 
 ## 2. Infraestructura en Azure (propuesta sencilla, uso académico)
@@ -141,5 +146,5 @@ Detalle y resultados en `documentacion/evidencias/entrega-8-verificacion.md`. Re
 
 ## 7. Mejoras anotadas
 - Registro de imágenes (GHCR o ACR) para no construir en la VM: lo traerá el pipeline de Jenkins.
-- Copias de seguridad de PostgreSQL (`pg_dump` programado hacia un blob) y monitoreo; hoy el disco de datos es la única protección.
+- Llevar los respaldos a un destino externo (hoy `qa.sh export` es manual, ver `evidencias/respaldos.md`) y agregar monitoreo con alertas.
 - Fijar las imágenes base por resumen (*digest*) y escanearlas (Trivy) en el pipeline.

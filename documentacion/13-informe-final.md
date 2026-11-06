@@ -6,7 +6,7 @@ Corte: 2026-11-06, rama `Dev_Diego`. Los resultados son de la corrida 7 de Jenki
 
 **Decisión propuesta: NO-GO para producción y GO condicionado para QA.**
 
-Todos los criterios automáticos se cumplieron: la agenda resistió la carga sin doble reserva y una caída de RabbitMQ no perdió datos clínicos. Aun así, MediCore no debe pasar a producción: faltan respaldos, faltan entregables exigidos y nunca se desplegó en Azure.
+Todos los criterios automáticos se cumplieron: la agenda resistió la carga sin doble reserva y una caída de RabbitMQ no perdió datos clínicos. Aun así, MediCore no debe pasar a producción: faltan entregables exigidos y nunca se desplegó en Azure.
 
 La decisión final corresponde al equipo.
 
@@ -44,7 +44,7 @@ No se alcanzó el punto de quiebre. k6, la API y la base de datos compartieron e
 
 ### Defectos
 
-Se registraron 25 defectos: 21 cerrados y 4 abiertos, ninguno crítico. Las pruebas de esta etapa encontraron defectos reales que las suites anteriores no veían:
+Se registraron 26 defectos: 23 cerrados y 3 abiertos, ninguno crítico ni de severidad alta. Todos están en GitHub Issues. Las pruebas de esta etapa encontraron defectos reales que las suites anteriores no veían:
 
 - **k6:** el outbox acumuló 14 405 eventos pendientes después del pico.
 - **ZAP:** un carácter nulo provocaba un error 500.
@@ -77,6 +77,10 @@ Con el Worker o RabbitMQ detenidos, en QA se comprobó lo siguiente:
 
 Con Redis detenido, el inicio de sesión respondió 503 y el token activo 401. Volvió a funcionar al iniciar Redis.
 
+## Respaldos
+
+PostgreSQL se respalda cada 6 horas, con cifrado y verificación. En un simulacro se destruyeron la base y el volumen de respaldos, y se restauró desde una copia exportada: 14 tablas idénticas, 36 849 filas y 72 s de recuperación en este equipo. La pérdida máxima esperada es de 6 horas. Las copias siguen en el mismo disco salvo exportación manual. Detalle: [evidencias/respaldos.md](evidencias/respaldos.md).
+
 ## Pipeline
 
 | Corrida | Resultado | Qué demostró |
@@ -86,6 +90,8 @@ Con Redis detenido, el inicio de sesión respondió 503 y el token activo 401. V
 | 4 | Falló | La colección de API falló porque QA arrastraba datos de corridas anteriores |
 | 5 | Inestable | Las 18 etapas llegaron al final, con Fortify y Maestro sin ejecutar |
 | 6 | Falló | `SIMULAR_FALLO` detuvo el pipeline: no se ejecutaron Aprobación ni Deploy final |
+| 7 | Falló | SonarQube rechazó 8 incidencias nuevas y un punto de seguridad sin revisar. La puerta no se bajó |
+| 8 | Falló | SonarQube rechazó 1 incidencia y otro punto de seguridad. Lo demás de la etapa 16 cumplió |
 
 La corrida 5 terminó inestable a propósito: Fortify y Maestro no se ejecutaron y el pipeline no los oculta. La aprobación de la etapa 17 se dio de forma automatizada, y la etapa 18 solo registró que no hay servidor de Azure.
 
@@ -95,7 +101,6 @@ Las consolas están en `reports/jenkins/`.
 
 | Bloqueo | Por qué importa | Quién lo resuelve |
 |---|---|---|
-| No hay respaldos automáticos (R-16) | Un sistema clínico no puede perder datos por una falla de disco | Equipo |
 | No hay despliegue en Azure (R-18) | La ejecución sin costo no demuestra la nube real | Equipo, si decide pagar |
 | Usabilidad sin aplicar | Es un entregable exigido | Equipo, con 5 personas |
 | Fortify sin ejecutar | Es un entregable exigido | Equipo, con licencia |
@@ -104,7 +109,7 @@ Las consolas están en `reports/jenkins/`.
 
 | Riesgo | Nivel | Tratamiento |
 |---|---|---|
-| Sin respaldos (R-16) | Alto | Configurar copias y probar su restauración |
+| Copias en el mismo disco (R-16) | Medio | Respaldos probados. Exportarlos o llevarlos a otro lugar con `qa.sh export` |
 | Ambiente de nube sin aprovisionar (R-18) | Alto | Decidir el pago y seguir `06-infraestructura.md` |
 | Sin Redis no hay sesión (R-14) | Medio | Aceptado por seguridad. Vigilar el servicio |
 | Servidor único (R-17) | Medio | Aceptado para QA |
@@ -118,7 +123,6 @@ Las consolas están en `reports/jenkins/`.
 
 MediCore puede pasar a GO cuando se cumpla todo esto:
 
-1. Respaldos configurados y una restauración probada.
-2. Usabilidad con 5 personas, SUS de 68 o más y 80 % de tareas sin ayuda.
-3. Fortify ejecutado y sus hallazgos clasificados.
-4. QA desplegado en Azure, con ZAP y k6 repetidos allí.
+1. Usabilidad con 5 personas, SUS de 68 o más y 80 % de tareas sin ayuda.
+2. Fortify ejecutado y sus hallazgos clasificados.
+3. QA desplegado en Azure, con ZAP y k6 repetidos allí.

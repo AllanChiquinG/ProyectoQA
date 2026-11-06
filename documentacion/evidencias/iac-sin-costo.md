@@ -21,12 +21,12 @@ Ejecutado el 2026-11-06 con `scripts/iac-simulacion.sh`. El equipo decidió no u
 
 | Pasada | Tareas correctas | Con cambios | Fallidas |
 |---|---|---|---|
-| Primera | 22 | 17 | 0 |
-| Segunda | 20 | 2 | 0 |
+| Primera | 23 | 18 | 0 |
+| Segunda | 21 | 2 | 0 |
 
 - **Paquetes y sistema:** se aplicaron los paquetes base, SSH solo con clave, actualizaciones automáticas, fail2ban y cortafuegos.
 - **Docker:** se instaló desde el repositorio oficial.
-- **Aplicación:** subió con los 7 servicios saludables, desde el commit `fc9b01d`. `GET /api/health` y `GET /Login` respondieron 200.
+- **Aplicación:** subió con los 8 servicios saludables, incluido `backup`, desde el commit `3fe9d40`. `GET /api/health` y `GET /Login` respondieron 200.
 - **Cortafuegos:** quedó activo y solo permite 22, 80 y 443.
 - **Segunda pasada:** los 2 cambios son la siembra de datos, que siempre se marca como cambio, y la tarea que levanta Compose. Esa tarea no reinició ni dañó la aplicación, pero tampoco es idempotente de forma estricta.
 

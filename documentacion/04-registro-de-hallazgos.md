@@ -258,7 +258,7 @@ Prioridad cambiada: se pausó Azure/Terraform/Ansible/Jenkins y la app móvil (s
 | H8-05 | Prueba | En la primera pasada de Maestro contra QA fallaron 01 y 03 en 8-9 s. | `DeviceServerDiedException` del driver de Maestro en el emulador; no la app. | Se repitió la suite completa. | 8/8. |
 | H8-06 | Seguridad (decisión) | Detrás del proxy, el límite de intentos de login por IP veía siempre la IP del proxy. | Faltaban cabeceras reenviadas. | `ForwardedHeaders__Enabled` (solo en el Compose de QA, donde la API no publica puertos). | Documentado; IP real del cliente. |
 | H8-07 | Riesgo abierto | La construcción de imágenes ocurre en la VM (no hay registro) y requiere acceso al repositorio. | Evitar el costo de un registro en esta etapa. | Anotado: GHCR/ACR con el pipeline de Jenkins. | Abierto. |
-| H8-08 | Riesgo abierto | Copias de seguridad de PostgreSQL y monitoreo no existen; el disco de datos es la única protección. | Fuera del alcance de esta entrega. | Anotado en `06-infraestructura.md`. | Abierto. |
+| H8-08 | Riesgo abierto | Copias de seguridad de PostgreSQL y monitoreo no existen; el disco de datos es la única protección. | Fuera del alcance de esta entrega. | Resuelto: copias cifradas automáticas y restauración probada, ver `evidencias/respaldos.md`. El monitoreo sigue pendiente. | Cerrado. |
 | H8-09 | Riesgo abierto | No hay prueba xUnit para el worker ni para `--seed-qa` (solo verificación con el ambiente). | Se verificó con el ambiente en contenedores. | Anotado. | Abierto. |
 
 Evidencia: `documentacion/evidencias/entrega-8-verificacion.md` y `entrega-8-maestro-qa.md`.

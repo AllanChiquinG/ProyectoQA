@@ -9,7 +9,7 @@ La severidad y la prioridad siguen la sección 17 del [plan de pruebas](10-plan-
 | Severidad | Cerrados | Abiertos |
 |---|---|---|
 | Crítica | 0 | 0 |
-| Alta | 6 | 1 |
+| Alta | 7 | 0 |
 | Media | 13 | 0 |
 | Baja | 3 | 3 |
 
@@ -35,6 +35,7 @@ La severidad y la prioridad siguen la sección 17 del [plan de pruebas](10-plan-
 | HZ-01 | API | Media | P2 | Buscar o guardar texto con un carácter nulo (`%00`) | Respuesta 400 | Error 500 de PostgreSQL | `InvalidTextExceptionHandler` | `PatientsApiTests`, `reports/zap/zap-api.html` |
 | HC-01 | Código | Baja | P3 | Ejecutar `dotnet format --verify-no-changes` en Jenkins | Sin cambios | 7 archivos con formato incorrecto | Formato aplicado | Etapa 3 de Jenkins |
 | HS-02 | Código | Media | P2 | Ejecutar SonarQube sobre código nuevo | Duplicación de 3 % o menos | 9,3 % de duplicación y 49 % de cobertura | Lectura de errores compartida y 4 pruebas | Corrida 2 de Jenkins, `reports/sonarqube/quality-gate.json` |
+| H8-08 | Datos | Alta | P1 antes de producción | Revisar la infraestructura | Copias automáticas | No hay respaldos | Copias cifradas cada 6 horas, verificadas, y restauración probada con pérdida total | `documentacion/evidencias/respaldos.md`, `reports/respaldos/simulacro.txt` |
 | HS-03 | Código | Media | P2 | Ejecutar la etapa 16 con los scripts nuevos | Puerta de SonarQube aprobada | Corridas 7 y 8 rechazadas: 8 y luego 1 incidencia nueva, y puntos de seguridad sin revisar; las etapas 17 y 18 no se ejecutaron | Incidencias corregidas sin bajar la puerta; una expresión regular reemplazada y un punto de seguridad revisado con justificación | `reports/jenkins/corrida-7.txt`, `reports/jenkins/corrida-8.txt`, `reports/sonarqube/quality-gate.json` |
 | H9-01 | Contenedores | Media | P1 | Crear QA desde Jenkins y reiniciar Docker | QA vuelve a arrancar | API, web y proxy terminan con código 127: montaban archivos del workspace de Jenkins | Script de salud y Caddyfile dentro de las imágenes | `docker/proxy.Dockerfile`, `scripts/qa.sh smoke` |
 | H9-02 | Infraestructura | Media | P2 | Aplicar `site.yml` en un Ubuntu mínimo | Docker instalado | Falla: faltaba `python3-debian` | Paquete agregado al rol `base` | `documentacion/evidencias/iac-sin-costo.md` |
@@ -44,7 +45,6 @@ La severidad y la prioridad siguen la sección 17 del [plan de pruebas](10-plan-
 
 | ID | Módulo | Severidad | Prioridad | Pasos | Esperado | Obtenido | Decisión | Evidencia |
 |---|---|---|---|---|---|---|---|---|
-| H8-08 | Datos | Alta | P1 antes de producción | Revisar la infraestructura | Copias automáticas | No hay respaldos | Abierto, bloquea producción | R-16 |
 | HQ-01 | Datos QA | Baja | P2 | Revisar `.env.qa` | Contraseña sembrada fuerte | Contraseña de demostración de 5 letras | Ficticia y solo local. Regenerar con `qa.sh init` antes de exponer QA | `.env.qa` (no versionado) |
 | HZ-03 | Web | Baja | P3 | Ejecutar ZAP | Cabeceras COEP y COOP | No están | Aceptado en QA; revisar con HTTPS | `reports/zap/zap.html` |
 | HJ-04 | Pipeline | Baja | P3 | Reiniciar Docker Desktop | Jenkins conserva su historial | Se pierde `/var/jenkins_home` y la numeración vuelve a 1 | Aceptado: las consolas se guardan en `reports/jenkins/` | `reports/jenkins/corridas.txt` |

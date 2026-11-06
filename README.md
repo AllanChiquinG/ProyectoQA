@@ -94,6 +94,7 @@ scripts/qa.sh up        # construye, migra y levanta; solo el proxy publica puer
 scripts/qa.sh seed      # usuarios y datos ficticios
 scripts/qa.sh smoke     # pruebas de humo de web y API
 scripts/qa.sh down      # conserva los volúmenes; "destroy" los borra (pide confirmación)
+scripts/qa.sh backups   # lista los respaldos automáticos; también: backup, export, import, restore
 ```
 
 La infraestructura de Azure (Terraform y Ansible) se **ejecutó sin costo, no en Azure**: `scripts/iac-simulacion.sh` usa un proveedor simulado y un Ubuntu desechable. No se creó ningún recurso real; el plan y su costo esperan aprobación (sección 3 del documento). La app Android es un APK, no un servicio del Compose.

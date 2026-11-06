@@ -19,7 +19,7 @@ Escala: probabilidad e impacto de 1 (bajo) a 3 (alto). Nivel = probabilidad × i
 | R-13 | I | Mensaje repetido o dañado en la cola | 2 | 2 | 4 | Consumidor idempotente, reintentos y DLQ | `MessagingTests` | Bajo |
 | R-14 | D | Redis no disponible | 2 | 3 | 6 | Cache falla abierto; sesiones fallan cerrado por seguridad | `AvailabilityApiTests`, `IdentityApiTests` | Medio: sin Redis no hay sesión |
 | R-15 | D | Saturación por picos de demanda | 2 | 3 | 6 | Pruebas de carga con umbrales y lote de outbox | Reportes de k6 | Bajo en local; sin medir en Azure |
-| R-16 | D | Pérdida de datos por falta de respaldo | 2 | 3 | 6 | Disco de datos separado; no hay copias automáticas | H8-08 | Alto: abierto |
+| R-16 | D | Pérdida de datos por falta de respaldo | 2 | 3 | 6 | Copias cifradas cada 6 h, verificadas; restauración probada (`evidencias/respaldos.md`) | H8-08 cerrado | Medio: siguen en el mismo disco salvo exportación |
 | R-17 | D | Servidor único en QA | 2 | 2 | 4 | Reconstrucción por Terraform y Ansible | `evidencias/iac-sin-costo.md`, sin Azure | Medio: abierto |
 | R-18 | D | Ambiente de nube no aprovisionado | 3 | 2 | 6 | Código ejecutado sin costo; el equipo decidió no pagar Azure | `evidencias/iac-sin-costo.md` | Alto: abierto |
 | R-19 | C/I | App móvil probada solo en emulador | 2 | 2 | 4 | Maestro 8/8 con el código final, contra QA | `evidencias/maestro-codigo-final.md` | Bajo: falta dispositivo físico |

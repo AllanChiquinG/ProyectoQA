@@ -22,7 +22,7 @@ Cada entrega es pequeña, termina compilando, con pruebas verdes y la matriz de 
 
 Decisión aceptada (entregas 3–4): el médico accede a pacientes con quienes tiene una cita no cancelada **o una consulta registrada**; la regla se valida en la API (`PatientAuthorizationHandler`). Cancelar una cita solo retira el acceso si no queda otra relación válida (otra cita con ese médico o una consulta). La parte de consultas se implementó y se prueba en la entrega 5 (la prueba que estaba omitida ya está activa).
 
-Pendientes (ver `13-informe-final.md`): usabilidad con personas, Fortify, respaldos y despliegue en Azure.
+Pendientes (ver `13-informe-final.md`): usabilidad con personas, Fortify y despliegue en Azure.
 
 Decisión aceptada (entrega 5, ajuste): **expediente compartido entre médicos autorizados.** Un médico con relación de atención válida lee las consultas y recetas que registraron otros médicos; nadie modifica registros de otro profesional; sin relación válida no hay acceso; los demás roles mantienen sus restricciones. Detalle en `CLAUDE.md` y en `04-registro-de-hallazgos.md`.
 

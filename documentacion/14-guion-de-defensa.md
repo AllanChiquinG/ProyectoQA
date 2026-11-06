@@ -133,7 +133,17 @@ bash scripts/iac-simulacion.sh all
 
 **Qué decir:** decidimos no usar recursos de pago, así que no hay despliegue real en Azure. Terraform recorrió aprovisionar, modificar y destruir con un proveedor simulado, y Ansible se aplicó en un Ubuntu desechable hasta dejar la aplicación funcionando. Eso prueba nuestro código, no la nube. La evidencia está en `documentacion/evidencias/iac-sin-costo.md`.
 
-## 8. Justificar la decisión
+## 8. Restaurar un respaldo
+
+Destruye QA y lo recupera desde una copia exportada. Tarda cerca de un minuto y medio:
+
+```bash
+QA_CONFIRM=medicore-qa bash scripts/simulacro-respaldo.sh
+```
+
+**Qué decir:** se borró la base y también el volumen de respaldos. Las 14 tablas volvieron idénticas. La pérdida máxima esperada es de 6 horas y las copias siguen en el mismo disco salvo que se exporten.
+
+## 9. Justificar la decisión
 
 La decisión está en la sección "Decisión GO / NO-GO" de `documentacion/13-informe-final.md`.
 
