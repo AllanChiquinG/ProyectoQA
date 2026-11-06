@@ -45,7 +45,9 @@ if dc:
     if open_items:
         blockers.append("Dependency-Check críticas sin aceptar: " + ", ".join(open_items[:10]))
 
-for report, label in (("zap/zap.json", "ZAP web"), ("zap/zap-api.json", "ZAP API")):
+zap_reports = (("zap/zap.json", "ZAP web"), ("zap/zap-api.json", "ZAP API administrador"), ("zap/zap-api-recepcion.json", "ZAP API recepción"),
+               ("zap/zap-api-medico.json", "ZAP API médico"), ("zap/zap-api-laboratorio.json", "ZAP API laboratorio"), ("zap/zap-api-paciente.json", "ZAP API paciente"))
+for report, label in zap_reports:
     zap = load(report)
     if zap:
         high = sorted({a["alert"] for s in zap.get("site", []) for a in s.get("alerts", []) if str(a.get("riskcode")) == "3"})
