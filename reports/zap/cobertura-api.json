@@ -3,7 +3,7 @@
   "GET /api/": {
    "4xx": 1
   },
-  "GET /api/4205764832631537050": {
+  "GET /api/8308338086657276331": {
    "4xx": 1
   },
   "GET /api/actuator/health": {
@@ -15,7 +15,7 @@
   "GET /api/appointments/": {
    "4xx": 2
   },
-  "GET /api/appointments/5099518209725240945": {
+  "GET /api/appointments/5619966983585422179": {
    "4xx": 1
   },
   "GET /api/appointments/consultable": {
@@ -42,7 +42,7 @@
   "GET /api/doctors/": {
    "2xx": 2
   },
-  "GET /api/doctors/5480690967426581164": {
+  "GET /api/doctors/8961725519340841413": {
    "4xx": 1
   },
   "GET /api/doctors/me": {
@@ -57,7 +57,7 @@
   "GET /api/doctors/{id}/": {
    "4xx": 1
   },
-  "GET /api/doctors/{id}/2906089605113661534": {
+  "GET /api/doctors/{id}/4909775890263648737": {
    "4xx": 1
   },
   "GET /api/doctors/{id}/availability": {
@@ -78,7 +78,7 @@
   "GET /api/labs/": {
    "4xx": 1
   },
-  "GET /api/labs/7274452029308029711": {
+  "GET /api/labs/3770396613194991696": {
    "4xx": 1
   },
   "GET /api/labs/patients": {
@@ -95,7 +95,7 @@
   "GET /api/labs/results/": {
    "2xx": 2
   },
-  "GET /api/labs/results/6010123762673829285": {
+  "GET /api/labs/results/4545708686949947926": {
    "4xx": 1
   },
   "GET /api/labs/results/me": {
@@ -110,7 +110,7 @@
   "GET /api/labs/results/{id}/": {
    "2xx": 1
   },
-  "GET /api/labs/results/{id}/426367653033026058": {
+  "GET /api/labs/results/{id}/5766866181071559852": {
    "4xx": 1
   },
   "GET /api/labs/results/{id}/notification": {
@@ -119,7 +119,7 @@
   "GET /api/labs/results/{id}/notification/": {
    "4xx": 1
   },
-  "GET /api/labs/results/{id}/notification/836497040788704808": {
+  "GET /api/labs/results/{id}/notification/8114183721184642420": {
    "4xx": 1
   },
   "GET /api/notifications": {
@@ -128,7 +128,7 @@
   "GET /api/notifications/": {
    "4xx": 2
   },
-  "GET /api/notifications/1803497732787219095": {
+  "GET /api/notifications/7505725366881702977": {
    "4xx": 1
   },
   "GET /api/notifications/unread-count": {
@@ -143,7 +143,7 @@
   "GET /api/patients/": {
    "4xx": 2
   },
-  "GET /api/patients/3089361644240233022": {
+  "GET /api/patients/5020855200037348924": {
    "4xx": 1
   },
   "GET /api/patients/me": {
@@ -158,7 +158,7 @@
   "GET /api/patients/{id}/": {
    "4xx": 1
   },
-  "GET /api/patients/{id}/8855170154662187183": {
+  "GET /api/patients/{id}/41284456138223370": {
    "4xx": 1
   },
   "GET /api/patients/{id}/consultations": {
@@ -185,7 +185,7 @@
   "GET /api/prescriptions/": {
    "4xx": 1
   },
-  "GET /api/prescriptions/2478685215322604139": {
+  "GET /api/prescriptions/507434272483905982": {
    "4xx": 1
   },
   "GET /api/prescriptions/me": {
@@ -265,23 +265,21 @@
    "4xx": 1
   }
  },
- "administrador": {
+ "recepcion": {
   "GET /api/": {
    "4xx": 1
   },
-  "GET /api/5951075786938192027": {
+  "GET /api/2739434244444292316": {
    "4xx": 1
   },
-  "GET /api/actuator/health": {
-   "4xx": 2
-  },
   "GET /api/appointments": {
-   "4xx": 349
+   "4xx": 262,
+   "2xx": 64
   },
   "GET /api/appointments/": {
    "4xx": 2
   },
-  "GET /api/appointments/3167093378537909673": {
+  "GET /api/appointments/1348303699709145439": {
    "4xx": 1
   },
   "GET /api/appointments/consultable": {
@@ -296,27 +294,23 @@
   "GET /api/appointments/me/": {
    "4xx": 1
   },
+  "GET /api/appointments/{id}": {
+   "2xx": 1
+  },
+  "GET /api/appointments/{id}/": {
+   "2xx": 1
+  },
+  "GET /api/appointments/{id}/620815463217206476": {
+   "4xx": 1
+  },
+  "GET /api/appointments/{id}/actuator/health": {
+   "4xx": 2
+  },
   "GET /api/audit": {
-   "2xx": 6,
    "4xx": 124
   },
   "GET /api/audit/": {
-   "2xx": 1
-  },
-  "GET /api/auth": {
-   "4xx": 19
-  },
-  "GET /api/auth/": {
    "4xx": 1
-  },
-  "GET /api/auth/2113920596850319912": {
-   "4xx": 1
-  },
-  "GET /api/auth/me": {
-   "2xx": 1
-  },
-  "GET /api/auth/me/": {
-   "2xx": 1
   },
   "GET /api/doctors": {
    "2xx": 150
@@ -324,7 +318,7 @@
   "GET /api/doctors/": {
    "2xx": 2
   },
-  "GET /api/doctors/2271184182237371143": {
+  "GET /api/doctors/3145293415742491064": {
    "4xx": 1
   },
   "GET /api/doctors/me": {
@@ -334,12 +328,12 @@
    "4xx": 1
   },
   "GET /api/doctors/{id}": {
-   "2xx": 1
+   "4xx": 1
   },
   "GET /api/doctors/{id}/": {
-   "2xx": 1
+   "4xx": 1
   },
-  "GET /api/doctors/{id}/8749583156176495196": {
+  "GET /api/doctors/{id}/3136532391921209041": {
    "4xx": 1
   },
   "GET /api/doctors/{id}/availability": {
@@ -350,10 +344,10 @@
    "4xx": 1
   },
   "GET /api/doctors/{id}/schedule": {
-   "2xx": 2
+   "4xx": 2
   },
   "GET /api/doctors/{id}/schedule/": {
-   "2xx": 1
+   "4xx": 1
   },
   "GET /api/labs": {
    "4xx": 19
@@ -361,7 +355,7 @@
   "GET /api/labs/": {
    "4xx": 1
   },
-  "GET /api/labs/3333632638976296235": {
+  "GET /api/labs/4993105175873169511": {
    "4xx": 1
   },
   "GET /api/labs/patients": {
@@ -376,7 +370,7 @@
   "GET /api/labs/results/": {
    "4xx": 2
   },
-  "GET /api/labs/results/7460403519017815421": {
+  "GET /api/labs/results/5879967469800481452": {
    "4xx": 1
   },
   "GET /api/labs/results/me": {
@@ -391,7 +385,7 @@
   "GET /api/notifications/": {
    "4xx": 2
   },
-  "GET /api/notifications/4780200413775567750": {
+  "GET /api/notifications/3642066898690190690": {
    "4xx": 1
   },
   "GET /api/notifications/unread-count": {
@@ -407,7 +401,7 @@
   "GET /api/patients/": {
    "2xx": 2
   },
-  "GET /api/patients/3757248470909663458": {
+  "GET /api/patients/4586493900928643495": {
    "4xx": 1
   },
   "GET /api/patients/me": {
@@ -422,7 +416,7 @@
   "GET /api/patients/{id}/": {
    "2xx": 1
   },
-  "GET /api/patients/{id}/6059375507183244150": {
+  "GET /api/patients/{id}/6070937226526361528": {
    "4xx": 1
   },
   "GET /api/patients/{id}/consultations": {
@@ -449,258 +443,7 @@
   "GET /api/prescriptions/": {
    "4xx": 1
   },
-  "GET /api/prescriptions/5947787776864434606": {
-   "4xx": 1
-  },
-  "GET /api/prescriptions/me": {
-   "4xx": 2
-  },
-  "GET /api/prescriptions/me/": {
-   "4xx": 1
-  },
-  "GET /api/users": {
-   "2xx": 1
-  },
-  "GET /api/users/": {
-   "2xx": 1
-  },
-  "POST /api/appointments": {
-   "4xx": 578
-  },
-  "POST /api/appointments/": {
-   "4xx": 1
-  },
-  "POST /api/auth/login": {
-   "2xx": 1,
-   "4xx": 239
-  },
-  "POST /api/auth/login/": {
-   "4xx": 1
-  },
-  "POST /api/consultations": {
-   "4xx": 352
-  },
-  "POST /api/consultations/": {
-   "4xx": 1
-  },
-  "POST /api/doctors": {
-   "2xx": 272,
-   "4xx": 217
-  },
-  "POST /api/doctors/": {
-   "2xx": 1
-  },
-  "POST /api/labs/results": {
-   "4xx": 919
-  },
-  "POST /api/labs/results/": {
-   "4xx": 1
-  },
-  "POST /api/patients": {
-   "2xx": 43,
-   "4xx": 535
-  },
-  "POST /api/patients/": {
-   "4xx": 1
-  },
-  "POST /api/prescriptions": {
-   "4xx": 578
-  },
-  "POST /api/prescriptions/": {
-   "4xx": 1
-  },
-  "PUT /api/doctors/{id}": {
-   "2xx": 272,
-   "4xx": 217
-  },
-  "PUT /api/doctors/{id}/": {
-   "2xx": 1
-  },
-  "PUT /api/doctors/{id}/schedule": {
-   "2xx": 29,
-   "4xx": 827
-  },
-  "PUT /api/doctors/{id}/schedule/": {
-   "2xx": 1
-  },
-  "PUT /api/patients/{id}": {
-   "4xx": 543,
-   "2xx": 35
-  },
-  "PUT /api/patients/{id}/": {
-   "4xx": 1
-  }
- },
- "recepcion": {
-  "GET /api/": {
-   "4xx": 1
-  },
-  "GET /api/9178622108690934772": {
-   "4xx": 1
-  },
-  "GET /api/actuator/health": {
-   "4xx": 2
-  },
-  "GET /api/appointments": {
-   "4xx": 259,
-   "2xx": 90
-  },
-  "GET /api/appointments/": {
-   "4xx": 2
-  },
-  "GET /api/appointments/1138877224863700825": {
-   "4xx": 1
-  },
-  "GET /api/appointments/consultable": {
-   "4xx": 143
-  },
-  "GET /api/appointments/consultable/": {
-   "4xx": 1
-  },
-  "GET /api/appointments/me": {
-   "4xx": 2
-  },
-  "GET /api/appointments/me/": {
-   "4xx": 1
-  },
-  "GET /api/audit": {
-   "4xx": 124
-  },
-  "GET /api/audit/": {
-   "4xx": 1
-  },
-  "GET /api/doctors": {
-   "2xx": 150
-  },
-  "GET /api/doctors/": {
-   "2xx": 2
-  },
-  "GET /api/doctors/3403000829522831643": {
-   "4xx": 1
-  },
-  "GET /api/doctors/me": {
-   "4xx": 3
-  },
-  "GET /api/doctors/me/": {
-   "4xx": 1
-  },
-  "GET /api/doctors/{id}": {
-   "4xx": 1
-  },
-  "GET /api/doctors/{id}/": {
-   "4xx": 1
-  },
-  "GET /api/doctors/{id}/1855614602653162934": {
-   "4xx": 1
-  },
-  "GET /api/doctors/{id}/availability": {
-   "2xx": 70,
-   "4xx": 122
-  },
-  "GET /api/doctors/{id}/availability/": {
-   "4xx": 1
-  },
-  "GET /api/doctors/{id}/schedule": {
-   "4xx": 2
-  },
-  "GET /api/doctors/{id}/schedule/": {
-   "4xx": 1
-  },
-  "GET /api/labs": {
-   "4xx": 19
-  },
-  "GET /api/labs/": {
-   "4xx": 1
-  },
-  "GET /api/labs/5777628424500164439": {
-   "4xx": 1
-  },
-  "GET /api/labs/patients": {
-   "4xx": 122
-  },
-  "GET /api/labs/patients/": {
-   "4xx": 1
-  },
-  "GET /api/labs/results": {
-   "4xx": 376
-  },
-  "GET /api/labs/results/": {
-   "4xx": 2
-  },
-  "GET /api/labs/results/7217457434115697120": {
-   "4xx": 1
-  },
-  "GET /api/labs/results/me": {
-   "4xx": 2
-  },
-  "GET /api/labs/results/me/": {
-   "4xx": 1
-  },
-  "GET /api/notifications": {
-   "4xx": 376
-  },
-  "GET /api/notifications/": {
-   "4xx": 2
-  },
-  "GET /api/notifications/4869930190450800635": {
-   "4xx": 1
-  },
-  "GET /api/notifications/unread-count": {
-   "4xx": 1
-  },
-  "GET /api/notifications/unread-count/": {
-   "4xx": 1
-  },
-  "GET /api/patients": {
-   "2xx": 151,
-   "4xx": 243
-  },
-  "GET /api/patients/": {
-   "2xx": 2
-  },
-  "GET /api/patients/5876800982976898554": {
-   "4xx": 1
-  },
-  "GET /api/patients/me": {
-   "4xx": 3
-  },
-  "GET /api/patients/me/": {
-   "4xx": 1
-  },
-  "GET /api/patients/{id}": {
-   "2xx": 1
-  },
-  "GET /api/patients/{id}/": {
-   "2xx": 1
-  },
-  "GET /api/patients/{id}/1143663009412947563": {
-   "4xx": 1
-  },
-  "GET /api/patients/{id}/consultations": {
-   "4xx": 21
-  },
-  "GET /api/patients/{id}/consultations/": {
-   "4xx": 1
-  },
-  "GET /api/patients/{id}/lab-results": {
-   "4xx": 21
-  },
-  "GET /api/patients/{id}/lab-results/": {
-   "4xx": 1
-  },
-  "GET /api/patients/{id}/prescriptions": {
-   "4xx": 21
-  },
-  "GET /api/patients/{id}/prescriptions/": {
-   "4xx": 1
-  },
-  "GET /api/prescriptions": {
-   "4xx": 19
-  },
-  "GET /api/prescriptions/": {
-   "4xx": 1
-  },
-  "GET /api/prescriptions/7614975887260313742": {
+  "GET /api/prescriptions/1137138184606478039": {
    "4xx": 1
   },
   "GET /api/prescriptions/me": {
@@ -716,9 +459,16 @@
    "4xx": 1
   },
   "POST /api/appointments": {
-   "4xx": 239
+   "2xx": 130,
+   "4xx": 478
   },
   "POST /api/appointments/": {
+   "2xx": 1
+  },
+  "POST /api/appointments/{id}/cancel": {
+   "4xx": 1
+  },
+  "POST /api/appointments/{id}/cancel/": {
    "4xx": 1
   },
   "POST /api/auth/login": {
@@ -743,8 +493,8 @@
    "4xx": 1
   },
   "POST /api/patients": {
-   "4xx": 555,
-   "2xx": 23
+   "2xx": 56,
+   "4xx": 522
   },
   "POST /api/patients/": {
    "4xx": 1
@@ -768,8 +518,8 @@
    "4xx": 1
   },
   "PUT /api/patients/{id}": {
-   "4xx": 556,
-   "2xx": 22
+   "4xx": 560,
+   "2xx": 18
   },
   "PUT /api/patients/{id}/": {
    "4xx": 1
@@ -779,25 +529,22 @@
   "GET /api/": {
    "4xx": 1
   },
-  "GET /api/2401578435472375430": {
+  "GET /api/7360832702432210499": {
    "4xx": 1
   },
-  "GET /api/actuator/health": {
-   "4xx": 2
-  },
   "GET /api/appointments": {
-   "4xx": 350,
-   "2xx": 11
+   "4xx": 314,
+   "2xx": 12
   },
   "GET /api/appointments/": {
    "4xx": 2
   },
-  "GET /api/appointments/1845226362330347209": {
+  "GET /api/appointments/648149878590914567": {
    "4xx": 1
   },
   "GET /api/appointments/consultable": {
    "4xx": 124,
-   "2xx": 6
+   "2xx": 7
   },
   "GET /api/appointments/consultable/": {
    "4xx": 1
@@ -807,6 +554,18 @@
   },
   "GET /api/appointments/me/": {
    "4xx": 1
+  },
+  "GET /api/appointments/{id}": {
+   "2xx": 1
+  },
+  "GET /api/appointments/{id}/": {
+   "2xx": 1
+  },
+  "GET /api/appointments/{id}/5041817609548106111": {
+   "4xx": 1
+  },
+  "GET /api/appointments/{id}/actuator/health": {
+   "4xx": 2
   },
   "GET /api/audit": {
    "4xx": 124
@@ -820,7 +579,7 @@
   "GET /api/consultations/": {
    "4xx": 1
   },
-  "GET /api/consultations/7350116315175302085": {
+  "GET /api/consultations/3478668953660300178": {
    "4xx": 1
   },
   "GET /api/consultations/{id}": {
@@ -835,7 +594,7 @@
   "GET /api/doctors/": {
    "2xx": 2
   },
-  "GET /api/doctors/3728397763799428777": {
+  "GET /api/doctors/5242701000306799930": {
    "4xx": 1
   },
   "GET /api/doctors/me": {
@@ -850,7 +609,7 @@
   "GET /api/doctors/{id}/": {
    "4xx": 1
   },
-  "GET /api/doctors/{id}/1020415640785867878": {
+  "GET /api/doctors/{id}/4296969083626536672": {
    "4xx": 1
   },
   "GET /api/doctors/{id}/availability": {
@@ -872,7 +631,7 @@
   "GET /api/labs/": {
    "4xx": 1
   },
-  "GET /api/labs/8970755674847016838": {
+  "GET /api/labs/1724051255935316162": {
    "4xx": 1
   },
   "GET /api/labs/patients": {
@@ -887,7 +646,7 @@
   "GET /api/labs/results/": {
    "4xx": 2
   },
-  "GET /api/labs/results/5167012350993836297": {
+  "GET /api/labs/results/1963170336914575975": {
    "4xx": 1
   },
   "GET /api/labs/results/me": {
@@ -902,7 +661,7 @@
   "GET /api/labs/results/{id}/": {
    "2xx": 1
   },
-  "GET /api/labs/results/{id}/2839093902527250718": {
+  "GET /api/labs/results/{id}/549609762999300311": {
    "4xx": 1
   },
   "GET /api/labs/results/{id}/notification": {
@@ -911,7 +670,7 @@
   "GET /api/labs/results/{id}/notification/": {
    "4xx": 1
   },
-  "GET /api/labs/results/{id}/notification/569688578906799124": {
+  "GET /api/labs/results/{id}/notification/5131391778970214080": {
    "4xx": 1
   },
   "GET /api/notifications": {
@@ -920,7 +679,7 @@
   "GET /api/notifications/": {
    "4xx": 2
   },
-  "GET /api/notifications/133519138541041798": {
+  "GET /api/notifications/5676340903983781200": {
    "4xx": 1
   },
   "GET /api/notifications/unread-count": {
@@ -936,7 +695,7 @@
   "GET /api/patients/": {
    "2xx": 2
   },
-  "GET /api/patients/8503608916551411198": {
+  "GET /api/patients/6749846605396306182": {
    "4xx": 1
   },
   "GET /api/patients/me": {
@@ -951,23 +710,23 @@
   "GET /api/patients/{id}/": {
    "2xx": 1
   },
-  "GET /api/patients/{id}/4822302167551447617": {
+  "GET /api/patients/{id}/6575973029764062854": {
    "4xx": 1
   },
   "GET /api/patients/{id}/consultations": {
-   "2xx": 2
+   "2xx": 3
   },
   "GET /api/patients/{id}/consultations/": {
    "2xx": 1
   },
   "GET /api/patients/{id}/lab-results": {
-   "2xx": 2
+   "2xx": 3
   },
   "GET /api/patients/{id}/lab-results/": {
    "2xx": 1
   },
   "GET /api/patients/{id}/prescriptions": {
-   "2xx": 2
+   "2xx": 3
   },
   "GET /api/patients/{id}/prescriptions/": {
    "2xx": 1
@@ -978,7 +737,7 @@
   "GET /api/prescriptions/": {
    "4xx": 1
   },
-  "GET /api/prescriptions/7240973909043337000": {
+  "GET /api/prescriptions/6691143378321926703": {
    "4xx": 1
   },
   "GET /api/prescriptions/me": {
@@ -1003,6 +762,12 @@
    "4xx": 578
   },
   "POST /api/appointments/": {
+   "4xx": 1
+  },
+  "POST /api/appointments/{id}/cancel": {
+   "4xx": 1
+  },
+  "POST /api/appointments/{id}/cancel/": {
    "4xx": 1
   },
   "POST /api/auth/login": {
@@ -1069,7 +834,7 @@
   "GET /api/": {
    "4xx": 1
   },
-  "GET /api/3891620180794588526": {
+  "GET /api/7088833878382044000": {
    "4xx": 1
   },
   "GET /api/appointments": {
@@ -1078,7 +843,7 @@
   "GET /api/appointments/": {
    "4xx": 2
   },
-  "GET /api/appointments/4006802824986690694": {
+  "GET /api/appointments/4473938835664797100": {
    "4xx": 1
   },
   "GET /api/appointments/consultable": {
@@ -1099,7 +864,7 @@
   "GET /api/appointments/{id}/": {
    "2xx": 1
   },
-  "GET /api/appointments/{id}/4772258895276169480": {
+  "GET /api/appointments/{id}/3239256367583472506": {
    "4xx": 1
   },
   "GET /api/appointments/{id}/actuator/health": {
@@ -1117,7 +882,7 @@
   "GET /api/doctors/": {
    "2xx": 2
   },
-  "GET /api/doctors/1097958614980021598": {
+  "GET /api/doctors/6270752583345626051": {
    "4xx": 1
   },
   "GET /api/doctors/me": {
@@ -1132,12 +897,12 @@
   "GET /api/doctors/{id}/": {
    "4xx": 1
   },
-  "GET /api/doctors/{id}/1873308653093392449": {
+  "GET /api/doctors/{id}/3906906490459656043": {
    "4xx": 1
   },
   "GET /api/doctors/{id}/availability": {
-   "2xx": 70,
-   "4xx": 122
+   "2xx": 8,
+   "4xx": 123
   },
   "GET /api/doctors/{id}/availability/": {
    "4xx": 1
@@ -1154,7 +919,7 @@
   "GET /api/labs/": {
    "4xx": 1
   },
-  "GET /api/labs/1248163630812206558": {
+  "GET /api/labs/1608953679513573880": {
    "4xx": 1
   },
   "GET /api/labs/patients": {
@@ -1169,7 +934,7 @@
   "GET /api/labs/results/": {
    "4xx": 2
   },
-  "GET /api/labs/results/8862489668633822879": {
+  "GET /api/labs/results/4937208261032276949": {
    "4xx": 1
   },
   "GET /api/labs/results/me": {
@@ -1184,7 +949,7 @@
   "GET /api/labs/results/{id}/": {
    "2xx": 1
   },
-  "GET /api/labs/results/{id}/5428284284649098484": {
+  "GET /api/labs/results/{id}/4519580689019512174": {
    "4xx": 1
   },
   "GET /api/labs/results/{id}/notification": {
@@ -1193,7 +958,7 @@
   "GET /api/labs/results/{id}/notification/": {
    "4xx": 1
   },
-  "GET /api/labs/results/{id}/notification/2384922975866778236": {
+  "GET /api/labs/results/{id}/notification/4107828047135709888": {
    "4xx": 1
   },
   "GET /api/notifications": {
@@ -1203,7 +968,7 @@
   "GET /api/notifications/": {
    "2xx": 2
   },
-  "GET /api/notifications/2168449002514688002": {
+  "GET /api/notifications/6144657008418572810": {
    "4xx": 1
   },
   "GET /api/notifications/unread-count": {
@@ -1218,7 +983,7 @@
   "GET /api/notifications/{id}/": {
    "4xx": 1
   },
-  "GET /api/notifications/{id}/2872792787366514609": {
+  "GET /api/notifications/{id}/4895643443227466608": {
    "4xx": 1
   },
   "GET /api/patients": {
@@ -1227,7 +992,7 @@
   "GET /api/patients/": {
    "4xx": 2
   },
-  "GET /api/patients/7199938519187464757": {
+  "GET /api/patients/1868881599402854077": {
    "4xx": 1
   },
   "GET /api/patients/me": {
@@ -1242,7 +1007,7 @@
   "GET /api/patients/{id}/": {
    "2xx": 1
   },
-  "GET /api/patients/{id}/3008683220628005628": {
+  "GET /api/patients/{id}/3842370068597524562": {
    "4xx": 1
   },
   "GET /api/patients/{id}/consultations": {
@@ -1269,7 +1034,7 @@
   "GET /api/prescriptions/": {
    "4xx": 1
   },
-  "GET /api/prescriptions/5389489628619476981": {
+  "GET /api/prescriptions/4245456950363539672": {
    "4xx": 1
   },
   "GET /api/prescriptions/me": {
@@ -1291,10 +1056,11 @@
    "4xx": 1
   },
   "POST /api/appointments": {
-   "4xx": 122
+   "2xx": 126,
+   "4xx": 363
   },
   "POST /api/appointments/": {
-   "4xx": 1
+   "2xx": 1
   },
   "POST /api/appointments/{id}/cancel": {
    "2xx": 1
@@ -1361,6 +1127,272 @@
   },
   "PUT /api/patients/{id}": {
    "4xx": 578
+  },
+  "PUT /api/patients/{id}/": {
+   "4xx": 1
+  }
+ },
+ "administrador": {
+  "GET /api/": {
+   "4xx": 1
+  },
+  "GET /api/236046664197259923": {
+   "4xx": 1
+  },
+  "GET /api/actuator/health": {
+   "4xx": 2
+  },
+  "GET /api/appointments": {
+   "4xx": 349
+  },
+  "GET /api/appointments/": {
+   "4xx": 2
+  },
+  "GET /api/appointments/2105434368773693207": {
+   "4xx": 1
+  },
+  "GET /api/appointments/consultable": {
+   "4xx": 143
+  },
+  "GET /api/appointments/consultable/": {
+   "4xx": 1
+  },
+  "GET /api/appointments/me": {
+   "4xx": 2
+  },
+  "GET /api/appointments/me/": {
+   "4xx": 1
+  },
+  "GET /api/audit": {
+   "2xx": 6,
+   "4xx": 124
+  },
+  "GET /api/audit/": {
+   "2xx": 1
+  },
+  "GET /api/auth": {
+   "4xx": 19
+  },
+  "GET /api/auth/": {
+   "4xx": 1
+  },
+  "GET /api/auth/2053355430226296591": {
+   "4xx": 1
+  },
+  "GET /api/auth/me": {
+   "2xx": 1
+  },
+  "GET /api/auth/me/": {
+   "2xx": 1
+  },
+  "GET /api/doctors": {
+   "2xx": 150
+  },
+  "GET /api/doctors/": {
+   "2xx": 2
+  },
+  "GET /api/doctors/227865069171250357": {
+   "4xx": 1
+  },
+  "GET /api/doctors/me": {
+   "4xx": 3
+  },
+  "GET /api/doctors/me/": {
+   "4xx": 1
+  },
+  "GET /api/doctors/{id}": {
+   "2xx": 1
+  },
+  "GET /api/doctors/{id}/": {
+   "2xx": 1
+  },
+  "GET /api/doctors/{id}/8478449844556959618": {
+   "4xx": 1
+  },
+  "GET /api/doctors/{id}/availability": {
+   "2xx": 8,
+   "4xx": 123
+  },
+  "GET /api/doctors/{id}/availability/": {
+   "4xx": 1
+  },
+  "GET /api/doctors/{id}/schedule": {
+   "2xx": 2
+  },
+  "GET /api/doctors/{id}/schedule/": {
+   "2xx": 1
+  },
+  "GET /api/labs": {
+   "4xx": 19
+  },
+  "GET /api/labs/": {
+   "4xx": 1
+  },
+  "GET /api/labs/911029935008735684": {
+   "4xx": 1
+  },
+  "GET /api/labs/patients": {
+   "4xx": 122
+  },
+  "GET /api/labs/patients/": {
+   "4xx": 1
+  },
+  "GET /api/labs/results": {
+   "4xx": 376
+  },
+  "GET /api/labs/results/": {
+   "4xx": 2
+  },
+  "GET /api/labs/results/5169206896733632746": {
+   "4xx": 1
+  },
+  "GET /api/labs/results/me": {
+   "4xx": 2
+  },
+  "GET /api/labs/results/me/": {
+   "4xx": 1
+  },
+  "GET /api/notifications": {
+   "4xx": 376
+  },
+  "GET /api/notifications/": {
+   "4xx": 2
+  },
+  "GET /api/notifications/1155462162824000985": {
+   "4xx": 1
+  },
+  "GET /api/notifications/unread-count": {
+   "4xx": 1
+  },
+  "GET /api/notifications/unread-count/": {
+   "4xx": 1
+  },
+  "GET /api/patients": {
+   "2xx": 151,
+   "4xx": 243
+  },
+  "GET /api/patients/": {
+   "2xx": 2
+  },
+  "GET /api/patients/405553947799440556": {
+   "4xx": 1
+  },
+  "GET /api/patients/me": {
+   "4xx": 3
+  },
+  "GET /api/patients/me/": {
+   "4xx": 1
+  },
+  "GET /api/patients/{id}": {
+   "2xx": 1
+  },
+  "GET /api/patients/{id}/": {
+   "2xx": 1
+  },
+  "GET /api/patients/{id}/3105273156872792819": {
+   "4xx": 1
+  },
+  "GET /api/patients/{id}/consultations": {
+   "4xx": 21
+  },
+  "GET /api/patients/{id}/consultations/": {
+   "4xx": 1
+  },
+  "GET /api/patients/{id}/lab-results": {
+   "4xx": 21
+  },
+  "GET /api/patients/{id}/lab-results/": {
+   "4xx": 1
+  },
+  "GET /api/patients/{id}/prescriptions": {
+   "4xx": 21
+  },
+  "GET /api/patients/{id}/prescriptions/": {
+   "4xx": 1
+  },
+  "GET /api/prescriptions": {
+   "4xx": 19
+  },
+  "GET /api/prescriptions/": {
+   "4xx": 1
+  },
+  "GET /api/prescriptions/2931355080490220390": {
+   "4xx": 1
+  },
+  "GET /api/prescriptions/me": {
+   "4xx": 2
+  },
+  "GET /api/prescriptions/me/": {
+   "4xx": 1
+  },
+  "GET /api/users": {
+   "2xx": 1
+  },
+  "GET /api/users/": {
+   "2xx": 1
+  },
+  "POST /api/appointments": {
+   "4xx": 578
+  },
+  "POST /api/appointments/": {
+   "4xx": 1
+  },
+  "POST /api/auth/login": {
+   "2xx": 1,
+   "4xx": 239
+  },
+  "POST /api/auth/login/": {
+   "4xx": 1
+  },
+  "POST /api/consultations": {
+   "4xx": 352
+  },
+  "POST /api/consultations/": {
+   "4xx": 1
+  },
+  "POST /api/doctors": {
+   "2xx": 272,
+   "4xx": 217
+  },
+  "POST /api/doctors/": {
+   "2xx": 1
+  },
+  "POST /api/labs/results": {
+   "4xx": 919
+  },
+  "POST /api/labs/results/": {
+   "4xx": 1
+  },
+  "POST /api/patients": {
+   "4xx": 562,
+   "2xx": 16
+  },
+  "POST /api/patients/": {
+   "4xx": 1
+  },
+  "POST /api/prescriptions": {
+   "4xx": 578
+  },
+  "POST /api/prescriptions/": {
+   "4xx": 1
+  },
+  "PUT /api/doctors/{id}": {
+   "2xx": 272,
+   "4xx": 217
+  },
+  "PUT /api/doctors/{id}/": {
+   "2xx": 1
+  },
+  "PUT /api/doctors/{id}/schedule": {
+   "2xx": 29,
+   "4xx": 827
+  },
+  "PUT /api/doctors/{id}/schedule/": {
+   "2xx": 1
+  },
+  "PUT /api/patients/{id}": {
+   "4xx": 564,
+   "2xx": 14
   },
   "PUT /api/patients/{id}/": {
    "4xx": 1

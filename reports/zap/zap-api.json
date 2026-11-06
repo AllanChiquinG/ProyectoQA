@@ -1,8 +1,8 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.17.0",
-	"@generated": "Fri, 6 Nov 2026 20:03:13",
-	"created": "2026-11-06T20:03:13.931322100Z",
+	"@generated": "Fri, 6 Nov 2026 20:20:39",
+	"created": "2026-11-06T20:20:39.187227534Z",
 	"insights":[
 		{
 			"level": "Medium",
@@ -26,7 +26,7 @@
 			"site": "http://proxy",
 			"key": "insight.code.2xx",
 			"description": "Percentage of responses with status code 2xx",
-			"statistic": "12"
+			"statistic": "11"
 		},
 		{
 			"level": "Info",
@@ -34,7 +34,7 @@
 			"site": "http://proxy",
 			"key": "insight.endpoint.ctype.application/json",
 			"description": "Percentage of endpoints with content type application/json",
-			"statistic": "16"
+			"statistic": "15"
 		},
 		{
 			"level": "Info",
@@ -42,7 +42,7 @@
 			"site": "http://proxy",
 			"key": "insight.endpoint.ctype.application/problem+json",
 			"description": "Percentage of endpoints with content type application/problem+json",
-			"statistic": "71"
+			"statistic": "72"
 		},
 		{
 			"level": "Info",
@@ -103,7 +103,7 @@
 					"desc": "<p>A private IP (such as 10.x.x.x, 172.x.x.x, 192.168.x.x) or an Amazon EC2 private hostname (for example, ip-10-0-56-78) has been found in the HTTP response body. This information might be helpful for further attacks targeting internal systems.</p>",
 					"instances":[ 
 						{
-							"id": "1210",
+							"id": "591",
 							"uri": "http://proxy/api/audit?take=100",
 							"nodeName": "http:\/\/proxy\/api\/audit (take)",
 							"method": "GET",
@@ -133,7 +133,7 @@
 					"desc": "<p>A Content-Type of text/html was returned by the server.</p><p>This is not one of the types expected to be returned by an API.</p><p>Raised by the 'Alert on Unexpected Content Types' script</p>",
 					"instances":[ 
 						{
-							"id": "5886",
+							"id": "5933",
 							"uri": "http://proxy/",
 							"nodeName": "http:\/\/proxy\/",
 							"method": "GET",
@@ -143,9 +143,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "21",
-							"uri": "http://proxy/5694922182160656241",
-							"nodeName": "http:\/\/proxy\/5694922182160656241",
+							"id": "22",
+							"uri": "http://proxy/7807945847357679246",
+							"nodeName": "http:\/\/proxy\/7807945847357679246",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -153,7 +153,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5883",
+							"id": "5931",
 							"uri": "http://proxy/Login?ReturnUrl=%2F",
 							"nodeName": "http:\/\/proxy\/Login (ReturnUrl)",
 							"method": "GET",
@@ -163,7 +163,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "35",
+							"id": "36",
 							"uri": "http://proxy/api",
 							"nodeName": "http:\/\/proxy\/api",
 							"method": "GET",
@@ -173,7 +173,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4352",
+							"id": "4388",
 							"uri": "http://proxy/computeMetadata/v1/",
 							"nodeName": "http:\/\/proxy\/computeMetadata\/v1\/ ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -183,7 +183,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4336",
+							"id": "4380",
 							"uri": "http://proxy/latest/meta-data/",
 							"nodeName": "http:\/\/proxy\/latest\/meta-data\/ ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -193,7 +193,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4441",
+							"id": "4493",
 							"uri": "http://proxy/metadata/instance",
 							"nodeName": "http:\/\/proxy\/metadata\/instance ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -203,7 +203,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4450",
+							"id": "4506",
 							"uri": "http://proxy/metadata/v1",
 							"nodeName": "http:\/\/proxy\/metadata\/v1 ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -213,7 +213,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4387",
+							"id": "4412",
 							"uri": "http://proxy/opc/v1/instance/",
 							"nodeName": "http:\/\/proxy\/opc\/v1\/instance\/ ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -223,7 +223,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4405",
+							"id": "4432",
 							"uri": "http://proxy/opc/v2/instance/",
 							"nodeName": "http:\/\/proxy\/opc\/v2\/instance\/ ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -233,7 +233,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4467",
+							"id": "4527",
 							"uri": "http://proxy/openstack/latest/meta_data.json",
 							"nodeName": "http:\/\/proxy\/openstack\/latest\/meta_data.json ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -263,9 +263,9 @@
 					"desc": "<p>A response code of 404 was returned by the server.</p><p>This may indicate that the application is failing to handle unexpected input correctly.</p><p>Raised by the 'Alert on HTTP Response Code Error' script</p>",
 					"instances":[ 
 						{
-							"id": "20",
-							"uri": "http://proxy/5694922182160656241",
-							"nodeName": "http:\/\/proxy\/5694922182160656241",
+							"id": "21",
+							"uri": "http://proxy/7807945847357679246",
+							"nodeName": "http:\/\/proxy\/7807945847357679246",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -273,7 +273,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "34",
+							"id": "35",
 							"uri": "http://proxy/api",
 							"nodeName": "http:\/\/proxy\/api",
 							"method": "GET",
@@ -283,7 +283,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5884",
+							"id": "5930",
 							"uri": "http://proxy/api/",
 							"nodeName": "http:\/\/proxy\/api\/",
 							"method": "GET",
@@ -293,9 +293,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "22",
-							"uri": "http://proxy/api/5951075786938192027",
-							"nodeName": "http:\/\/proxy\/api\/5951075786938192027",
+							"id": "23",
+							"uri": "http://proxy/api/236046664197259923",
+							"nodeName": "http:\/\/proxy\/api\/236046664197259923",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -303,7 +303,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "6734",
+							"id": "6781",
 							"uri": "http://proxy/api/actuator/health",
 							"nodeName": "http:\/\/proxy\/api\/actuator\/health",
 							"method": "GET",
@@ -313,7 +313,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "36",
+							"id": "42",
 							"uri": "http://proxy/api/appointments",
 							"nodeName": "http:\/\/proxy\/api\/appointments",
 							"method": "GET",
@@ -324,7 +324,7 @@
 						},
 						{
 							"id": "0",
-							"uri": "http://proxy/api/appointments?doctorId=392ea5bb-f0c8-4406-a2ec-deab4a10d023&date=2026-11-09",
+							"uri": "http://proxy/api/appointments?doctorId=60e6aed2-eb70-427e-89ee-48b9d07d1a38&date=2026-11-09",
 							"nodeName": "http:\/\/proxy\/api\/appointments (date,doctorId)",
 							"method": "GET",
 							"param": "",
@@ -333,7 +333,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5887",
+							"id": "5934",
 							"uri": "http://proxy/api/appointments/",
 							"nodeName": "http:\/\/proxy\/api\/appointments\/",
 							"method": "GET",
@@ -343,9 +343,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "23",
-							"uri": "http://proxy/api/appointments/3167093378537909673",
-							"nodeName": "http:\/\/proxy\/api\/appointments\/3167093378537909673",
+							"id": "24",
+							"uri": "http://proxy/api/appointments/2105434368773693207",
+							"nodeName": "http:\/\/proxy\/api\/appointments\/2105434368773693207",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -354,7 +354,7 @@
 						},
 						{
 							"id": "4",
-							"uri": "http://proxy/api/appointments/consultable?patientId=4d5620b7-78e4-49ca-baf5-bc3a72181ed7",
+							"uri": "http://proxy/api/appointments/consultable?patientId=e56b325f-750b-4671-b7a0-aecf3b89b4f1",
 							"nodeName": "http:\/\/proxy\/api\/appointments\/consultable (patientId)",
 							"method": "GET",
 							"param": "",
@@ -363,7 +363,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5890",
+							"id": "5936",
 							"uri": "http://proxy/api/appointments/consultable/",
 							"nodeName": "http:\/\/proxy\/api\/appointments\/consultable\/",
 							"method": "GET",
@@ -383,7 +383,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5888",
+							"id": "5937",
 							"uri": "http://proxy/api/appointments/me/",
 							"nodeName": "http:\/\/proxy\/api\/appointments\/me\/",
 							"method": "GET",
@@ -393,7 +393,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "48",
+							"id": "51",
 							"uri": "http://proxy/api/audit?take=http%3A%2F%2Fwww.google.com%2F",
 							"nodeName": "http:\/\/proxy\/api\/audit (take)",
 							"method": "GET",
@@ -403,7 +403,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "53",
+							"id": "47",
 							"uri": "http://proxy/api/auth",
 							"nodeName": "http:\/\/proxy\/api\/auth",
 							"method": "GET",
@@ -413,7 +413,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5892",
+							"id": "5939",
 							"uri": "http://proxy/api/auth/",
 							"nodeName": "http:\/\/proxy\/api\/auth\/",
 							"method": "GET",
@@ -423,19 +423,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "24",
-							"uri": "http://proxy/api/auth/2113920596850319912",
-							"nodeName": "http:\/\/proxy\/api\/auth\/2113920596850319912",
-							"method": "GET",
-							"param": "",
-							"attack": "",
-							"evidence": "404",
-							"otherinfo": ""
-						},
-						{
 							"id": "25",
-							"uri": "http://proxy/api/doctors/2271184182237371143",
-							"nodeName": "http:\/\/proxy\/api\/doctors\/2271184182237371143",
+							"uri": "http://proxy/api/auth/2053355430226296591",
+							"nodeName": "http:\/\/proxy\/api\/auth\/2053355430226296591",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -444,8 +434,8 @@
 						},
 						{
 							"id": "26",
-							"uri": "http://proxy/api/doctors/392ea5bb-f0c8-4406-a2ec-deab4a10d023/8749583156176495196",
-							"nodeName": "http:\/\/proxy\/api\/doctors\/392ea5bb-f0c8-4406-a2ec-deab4a10d023\/8749583156176495196",
+							"uri": "http://proxy/api/doctors/227865069171250357",
+							"nodeName": "http:\/\/proxy\/api\/doctors\/227865069171250357",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -453,9 +443,19 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "6637",
-							"uri": "http://proxy/api/doctors/392ea5bb-f0c8-4406-a2ec-deab4a10d023/availability?=",
-							"nodeName": "http:\/\/proxy\/api\/doctors\/392ea5bb-f0c8-4406-a2ec-deab4a10d023\/availability",
+							"id": "27",
+							"uri": "http://proxy/api/doctors/60e6aed2-eb70-427e-89ee-48b9d07d1a38/8478449844556959618",
+							"nodeName": "http:\/\/proxy\/api\/doctors\/60e6aed2-eb70-427e-89ee-48b9d07d1a38\/8478449844556959618",
+							"method": "GET",
+							"param": "",
+							"attack": "",
+							"evidence": "404",
+							"otherinfo": ""
+						},
+						{
+							"id": "6687",
+							"uri": "http://proxy/api/doctors/60e6aed2-eb70-427e-89ee-48b9d07d1a38/availability?=",
+							"nodeName": "http:\/\/proxy\/api\/doctors\/60e6aed2-eb70-427e-89ee-48b9d07d1a38\/availability",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -463,9 +463,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "86",
-							"uri": "http://proxy/api/doctors/392ea5bb-f0c8-4406-a2ec-deab4a10d023/availability?date=http%3A%2F%2Fwww.google.com%2F",
-							"nodeName": "http:\/\/proxy\/api\/doctors\/392ea5bb-f0c8-4406-a2ec-deab4a10d023\/availability (date)",
+							"id": "64",
+							"uri": "http://proxy/api/doctors/60e6aed2-eb70-427e-89ee-48b9d07d1a38/availability?date=http%3A%2F%2Fwww.google.com%2F",
+							"nodeName": "http:\/\/proxy\/api\/doctors\/60e6aed2-eb70-427e-89ee-48b9d07d1a38\/availability (date)",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -473,9 +473,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5893",
-							"uri": "http://proxy/api/doctors/392ea5bb-f0c8-4406-a2ec-deab4a10d023/availability/",
-							"nodeName": "http:\/\/proxy\/api\/doctors\/392ea5bb-f0c8-4406-a2ec-deab4a10d023\/availability\/",
+							"id": "5940",
+							"uri": "http://proxy/api/doctors/60e6aed2-eb70-427e-89ee-48b9d07d1a38/availability/",
+							"nodeName": "http:\/\/proxy\/api\/doctors\/60e6aed2-eb70-427e-89ee-48b9d07d1a38\/availability\/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -493,7 +493,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5894",
+							"id": "5941",
 							"uri": "http://proxy/api/doctors/me/",
 							"nodeName": "http:\/\/proxy\/api\/doctors\/me\/",
 							"method": "GET",
@@ -503,9 +503,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "27",
-							"uri": "http://proxy/api/health/146384932946887738",
-							"nodeName": "http:\/\/proxy\/api\/health\/146384932946887738",
+							"id": "28",
+							"uri": "http://proxy/api/health/5578506085910642527",
+							"nodeName": "http:\/\/proxy\/api\/health\/5578506085910642527",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -513,7 +513,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "87",
+							"id": "66",
 							"uri": "http://proxy/api/labs",
 							"nodeName": "http:\/\/proxy\/api\/labs",
 							"method": "GET",
@@ -523,7 +523,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5899",
+							"id": "5943",
 							"uri": "http://proxy/api/labs/",
 							"nodeName": "http:\/\/proxy\/api\/labs\/",
 							"method": "GET",
@@ -533,9 +533,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "28",
-							"uri": "http://proxy/api/labs/3333632638976296235",
-							"nodeName": "http:\/\/proxy\/api\/labs\/3333632638976296235",
+							"id": "29",
+							"uri": "http://proxy/api/labs/911029935008735684",
+							"nodeName": "http:\/\/proxy\/api\/labs\/911029935008735684",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -553,7 +553,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5898",
+							"id": "5944",
 							"uri": "http://proxy/api/labs/patients/",
 							"nodeName": "http:\/\/proxy\/api\/labs\/patients\/",
 							"method": "GET",
@@ -563,7 +563,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "93",
+							"id": "74",
 							"uri": "http://proxy/api/labs/results",
 							"nodeName": "http:\/\/proxy\/api\/labs\/results",
 							"method": "GET",
@@ -583,7 +583,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5901",
+							"id": "5946",
 							"uri": "http://proxy/api/labs/results/",
 							"nodeName": "http:\/\/proxy\/api\/labs\/results\/",
 							"method": "GET",
@@ -593,9 +593,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "29",
-							"uri": "http://proxy/api/labs/results/7460403519017815421",
-							"nodeName": "http:\/\/proxy\/api\/labs\/results\/7460403519017815421",
+							"id": "30",
+							"uri": "http://proxy/api/labs/results/5169206896733632746",
+							"nodeName": "http:\/\/proxy\/api\/labs\/results\/5169206896733632746",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -613,7 +613,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5900",
+							"id": "5949",
 							"uri": "http://proxy/api/labs/results/me/",
 							"nodeName": "http:\/\/proxy\/api\/labs\/results\/me\/",
 							"method": "GET",
@@ -623,7 +623,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "103",
+							"id": "92",
 							"uri": "http://proxy/api/notifications",
 							"nodeName": "http:\/\/proxy\/api\/notifications",
 							"method": "GET",
@@ -643,7 +643,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5904",
+							"id": "5951",
 							"uri": "http://proxy/api/notifications/",
 							"nodeName": "http:\/\/proxy\/api\/notifications\/",
 							"method": "GET",
@@ -653,9 +653,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "30",
-							"uri": "http://proxy/api/notifications/4780200413775567750",
-							"nodeName": "http:\/\/proxy\/api\/notifications\/4780200413775567750",
+							"id": "31",
+							"uri": "http://proxy/api/notifications/1155462162824000985",
+							"nodeName": "http:\/\/proxy\/api\/notifications\/1155462162824000985",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -673,7 +673,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5906",
+							"id": "5950",
 							"uri": "http://proxy/api/notifications/unread-count/",
 							"nodeName": "http:\/\/proxy\/api\/notifications\/unread-count\/",
 							"method": "GET",
@@ -683,7 +683,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "288",
+							"id": "282",
 							"uri": "http://proxy/api/patients?q=q&page=http%3A%2F%2Fwww.google.com%2F&pageSize=20",
 							"nodeName": "http:\/\/proxy\/api\/patients (page,pageSize,q)",
 							"method": "GET",
@@ -693,9 +693,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "31",
-							"uri": "http://proxy/api/patients/3757248470909663458",
-							"nodeName": "http:\/\/proxy\/api\/patients\/3757248470909663458",
+							"id": "32",
+							"uri": "http://proxy/api/patients/405553947799440556",
+							"nodeName": "http:\/\/proxy\/api\/patients\/405553947799440556",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -703,9 +703,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "32",
-							"uri": "http://proxy/api/patients/4d5620b7-78e4-49ca-baf5-bc3a72181ed7/6059375507183244150",
-							"nodeName": "http:\/\/proxy\/api\/patients\/4d5620b7-78e4-49ca-baf5-bc3a72181ed7\/6059375507183244150",
+							"id": "33",
+							"uri": "http://proxy/api/patients/e56b325f-750b-4671-b7a0-aecf3b89b4f1/3105273156872792819",
+							"nodeName": "http:\/\/proxy\/api\/patients\/e56b325f-750b-4671-b7a0-aecf3b89b4f1\/3105273156872792819",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -714,8 +714,8 @@
 						},
 						{
 							"id": "6",
-							"uri": "http://proxy/api/patients/4d5620b7-78e4-49ca-baf5-bc3a72181ed7/consultations",
-							"nodeName": "http:\/\/proxy\/api\/patients\/4d5620b7-78e4-49ca-baf5-bc3a72181ed7\/consultations",
+							"uri": "http://proxy/api/patients/e56b325f-750b-4671-b7a0-aecf3b89b4f1/consultations",
+							"nodeName": "http:\/\/proxy\/api\/patients\/e56b325f-750b-4671-b7a0-aecf3b89b4f1\/consultations",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -723,9 +723,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5907",
-							"uri": "http://proxy/api/patients/4d5620b7-78e4-49ca-baf5-bc3a72181ed7/consultations/",
-							"nodeName": "http:\/\/proxy\/api\/patients\/4d5620b7-78e4-49ca-baf5-bc3a72181ed7\/consultations\/",
+							"id": "5953",
+							"uri": "http://proxy/api/patients/e56b325f-750b-4671-b7a0-aecf3b89b4f1/consultations/",
+							"nodeName": "http:\/\/proxy\/api\/patients\/e56b325f-750b-4671-b7a0-aecf3b89b4f1\/consultations\/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -734,8 +734,8 @@
 						},
 						{
 							"id": "15",
-							"uri": "http://proxy/api/patients/4d5620b7-78e4-49ca-baf5-bc3a72181ed7/lab-results",
-							"nodeName": "http:\/\/proxy\/api\/patients\/4d5620b7-78e4-49ca-baf5-bc3a72181ed7\/lab-results",
+							"uri": "http://proxy/api/patients/e56b325f-750b-4671-b7a0-aecf3b89b4f1/lab-results",
+							"nodeName": "http:\/\/proxy\/api\/patients\/e56b325f-750b-4671-b7a0-aecf3b89b4f1\/lab-results",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -743,9 +743,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5908",
-							"uri": "http://proxy/api/patients/4d5620b7-78e4-49ca-baf5-bc3a72181ed7/lab-results/",
-							"nodeName": "http:\/\/proxy\/api\/patients\/4d5620b7-78e4-49ca-baf5-bc3a72181ed7\/lab-results\/",
+							"id": "5955",
+							"uri": "http://proxy/api/patients/e56b325f-750b-4671-b7a0-aecf3b89b4f1/lab-results/",
+							"nodeName": "http:\/\/proxy\/api\/patients\/e56b325f-750b-4671-b7a0-aecf3b89b4f1\/lab-results\/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -754,8 +754,8 @@
 						},
 						{
 							"id": "9",
-							"uri": "http://proxy/api/patients/4d5620b7-78e4-49ca-baf5-bc3a72181ed7/prescriptions",
-							"nodeName": "http:\/\/proxy\/api\/patients\/4d5620b7-78e4-49ca-baf5-bc3a72181ed7\/prescriptions",
+							"uri": "http://proxy/api/patients/e56b325f-750b-4671-b7a0-aecf3b89b4f1/prescriptions",
+							"nodeName": "http:\/\/proxy\/api\/patients\/e56b325f-750b-4671-b7a0-aecf3b89b4f1\/prescriptions",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -763,9 +763,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5909",
-							"uri": "http://proxy/api/patients/4d5620b7-78e4-49ca-baf5-bc3a72181ed7/prescriptions/",
-							"nodeName": "http:\/\/proxy\/api\/patients\/4d5620b7-78e4-49ca-baf5-bc3a72181ed7\/prescriptions\/",
+							"id": "5956",
+							"uri": "http://proxy/api/patients/e56b325f-750b-4671-b7a0-aecf3b89b4f1/prescriptions/",
+							"nodeName": "http:\/\/proxy\/api\/patients\/e56b325f-750b-4671-b7a0-aecf3b89b4f1\/prescriptions\/",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -773,7 +773,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "18",
+							"id": "19",
 							"uri": "http://proxy/api/patients/me",
 							"nodeName": "http:\/\/proxy\/api\/patients\/me",
 							"method": "GET",
@@ -783,7 +783,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5910",
+							"id": "5954",
 							"uri": "http://proxy/api/patients/me/",
 							"nodeName": "http:\/\/proxy\/api\/patients\/me\/",
 							"method": "GET",
@@ -793,7 +793,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "144",
+							"id": "129",
 							"uri": "http://proxy/api/prescriptions",
 							"nodeName": "http:\/\/proxy\/api\/prescriptions",
 							"method": "GET",
@@ -803,7 +803,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5913",
+							"id": "5958",
 							"uri": "http://proxy/api/prescriptions/",
 							"nodeName": "http:\/\/proxy\/api\/prescriptions\/",
 							"method": "GET",
@@ -813,9 +813,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "33",
-							"uri": "http://proxy/api/prescriptions/5947787776864434606",
-							"nodeName": "http:\/\/proxy\/api\/prescriptions\/5947787776864434606",
+							"id": "34",
+							"uri": "http://proxy/api/prescriptions/2931355080490220390",
+							"nodeName": "http:\/\/proxy\/api\/prescriptions\/2931355080490220390",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -833,7 +833,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5912",
+							"id": "5959",
 							"uri": "http://proxy/api/prescriptions/me/",
 							"nodeName": "http:\/\/proxy\/api\/prescriptions\/me\/",
 							"method": "GET",
@@ -853,7 +853,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5875",
+							"id": "5923",
 							"uri": "http://proxy/api/appointments/",
 							"nodeName": "http:\/\/proxy\/api\/appointments\/ ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -863,7 +863,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "39",
+							"id": "43",
 							"uri": "http://proxy/api/auth/login",
 							"nodeName": "http:\/\/proxy\/api\/auth\/login ()({email,password})",
 							"method": "POST",
@@ -883,7 +883,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5895",
+							"id": "5960",
 							"uri": "http://proxy/api/auth/login/",
 							"nodeName": "http:\/\/proxy\/api\/auth\/login\/ ()({email,password})",
 							"method": "POST",
@@ -903,7 +903,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5880",
+							"id": "5922",
 							"uri": "http://proxy/api/consultations/",
 							"nodeName": "http:\/\/proxy\/api\/consultations\/ ()({appointmentId,reason,notes,diagnosis})",
 							"method": "POST",
@@ -913,7 +913,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "342",
+							"id": "340",
 							"uri": "http://proxy/api/doctors",
 							"nodeName": "http:\/\/proxy\/api\/doctors ()({fullName,specialty,phone,email})",
 							"method": "POST",
@@ -933,7 +933,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5876",
+							"id": "5925",
 							"uri": "http://proxy/api/labs/results/",
 							"nodeName": "http:\/\/proxy\/api\/labs\/results\/ ()({patientId,examType,performedOn,notes,parameters:[{name,value,unit,referenceRange}]})",
 							"method": "POST",
@@ -943,7 +943,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "238",
+							"id": "234",
 							"uri": "http://proxy/api/patients",
 							"nodeName": "http:\/\/proxy\/api\/patients ()({fullName,identificationNumber,birthDate,phone,email})",
 							"method": "POST",
@@ -953,7 +953,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "42",
+							"id": "18",
 							"uri": "http://proxy/api/patients",
 							"nodeName": "http:\/\/proxy\/api\/patients ()({fullName,identificationNumber,birthDate,phone,email})",
 							"method": "POST",
@@ -963,7 +963,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5877",
+							"id": "5927",
 							"uri": "http://proxy/api/patients/",
 							"nodeName": "http:\/\/proxy\/api\/patients\/ ()({fullName,identificationNumber,birthDate,phone,email})",
 							"method": "POST",
@@ -983,7 +983,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5879",
+							"id": "5924",
 							"uri": "http://proxy/api/prescriptions/",
 							"nodeName": "http:\/\/proxy\/api\/prescriptions\/ ()({consultationId,items:[{medication,dose,frequency,duration,instructions}]})",
 							"method": "POST",
@@ -993,7 +993,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4351",
+							"id": "4387",
 							"uri": "http://proxy/computeMetadata/v1/",
 							"nodeName": "http:\/\/proxy\/computeMetadata\/v1\/ ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -1003,7 +1003,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4335",
+							"id": "4379",
 							"uri": "http://proxy/latest/meta-data/",
 							"nodeName": "http:\/\/proxy\/latest\/meta-data\/ ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -1013,7 +1013,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4440",
+							"id": "4492",
 							"uri": "http://proxy/metadata/instance",
 							"nodeName": "http:\/\/proxy\/metadata\/instance ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -1023,7 +1023,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4448",
+							"id": "4504",
 							"uri": "http://proxy/metadata/v1",
 							"nodeName": "http:\/\/proxy\/metadata\/v1 ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -1033,7 +1033,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4385",
+							"id": "4411",
 							"uri": "http://proxy/opc/v1/instance/",
 							"nodeName": "http:\/\/proxy\/opc\/v1\/instance\/ ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -1043,7 +1043,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4404",
+							"id": "4431",
 							"uri": "http://proxy/opc/v2/instance/",
 							"nodeName": "http:\/\/proxy\/opc\/v2\/instance\/ ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -1053,7 +1053,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "4466",
+							"id": "4526",
 							"uri": "http://proxy/openstack/latest/meta_data.json",
 							"nodeName": "http:\/\/proxy\/openstack\/latest\/meta_data.json ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -1063,9 +1063,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "348",
-							"uri": "http://proxy/api/doctors/392ea5bb-f0c8-4406-a2ec-deab4a10d023",
-							"nodeName": "http:\/\/proxy\/api\/doctors\/392ea5bb-f0c8-4406-a2ec-deab4a10d023 ()({fullName,specialty,phone,email})",
+							"id": "357",
+							"uri": "http://proxy/api/doctors/60e6aed2-eb70-427e-89ee-48b9d07d1a38",
+							"nodeName": "http:\/\/proxy\/api\/doctors\/60e6aed2-eb70-427e-89ee-48b9d07d1a38 ()({fullName,specialty,phone,email})",
 							"method": "PUT",
 							"param": "",
 							"attack": "",
@@ -1073,9 +1073,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "44",
-							"uri": "http://proxy/api/doctors/392ea5bb-f0c8-4406-a2ec-deab4a10d023/schedule",
-							"nodeName": "http:\/\/proxy\/api\/doctors\/392ea5bb-f0c8-4406-a2ec-deab4a10d023\/schedule ()({days:[{}..],startTime,endTime})",
+							"id": "39",
+							"uri": "http://proxy/api/doctors/60e6aed2-eb70-427e-89ee-48b9d07d1a38/schedule",
+							"nodeName": "http:\/\/proxy\/api\/doctors\/60e6aed2-eb70-427e-89ee-48b9d07d1a38\/schedule ()({days:[{}..],startTime,endTime})",
 							"method": "PUT",
 							"param": "",
 							"attack": "",
@@ -1083,9 +1083,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "233",
-							"uri": "http://proxy/api/patients/4d5620b7-78e4-49ca-baf5-bc3a72181ed7",
-							"nodeName": "http:\/\/proxy\/api\/patients\/4d5620b7-78e4-49ca-baf5-bc3a72181ed7 ()({fullName,identificationNumber,birthDate,phone,email})",
+							"id": "252",
+							"uri": "http://proxy/api/patients/e56b325f-750b-4671-b7a0-aecf3b89b4f1",
+							"nodeName": "http:\/\/proxy\/api\/patients\/e56b325f-750b-4671-b7a0-aecf3b89b4f1 ()({fullName,identificationNumber,birthDate,phone,email})",
 							"method": "PUT",
 							"param": "",
 							"attack": "",
@@ -1093,9 +1093,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "19",
-							"uri": "http://proxy/api/patients/4d5620b7-78e4-49ca-baf5-bc3a72181ed7",
-							"nodeName": "http:\/\/proxy\/api\/patients\/4d5620b7-78e4-49ca-baf5-bc3a72181ed7 ()({fullName,identificationNumber,birthDate,phone,email})",
+							"id": "20",
+							"uri": "http://proxy/api/patients/e56b325f-750b-4671-b7a0-aecf3b89b4f1",
+							"nodeName": "http:\/\/proxy\/api\/patients\/e56b325f-750b-4671-b7a0-aecf3b89b4f1 ()({fullName,identificationNumber,birthDate,phone,email})",
 							"method": "PUT",
 							"param": "",
 							"attack": "",
@@ -1103,9 +1103,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "5878",
-							"uri": "http://proxy/api/patients/4d5620b7-78e4-49ca-baf5-bc3a72181ed7/",
-							"nodeName": "http:\/\/proxy\/api\/patients\/4d5620b7-78e4-49ca-baf5-bc3a72181ed7\/ ()({fullName,identificationNumber,birthDate,phone,email})",
+							"id": "5926",
+							"uri": "http://proxy/api/patients/e56b325f-750b-4671-b7a0-aecf3b89b4f1/",
+							"nodeName": "http:\/\/proxy\/api\/patients\/e56b325f-750b-4671-b7a0-aecf3b89b4f1\/ ()({fullName,identificationNumber,birthDate,phone,email})",
 							"method": "PUT",
 							"param": "",
 							"attack": "",
@@ -1133,7 +1133,7 @@
 					"desc": "<p>The given request has been identified as an authentication request. The 'Other Info' field contains a set of key=value lines which identify any relevant fields. If the request is in a context which has an Authentication Method set to \"Auto-Detect\" then this rule will change the authentication to match the request identified.</p>",
 					"instances":[ 
 						{
-							"id": "1135",
+							"id": "416",
 							"uri": "http://proxy/api/auth/login",
 							"nodeName": "http:\/\/proxy\/api\/auth\/login ()({email,password})",
 							"method": "POST",
@@ -1163,9 +1163,9 @@
 					"desc": "<p>The response contents are not storable by caching components such as proxy servers. If the response does not contain sensitive, personal or user-specific information, it may benefit from being stored and cached, to improve performance.</p>",
 					"instances":[ 
 						{
-							"id": "1180",
-							"uri": "http://proxy/api/appointments?doctorId=392ea5bb-f0c8-4406-a2ec-deab4a10d023&date=2026-11-09",
-							"nodeName": "http:\/\/proxy\/api\/appointments (date,doctorId)",
+							"id": "546",
+							"uri": "http://proxy/api/auth/me",
+							"nodeName": "http:\/\/proxy\/api\/auth\/me",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -1173,9 +1173,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "1178",
-							"uri": "http://proxy/api/patients/4d5620b7-78e4-49ca-baf5-bc3a72181ed7/prescriptions",
-							"nodeName": "http:\/\/proxy\/api\/patients\/4d5620b7-78e4-49ca-baf5-bc3a72181ed7\/prescriptions",
+							"id": "534",
+							"uri": "http://proxy/api/patients/e56b325f-750b-4671-b7a0-aecf3b89b4f1/consultations",
+							"nodeName": "http:\/\/proxy\/api\/patients\/e56b325f-750b-4671-b7a0-aecf3b89b4f1\/consultations",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -1183,9 +1183,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "1164",
-							"uri": "http://proxy/api/prescriptions/me",
-							"nodeName": "http:\/\/proxy\/api\/prescriptions\/me",
+							"id": "521",
+							"uri": "http://proxy/api/patients/e56b325f-750b-4671-b7a0-aecf3b89b4f1/prescriptions",
+							"nodeName": "http:\/\/proxy\/api\/patients\/e56b325f-750b-4671-b7a0-aecf3b89b4f1\/prescriptions",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -1193,7 +1193,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "1136",
+							"id": "531",
 							"uri": "http://proxy/api/appointments",
 							"nodeName": "http:\/\/proxy\/api\/appointments ()({doctorId,date,time,reason,patientId})",
 							"method": "POST",
@@ -1203,9 +1203,9 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "1152",
-							"uri": "http://proxy/api/auth/login",
-							"nodeName": "http:\/\/proxy\/api\/auth\/login ()({email,password})",
+							"id": "522",
+							"uri": "http://proxy/api/prescriptions",
+							"nodeName": "http:\/\/proxy\/api\/prescriptions ()({consultationId,items:[{medication,dose,frequency,duration,instructions}]})",
 							"method": "POST",
 							"param": "",
 							"attack": "",
@@ -1220,7 +1220,7 @@
 					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
 					"cweid": "524",
 					"wascid": "13",
-					"sourceid": "1"
+					"sourceid": "10"
 				}
 			]
 		}

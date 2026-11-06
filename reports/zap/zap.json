@@ -1,8 +1,8 @@
 {
 	"@programName": "ZAP",
 	"@version": "2.17.0",
-	"@generated": "Fri, 6 Nov 2026 20:02:24",
-	"created": "2026-11-06T20:02:24.281732317Z",
+	"@generated": "Fri, 6 Nov 2026 20:18:35",
+	"created": "2026-11-06T20:18:35.250637997Z",
 	"insights":[
 		{
 			"level": "Low",
@@ -50,7 +50,7 @@
 			"site": "http://proxy",
 			"key": "insight.endpoint.ctype.text/css",
 			"description": "Percentage of endpoints with content type text/css",
-			"statistic": "30"
+			"statistic": "27"
 		},
 		{
 			"level": "Info",
@@ -58,7 +58,7 @@
 			"site": "http://proxy",
 			"key": "insight.endpoint.ctype.text/html",
 			"description": "Percentage of endpoints with content type text/html",
-			"statistic": "60"
+			"statistic": "63"
 		},
 		{
 			"level": "Info",
@@ -74,7 +74,7 @@
 			"site": "http://proxy",
 			"key": "insight.endpoint.method.POST",
 			"description": "Percentage of endpoints with method POST",
-			"statistic": "10"
+			"statistic": "9"
 		},
 		{
 			"level": "Info",
@@ -82,7 +82,7 @@
 			"site": "http://proxy",
 			"key": "insight.endpoint.total",
 			"description": "Count of total endpoints",
-			"statistic": "10"
+			"statistic": "11"
 		},
 		{
 			"level": "Info",
@@ -175,7 +175,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "13",
+							"id": "15",
 							"uri": "http://proxy/Login?ReturnUrl=%2F",
 							"nodeName": "http:\/\/proxy\/Login (ReturnUrl)",
 							"method": "GET",
@@ -185,7 +185,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "17",
+							"id": "16",
 							"uri": "http://proxy/Login?ReturnUrl=%2F",
 							"nodeName": "http:\/\/proxy\/Login (ReturnUrl)(Input.Email,Input.Password,ReturnUrl,__RequestVerificationToken)",
 							"method": "POST",
@@ -225,7 +225,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "15",
+							"id": "18",
 							"uri": "http://proxy/Login?ReturnUrl=%2F",
 							"nodeName": "http:\/\/proxy\/Login (ReturnUrl)",
 							"method": "GET",
@@ -235,7 +235,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "18",
+							"id": "17",
 							"uri": "http://proxy/Login?ReturnUrl=%2F",
 							"nodeName": "http:\/\/proxy\/Login (ReturnUrl)(Input.Email,Input.Password,ReturnUrl,__RequestVerificationToken)",
 							"method": "POST",
@@ -265,7 +265,7 @@
 					"desc": "<p>The given request has been identified as an authentication request. The 'Other Info' field contains a set of key=value lines which identify any relevant fields. If the request is in a context which has an Authentication Method set to \"Auto-Detect\" then this rule will change the authentication to match the request identified.</p>",
 					"instances":[ 
 						{
-							"id": "10",
+							"id": "8",
 							"uri": "http://proxy/Login?ReturnUrl=%2F",
 							"nodeName": "http:\/\/proxy\/Login (ReturnUrl)(Input.Email,Input.Password,ReturnUrl,__RequestVerificationToken)",
 							"method": "POST",
@@ -295,7 +295,7 @@
 					"desc": "<p>Repeated GET requests: drop a different cookie each time, followed by normal request with all cookies to stabilize session, compare responses against original baseline GET. This can reveal areas where cookie based authentication/attributes are not actually enforced.</p>",
 					"instances":[ 
 						{
-							"id": "82",
+							"id": "84",
 							"uri": "http://proxy/Login",
 							"nodeName": "http:\/\/proxy\/Login",
 							"method": "GET",
@@ -305,7 +305,7 @@
 							"otherinfo": "Cookies that don't have expected effects can reveal flaws in application logic. In the worst case, this can reveal where authentication via cookie token(s) is not actually enforced.\nThese cookies affected the response: \nThese cookies did NOT affect the response: .AspNetCore.Mvc.CookieTempDataProvider,.AspNetCore.Antiforgery.dO4hVM2ZSqY\n"
 						},
 						{
-							"id": "85",
+							"id": "82",
 							"uri": "http://proxy/Login?ReturnUrl=%2F",
 							"nodeName": "http:\/\/proxy\/Login (ReturnUrl)",
 							"method": "GET",
@@ -316,18 +316,18 @@
 						},
 						{
 							"id": "83",
-							"uri": "http://proxy/css/app.jvve3v8y91.css",
-							"nodeName": "http:\/\/proxy\/css\/app.jvve3v8y91.css",
+							"uri": "http://proxy/css",
+							"nodeName": "http:\/\/proxy\/css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
 							"evidence": "",
-							"otherinfo": "Cookies that don't have expected effects can reveal flaws in application logic. In the worst case, this can reveal where authentication via cookie token(s) is not actually enforced.\nThese cookies affected the response: \nThese cookies did NOT affect the response: .AspNetCore.Antiforgery.dO4hVM2ZSqY\n"
+							"otherinfo": "Cookies that don't have expected effects can reveal flaws in application logic. In the worst case, this can reveal where authentication via cookie token(s) is not actually enforced.\nThese cookies affected the response: \nThese cookies did NOT affect the response: .AspNetCore.Mvc.CookieTempDataProvider\n"
 						},
 						{
-							"id": "84",
-							"uri": "http://proxy/css/style.hryy3gxenq.css",
-							"nodeName": "http:\/\/proxy\/css\/style.hryy3gxenq.css",
+							"id": "85",
+							"uri": "http://proxy/css/app.jvve3v8y91.css",
+							"nodeName": "http:\/\/proxy\/css\/app.jvve3v8y91.css",
 							"method": "GET",
 							"param": "",
 							"attack": "",
@@ -352,7 +352,7 @@
 					"reference": "<p>https://cwe.mitre.org/data/definitions/205.html</p>",
 					"cweid": "205",
 					"wascid": "45",
-					"sourceid": "3039"
+					"sourceid": "3040"
 				},
 				{
 					"pluginid": "10058",
@@ -371,7 +371,7 @@
 							"method": "GET",
 							"param": "",
 							"attack": "",
-							"evidence": "GET http://proxy/Login?Input.Email=foo-bar@example.com&Input.Password=ZAP&ReturnUrl=/&__RequestVerificationToken=CfDJ8MMefd28IodGnmXpDsTXzbzocChke6lTj6XgFamAnKsm1qOcMMIZbHYPzSOunsOFehMoNbeYui2CAKXrwDsZi3tzPumpz8P_l6smy63D4mCCgWp_j4Gso6o85yj73CVZPrB0_w2DeYMICelubg1fhig HTTP/1.1",
+							"evidence": "GET http://proxy/Login?Input.Email=foo-bar@example.com&Input.Password=ZAP&ReturnUrl=/&__RequestVerificationToken=CfDJ8CkOOVy8OGVImzFOcqVfe7oWXtcbJkMKJ4Fa7tv196YbuqAIdFpLz9HQceqnF6pr0fp_5EW-BVCntvDetCtNP11tDjcge8gEkOydGhMwM_41HiGHgBWm-pCtFyXMfLf2m3s20ZzTbxD-zlRDtHFdDbs HTTP/1.1",
 							"otherinfo": ""
 						}
 					],
@@ -415,7 +415,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "12",
+							"id": "13",
 							"uri": "http://proxy/Login?ReturnUrl=%2F",
 							"nodeName": "http:\/\/proxy\/Login (ReturnUrl)",
 							"method": "GET",
@@ -425,7 +425,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "16",
+							"id": "14",
 							"uri": "http://proxy/Login?ReturnUrl=%2F",
 							"nodeName": "http:\/\/proxy\/Login (ReturnUrl)(Input.Email,Input.Password,ReturnUrl,__RequestVerificationToken)",
 							"method": "POST",
@@ -505,7 +505,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "8",
+							"id": "10",
 							"uri": "http://proxy/css/appearance.02g59b7ua1.css",
 							"nodeName": "http:\/\/proxy\/css\/appearance.02g59b7ua1.css",
 							"method": "GET",
@@ -552,7 +552,7 @@
 					"reference": "<p>https://datatracker.ietf.org/doc/html/rfc7234</p><p>https://datatracker.ietf.org/doc/html/rfc7231</p><p>https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html</p>",
 					"cweid": "524",
 					"wascid": "13",
-					"sourceid": "17"
+					"sourceid": "16"
 				},
 				{
 					"pluginid": "10104",
@@ -565,7 +565,7 @@
 					"desc": "<p>Check for differences in response based on fuzzed User Agent (eg. mobile sites, access as a Search Engine Crawler). Compares the response statuscode and the hashcode of the response body with the original response.</p>",
 					"instances":[ 
 						{
-							"id": "25",
+							"id": "24",
 							"uri": "http://proxy",
 							"nodeName": "http:\/\/proxy",
 							"method": "GET",
@@ -595,7 +595,7 @@
 							"otherinfo": ""
 						},
 						{
-							"id": "24",
+							"id": "25",
 							"uri": "http://proxy/Login?ReturnUrl=%2F",
 							"nodeName": "http:\/\/proxy\/Login (ReturnUrl)",
 							"method": "GET",
@@ -622,7 +622,7 @@
 					"reference": "<p>https://owasp.org/www-project-web-security-testing-guide/</p>",
 					"cweid": "0",
 					"wascid": "0",
-					"sourceid": "2071"
+					"sourceid": "2068"
 				},
 				{
 					"pluginid": "10031",
@@ -635,7 +635,7 @@
 					"desc": "<p>This check looks at user-supplied input in query string parameters and POST data to identify where certain HTML attribute values might be controlled. This provides hot-spot detection for XSS (cross-site scripting) that will require further review by a security analyst to determine exploitability.</p>",
 					"instances":[ 
 						{
-							"id": "14",
+							"id": "12",
 							"uri": "http://proxy/Login?ReturnUrl=%2F",
 							"nodeName": "http:\/\/proxy\/Login (ReturnUrl)(Input.Email,Input.Password,ReturnUrl,__RequestVerificationToken)",
 							"method": "POST",
