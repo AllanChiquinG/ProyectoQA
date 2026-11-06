@@ -195,7 +195,7 @@ describe('Recepción · agenda y reserva', () => {
       cy.apiToken(RECEPCION).then((token) => {
         const reservar = (paciente, clave) => cy.api(token, 'POST', '/api/appointments', { patientId: paciente, doctorId: ctx.doctorId, date: FECHA, time: '11:00' });
         reservar(ctx.p0).then((a) => reservar(ctx.p1).then((b) => {
-          expect([a.status, b.status].sort()).to.deep.equal([201, 409]);
+          expect([a.status, b.status].sort((x, y) => x - y)).to.deep.equal([201, 409]);
         }));
         cy.api(token, 'GET', `/api/appointments?doctorId=${ctx.doctorId}&date=${FECHA}`).its('body').then((citas) => {
           expect(citas.filter((c) => c.time === '11:00' && c.status === 'Confirmed')).to.have.length(1);

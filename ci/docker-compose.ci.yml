@@ -1,0 +1,40 @@
+# Herramientas de CI locales: Jenkins y SonarQube. Secretos en ci/.env.ci (no se versiona).
+#   docker compose -p medicore-ci --env-file ci/.env.ci -f ci/docker-compose.ci.yml up -d --build
+# /var/jenkins_home es una ruta de la máquina de Docker: tiene la misma ruta en Jenkins y en los contenedores que Jenkins lanza,
+# así funcionan los bind mounts de los scripts.
+name: medicore-ci
+
+services:
+  sonarqube:
+    image: sonarqube:25.5.0.107428-community
+    environment:
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+    ports:
+      - "127.0.0.1:9000:9000"
+    volumes:
+      - sonar-data:/opt/sonarqube/data
+      - sonar-extensions:/opt/sonarqube/extensions
+    networks: [ci]
+
+  jenkins:
+    build: { context: .., dockerfile: ci/jenkins.Dockerfile }
+    user: root
+    environment:
+      JENKINS_ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD:?Define JENKINS_ADMIN_PASSWORD en ci/.env.ci}
+      SONAR_TOKEN: ${SONAR_TOKEN:-pendiente}
+      MEDICORE_BRANCH: ${MEDICORE_BRANCH:-Dev_Diego}
+    ports:
+      - "127.0.0.1:8090:8080"
+    volumes:
+      - /var/jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ..:/repo:ro
+    networks: [ci]
+
+volumes:
+  sonar-data:
+  sonar-extensions:
+
+networks:
+  ci:
+    name: medicore-ci
