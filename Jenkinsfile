@@ -69,6 +69,9 @@ pipeline {
         }
         stage('10. Deploy a QA') {
             steps {
+                // Datos limpios en cada corrida: k6 y ZAP dejan miles de registros ficticios.
+                sh 'docker network disconnect -f medicore-qa_edge "$(hostname)" 2>/dev/null || true'
+                sh 'QA_CONFIRM=medicore-qa bash scripts/qa.sh destroy'
                 sh 'bash scripts/qa.sh up'
                 sh 'bash scripts/qa.sh seed'
                 // Jenkins corre en un contenedor: entra a la red del proxy para llegar a QA.

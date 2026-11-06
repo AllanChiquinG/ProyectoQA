@@ -65,7 +65,9 @@ case "${1:-}" in
   destroy)
     need_env
     echo "Esto BORRA los volúmenes de QA (${project}_*): base de datos, Redis, RabbitMQ y claves. No toca los del desarrollo (medicore_*)."
-    read -r -p "Escribe el nombre del proyecto (${project}) para confirmar: " answer
+    # El pipeline confirma con QA_CONFIRM=medicore-qa: cada corrida parte de datos limpios.
+    answer="${QA_CONFIRM:-}"
+    [ -n "$answer" ] || read -r -p "Escribe el nombre del proyecto (${project}) para confirmar: " answer
     [ "$answer" = "$project" ] || { echo "Cancelado."; exit 1; }
     "${compose[@]}" down --remove-orphans --volumes
     ;;

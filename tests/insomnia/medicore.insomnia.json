@@ -439,7 +439,7 @@
       "created": 1762400000000,
       "isPrivate": false,
       "settingFollowRedirects": "global",
-      "preRequestScript": "const d = new Date(Date.now() + 10 * 86400000);\nwhile ([0, 6].includes(d.getUTCDay())) d.setUTCDate(d.getUTCDate() + 1);\ninsomnia.environment.set('booking_date', d.toISOString().slice(0, 10));\n",
+      "preRequestScript": "const d = new Date(Date.now() + (7 + Math.floor(Math.random() * 75)) * 86400000);\nwhile ([0, 6].includes(d.getUTCDay())) d.setUTCDate(d.getUTCDate() + 1);\ninsomnia.environment.set('booking_date', d.toISOString().slice(0, 10));\n",
       "afterResponseScript": "insomnia.test('Disponibilidad responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\ninsomnia.environment.set('slot', insomnia.response.json().slots.find(s => s.available).time);\n"
     },
     {

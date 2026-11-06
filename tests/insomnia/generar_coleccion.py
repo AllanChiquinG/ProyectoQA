@@ -60,7 +60,7 @@ def save(key, expression):
     return "insomnia.environment.set('%s', %s);\n" % (key, expression)
 
 
-NEXT_WEEKDAY = """const d = new Date(Date.now() + 10 * 86400000);
+NEXT_WEEKDAY = """const d = new Date(Date.now() + (7 + Math.floor(Math.random() * 75)) * 86400000);
 while ([0, 6].includes(d.getUTCDay())) d.setUTCDate(d.getUTCDate() + 1);
 insomnia.environment.set('booking_date', d.toISOString().slice(0, 10));
 """
