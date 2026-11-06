@@ -71,7 +71,9 @@ pipeline {
             steps {
                 sh 'bash scripts/qa.sh up'
                 sh 'bash scripts/qa.sh seed'
-                sh 'bash scripts/qa.sh smoke'
+                // Jenkins corre en un contenedor: entra a la red del proxy para llegar a QA.
+                sh 'docker network connect medicore-qa_edge "$(hostname)" 2>/dev/null || true'
+                sh 'QA_URL=http://proxy bash scripts/qa.sh smoke'
             }
         }
         stage('11. Pruebas API') {
