@@ -1,0 +1,100 @@
+[
+  {
+    "rol": "publico",
+    "pagina": "/Login",
+    "ruta": "/Login",
+    "aprobadas": 12,
+    "infracciones": []
+  },
+  {
+    "rol": "recepcion",
+    "pagina": "/",
+    "ruta": "/",
+    "aprobadas": 16,
+    "infracciones": []
+  },
+  {
+    "rol": "recepcion",
+    "pagina": "/Pacientes",
+    "ruta": "/Pacientes",
+    "aprobadas": 23,
+    "infracciones": []
+  },
+  {
+    "rol": "recepcion",
+    "pagina": "/Agenda",
+    "ruta": "/Agenda",
+    "aprobadas": 19,
+    "infracciones": []
+  },
+  {
+    "rol": "recepcion",
+    "pagina": "/Agenda/Reservar",
+    "ruta": "/Agenda/Reservar",
+    "aprobadas": 23,
+    "infracciones": []
+  },
+  {
+    "rol": "administrador",
+    "pagina": "/",
+    "ruta": "/",
+    "aprobadas": 16,
+    "infracciones": []
+  },
+  {
+    "rol": "administrador",
+    "pagina": "/Medicos",
+    "ruta": "/Medicos",
+    "aprobadas": 23,
+    "infracciones": []
+  },
+  {
+    "rol": "administrador",
+    "pagina": "/Usuarios",
+    "ruta": "/Usuarios",
+    "aprobadas": 20,
+    "infracciones": []
+  },
+  {
+    "rol": "medico",
+    "pagina": "/",
+    "ruta": "/",
+    "aprobadas": 16,
+    "infracciones": []
+  },
+  {
+    "rol": "medico",
+    "pagina": "/MiAgenda",
+    "ruta": "/MiAgenda",
+    "aprobadas": 18,
+    "infracciones": []
+  },
+  {
+    "rol": "medico",
+    "pagina": "/Pacientes",
+    "ruta": "/Pacientes",
+    "aprobadas": 23,
+    "infracciones": []
+  },
+  {
+    "rol": "laboratorio",
+    "pagina": "/",
+    "ruta": "/",
+    "aprobadas": 16,
+    "infracciones": []
+  },
+  {
+    "rol": "laboratorio",
+    "pagina": "/Laboratorio",
+    "ruta": "/Laboratorio",
+    "aprobadas": 23,
+    "infracciones": []
+  },
+  {
+    "rol": "laboratorio",
+    "pagina": "/Laboratorio/Registrar",
+    "ruta": "/Laboratorio/Registrar",
+    "aprobadas": 23,
+    "infracciones": []
+  }
+]

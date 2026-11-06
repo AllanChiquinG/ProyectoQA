@@ -28,6 +28,8 @@ describe('Administrador', () => {
   before(() => {
     cy.task('db:cleanE2eWebDoctors');
     cy.apiToken(ADMIN).then((t) => cy.api(t, 'GET', '/api/doctors').its('body').then((docs) => { ctx.colegaId = docs.find((d) => d.fullName === COLEGA).id; }));
+    // Estado conocido: la prueba 5 no debe depender de lo que dejó una corrida anterior.
+    cy.apiToken(ADMIN).then((t) => cy.api(t, 'PUT', `/api/doctors/${ctx.colegaId}/schedule`, { days: [0, 1, 2, 3, 4, 5, 6], startTime: '08:00', endTime: '12:00' }));
   });
 
   after(() => {

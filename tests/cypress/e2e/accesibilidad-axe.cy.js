@@ -1,7 +1,7 @@
 // Auditoría automática con axe-core de las pantallas por rol. Falla ante infracciones graves o críticas y guarda el detalle.
 const pantallas = {
   publico: { paginas: ['/Login'] },
-  recepcion: { correo: 'elena.vargas@example.com', paginas: ['/', '/Pacientes', '/Agenda', '/Citas/Nueva'] },
+  recepcion: { correo: 'elena.vargas@example.com', paginas: ['/', '/Pacientes', '/Agenda', '/Agenda/Reservar'] },
   administrador: { correo: 'admin@example.com', paginas: ['/', '/Medicos', '/Usuarios'] },
   medico: { correo: 'lucia.mendez@example.com', paginas: ['/', '/MiAgenda', '/Pacientes'] },
   laboratorio: { correo: 'daniela.reyes@example.com', paginas: ['/', '/Laboratorio', '/Laboratorio/Registrar'] },

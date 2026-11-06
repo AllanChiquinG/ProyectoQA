@@ -1,0 +1,595 @@
+[STARTED] [06:56:26]  Verifying Cypress can run /root/.cache/Cypress/16.2.0/Cypress
+[COMPLETED] [06:56:27]  Verified Cypress!       /root/.cache/Cypress/16.2.0/Cypress
+
+====================================================================================================
+
+  (Run Starting)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Cypress:        16.2.0                                                                         │
+  │ Browser:        Chrome 156 (headless)                                                          │
+  │ Node Version:   v24.22.1 (/usr/local/bin/node)                                                 │
+  │ Specs:          11 found (accesibilidad-axe.cy.js, acceso-permisos.cy.js, administrador.cy.js, │
+  │                  laboratorio-completo.cy.js, laboratorio-resultados.cy.js, medico-agenda.cy.js │
+  │                 , medico-expediente.cy.js, pantalla-pequena.cy.js, recepcion-agenda.cy.js, rec │
+  │                 epcion-pacientes.cy.js,...)                                                    │
+  │ Searched:       e2e/**/*.cy.js                                                                 │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  accesibilidad-axe.cy.js                                                        (1 of 11)
+
+
+  Accesibilidad con axe-core
+    ✓ publico: /Login (561ms)
+    ✓ recepcion: / (1282ms)
+    ✓ recepcion: /Pacientes (498ms)
+    ✓ recepcion: /Agenda (461ms)
+    ✓ recepcion: /Agenda/Reservar (363ms)
+    ✓ administrador: / (706ms)
+    ✓ administrador: /Medicos (1349ms)
+    ✓ administrador: /Usuarios (335ms)
+    ✓ medico: / (729ms)
+    ✓ medico: /MiAgenda (340ms)
+    ✓ medico: /Pacientes (355ms)
+    ✓ laboratorio: / (697ms)
+    ✓ laboratorio: /Laboratorio (307ms)
+    ✓ laboratorio: /Laboratorio/Registrar (295ms)
+
+
+  14 passing (8s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        14                                                                               │
+  │ Passing:      14                                                                               │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     8 seconds                                                                        │
+  │ Spec Ran:     accesibilidad-axe.cy.js                                                          │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  acceso-permisos.cy.js                                                          (2 of 11)
+
+
+  Acceso · inicio y cierre de sesión
+    ✓ 1. la pantalla de inicio de sesión tiene campos con etiqueta, está en español y no muestra datos ficticios (428ms)
+    ✓ 2. teclado: se escribe, se pasa con Tab del correo a la contraseña y al botón, y Enter envía el formulario (393ms)
+    ✓ 3. un formulario vacío o con correo inválido muestra un mensaje comprensible y no entra (450ms)
+    ✓ 4. credenciales incorrectas: el mismo mensaje con contraseña errónea o con un correo que no existe (no revela cuál falló) (1237ms)
+    ✓ 5. Recepcion: entra, ve su nombre y rol, su menú y sus accesos directos funcionan (806ms)
+    ✓ 5. Medico: entra, ve su nombre y rol, su menú y sus accesos directos funcionan (817ms)
+    ✓ 5. Laboratorio: entra, ve su nombre y rol, su menú y sus accesos directos funcionan (850ms)
+    ✓ 5. Administrador: entra, ve su nombre y rol, su menú y sus accesos directos funcionan (806ms)
+    ✓ 6. cerrar sesión vuelve al inicio de sesión y la sesión ya no sirve al regresar a una página protegida (885ms)
+    ✓ 7. una página protegida sin sesión pide iniciar sesión y, al entrar, regresa a esa página (535ms)
+    ✓ 8. un ReturnUrl externo no se sigue (no hay redirección abierta) (457ms)
+
+  Acceso · sesión vencida o revocada
+    ✓ 9. si desaparece la cookie de sesión, la siguiente pantalla pide iniciar sesión de nuevo (773ms)
+    ✓ 10. si el administrador cambia el rol de la persona, su sesión se revoca y la web le pide volver a entrar (1312ms)
+
+  Permisos por rol (web y API)
+    ✓ 11. Recepcion: abre sus pantallas y las que no le corresponden muestran "Acceso restringido" (1051ms)
+    ✓ 11. Medico: abre sus pantallas y las que no le corresponden muestran "Acceso restringido" (1035ms)
+    ✓ 11. Laboratorio: abre sus pantallas y las que no le corresponden muestran "Acceso restringido" (1038ms)
+    ✓ 11. Administrador: abre sus pantallas y las que no le corresponden muestran "Acceso restringido" (1062ms)
+    ✓ 12. la API rechaza por rol aunque se conozca la dirección: 401 sin sesión y 403 al rol equivocado (1503ms)
+    ✓ 13. restricción por recurso: un médico sin relación de atención no abre el expediente de un paciente ajeno (404, sin confirmar que existe) (1021ms)
+
+
+  19 passing (17s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        19                                                                               │
+  │ Passing:      19                                                                               │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  6                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     16 seconds                                                                       │
+  │ Spec Ran:     acceso-permisos.cy.js                                                            │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Screenshots)
+
+  -  /repo/reports/cypress/screenshots/acceso-permisos.cy.js/40-login.png                 (1280x633)
+  -  /repo/reports/cypress/screenshots/acceso-permisos.cy.js/41-login-incorrecto.png      (1280x633)
+  -  /repo/reports/cypress/screenshots/acceso-permisos.cy.js/42-inicio-Recepcion.png      (1280x633)
+  -  /repo/reports/cypress/screenshots/acceso-permisos.cy.js/42-inicio-Medico.png         (1280x633)
+  -  /repo/reports/cypress/screenshots/acceso-permisos.cy.js/42-inicio-Laboratorio.pn     (1280x633)
+     g                                                                                              
+  -  /repo/reports/cypress/screenshots/acceso-permisos.cy.js/42-inicio-Administrador.     (1280x633)
+     png                                                                                            
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  administrador.cy.js                                                            (3 of 11)
+
+
+  Administrador
+    Médicos
+      ✓ 1. lista, busca (por nombre), muestra "sin resultados" y conserva la búsqueda (1446ms)
+      ✓ 2. valida el registro: campos vacíos, correo y teléfono inválidos, sin guardar (1213ms)
+      ✓ 3. registra un médico, aparece en la lista y se conserva al recargar (1182ms)
+      ✓ 4. edita al médico (datos precargados), Cancelar no guarda y Guardar persiste el cambio (1030ms)
+    Disponibilidad
+      ✓ 5. muestra el horario actual y valida horas (519ms)
+      ✓ 6. cambiar días y horas se refleja en la reserva (martes y jueves 09:00 a 10:30) (1316ms)
+    Usuarios y roles
+      ✓ 7. lista a las personas con su rol; la cuenta propia no se puede cambiar (91ms)
+      ✓ 8. cambia el rol de una cuenta, avisa del cierre de sus sesiones y el nuevo rol se aplica; se restaura (1168ms)
+      ✓ 9. Recepción no entra a Médicos ni a Usuarios (321ms)
+    Pantalla pequeña
+      ✓ 10. médicos, formulario, disponibilidad y usuarios no desbordan a 375 px (448ms)
+
+
+  10 passing (9s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        10                                                                               │
+  │ Passing:      10                                                                               │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  2                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     9 seconds                                                                        │
+  │ Spec Ran:     administrador.cy.js                                                              │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Screenshots)
+
+  -  /repo/reports/cypress/screenshots/administrador.cy.js/51-medico-validacion.png       (1280x633)
+  -  /repo/reports/cypress/screenshots/administrador.cy.js/52-usuarios-movil.png           (375x633)
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  laboratorio-completo.cy.js                                                     (4 of 11)
+
+
+  Laboratorio · listado, registro y detalle
+    Listado
+      ✓ 1. busca por examen y por paciente, informa el total y avisa cuando no hay resultados (2846ms)
+      ✓ 2. pagina de 20 en 20 conservando la búsqueda (Anterior y Siguiente) (243ms)
+      ✓ 3. "Ver resultado" abre el detalle con los parámetros y "Volver" regresa al listado (257ms)
+    Registro
+      ✓ 4. valida paciente, examen, fecha y parámetro; una fecha futura se rechaza con un mensaje claro (1054ms)
+      ✓ 5. el filtro de pacientes acota la lista; sin coincidencias solo queda "Selecciona un paciente…" (511ms)
+      ✓ 6. permite hasta 10 parámetros y quitar los que sobran; con uno solo no se puede quitar (1042ms)
+    Notificación pendiente
+      ✓ 7. un resultado sin notificación se ve "Pendiente" y "Reintentar notificación" la reprograma (285ms)
+    Pantalla pequeña
+      ✓ 8. listado, registro y detalle no desbordan a 375 px (391ms)
+
+
+  8 passing (7s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        8                                                                                │
+  │ Passing:      8                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  1                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     6 seconds                                                                        │
+  │ Spec Ran:     laboratorio-completo.cy.js                                                       │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Screenshots)
+
+  -  /repo/reports/cypress/screenshots/laboratorio-completo.cy.js/55-laboratorio-movi      (375x633)
+     l.png                                                                                          
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  laboratorio-resultados.cy.js                                                   (5 of 11)
+
+
+  Laboratorio · registrar, consultar y notificar un resultado
+    Laboratorio
+      ✓ 1. inicia sesión como Laboratorio y abre "Resultados de laboratorio" desde el menú (1201ms)
+      ✓ 2. no guarda un resultado incompleto y muestra los errores (338ms)
+      ✓ 3. registra un resultado con dos parámetros escribiendo en el formulario (1986ms)
+      ✓ 4. la notificación al paciente se genera de forma asíncrona y pasa a "enviada" (1300ms)
+      ✓ 5. el listado muestra el resultado con su notificación "Enviada" y permite buscarlo (527ms)
+    Médico (expediente)
+      ✓ 6. el médico con relación de atención ve el resultado en la pestaña Laboratorio y abre su detalle (845ms)
+      ✓ 7. un médico sin relación de atención no ve el resultado (404, sin confirmar que existe) (657ms)
+    Otros roles
+      ✓ 8. Recepción no tiene acceso a los resultados de laboratorio (607ms)
+
+
+  8 passing (8s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        8                                                                                │
+  │ Passing:      8                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  7                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     7 seconds                                                                        │
+  │ Spec Ran:     laboratorio-resultados.cy.js                                                     │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Screenshots)
+
+  -  /repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/30-laboratorio-re     (1280x633)
+     sultados.png                                                                                   
+  -  /repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/31-laboratorio-er     (1280x633)
+     rores.png                                                                                      
+  -  /repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/32-laboratorio-fo     (1280x633)
+     rmulario.png                                                                                   
+  -  /repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/33-laboratorio-de     (1280x633)
+     talle-enviada.png                                                                              
+  -  /repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/34-laboratorio-li     (1280x633)
+     stado.png                                                                                      
+  -  /repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/35-medico-detalle     (1280x633)
+     -resultado.png                                                                                 
+  -  /repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/36-medico-sin-rel     (1280x633)
+     acion.png                                                                                      
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  medico-agenda.cy.js                                                            (6 of 11)
+
+
+  Médico · agenda, pacientes autorizados y receta
+    Mi agenda
+      ✓ 1. muestra solo su agenda del día con las citas, el contador, el calendario y sin opciones de reserva (1582ms)
+      ✓ 2. cambia de día con la fecha y con el calendario; un día sin citas y un día pasado lo dicen (1184ms)
+      ✓ 3. "Abrir expediente" desde la cita lleva al expediente del paciente correcto (173ms)
+    Pacientes autorizados
+      ✓ 4. lista solo a los pacientes con relación de atención, sin "Registrar paciente", y busca (524ms)
+      ✓ 5. un paciente sin relación no se abre (404) y el médico no entra al alta ni a la edición de pacientes (156ms)
+    Expediente y receta
+      ✓ 6. las pestañas se recorren con el teclado y la pestaña activa queda marcada (166ms)
+      ✓ 7. la receta valida los campos obligatorios, permite hasta 10 medicamentos y conserva lo escrito (2877ms)
+    Pantalla pequeña
+      ✓ 8. mi agenda, pacientes y expediente no desbordan a 375 px (373ms)
+
+
+  8 passing (7s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        8                                                                                │
+  │ Passing:      8                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  2                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     7 seconds                                                                        │
+  │ Spec Ran:     medico-agenda.cy.js                                                              │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Screenshots)
+
+  -  /repo/reports/cypress/screenshots/medico-agenda.cy.js/53-mi-agenda.png               (1280x633)
+  -  /repo/reports/cypress/screenshots/medico-agenda.cy.js/54-mi-agenda-movil.png          (375x633)
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  medico-expediente.cy.js                                                        (7 of 11)
+
+
+  Médicos · expediente compartido, consulta y receta
+    Médico autor
+      ✓ 1. inicia sesión como Médico y ve en su agenda la cita del paciente (2592ms)
+      ✓ 2. abre el expediente desde la agenda y recorre las secciones vacías (consultas, recetas y laboratorio) (650ms)
+      ✓ 3. no guarda una consulta incompleta y muestra los errores (446ms)
+      ✓ 4 y 5. registra la consulta, crea una receta con dos medicamentos y la consulta (2641ms)
+      ✓ 6. el expediente muestra la consulta y la receta, y la receta se abre desde su tarjeta (442ms)
+      ✓ 7. la cita ya tiene consulta: no se puede registrar otra (76ms)
+      ✓ 8. un paciente sin cita ni consulta con este médico no se puede abrir (281ms)
+    Médico colega (expediente compartido)
+      ✓ 9. el colega con una cita con el paciente lee la consulta y la receta de otro médico, marcadas como ajenas (1076ms)
+      ✓ 10. el colega no puede crear una receta sobre la consulta de otro: ni por la pantalla ni por la API (405ms)
+      ✓ 11. sin una relación válida el colega ya no accede al expediente (448ms)
+
+
+  10 passing (9s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        10                                                                               │
+  │ Passing:      10                                                                               │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  12                                                                               │
+  │ Video:        false                                                                            │
+  │ Duration:     9 seconds                                                                        │
+  │ Spec Ran:     medico-expediente.cy.js                                                          │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Screenshots)
+
+  -  /repo/reports/cypress/screenshots/medico-expediente.cy.js/10-medico-mi-agenda.pn     (1280x633)
+     g                                                                                              
+  -  /repo/reports/cypress/screenshots/medico-expediente.cy.js/11-expediente-consulta     (1280x633)
+     s.png                                                                                          
+  -  /repo/reports/cypress/screenshots/medico-expediente.cy.js/12-expediente-laborato     (1280x633)
+     rio-vacio.png                                                                                  
+  -  /repo/reports/cypress/screenshots/medico-expediente.cy.js/13-consulta-con-errore     (1280x633)
+     s.png                                                                                          
+  -  /repo/reports/cypress/screenshots/medico-expediente.cy.js/14-consulta-llena.png      (1280x633)
+  -  /repo/reports/cypress/screenshots/medico-expediente.cy.js/15-receta-dos-medicame     (1280x633)
+     ntos.png                                                                                       
+  -  /repo/reports/cypress/screenshots/medico-expediente.cy.js/16-detalle-de-receta.p     (1280x633)
+     ng                                                                                             
+  -  /repo/reports/cypress/screenshots/medico-expediente.cy.js/17-expediente-con-cons     (1280x633)
+     ulta.png                                                                                       
+  -  /repo/reports/cypress/screenshots/medico-expediente.cy.js/18-paciente-sin-relaci     (1280x633)
+     on.png                                                                                         
+  -  /repo/reports/cypress/screenshots/medico-expediente.cy.js/19-colega-lee-consulta     (1280x633)
+     -ajena.png                                                                                     
+  -  /repo/reports/cypress/screenshots/medico-expediente.cy.js/20-colega-lee-receta-a     (1280x633)
+     jena.png                                                                                       
+  -  /repo/reports/cypress/screenshots/medico-expediente.cy.js/21-colega-sin-relacion     (1280x633)
+     .png                                                                                           
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  pantalla-pequena.cy.js                                                         (8 of 11)
+
+
+  Pantalla pequeña (375 px)
+    ✓ 1. el inicio de sesión cabe y sus campos tienen etiqueta (143ms)
+    ✓ 2. Recepción: el inicio no desborda y el menú se puede recorrer (652ms)
+    ✓ 2. Administrador: el inicio no desborda y el menú se puede recorrer (567ms)
+    ✓ 2. Médico: el inicio no desborda y el menú se puede recorrer (575ms)
+    ✓ 2. Laboratorio: el inicio no desborda y el menú se puede recorrer (585ms)
+    ✓ 3. Recepción: pacientes y alta de paciente no desbordan y las etiquetas están completas (119ms)
+    ✓ 4. el aviso de acceso restringido cabe (104ms)
+
+
+  7 passing (3s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        7                                                                                │
+  │ Passing:      7                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  0                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     2 seconds                                                                        │
+  │ Spec Ran:     pantalla-pequena.cy.js                                                           │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  recepcion-agenda.cy.js                                                         (9 of 11)
+
+
+  Recepción · agenda y reserva
+    Agenda (WEB-02)
+      ✓ 1. muestra la fecha, el filtro de médico, el calendario y el aviso, y "Reservar cita" lleva al formulario con lo elegido (1529ms)
+      ✓ 2. los filtros funcionan: cambiar de médico, de fecha, un día del calendario y los meses anterior y siguiente (1422ms)
+      ✓ 3. un fin de semana sin atención lo dice, y un día pasado no ofrece horarios (165ms)
+      ✓ 4. un horario libre abre la reserva con médico, fecha y hora ya elegidos (171ms)
+    Reserva (WEB-03)
+      ✓ 5. valida: sin paciente y sin horario pide elegirlos, y conserva lo ya elegido (594ms)
+      ✓ 6. tiene etiquetas en todos los campos, el grupo de horarios con nombre y la duración informada (87ms)
+      ✓ 7. cambiar de médico o de fecha actualiza los horarios sin perder el paciente; un día sin atención no ofrece horarios (1241ms)
+      ✓ 8. reserva y abre el detalle; Volver a agenda regresa al día; cancelar libera el horario (758ms)
+    Prevención de doble reserva
+      ✓ 9. dos reservas al mismo horario (una tras otra; la concurrencia real la cubren las pruebas xUnit): solo una queda y la otra recibe 409 (284ms)
+      ✓ 10. pulsar dos veces "Confirmar cita" crea una sola cita (la reserva lleva una clave de idempotencia) (575ms)
+      ✓ 11. un horario ocupado aparece sin opción de elegirlo (deshabilitado) en la reserva (88ms)
+    Pantalla pequeña
+      ✓ 12. la agenda, la reserva y el detalle se adaptan a 375 px sin desbordar; el menú sigue disponible (334ms)
+
+
+  12 passing (8s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        12                                                                               │
+  │ Passing:      12                                                                               │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  3                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     7 seconds                                                                        │
+  │ Spec Ran:     recepcion-agenda.cy.js                                                           │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Screenshots)
+
+  -  /repo/reports/cypress/screenshots/recepcion-agenda.cy.js/48-agenda.png               (1280x633)
+  -  /repo/reports/cypress/screenshots/recepcion-agenda.cy.js/49-reserva-validacion.p     (1280x633)
+     ng                                                                                             
+  -  /repo/reports/cypress/screenshots/recepcion-agenda.cy.js/50-agenda-movil.png          (375x633)
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  recepcion-pacientes.cy.js                                                     (10 of 11)
+
+
+  Recepción · pacientes
+    Lista y búsqueda (WEB-05)
+      ✓ 1. muestra el encabezado, el contador, las columnas y las acciones de Recepción (2080ms)
+      ✓ 2. busca por nombre (sin distinguir mayúsculas), por identificación y por parte del texto (865ms)
+      ✓ 3. una búsqueda sin resultados lo dice, y los caracteres especiales no rompen la pantalla (766ms)
+      ✓ 4. la paginación recorre las páginas, conserva la búsqueda y deshabilita lo que no aplica (698ms)
+    Registro (WEB-06)
+      ✓ 5. el formulario tiene etiquetas, marca los obligatorios, y el teclado recorre los campos en orden (111ms)
+      ✓ 6. un formulario vacío muestra los errores en español junto a cada campo y no guarda (330ms)
+      ✓ 7. valida correo, teléfono y fecha de nacimiento, y conserva lo que ya se escribió (959ms)
+      ✓ 8. registra un paciente, lo avisa y aparece en la lista; repetir la identificación se rechaza con un mensaje claro (2377ms)
+    Edición (WEB-06)
+      ✓ 9. abre el paciente desde la lista, cambia el teléfono y lo ve reflejado; Cancelar no guarda (1534ms)
+      ✓ 10. al editar, un dato inválido muestra el error y no cambia el registro (1055ms)
+      ✓ 11. un paciente que no existe en la dirección se informa con la página de "no encontrado" sin romper la pantalla (64ms)
+    Pantalla pequeña
+      ✓ 12. la lista y el formulario se adaptan a 375 px: sin desbordar la página y con el menú disponible (351ms)
+
+
+  12 passing (11s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        12                                                                               │
+  │ Passing:      12                                                                               │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  5                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     11 seconds                                                                       │
+  │ Spec Ran:     recepcion-pacientes.cy.js                                                        │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Screenshots)
+
+  -  /repo/reports/cypress/screenshots/recepcion-pacientes.cy.js/43-pacientes-lista.p     (1280x633)
+     ng                                                                                             
+  -  /repo/reports/cypress/screenshots/recepcion-pacientes.cy.js/44-pacientes-paginac     (1280x633)
+     ion.png                                                                                        
+  -  /repo/reports/cypress/screenshots/recepcion-pacientes.cy.js/45-paciente-errores.     (1280x633)
+     png                                                                                            
+  -  /repo/reports/cypress/screenshots/recepcion-pacientes.cy.js/46-paciente-duplicad     (1280x633)
+     o.png                                                                                          
+  -  /repo/reports/cypress/screenshots/recepcion-pacientes.cy.js/47-pacientes-movil.p      (375x633)
+     ng                                                                                             
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────
+                                                                                                    
+  Running:  recepcion-reserva.cy.js                                                       (11 of 11)
+
+
+  Recepción · reservar, consultar y cancelar citas
+    ✓ 1. inicia sesión como Recepción escribiendo en el formulario y pulsando el botón (1349ms)
+    ✓ 2 y 3. elige médico, fecha, paciente y horario, y confirma con el botón de la interfaz (3889ms)
+    ✓ 4. abre "Ver detalle" desde la agenda (1199ms)
+    ✓ 5a. cancelar: si se RECHAZA la confirmación, la cita se conserva (1291ms)
+    ✓ 5b. cancelar: si se ACEPTA la confirmación, la cita se cancela (392ms)
+    ✓ 6. el horario cancelado vuelve a estar disponible (1348ms)
+    ✓ 7. un conflicto de horario muestra el aviso y conserva lo ingresado (811ms)
+    ✓ 8. cambia de mes en el calendario (1666ms)
+
+
+  8 passing (12s)
+
+
+  (Results)
+
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ Tests:        8                                                                                │
+  │ Passing:      8                                                                                │
+  │ Failing:      0                                                                                │
+  │ Pending:      0                                                                                │
+  │ Skipped:      0                                                                                │
+  │ Screenshots:  8                                                                                │
+  │ Video:        false                                                                            │
+  │ Duration:     12 seconds                                                                       │
+  │ Spec Ran:     recepcion-reserva.cy.js                                                          │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+
+
+  (Screenshots)
+
+  -  /repo/reports/cypress/screenshots/recepcion-reserva.cy.js/01-sesion-recepcion.pn     (1280x633)
+     g                                                                                              
+  -  /repo/reports/cypress/screenshots/recepcion-reserva.cy.js/02-agenda-del-medico.p     (1280x633)
+     ng                                                                                             
+  -  /repo/reports/cypress/screenshots/recepcion-reserva.cy.js/03-formulario-de-reser     (1280x633)
+     va.png                                                                                         
+  -  /repo/reports/cypress/screenshots/recepcion-reserva.cy.js/04-cita-confirmada.png     (1280x633)
+  -  /repo/reports/cypress/screenshots/recepcion-reserva.cy.js/05-cita-cancelada.png      (1280x633)
+  -  /repo/reports/cypress/screenshots/recepcion-reserva.cy.js/06-horario-liberado.pn     (1280x633)
+     g                                                                                              
+  -  /repo/reports/cypress/screenshots/recepcion-reserva.cy.js/07-conflicto-de-horari     (1280x633)
+     o.png                                                                                          
+  -  /repo/reports/cypress/screenshots/recepcion-reserva.cy.js/08-calendario.png          (1280x633)
+
+
+====================================================================================================
+
+  (Run Finished)
+
+
+       Spec                                              Tests  Passing  Failing  Pending  Skipped  
+  ┌────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ ✔  accesibilidad-axe.cy.js                  00:08       14       14        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  acceso-permisos.cy.js                    00:16       19       19        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  administrador.cy.js                      00:09       10       10        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  laboratorio-completo.cy.js               00:06        8        8        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  laboratorio-resultados.cy.js             00:07        8        8        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  medico-agenda.cy.js                      00:07        8        8        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  medico-expediente.cy.js                  00:09       10       10        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  pantalla-pequena.cy.js                   00:02        7        7        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  recepcion-agenda.cy.js                   00:07       12       12        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  recepcion-pacientes.cy.js                00:11       12       12        -        -        - │
+  ├────────────────────────────────────────────────────────────────────────────────────────────────┤
+  │ ✔  recepcion-reserva.cy.js                  00:12        8        8        -        -        - │
+  └────────────────────────────────────────────────────────────────────────────────────────────────┘
+    ✔  All specs passed!                        01:39      116      116        -        -        -  
+
