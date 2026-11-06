@@ -277,12 +277,17 @@ El registro formal, con pasos, severidad y prioridad, está en [12-registro-de-d
 | HA-01 | Producto | axe encontró contraste insuficiente en el calendario. | Colores del diseño. | Colores en `app.css`. | 0 infracciones. |
 | HZ-01 | Producto | Un carácter nulo provocaba un error 500. | PostgreSQL rechaza NUL en texto. | `InvalidTextExceptionHandler` responde 400. | Prueba de regresión. |
 | HZ-02 | Producto | ZAP reportó cabeceras faltantes. | No estaban en Caddy. | Agregadas. | 0 fallas en ZAP. |
-| HZ-04 | Prueba | ZAP API recibía casi solo 401. | Probaba cerrar sesión y perdía la sesión. | Rutas de sesión excluidas. | Análisis con sesión, parcial en rutas clínicas. |
+| HZ-04 | Prueba | ZAP API recibía casi solo 401. | Probaba cerrar sesión y perdía la sesión. | Rutas de sesión excluidas. | Análisis con sesión; se completó en HZ-05. |
+| HZ-05 | Prueba | ZAP no llegaba a la lógica clínica. | Usaba solo Administrador, identificadores inventados y cuerpos que la API rechazaba. | Análisis por rol, con identificadores y cuerpos válidos. El orden importa: el análisis activo altera datos. | 40 de 45 operaciones alcanzadas, 0 errores 500. |
 | HC-01 | Producto | 7 archivos fallaban `dotnet format` en Jenkins. | La validación nunca se había ejecutado. | Formato aplicado. | Etapa 3 aprobada. |
 | HJ-01 | Entorno | Jenkins no tenía `docker`. | Debian separa el cliente en `docker-cli`. | Paquete correcto. | Corre etapas. |
 | HJ-02 | Entorno | El smoke fallaba en Jenkins. | `127.0.0.1` era el propio contenedor. | Jenkins entra a la red del proxy. | Etapa 10 aprobada. |
 | HJ-03 | Prueba | Insomnia falló en Jenkins sin horarios libres. | QA acumuló 761 médicos y 34 655 citas de k6 y ZAP. | QA se recrea en cada corrida y la fecha varía. | 65 de 65. |
 | HD-01 | Herramienta | Dependency-Check reportó 4 críticas. | Confundió bibliotecas cliente con servidores. | Revisadas y aceptadas con motivo. | Ver reporte de seguridad. |
+| H9-01 | Producto | QA no arrancaba tras reiniciar Docker. | Jenkins crea los contenedores con rutas de su workspace. | Archivos dentro de las imágenes. | `qa.sh smoke` correcto. |
+| H9-02 | Producto | Ansible fallaba en un Ubuntu mínimo. | Faltaba `python3-debian`. | Paquete agregado. | Dos pasadas sin fallas. |
+| H9-03 | Entorno | Los 8 flujos de Maestro fallaron a la vez. | La cortina de notificaciones del emulador tapaba la app. | Cortina cerrada antes de ejecutar. | 8 de 8. |
+| HJ-04 | Entorno | Jenkins perdió su historial al reiniciar Docker. | `/var/jenkins_home` vive en la VM de Docker Desktop. | Aceptado; las consolas están en `reports/jenkins/`. | Numeración reiniciada. |
 | HE-01 | Error propio | Se borraron capturas antiguas de Cypress que no estaban en Git (unos 9,7 MB). | Una limpieza con `rm -rf`. | No se pueden recuperar. Cypress genera capturas nuevas si una prueba falla. | Sin efecto en las pruebas. |
 
 ## Entregas anteriores

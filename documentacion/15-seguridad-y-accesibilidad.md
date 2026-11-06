@@ -61,9 +61,21 @@ Las 4 críticas se aceptaron en `ci/riesgos-aceptados.json`, con motivo:
 
 ## OWASP ZAP
 
-Se analizó la web con un escaneo activo acotado y la API con su contrato OpenAPI y una sesión real de administrador. El análisis excluye cerrar sesión, renovar sesión y cambiar roles, para no perder la sesión ni alterar las cuentas de prueba.
+Se analizó la web con un escaneo activo acotado. La API se analizó cinco veces con su contrato OpenAPI, una por rol: Laboratorio, Recepción, Médico, Paciente y Administrador. Cada análisis usa una sesión real, identificadores reales de QA y cuerpos válidos, para pasar la validación y llegar a la lógica clínica. Se excluyen cerrar sesión, renovar sesión y cambiar roles, para no perder la sesión ni alterar las cuentas de prueba.
 
-**Límite importante:** el administrador no tiene acceso clínico, y el token dura 15 minutos. Muchas rutas clínicas respondieron 401 o 403, así que esa parte del análisis es parcial.
+**Cobertura medida:** `reports/zap/cobertura-api.json` cuenta, con el registro del proxy, las respuestas por ruta y rol. 40 de las 45 operaciones del contrato respondieron con éxito al menos una vez, y ninguna petición produjo un error 500. Las 5 restantes son las 3 excluidas y las 2 rutas de salud, que no se cuentan en la medición.
+
+| Rol | Rutas probadas | Con respuesta exitosa | Errores 500 |
+|---|---|---|---|
+| Laboratorio | 87 | 13 | 0 |
+| Recepción | 84 | 15 | 0 |
+| Médico | 99 | 28 | 0 |
+| Paciente | 99 | 30 | 0 |
+| Administrador | 85 | 26 | 0 |
+
+Las rutas probadas incluyen variantes que genera ZAP, por eso superan a las del contrato.
+
+**Límite:** ZAP busca fallas técnicas conocidas. No demuestra que un usuario no pueda leer datos ajenos; eso lo cubren `ClinicalApiTests`, `LaboratoryApiTests` e Insomnia. QA corre sin HTTPS.
 
 | Alerta | Dónde | Decisión |
 |---|---|---|
@@ -85,7 +97,7 @@ Se analizó la web con un escaneo activo acotado y la API con su contrato OpenAP
 | Autorización por recurso | `ClinicalApiTests`, `LaboratoryApiTests`, Insomnia | Aprobado |
 | Datos sensibles | Pruebas de auditoría y bitácoras | Aprobado |
 | Sesiones | JWT de 15 minutos, refresco de un solo uso, bloqueo tras 5 intentos | Aprobado |
-| API Security | Validación, límite por IP, cabeceras, ZAP | Aprobado, ZAP parcial |
+| API Security | Validación, límite por IP, cabeceras, ZAP con 5 roles | Aprobado |
 | Trazabilidad | `audit_entries`, `GET /api/audit` | Aprobado |
 
 ## Accesibilidad
@@ -100,5 +112,4 @@ Se analizó la web con un escaneo activo acotado y la API con su contrato OpenAP
 
 1. Ejecutar Fortify si se consigue licencia. Es un entregable exigido.
 2. Revisar los 5 puntos de Terraform antes de aplicar en Azure.
-3. Repetir ZAP con usuarios clínicos sobre el ambiente HTTPS.
-4. Revisar los avisos de Redis y actualizar la imagen antes de producción.
+3. Revisar los avisos de Redis y actualizar la imagen antes de producción.

@@ -95,13 +95,13 @@ Para detener el broker, usa `medicore-qa-rabbitmq-1` en lugar del Worker. El res
 
 ## 5. Mostrar un hallazgo de ZAP
 
-1. Abre `reports/zap/zap-api.html`.
+1. Abre `reports/zap/zap-api-medico.html` y `reports/zap/cobertura-api.json`.
 2. Muestra que no hay alertas altas.
 3. Explica el defecto HZ-01: un carácter nulo en la búsqueda provocaba un error 500.
 4. Muestra la corrección en `src/MediCore.Api/Security/InvalidTextExceptionHandler.cs`.
 5. Muestra la prueba `Un_caracter_nulo_en_busqueda_o_en_datos_devuelve_400_y_no_500`.
 
-**Qué decir:** ZAP se ejecutó con una sesión real. Esa sesión tenía permisos de administrador, que no tiene acceso clínico, y por eso el análisis de rutas clínicas es parcial.
+**Qué decir:** ZAP se ejecutó con los 5 roles, con sesiones reales y datos válidos. Alcanzó 40 de las 45 operaciones del contrato, sin alertas altas ni errores 500. Las otras 5 están fuera a propósito. Antes el análisis era parcial porque usaba solo Administrador; lo corregimos y lo medimos.
 
 ## 6. Explicar el p95
 
@@ -125,13 +125,13 @@ bash scripts/qa.sh down
 bash scripts/qa.sh up
 ```
 
-Validación de Terraform y Ansible sin crear recursos:
+Ejecución de Terraform y Ansible sin Azure y sin costo (Ansible construye la aplicación, así que tarda varios minutos):
 
 ```bash
-bash scripts/validate-iac.sh
+bash scripts/iac-simulacion.sh all
 ```
 
-**Qué decir:** Azure es el último paso porque depende de la decisión de pago. El código está validado, pero nunca se ejecutó `terraform apply`. Los pasos están en `documentacion/06-infraestructura.md`.
+**Qué decir:** decidimos no usar recursos de pago, así que no hay despliegue real en Azure. Terraform recorrió aprovisionar, modificar y destruir con un proveedor simulado, y Ansible se aplicó en un Ubuntu desechable hasta dejar la aplicación funcionando. Eso prueba nuestro código, no la nube. La evidencia está en `documentacion/evidencias/iac-sin-costo.md`.
 
 ## 8. Justificar la decisión
 

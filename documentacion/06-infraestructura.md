@@ -1,6 +1,6 @@
 # MediCore · Contenedores e infraestructura de QA (entrega 8)
 
-Estado: **preparado y verificado en local; NO desplegado en Azure.** No se ejecutó `terraform apply`, no se creó ningún recurso de pago ni se publicó ningún servicio. El despliegue real espera la aprobación del plan y del costo de la sección 3.
+Estado: **ejecutado sin costo; NO desplegado en Azure.** El equipo decidió no usar recursos de pago. Terraform corrió con un proveedor simulado y Ansible sobre un Ubuntu desechable (`documentacion/evidencias/iac-sin-costo.md`). No se creó ningún recurso real. Si se decide pagar, hay que aprobar antes el plan y el costo de la sección 3.
 
 ## 1. Arquitectura
 
@@ -127,8 +127,9 @@ Detalle y resultados en `documentacion/evidencias/entrega-8-verificacion.md`. Re
 - Persistencia: datos, notificación asíncrona (worker + RabbitMQ) y volúmenes sobreviven a `restart` y a `down` + `up` sin borrar volúmenes.
 - Los puertos de PostgreSQL, Redis y RabbitMQ del ambiente QA no se publican.
 - La app Android (APK compilado contra `http://10.0.2.2:8080/`) se conectó al ambiente local en contenedores y los flujos Maestro pasaron (ver la evidencia).
-- Terraform (`fmt`, `init -backend=false`, `validate`), Ansible (sintaxis y `ansible-lint` perfil *production*), `hadolint` y `docker compose config` pasan: **eso valida archivos, no un despliegue en Azure.**
-- **No se ejecutó:** `terraform plan/apply` (requiere credenciales y suscripción de Azure), `ansible-playbook` contra un servidor real, HTTPS con certificado real, ni una prueba de la app contra un servidor en Internet.
+- Terraform (`fmt`, `init -backend=false`, `validate`), Ansible (sintaxis y `ansible-lint` perfil *production*), `hadolint` y `docker compose config` pasan.
+- `scripts/iac-simulacion.sh` ejecuta Terraform con proveedor simulado y aplica Ansible en un Ubuntu desechable: **prueba el código, no un despliegue en Azure.**
+- **No se ejecutó:** `terraform plan/apply` real (requiere suscripción de Azure), `ansible-playbook` por SSH contra una VM, HTTPS con certificado real, ni una prueba de la app contra un servidor en Internet.
 
 ## 6. Qué falta para probar el despliegue real en Azure
 1. Tu **aprobación** del plan y costo (sección 3) y una suscripción con crédito y cuota de la serie B.
@@ -137,7 +138,6 @@ Detalle y resultados en `documentacion/evidencias/entrega-8-verificacion.md`. Re
 4. Una clave SSH y tu IP de administración; el Vault de Ansible con contraseñas nuevas.
 5. Acceso al repositorio desde la VM (hoy `medicore_repo_url` es el repositorio de GitHub: si es privado hace falta una llave de despliegue de solo lectura).
 6. Compilar el APK con `-p:ApiBaseUrl=https://<fqdn>/` (la app solo permite HTTP hacia el emulador y localhost) y repetir los flujos Maestro contra Azure.
-7. Pendientes que no son de esta entrega y **siguen abiertos**: Jenkins (Jenkinsfile de 18 etapas y *quality gate*), SonarQube, Dependency-Check/npm audit/Fortify, OWASP ZAP sobre QA, y los entregables de QA (Cypress ampliado, Insomnia, k6/JMeter, plan de pruebas, matriz de riesgos, informe GO / NO-GO).
 
 ## 7. Mejoras anotadas
 - Registro de imágenes (GHCR o ACR) para no construir en la VM: lo traerá el pipeline de Jenkins.

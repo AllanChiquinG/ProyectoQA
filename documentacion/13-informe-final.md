@@ -1,6 +1,6 @@
 # MediCore · Informe final
 
-Corte: 2026-11-06, rama `Dev_Diego`. Los resultados son de la corrida 5 de Jenkins, salvo donde se indica otra fuente.
+Corte: 2026-11-06, rama `Dev_Diego`. Los resultados son de la corrida 7 de Jenkins, salvo donde se indica otra fuente.
 
 ## Conclusión
 
@@ -17,17 +17,18 @@ La decisión final corresponde al equipo.
 | Unitarias e integración | xUnit | 304 de 304 | 100 % | Cumple |
 | API | Insomnia | 61 solicitudes, 65 de 65 comprobaciones | 100 % | Cumple |
 | Web | Cypress, Chrome | 116 de 116 | 100 % | Cumple |
-| Móvil | Maestro | 8 de 8, antes de agregar los eventos | 5 a 8 flujos | **Repetir** |
+| Móvil | Maestro | 8 de 8 con el código final, en emulador contra QA | 5 a 8 flujos | Cumple |
 | Calidad | SonarQube | Puerta aprobada, 0 bugs, 74,2 % de cobertura | Puerta aprobada | Cumple |
 | SAST | Fortify | No ejecutado, sin licencia | Exigido | **Pendiente** |
 | SCA | npm audit y NuGet | 0 vulnerables | 0 críticas | Cumple |
 | SCA | Dependency-Check | 4 críticas, todas falsos positivos justificados | 0 sin aceptar | Cumple |
-| DAST | ZAP web y API | 0 alertas altas | 0 altas sin aceptar | Cumple, API parcial |
+| DAST | ZAP web y API con 5 roles | 0 alertas altas, 0 errores 500, 40 de 45 operaciones alcanzadas | 0 altas sin aceptar | Cumple |
 | Rendimiento | k6 | Umbrales cumplidos | Declarados antes | Cumple |
 | Accesibilidad | axe-core | 14 pantallas, 0 infracciones | 0 | Cumple |
 | Usabilidad | Prueba con personas | No aplicada | 5 participantes | **Pendiente** |
 | Pipeline | Jenkins | 18 etapas ejecutadas | Bloquea si falla | Cumple |
-| Nube | Terraform y Ansible | Validado, sin aplicar | Reproducible | **Pendiente** |
+| Infraestructura | Terraform y Ansible sin Azure | Terraform 3 de 3 con proveedor simulado; Ansible sin fallas en Ubuntu desechable | Reproducible | Cumple en simulación |
+| Nube | Azure | Sin desplegar: el equipo decidió no usar recursos de pago | Exigido | **Pendiente** |
 
 ### Rendimiento
 
@@ -43,12 +44,14 @@ No se alcanzó el punto de quiebre. k6, la API y la base de datos compartieron e
 
 ### Defectos
 
-Se registraron 22 defectos: 19 cerrados y 3 abiertos, ninguno crítico. Las pruebas de esta etapa encontraron defectos reales que las suites anteriores no veían:
+Se registraron 25 defectos: 21 cerrados y 4 abiertos, ninguno crítico. Las pruebas de esta etapa encontraron defectos reales que las suites anteriores no veían:
 
 - **k6:** el outbox acumuló 14 405 eventos pendientes después del pico.
 - **ZAP:** un carácter nulo provocaba un error 500.
 - **SonarQube:** rechazó código nuevo por duplicación y cobertura.
 - **axe:** el calendario no cumplía el contraste.
+- **Reinicio de Docker:** QA no volvía a arrancar si Jenkins lo había creado.
+- **Ansible:** el playbook no instalaba un paquete que necesitaba.
 
 ## Escenario crítico
 
@@ -93,10 +96,9 @@ Las consolas están en `reports/jenkins/`.
 | Bloqueo | Por qué importa | Quién lo resuelve |
 |---|---|---|
 | No hay respaldos automáticos (R-16) | Un sistema clínico no puede perder datos por una falla de disco | Equipo |
-| No hay despliegue en Azure (R-18) | QA en la nube no se ha demostrado | Equipo, tras decidir el pago |
+| No hay despliegue en Azure (R-18) | La ejecución sin costo no demuestra la nube real | Equipo, si decide pagar |
 | Usabilidad sin aplicar | Es un entregable exigido | Equipo, con 5 personas |
 | Fortify sin ejecutar | Es un entregable exigido | Equipo, con licencia |
-| Maestro sin repetir | Faltó probarlo después de agregar los eventos | Equipo, con emulador |
 
 ## Riesgos residuales
 
@@ -106,7 +108,7 @@ Las consolas están en `reports/jenkins/`.
 | Ambiente de nube sin aprovisionar (R-18) | Alto | Decidir el pago y seguir `06-infraestructura.md` |
 | Sin Redis no hay sesión (R-14) | Medio | Aceptado por seguridad. Vigilar el servicio |
 | Servidor único (R-17) | Medio | Aceptado para QA |
-| ZAP parcial en rutas clínicas | Medio | Repetir con usuarios clínicos y HTTPS |
+| ZAP sin HTTPS real | Bajo | Repetir sobre HTTPS si se despliega |
 | Puntos sensibles de Terraform | Medio | Revisar antes de aplicar |
 | Avisos de Redis 2026 | Medio | Revisar y actualizar la imagen |
 | Rendimiento medido en un solo equipo | Medio | Repetir en Azure |
@@ -117,7 +119,6 @@ Las consolas están en `reports/jenkins/`.
 MediCore puede pasar a GO cuando se cumpla todo esto:
 
 1. Respaldos configurados y una restauración probada.
-2. Maestro repetido con 8 de 8 flujos.
-3. Usabilidad con 5 personas, SUS de 68 o más y 80 % de tareas sin ayuda.
-4. Fortify ejecutado y sus hallazgos clasificados.
-5. QA desplegado en Azure, con ZAP y k6 repetidos allí.
+2. Usabilidad con 5 personas, SUS de 68 o más y 80 % de tareas sin ayuda.
+3. Fortify ejecutado y sus hallazgos clasificados.
+4. QA desplegado en Azure, con ZAP y k6 repetidos allí.

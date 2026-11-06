@@ -11,7 +11,7 @@ Plataforma hospitalaria: web del personal (Razor Pages), API (ASP.NET Core) y ap
 | Visual Studio 2022 17.14+ o 2026 | IDE (soporta `.slnx`) | opcional |
 | Docker Desktop | ambiente QA, pruebas y pipeline | necesario |
 | Workload MAUI + Android SDK | app móvil y Maestro | opcional |
-| Terraform, Ansible | infraestructura en Azure | opcional; la validación corre en contenedores |
+| Terraform, Ansible | infraestructura | opcional; la validación y la simulación corren en contenedores |
 
 ## Ejecutar
 
@@ -96,7 +96,7 @@ scripts/qa.sh smoke     # pruebas de humo de web y API
 scripts/qa.sh down      # conserva los volúmenes; "destroy" los borra (pide confirmación)
 ```
 
-La infraestructura de Azure (Terraform y Ansible) está **preparada y validada como archivos, no desplegada**: no se ha ejecutado `terraform apply` ni se ha creado ningún recurso; el plan y su costo esperan tu aprobación (sección 3 del documento). La app Android es un APK, no un servicio del Compose.
+La infraestructura de Azure (Terraform y Ansible) se **ejecutó sin costo, no en Azure**: `scripts/iac-simulacion.sh` usa un proveedor simulado y un Ubuntu desechable. No se creó ningún recurso real; el plan y su costo esperan aprobación (sección 3 del documento). La app Android es un APK, no un servicio del Compose.
 
 ## Agenda y citas
 
@@ -128,10 +128,10 @@ Docs/  Referencias/     documento del proyecto y diseño aprobado (solo lectura)
 | xUnit | 304/304 (48 unitarias, 50 móviles, 206 de integración) |
 | Insomnia | 65/65 comprobaciones en 61 solicitudes |
 | Cypress en Chrome | 116/116, incluidas 14 pantallas con axe |
-| Maestro | 8/8 antes de agregar eventos, falta repetir |
+| Maestro | 8/8 con el código final, en emulador contra QA |
 | k6 | Load, Stress y Spike dentro de umbrales, en equipo local |
 | SonarQube | Puerta aprobada, 0 bugs, 74,2 % de cobertura |
-| ZAP | 0 alertas altas en web y API; rutas clínicas parciales |
+| ZAP | 0 alertas altas en web y API con 5 roles; 40 de 45 operaciones alcanzadas |
 | Fortify | Sin ejecutar: falta licencia |
 | Usabilidad | Definida, sin aplicar a personas |
 
