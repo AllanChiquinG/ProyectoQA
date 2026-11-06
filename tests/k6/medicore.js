@@ -20,16 +20,18 @@ const perfiles = {
 };
 
 // Umbrales por perfil. Stress busca el límite: sus umbrales informan, no definen la salida.
+// reservas_creadas evita un falso aprobado: una corrida sin escrituras no prueba el escenario.
 const umbrales = {
-  smoke: { 'http_req_duration{tipo:lectura}': ['p(95)<800'], 'http_req_duration{tipo:reserva}': ['p(95)<1000'], error_inesperado: ['rate<0.01'] },
-  load: { 'http_req_duration{tipo:lectura}': ['p(95)<800'], 'http_req_duration{tipo:reserva}': ['p(95)<1000'], error_inesperado: ['rate<0.01'] },
-  stress: { error_inesperado: ['rate<0.05'] },
-  spike: { 'http_req_duration{tipo:lectura}': ['p(95)<2000'], 'http_req_duration{tipo:reserva}': ['p(95)<3000'], error_inesperado: ['rate<0.02'] },
+  smoke: { 'http_req_duration{tipo:lectura}': ['p(95)<800'], 'http_req_duration{tipo:reserva}': ['p(95)<1000'], error_inesperado: ['rate<0.01'], reservas_creadas: ['count>5'] },
+  load: { 'http_req_duration{tipo:lectura}': ['p(95)<800'], 'http_req_duration{tipo:reserva}': ['p(95)<1000'], error_inesperado: ['rate<0.01'], reservas_creadas: ['count>200'] },
+  stress: { 'http_req_duration{tipo:lectura}': ['p(95)<60000'], 'http_req_duration{tipo:reserva}': ['p(95)<60000'], error_inesperado: ['rate<0.05'], reservas_creadas: ['count>200'] },
+  spike: { 'http_req_duration{tipo:lectura}': ['p(95)<2000'], 'http_req_duration{tipo:reserva}': ['p(95)<3000'], error_inesperado: ['rate<0.02'], reservas_creadas: ['count>200'] },
 };
 
 export const options = {
   scenarios: { demanda: { executor: 'ramping-vus', startVUs: 1, stages: perfiles[PERFIL], gracefulRampDown: '20s', gracefulStop: '20s' } },
   thresholds: umbrales[PERFIL],
+  setupTimeout: '5m',
   summaryTrendStats: ['avg', 'med', 'p(90)', 'p(95)', 'p(99)', 'max'],
 };
 
@@ -42,22 +44,34 @@ function login(email) {
 export function setup() {
   const recepcion = login('elena.vargas@example.com');
   const medico = login('lucia.mendez@example.com');
-  const doctors = http.get(`${BASE}/api/doctors`, { headers: recepcion }).json();
-  const patients = [];
+  const admin = login('admin@example.com');
   const corrida = Date.now();
-  for (let i = 0; i < 40; i++) {
+  // Médicos propios de la corrida: una agenda ya llena dejaría al escenario sin reservas.
+  const doctorIds = [];
+  for (let i = 0; i < 30; i++) {
+    const r = http.post(`${BASE}/api/doctors`, JSON.stringify({
+      fullName: `Dr. Carga ${corrida} ${i}`, specialty: 'Carga', phone: '5555-1234', email: `doctor${i}.${corrida}@example.com`,
+    }), { headers: admin });
+    if (r.status !== 201) throw new Error(`No se pudo crear el médico: ${r.status} ${r.body}`);
+    const id = r.json('id');
+    const s = http.put(`${BASE}/api/doctors/${id}/schedule`, JSON.stringify({ days: [1, 2, 3, 4, 5], startTime: '08:00', endTime: '12:00' }), { headers: admin });
+    if (s.status !== 200 && s.status !== 204) throw new Error(`No se pudo definir el horario: ${s.status} ${s.body}`);
+    doctorIds.push(id);
+  }
+  const patients = [];
+  for (let i = 0; i < 300; i++) {
     const r = http.post(`${BASE}/api/patients`, JSON.stringify({
       fullName: `Paciente Carga ${i}`, identificationNumber: `K6-${corrida}-${i}`, birthDate: '1990-05-20', phone: '5555-1234', email: `carga${i}@example.com`,
     }), { headers: recepcion });
     if (r.status === 201) patients.push(r.json('id'));
   }
   const dates = [];
-  for (let d = 3; dates.length < 40; d++) {
+  for (let d = 3; dates.length < 55; d++) {
     const date = new Date(Date.now() + d * 86400000);
     if (![0, 6].includes(date.getUTCDay())) dates.push(date.toISOString().slice(0, 10));
   }
   const medicoId = http.get(`${BASE}/api/doctors/me`, { headers: medico }).json('id');
-  return { recepcion, medico, doctorIds: doctors.map((d) => d.id), patients, dates, medicoId };
+  return { recepcion, medico, doctorIds, patients, dates, medicoId };
 }
 
 const SLOTS = ['08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30'];
