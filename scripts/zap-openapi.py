@@ -176,7 +176,7 @@ def lab_fixture(base, token, name):
         print("No se pudo crear el resultado de laboratorio ficticio", file=sys.stderr)
 
 
-def concrete(path, value, kind, identifier):
+def concrete(path, value, identifier):
     """Ruta con el identificador real; ya no necesita su parámetro de ruta."""
     for operation in value.values():
         if isinstance(operation, dict) and "parameters" in operation:
@@ -194,7 +194,7 @@ def build_paths(spec, found, bodies, query, include_auth):
         if kind is None:
             paths[path] = value
         elif kind in found:
-            paths[concrete(path, value, kind, found[kind])] = value
+            paths[concrete(path, value, found[kind])] = value
     return paths
 
 

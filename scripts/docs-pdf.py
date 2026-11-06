@@ -49,8 +49,7 @@ def render(page, source, target):
     text = source.read_text(encoding="utf-8-sig")
     body = markdown.markdown(links_to_pdf(text), extensions=["tables", "fenced_code", "sane_lists"])
     wide = max((line.count("|") - 1 for line in text.splitlines() if line.lstrip().startswith("|")), default=0) >= 6
-    title = re.search(r"^#\s+(.+)$", text, re.M)
-    title = html.escape(title.group(1) if title else source.stem)
+    title = html.escape(next((line[2:].strip() for line in text.splitlines() if line.startswith("# ")), source.stem))
     diagrams = re.sub(r'<pre><code class="language-mermaid">(.*?)</code></pre>', r'<div class="mermaid">\1</div>', body, flags=re.S)
     page.set_content(f'<!doctype html><html lang="es"><head><meta charset="utf-8"><title>{title}</title><style>{STYLE}</style></head><body>{diagrams}</body></html>')
     if diagrams != body:  # Los diagramas se dibujan antes de imprimir; requiere conexión la primera vez.
