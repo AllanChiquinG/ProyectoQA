@@ -27,8 +27,9 @@ docker exec medicore-qa-postgres-1 sh -c 'psql -q -U "$POSTGRES_USER" -d "$POSTG
   select gen_random_uuid(), p.\"Id\", d.\"Id\", date_trunc(\$\$minute\$\$, now()) - interval \$\$3 days\$\$, date_trunc(\$\$minute\$\$, now()) - interval \$\$3 days\$\$ + interval \$\$30 minutes\$\$,
          \$\$Confirmed\$\$, \$\$Cita ficticia para ZAP\$\$, d.\"UserId\", now()
   from patients p, doctors d where p.\"Email\" = \$\$ana.garcia@example.com\$\$ and d.\"Email\" = \$\$lucia.mendez@example.com\$\$"' || true
-# Laboratorio va primero: crea el resultado ficticio que Médico y Paciente leen, y busca a la paciente por nombre antes de que el análisis activo lo altere.
-for profile in laboratorio:daniela.reyes@example.com administrador:admin@example.com recepcion:elena.vargas@example.com                medico:lucia.mendez@example.com paciente:ana.garcia@example.com; do
+# Orden necesario: el análisis activo altera datos. Laboratorio crea el resultado que Médico y Paciente leen; Administrador va al final porque modifica
+# médicos y pacientes, y después de eso ninguna reserva sería válida.
+for profile in laboratorio:daniela.reyes@example.com recepcion:elena.vargas@example.com medico:lucia.mendez@example.com                paciente:ana.garcia@example.com administrador:admin@example.com; do
   role="${profile%%:*}"
   email="${profile#*:}"
   suffix="-$role"; auth=""

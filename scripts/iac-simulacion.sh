@@ -34,7 +34,7 @@ run_ansible() {
     case "$state" in running|degraded) break ;; esac
     sleep 2
   done
-  docker exec "$server" bash /repo/scripts/iac/aplicar-ansible.sh 2>&1 | tee reports/iac/ansible.txt
+  MSYS_NO_PATHCONV=1 docker exec "$server" bash /repo/scripts/iac/aplicar-ansible.sh 2>&1 | tee reports/iac/ansible.txt
   return "${PIPESTATUS[0]}"
 }
 
