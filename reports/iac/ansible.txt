@@ -1,4 +1,4 @@
-=== Primera aplicación (commit fc9b01d5d149fa187fb234cbfdedec56f786629a)
+=== Primera aplicación (commit 3fe9d40a7e29a56059f6aa84a6875f3774a266d2)
 
 PLAY [Servidor de QA de MediCore] **********************************************
 
@@ -67,12 +67,16 @@ changed: [medicore-qa]
 TASK [medicore : Archivo de entorno (secretos del Vault; permisos restringidos)] ***
 changed: [medicore-qa]
 
-TASK [medicore : Ambiente QA levantado (migración, API, web, worker y proxy)] ***
-[WARNING]: Docker compose: image medicore/migrator:qa: pull access denied for medicore/migrator, repository does not exist or may require 'docker login'
-[WARNING]: Docker compose: image medicore/worker:qa: pull access denied for medicore/worker, repository does not exist or may require 'docker login'
-[WARNING]: Docker compose: image medicore/web:qa: pull access denied for medicore/web, repository does not exist or may require 'docker login'
+TASK [medicore : Volumen de respaldos, externo para que sobreviva a la recreación del ambiente] ***
+changed: [medicore-qa]
+
+TASK [medicore : Ambiente QA levantado (migración, API, web, worker, respaldos y proxy)] ***
 [WARNING]: Docker compose: image medicore/proxy:local: pull access denied for medicore/proxy, repository does not exist or may require 'docker login'
+[WARNING]: Docker compose: image medicore/migrator:qa: pull access denied for medicore/migrator, repository does not exist or may require 'docker login'
+[WARNING]: Docker compose: image medicore/web:qa: pull access denied for medicore/web, repository does not exist or may require 'docker login'
 [WARNING]: Docker compose: image medicore/api:qa: pull access denied for medicore/api, repository does not exist or may require 'docker login'
+[WARNING]: Docker compose: image medicore/backup:qa: pull access denied for medicore/backup, repository does not exist or may require 'docker login'
+[WARNING]: Docker compose: image medicore/worker:qa: pull access denied for medicore/worker, repository does not exist or may require 'docker login'
 changed: [medicore-qa]
 
 TASK [medicore : Datos ficticios de QA (solo si medicore_seed es true)] ********
@@ -85,7 +89,7 @@ RUNNING HANDLER [docker : Reiniciar Docker] ************************************
 changed: [medicore-qa]
 
 PLAY RECAP *********************************************************************
-medicore-qa                : ok=22   changed=17   unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+medicore-qa                : ok=23   changed=18   unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
 
 === Segunda aplicación (idempotencia)
 
@@ -156,25 +160,29 @@ ok: [medicore-qa]
 TASK [medicore : Archivo de entorno (secretos del Vault; permisos restringidos)] ***
 ok: [medicore-qa]
 
-TASK [medicore : Ambiente QA levantado (migración, API, web, worker y proxy)] ***
+TASK [medicore : Volumen de respaldos, externo para que sobreviva a la recreación del ambiente] ***
+ok: [medicore-qa]
+
+TASK [medicore : Ambiente QA levantado (migración, API, web, worker, respaldos y proxy)] ***
 changed: [medicore-qa]
 
 TASK [medicore : Datos ficticios de QA (solo si medicore_seed es true)] ********
 changed: [medicore-qa]
 
 PLAY RECAP *********************************************************************
-medicore-qa                : ok=20   changed=2    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+medicore-qa                : ok=21   changed=2    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
 
 === Comprobación de la aplicación
 GET /api/health = 200
 GET /Login = 200
-api Up 52 seconds (healthy)
-postgres Up 59 seconds (healthy)
-proxy Up 40 seconds (healthy)
-rabbitmq Up 59 seconds (healthy)
-redis Up 59 seconds (healthy)
-web Up 46 seconds (healthy)
-worker Up 48 seconds (healthy)
+api Up About a minute (healthy)
+backup Up About a minute (healthy)
+postgres Up About a minute (healthy)
+proxy Up 57 seconds (healthy)
+rabbitmq Up About a minute (healthy)
+redis Up About a minute (healthy)
+web Up About a minute (healthy)
+worker Up About a minute (healthy)
 Status: active
 
 To                         Action      From
