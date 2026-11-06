@@ -19,7 +19,7 @@ run_terraform() {
 
 cleanup() {
   docker rm -f "$server" >/dev/null 2>&1
-  docker volume rm "$volume" >/dev/null 2>&1
+  docker volume rm "$volume" "$volume-containerd" >/dev/null 2>&1
 }
 
 run_ansible() {
@@ -28,7 +28,7 @@ run_ansible() {
   docker build -q -t medicore-iac-ubuntu:local -f scripts/iac/ubuntu.Dockerfile scripts/iac >/dev/null || return 1
   # Privilegiado solo para que el Docker interno funcione. El repositorio se monta de solo lectura.
   MSYS_NO_PATHCONV=1 docker run -d --name "$server" --hostname medicore-qa --privileged --cgroupns=host -v /sys/fs/cgroup:/sys/fs/cgroup:rw \
-    -v "$volume:/var/lib/docker" -v "$root:/repo:ro" -p 127.0.0.1:8088:80 medicore-iac-ubuntu:local >/dev/null || return 1
+    -v "$volume:/var/lib/docker" -v "$volume-containerd:/var/lib/containerd" -v "$root:/repo:ro" -p 127.0.0.1:8088:80 medicore-iac-ubuntu:local >/dev/null || return 1
   for _ in $(seq 1 30); do
     state="$(docker exec "$server" systemctl is-system-running 2>/dev/null)"
     case "$state" in running|degraded) break ;; esac

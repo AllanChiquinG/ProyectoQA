@@ -1,0 +1,185 @@
+=== Primera aplicación (commit fc9b01d5d149fa187fb234cbfdedec56f786629a)
+
+PLAY [Servidor de QA de MediCore] **********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [medicore-qa]
+
+TASK [base : Paquetes base] ****************************************************
+changed: [medicore-qa]
+
+TASK [base : Actualizaciones de seguridad automáticas] *************************
+ok: [medicore-qa]
+
+TASK [base : SSH solo con clave y sin acceso de root] **************************
+changed: [medicore-qa]
+
+TASK [base : Cortafuegos - denegar la entrada por defecto] *********************
+ok: [medicore-qa]
+
+TASK [base : Cortafuegos - permitir la salida] *********************************
+ok: [medicore-qa]
+
+TASK [base : Cortafuegos - SSH (limitado en intentos), HTTP y HTTPS] ***********
+changed: [medicore-qa] => (item={'rule': 'limit', 'port': '22'})
+changed: [medicore-qa] => (item={'rule': 'allow', 'port': '80'})
+changed: [medicore-qa] => (item={'rule': 'allow', 'port': '443'})
+
+TASK [base : Cortafuegos - activar] ********************************************
+changed: [medicore-qa]
+
+TASK [base : Servicio fail2ban activo] *****************************************
+changed: [medicore-qa]
+
+TASK [docker : Disco de datos - comprobar que existe] **************************
+skipping: [medicore-qa]
+
+TASK [docker : Disco de datos - sistema de archivos ext4] **********************
+skipping: [medicore-qa]
+
+TASK [docker : Disco de datos - montaje] ***************************************
+skipping: [medicore-qa]
+
+TASK [docker : Carpeta de claves de apt] ***************************************
+ok: [medicore-qa]
+
+TASK [docker : Clave del repositorio de Docker] ********************************
+changed: [medicore-qa]
+
+TASK [docker : Repositorio de Docker] ******************************************
+changed: [medicore-qa]
+
+TASK [docker : Docker Engine y Compose] ****************************************
+changed: [medicore-qa]
+
+TASK [docker : Configuración del demonio (rotación de registros y ubicación de datos)] ***
+changed: [medicore-qa]
+
+TASK [docker : Docker activo] **************************************************
+changed: [medicore-qa]
+
+TASK [docker : El usuario administrador puede usar Docker] *********************
+changed: [medicore-qa]
+
+TASK [medicore : Código de la aplicación (versión fija)] ***********************
+changed: [medicore-qa]
+
+TASK [medicore : Archivo de entorno (secretos del Vault; permisos restringidos)] ***
+changed: [medicore-qa]
+
+TASK [medicore : Ambiente QA levantado (migración, API, web, worker y proxy)] ***
+[WARNING]: Docker compose: image medicore/migrator:qa: pull access denied for medicore/migrator, repository does not exist or may require 'docker login'
+[WARNING]: Docker compose: image medicore/worker:qa: pull access denied for medicore/worker, repository does not exist or may require 'docker login'
+[WARNING]: Docker compose: image medicore/web:qa: pull access denied for medicore/web, repository does not exist or may require 'docker login'
+[WARNING]: Docker compose: image medicore/proxy:local: pull access denied for medicore/proxy, repository does not exist or may require 'docker login'
+[WARNING]: Docker compose: image medicore/api:qa: pull access denied for medicore/api, repository does not exist or may require 'docker login'
+changed: [medicore-qa]
+
+TASK [medicore : Datos ficticios de QA (solo si medicore_seed es true)] ********
+changed: [medicore-qa]
+
+RUNNING HANDLER [base : Recargar sshd] *****************************************
+changed: [medicore-qa]
+
+RUNNING HANDLER [docker : Reiniciar Docker] ************************************
+changed: [medicore-qa]
+
+PLAY RECAP *********************************************************************
+medicore-qa                : ok=22   changed=17   unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+
+=== Segunda aplicación (idempotencia)
+
+PLAY [Servidor de QA de MediCore] **********************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [medicore-qa]
+
+TASK [base : Paquetes base] ****************************************************
+ok: [medicore-qa]
+
+TASK [base : Actualizaciones de seguridad automáticas] *************************
+ok: [medicore-qa]
+
+TASK [base : SSH solo con clave y sin acceso de root] **************************
+ok: [medicore-qa]
+
+TASK [base : Cortafuegos - denegar la entrada por defecto] *********************
+ok: [medicore-qa]
+
+TASK [base : Cortafuegos - permitir la salida] *********************************
+ok: [medicore-qa]
+
+TASK [base : Cortafuegos - SSH (limitado en intentos), HTTP y HTTPS] ***********
+ok: [medicore-qa] => (item={'rule': 'limit', 'port': '22'})
+ok: [medicore-qa] => (item={'rule': 'allow', 'port': '80'})
+ok: [medicore-qa] => (item={'rule': 'allow', 'port': '443'})
+
+TASK [base : Cortafuegos - activar] ********************************************
+ok: [medicore-qa]
+
+TASK [base : Servicio fail2ban activo] *****************************************
+ok: [medicore-qa]
+
+TASK [docker : Disco de datos - comprobar que existe] **************************
+skipping: [medicore-qa]
+
+TASK [docker : Disco de datos - sistema de archivos ext4] **********************
+skipping: [medicore-qa]
+
+TASK [docker : Disco de datos - montaje] ***************************************
+skipping: [medicore-qa]
+
+TASK [docker : Carpeta de claves de apt] ***************************************
+ok: [medicore-qa]
+
+TASK [docker : Clave del repositorio de Docker] ********************************
+ok: [medicore-qa]
+
+TASK [docker : Repositorio de Docker] ******************************************
+ok: [medicore-qa]
+
+TASK [docker : Docker Engine y Compose] ****************************************
+ok: [medicore-qa]
+
+TASK [docker : Configuración del demonio (rotación de registros y ubicación de datos)] ***
+ok: [medicore-qa]
+
+TASK [docker : Docker activo] **************************************************
+ok: [medicore-qa]
+
+TASK [docker : El usuario administrador puede usar Docker] *********************
+ok: [medicore-qa]
+
+TASK [medicore : Código de la aplicación (versión fija)] ***********************
+ok: [medicore-qa]
+
+TASK [medicore : Archivo de entorno (secretos del Vault; permisos restringidos)] ***
+ok: [medicore-qa]
+
+TASK [medicore : Ambiente QA levantado (migración, API, web, worker y proxy)] ***
+changed: [medicore-qa]
+
+TASK [medicore : Datos ficticios de QA (solo si medicore_seed es true)] ********
+changed: [medicore-qa]
+
+PLAY RECAP *********************************************************************
+medicore-qa                : ok=20   changed=2    unreachable=0    failed=0    skipped=3    rescued=0    ignored=0   
+
+=== Comprobación de la aplicación
+GET /api/health = 200
+GET /Login = 200
+api Up 52 seconds (healthy)
+postgres Up 59 seconds (healthy)
+proxy Up 40 seconds (healthy)
+rabbitmq Up 59 seconds (healthy)
+redis Up 59 seconds (healthy)
+web Up 46 seconds (healthy)
+worker Up 48 seconds (healthy)
+Status: active
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     LIMIT       Anywhere                  
+80/tcp                     ALLOW       Anywhere                  
+443/tcp                    ALLOW       Anywhere                  
+22/tcp (v6)                LIMIT       Anywhere (v6)             

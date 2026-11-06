@@ -3,6 +3,8 @@
 # Lo único distinto de Azure: conexión local en vez de SSH, sin disco de datos, repositorio local y secretos aleatorios de un solo uso.
 set -euo pipefail
 
+# En una VM real SSH ya está activo; aquí se arranca para que exista /run/sshd.
+mkdir -p /run/sshd && systemctl start ssh
 python3 -m venv /opt/ansible
 /opt/ansible/bin/pip -q install ansible-core
 cp -r /repo/infrastructure/ansible /opt/playbook
@@ -16,7 +18,7 @@ commit="$(git -C /repo rev-parse HEAD)"
 random() { head -c 48 /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c "$1"; }
 cat > /opt/playbook/inventory/qa.ini <<EOF
 [qa]
-medicore-qa ansible_connection=local ansible_python_interpreter=/usr/bin/python3
+medicore-qa ansible_connection=local ansible_user=root ansible_python_interpreter=/usr/bin/python3
 EOF
 cat > /opt/playbook/group_vars/qa/simulacion.yml <<EOF
 medicore_repo_url: /opt/repo-simulado

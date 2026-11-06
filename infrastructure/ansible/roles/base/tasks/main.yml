@@ -1,7 +1,7 @@
 ---
 - name: Paquetes base
   ansible.builtin.apt:
-    name: [ca-certificates, curl, git, gnupg, ufw, fail2ban, unattended-upgrades]
+    name: [ca-certificates, curl, git, gnupg, python3-debian, ufw, fail2ban, unattended-upgrades]
     state: present
     update_cache: true
     cache_valid_time: 3600
