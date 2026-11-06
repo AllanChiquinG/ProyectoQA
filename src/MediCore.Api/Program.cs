@@ -19,6 +19,7 @@ builder.Services.AddMediCoreInfrastructure(builder.Configuration);
 // Respuestas de error uniformes (RFC 9457) sin filtrar detalles internos al cliente.
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<DependencyUnavailableExceptionHandler>();
+builder.Services.AddExceptionHandler<InvalidTextExceptionHandler>();
 
 // --- Autenticación: JWT de vida corta + sesión en Redis (permite revocar al cerrar sesión o cambiar el rol).
 builder.Services.AddOptions<JwtOptions>()
