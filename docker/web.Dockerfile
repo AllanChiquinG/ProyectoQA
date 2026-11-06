@@ -15,6 +15,7 @@ RUN dotnet publish src/MediCore.Web/MediCore.Web.csproj -c Release --no-restore 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 COPY --from=build /out .
+COPY deploy/healthcheck-http.sh /healthcheck-http.sh
 # Carpeta de las claves de protección de datos (volumen): debe pertenecer al usuario sin privilegios para que el volumen nuevo herede el permiso.
 RUN mkdir /keys && chown "$APP_UID" /keys
 USER $APP_UID

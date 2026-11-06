@@ -76,8 +76,6 @@ services:
       # Seguro porque la API no publica puertos: solo el proxy llega a ella.
       ForwardedHeaders__Enabled: "true"
       RateLimiting__AuthPermitsPerMinute: ${AUTH_PERMITS_PER_MINUTE:-10}
-    volumes:
-      - ./deploy/healthcheck-http.sh:/healthcheck-http.sh:ro
     healthcheck:
       test: ["CMD", "bash", "/healthcheck-http.sh", "8080", "/api/health/ready"]
       interval: 15s
@@ -121,7 +119,6 @@ services:
       DataProtection__KeysPath: /keys
     volumes:
       - web-keys:/keys
-      - ./deploy/healthcheck-http.sh:/healthcheck-http.sh:ro
     healthcheck:
       test: ["CMD", "bash", "/healthcheck-http.sh", "8080", "/Login"]
       interval: 15s
@@ -135,14 +132,14 @@ services:
     logging: *logging
 
   proxy:
-    image: caddy:2-alpine
+    image: medicore/proxy:local
+    build: { context: ., dockerfile: docker/proxy.Dockerfile }
     ports:
       - "${PROXY_HTTP_BIND:-127.0.0.1:8080}:80"
       - "${PROXY_HTTPS_BIND:-127.0.0.1:8443}:443"
     environment:
       SITE_ADDRESS: ${SITE_ADDRESS:-:80}
     volumes:
-      - ./deploy/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
       - caddy-config:/config
     healthcheck:

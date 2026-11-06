@@ -19,6 +19,7 @@ RUN dotnet publish src/MediCore.Api/MediCore.Api.csproj -c Release --no-restore 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 COPY --from=build /out .
+COPY deploy/healthcheck-http.sh /healthcheck-http.sh
 # Usuario sin privilegios (incluido en la imagen base). Puerto interno 8080: solo lo alcanza el proxy inverso.
 USER $APP_UID
 ENV ASPNETCORE_HTTP_PORTS=8080 \
