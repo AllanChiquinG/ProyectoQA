@@ -1,7 +1,7 @@
 # Jenkins con Docker CLI, Compose y Python. Usa el Docker del anfitrión por el socket.
 FROM jenkins/jenkins:lts-jdk21
 USER root
-RUN apt-get update && apt-get install -y --no-install-recommends docker.io docker-compose python3 curl \
+RUN apt-get update && apt-get install -y --no-install-recommends docker-cli python3 curl \
     && mkdir -p /usr/local/lib/docker/cli-plugins \
     && curl -fsSL https://github.com/docker/compose/releases/download/v2.39.1/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose \
     && chmod +x /usr/local/lib/docker/cli-plugins/docker-compose \

@@ -45,13 +45,14 @@ if dc:
     if open_items:
         blockers.append("Dependency-Check críticas sin aceptar: " + ", ".join(open_items[:10]))
 
-zap = load("zap/zap.json")
-if zap:
-    high = sorted({a["alert"] for s in zap.get("site", []) for a in s.get("alerts", []) if str(a.get("riskcode")) == "3"})
-    open_items = sorted(set(high) - set(accepted.get("zap", {})))
-    notes.append(f"ZAP: {len(high)} alertas altas, {len(open_items)} sin aceptar")
-    if open_items:
-        blockers.append("ZAP altas sin aceptar: " + ", ".join(open_items))
+for report, label in (("zap/zap.json", "ZAP web"), ("zap/zap-api.json", "ZAP API")):
+    zap = load(report)
+    if zap:
+        high = sorted({a["alert"] for s in zap.get("site", []) for a in s.get("alerts", []) if str(a.get("riskcode")) == "3"})
+        open_items = sorted(set(high) - set(accepted.get("zap", {})))
+        notes.append(f"{label}: {len(high)} alertas altas, {len(open_items)} sin aceptar")
+        if open_items:
+            blockers.append(f"{label} altas sin aceptar: " + ", ".join(open_items))
 
 api = REPORTS / "insomnia/resultado.txt"
 if not api.exists():
