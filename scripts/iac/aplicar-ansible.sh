@@ -30,6 +30,7 @@ vault_postgres_password: "$(random 28)"
 vault_redis_password: "$(random 28)"
 vault_rabbitmq_password: "$(random 28)"
 vault_jwt_signing_key: "$(random 48)"
+vault_backup_passphrase: "$(random 48)"
 vault_seed_password: "Qa-$(random 20)-1!"
 EOF
 

@@ -11,7 +11,13 @@
 #   scripts/qa.sh down      detiene y elimina los contenedores y la red; CONSERVA los volúmenes (datos)
 #   scripts/qa.sh destroy   igual que down pero BORRA los volúmenes de QA (medicore-qa_*); pide escribir el nombre del proyecto
 #   scripts/qa.sh smoke     pruebas de humo de web y API a través del proxy
+#   scripts/qa.sh backup    crea un respaldo cifrado ahora (además de los automáticos)
+#   scripts/qa.sh backups   lista los respaldos
+#   scripts/qa.sh export <carpeta>           copia los respaldos fuera de Docker; guarda esa copia en otro disco
+#   scripts/qa.sh import <archivo.dump.enc>  trae un respaldo exportado (y su .sha256) de vuelta al volumen
+#   scripts/qa.sh restore <archivo>          REEMPLAZA la base con un respaldo; pide escribir el nombre del proyecto
 set -euo pipefail
+export MSYS_NO_PATHCONV=1  # Git Bash convertiría las rutas de los contenedores en rutas de Windows
 
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 project="medicore-qa"
@@ -31,6 +37,7 @@ case "${1:-}" in
         -e "s|^REDIS_PASSWORD=.*|REDIS_PASSWORD=$(random 28)|" \
         -e "s|^RABBITMQ_DEFAULT_PASS=.*|RABBITMQ_DEFAULT_PASS=$(random 28)|" \
         -e "s|^JWT_SIGNING_KEY=.*|JWT_SIGNING_KEY=$(random 48)|" \
+        -e "s|^BACKUP_PASSPHRASE=.*|BACKUP_PASSPHRASE=$(random 48)|" \
         -e "s|^SEED_DEV_PASSWORD=.*|SEED_DEV_PASSWORD=Qa-$(random 20)-1!|" \
         .env.qa.example > "$envfile"
     chmod 600 "$envfile" 2>/dev/null || true
@@ -38,6 +45,7 @@ case "${1:-}" in
     ;;
   up)
     need_env
+    docker volume create medicore-qa-respaldos >/dev/null
     "${compose[@]}" up -d --build --remove-orphans
     "${compose[@]}" ps
     ;;
@@ -73,6 +81,41 @@ case "${1:-}" in
     ;;
   smoke)
     exec bash scripts/qa-smoke.sh
+    ;;
+  backup)
+    need_env
+    "${compose[@]}" exec -T backup sh /usr/local/bin/respaldo.sh una
+    ;;
+  backups)
+    need_env
+    "${compose[@]}" exec -T backup sh -c 'ls -lh /backups/*.dump.enc'
+    ;;
+  export)
+    need_env
+    target="${2:?Indica la carpeta de destino}"
+    mkdir -p "$target"
+    "${compose[@]}" cp backup:/backups/. "$target"
+    echo "Copiado a $target. Guárdalo en otro disco, junto con BACKUP_PASSPHRASE: sin esa clave el respaldo no se puede leer."
+    ;;
+  import)
+    need_env
+    file="${2:?Indica el archivo .dump.enc}"
+    "${compose[@]}" cp "$file" "backup:/backups/$(basename "$file")"
+    "${compose[@]}" cp "$file.sha256" "backup:/backups/$(basename "$file").sha256"
+    echo "Importado: $(basename "$file")"
+    ;;
+  restore)
+    need_env
+    file="${2:?Indica el archivo; usa scripts/qa.sh backups}"
+    echo "Esto REEMPLAZA la base de datos de QA con $(basename "$file") y cierra todas las sesiones."
+    answer="${QA_CONFIRM:-}"
+    [ -n "$answer" ] || read -r -p "Escribe el nombre del proyecto (${project}) para confirmar: " answer
+    [ "$answer" = "$project" ] || { echo "Cancelado."; exit 1; }
+    "${compose[@]}" stop proxy web worker api
+    "${compose[@]}" exec -T backup sh /usr/local/bin/respaldo.sh restaurar "$(basename "$file")"
+    # Cache y sesiones de Redis ya no corresponden a la base restaurada.
+    "${compose[@]}" exec -T redis sh -c 'redis-cli -a "$REDIS_PASSWORD" --no-auth-warning FLUSHALL'
+    "${compose[@]}" up -d --wait api worker web proxy
     ;;
   *)
     sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'

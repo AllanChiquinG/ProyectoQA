@@ -1,0 +1,25 @@
+Simulacro de restauración de MediCore QA: 2026-11-06T21:18:57Z
+Copia usada: medicore-20261106T211743Z.dump.enc (exportada fuera de Docker; volumen original destruido)
+Usuarios tras reconstruir y antes de restaurar: 0
+Tablas comparadas: 14
+Filas antes: 36849
+Filas después: 36849
+Tablas idénticas: sí
+Tiempo de recuperación (destruir, reconstruir, restaurar, humo): 72 s
+Pérdida en este simulacro: 0 (copia tomada 1 s antes del desastre)
+
+tabla|filas|md5 después
+__EFMigrationsHistory|7|9ddc2bec5429ac8e63ca4f3d0003c1aa
+appointments|3338|1a70724009076623ced02fb56c808ac0
+audit_entries|17351|1e55e53f13ea9b23e2e9807a86f4ccbc
+consultations|2|b0aa3688d1e60ca45a038788c8b37722
+doctor_schedules|35|86150561c24c728584adcc0bdf8f566d
+doctors|308|4ed3d003d93fcef2c1a5483e232d17b2
+lab_result_parameters|571|f29fc862a107b4108b5d8f2fd0fcd77f
+lab_results|571|9b8a9f550c2693423bf496a780bb91ae
+notifications|4412|cf7bc47cab9bc935118ebf5fb291a628
+outbox_messages|8858|6ee5e8d2344ac46256729620de5d90bc
+patients|383|67e7b9d5236d57c6e35c6bbf4ca53f17
+prescription_items|502|1b10930aebfbe3d483b6a8eb245d89e6
+prescriptions|502|8398036c1202f9a4f032c756831ef8bc
+users|9|193722fed74f35d87386b131970c865d

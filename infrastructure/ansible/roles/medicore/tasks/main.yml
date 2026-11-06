@@ -16,7 +16,12 @@
     group: root
   no_log: true
 
-- name: Ambiente QA levantado (migración, API, web, worker y proxy)
+- name: Volumen de respaldos, externo para que sobreviva a la recreación del ambiente
+  community.docker.docker_volume:
+    name: medicore-qa-respaldos
+    state: present
+
+- name: Ambiente QA levantado (migración, API, web, worker, respaldos y proxy)
   community.docker.docker_compose_v2:
     project_src: "{{ medicore_dir }}"
     project_name: "{{ medicore_project_name }}"

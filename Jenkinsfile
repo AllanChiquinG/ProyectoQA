@@ -63,7 +63,7 @@ pipeline {
         }
         stage('9. Docker Build') {
             steps {
-                sh 'test -f .env.qa || cp /repo/.env.qa .env.qa 2>/dev/null || bash scripts/qa.sh init'
+                sh 'cp /repo/.env.qa .env.qa 2>/dev/null || test -f .env.qa || bash scripts/qa.sh init'
                 sh 'docker compose -p medicore-qa --env-file .env.qa -f docker-compose.yml -f docker-compose.qa.yml build'
             }
         }

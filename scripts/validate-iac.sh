@@ -36,7 +36,7 @@ run docker run --rm -v "$root/infrastructure/ansible:/src:ro" python:3.12-slim b
   ansible-lint site.yml && echo "ansible-lint: sin problemas"'
 
 step "Dockerfiles (hadolint)"
-for f in api web worker migrator; do
+for f in api web worker migrator proxy backup; do
   echo -n "docker/$f.Dockerfile: "
   if MSYS_NO_PATHCONV=1 docker run --rm -i hadolint/hadolint hadolint --failure-threshold warning - < "docker/$f.Dockerfile"; then echo "sin advertencias ni errores (los avisos informativos DL3066 listados arriba son esperados: se usa el UID numérico de la imagen)"; else failures=$((failures + 1)); fi
 done

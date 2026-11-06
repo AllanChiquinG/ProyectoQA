@@ -6,4 +6,5 @@ vault_postgres_password: "CAMBIAR"
 vault_redis_password: "CAMBIAR"
 vault_rabbitmq_password: "CAMBIAR"
 vault_jwt_signing_key: "CAMBIAR-MINIMO-32-CARACTERES"
+vault_backup_passphrase: "CAMBIAR"  # sin esta clave los respaldos no se pueden leer: guárdala también fuera del servidor
 vault_seed_password: "CAMBIAR"      # contraseña de los usuarios ficticios de QA; solo se usa si medicore_seed es true

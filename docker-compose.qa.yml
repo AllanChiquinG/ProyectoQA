@@ -3,7 +3,7 @@
 # (o simplemente: scripts/qa.sh up). El nombre de proyecto "medicore-qa" crea volúmenes PROPIOS (medicore-qa_*): no toca los del desarrollo (medicore_*).
 #
 # Orden de arranque (depends_on con condiciones):
-#   postgres, redis, rabbitmq (healthy) -> migrate (termina bien) -> api, worker (healthy) -> web (healthy) -> proxy
+#   postgres, redis, rabbitmq (healthy) -> migrate (termina bien) -> api, worker, backup (healthy) -> web (healthy) -> proxy
 # La app Android es un APK: no es un servicio de este Compose.
 name: medicore-qa
 
@@ -154,6 +154,31 @@ services:
     restart: unless-stopped
     logging: *logging
 
+  # Respaldos cifrados de PostgreSQL (deploy/respaldos/respaldo.sh). El volumen es externo para que "qa.sh destroy" no borre las copias junto con los datos.
+  backup:
+    build: { context: ., dockerfile: docker/backup.Dockerfile }
+    image: medicore/backup:${IMAGE_TAG:-local}
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-medicore}
+      POSTGRES_USER: ${POSTGRES_USER:-medicore}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Define POSTGRES_PASSWORD en .env.qa}
+      BACKUP_PASSPHRASE: ${BACKUP_PASSPHRASE:?Define BACKUP_PASSPHRASE en .env.qa}
+      BACKUP_INTERVAL_HOURS: ${BACKUP_INTERVAL_HOURS:-6}
+      BACKUP_KEEP: ${BACKUP_KEEP:-28}
+    volumes:
+      - backups:/backups
+    healthcheck:
+      test: ["CMD-SHELL", "test -n \"$$(find /backups -name 'medicore-*.dump.enc' -mmin -$$((BACKUP_INTERVAL_HOURS * 120)) 2>/dev/null)\""]
+      interval: 30s
+      timeout: 5s
+      retries: 10
+    depends_on:
+      postgres: { condition: service_healthy }
+      migrate: { condition: service_completed_successfully }
+    networks: [backend]
+    restart: unless-stopped
+    logging: *logging
+
 networks:
   # Red interna: sin salida a Internet ni al anfitrión. Aquí viven las bases de datos y el broker.
   backend:
@@ -161,6 +186,9 @@ networks:
   edge: {}
 
 volumes:
+  backups:
+    name: medicore-qa-respaldos
+    external: true
   web-keys:
   caddy-data:
   caddy-config:
