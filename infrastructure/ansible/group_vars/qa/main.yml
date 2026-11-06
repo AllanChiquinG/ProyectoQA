@@ -1,0 +1,17 @@
+---
+# Valores NO secretos del ambiente QA. Los secretos van en group_vars/qa/vault.yml (cifrado con ansible-vault; ver vault.yml.example).
+medicore_repo_url: https://github.com/AllanChiquinG/ProyectoQA.git
+medicore_version: main            # rama, etiqueta o commit a desplegar (usa un commit o una etiqueta para un despliegue reproducible)
+medicore_dir: /opt/medicore
+medicore_project_name: medicore-qa
+medicore_image_tag: qa
+medicore_clinic_timezone: America/Guatemala
+medicore_auth_permits_per_minute: 10
+medicore_seed: false              # true: siembra usuarios y datos FICTICIOS de QA (idempotente)
+
+# Disco de datos de Azure (LUN 0) para /var/lib/docker; vacío = sin disco de datos.
+medicore_data_disk_device: /dev/disk/azure/scsi1/lun0
+medicore_data_mount: /srv/medicore-data
+
+# Proxy inverso: el nombre DNS (cloudapp.azure.com) hace que Caddy obtenga el certificado HTTPS automáticamente.
+medicore_site_address: "{{ inventory_hostname }}"

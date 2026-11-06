@@ -1,0 +1,72 @@
+---
+# Disco de datos (opcional): Docker guarda sus volúmenes en él para sobrevivir a la recreación de la máquina virtual.
+- name: Disco de datos - comprobar que existe
+  ansible.builtin.stat:
+    path: "{{ medicore_data_disk_device }}"
+  register: docker_data_disk
+  when: medicore_data_disk_device | length > 0
+
+- name: Disco de datos - sistema de archivos ext4
+  community.general.filesystem:
+    fstype: ext4
+    dev: "{{ medicore_data_disk_device }}"
+  when: medicore_data_disk_device | length > 0 and docker_data_disk.stat.exists
+
+- name: Disco de datos - montaje
+  ansible.posix.mount:
+    path: "{{ medicore_data_mount }}"
+    src: "{{ medicore_data_disk_device }}"
+    fstype: ext4
+    opts: defaults,nofail
+    state: mounted
+  when: medicore_data_disk_device | length > 0 and docker_data_disk.stat.exists
+
+- name: Carpeta de claves de apt
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+
+- name: Clave del repositorio de Docker
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: "0644"
+
+- name: Repositorio de Docker
+  ansible.builtin.deb822_repository:
+    name: docker
+    types: [deb]
+    uris: https://download.docker.com/linux/ubuntu
+    suites: ["{{ ansible_facts['distribution_release'] }}"]
+    components: [stable]
+    architectures: [amd64]
+    signed_by: /etc/apt/keyrings/docker.asc
+    state: present
+
+- name: Docker Engine y Compose
+  ansible.builtin.apt:
+    name: [docker-ce, docker-ce-cli, containerd.io, docker-buildx-plugin, docker-compose-plugin, python3-docker]
+    state: present
+    update_cache: true
+
+- name: Configuración del demonio (rotación de registros y ubicación de datos)
+  ansible.builtin.template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+    mode: "0644"
+    owner: root
+    group: root
+  notify: Reiniciar Docker
+
+- name: Docker activo
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: El usuario administrador puede usar Docker
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true

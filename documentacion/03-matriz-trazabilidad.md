@@ -78,9 +78,9 @@ Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 sol
 |---|---|---|---|---|
 | GEN-01 | Repo GitHub: ramas, PR, Issues, Releases, protección de `main` | Remoto en GitHub, ramas `feature/*` y PR #1 fusionado; falta protección de `main`, Issues y Releases | 0, 11 | ◐ |
 | GEN-02 | Jenkinsfile con las 18 etapas + bloqueo por Quality Gate | — | 11 | ○ |
-| GEN-03 | Dockerfiles + docker-compose | `docker-compose.yml` (Postgres, Redis, RabbitMQ con nombre de nodo fijo; faltan Dockerfiles de API/Web) | 1, 11 | ◐ |
-| GEN-04 | Azure + Terraform (aprovisionar, modificar, destruir) | — | 12 | ○ |
-| GEN-05 | Ansible (SO, Docker, reverse proxy) | — | 12 | ○ |
+| GEN-03 | Dockerfiles + docker-compose | `docker/{api,web,worker,migrator}.Dockerfile`, `docker-compose.yml` (dependencias) + `docker-compose.qa.yml` (aplicación, proxy `deploy/caddy/Caddyfile`), `scripts/qa.sh`; verificado: ambiente levantado, humo, persistencia (`documentacion/evidencias/entrega-8-verificacion.md`) | 1, 8 | ✔ (local) |
+| GEN-04 | Azure + Terraform (aprovisionar, modificar, destruir) | `infrastructure/terraform/{bootstrap,azure}` (estado remoto protegido, VM, red, NSG, IP, discos). **Validado** (`fmt`/`validate`); **sin `plan`/`apply`**: no hay despliegue demostrado | 8, 12 | ◐ |
+| GEN-05 | Ansible (SO, Docker, reverse proxy) | `infrastructure/ansible` (roles `base`, `docker`, `medicore`; proxy Caddy en el Compose). **Sintaxis y `ansible-lint` correctos**; **sin ejecutar contra un servidor** | 8, 12 | ◐ |
 | GEN-06 | API REST documentada (OpenAPI) | `AddOpenApi` + `/openapi/v1.json` en Development (sin esquema Bearer ni comentarios aún) | 1 | ◐ |
 | GEN-07 | SonarQube + Quality Gate | — | 11 | ○ |
 | GEN-08 | Fortify, Dependency-Check, npm audit | — | 11 | ○ |
@@ -91,5 +91,5 @@ Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 sol
 | GEN-13 | Usabilidad (≥5 participantes) + Lighthouse/axe | — | 13 | ○ |
 | GEN-14 | Registro de defectos con evidencia | — | continuo | ○ |
 | GEN-15 | Plan de pruebas (20 secciones), riesgos C/I/D, casos, informe GO / NO-GO | — | 14 | ○ |
-| GEN-16 | Ambiente reproducible desde código y documentación | README + compose + migraciones | 1, 12 | ◐ |
+| GEN-16 | Ambiente reproducible desde código y documentación | README + `documentacion/06-infraestructura.md` + `scripts/qa.sh` + Compose + migraciones por contenedor; reproducido localmente desde cero. Falta reproducirlo en Azure | 1, 8, 12 | ◐ |
 | GEN-17 | Insomnia: colección +/−/authz | — | 10 | ○ |

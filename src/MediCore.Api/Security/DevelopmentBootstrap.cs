@@ -13,14 +13,22 @@ namespace MediCore.Api.Security;
 /// </summary>
 public static class DevelopmentBootstrap
 {
-    public static async Task RunAsync(WebApplication app)
+    public static Task RunAsync(WebApplication app) => RunAsync(app, migrate: true);
+
+    /// <summary>
+    /// Siembra de datos ficticios sin migrar (ambiente QA: las migraciones las aplica el contenedor "migrate" antes de arrancar la API).
+    /// Se invoca con <c>MediCore.Api.dll --seed-qa</c> y solo se permite en Development y QA.
+    /// </summary>
+    public static Task SeedAsync(WebApplication app) => RunAsync(app, migrate: false);
+
+    private static async Task RunAsync(WebApplication app, bool migrate)
     {
         using var scope = app.Services.CreateScope();
         var logger = scope.ServiceProvider.GetRequiredService<ILoggerFactory>().CreateLogger("DevelopmentBootstrap");
         try
         {
             var db = scope.ServiceProvider.GetRequiredService<MediCoreDbContext>();
-            await db.Database.MigrateAsync();
+            if (migrate) await db.Database.MigrateAsync();
 
             var password = app.Configuration["Seed:DevPassword"];
             if (string.IsNullOrWhiteSpace(password))
@@ -32,12 +40,17 @@ public static class DevelopmentBootstrap
                 var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
                 var created = await UserSeeder.SeedAsync(db, hasher, password);
                 if (created > 0) logger.LogInformation("Se crearon {Count} usuarios ficticios de desarrollo.", created);
-
-                // Médicos dedicados a las pruebas end-to-end (no se tocan los médicos de uso normal).
-                await E2eFixtureSeeder.SeedAsync(db, hasher, password);
             }
 
+            // Primero los médicos y pacientes de demostración y después los de las pruebas end-to-end: el sembrado de demostración solo crea
+            // médicos y pacientes si todavía no hay ninguno, así que en una base nueva debe ir antes.
             await ClinicalDemoSeeder.SeedAsync(db, scope.ServiceProvider.GetRequiredService<IClinicClock>());
+
+            if (!string.IsNullOrWhiteSpace(password))
+            {
+                // Médicos y paciente dedicados a las pruebas end-to-end (no se tocan los médicos de uso normal).
+                await E2eFixtureSeeder.SeedAsync(db, scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>(), password);
+            }
         }
         catch (Exception ex)
         {

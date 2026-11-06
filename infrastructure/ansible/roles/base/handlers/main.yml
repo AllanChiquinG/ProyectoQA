@@ -1,0 +1,5 @@
+---
+- name: Recargar sshd
+  ansible.builtin.service:
+    name: ssh
+    state: reloaded

@@ -1,0 +1,11 @@
+---
+# Configuración del servidor de QA (después de "terraform apply"): sistema operativo, Docker, proxy inverso y aplicación.
+#   ansible-playbook site.yml --ask-vault-pass
+# Terraform crea los recursos de Azure; este playbook NO crea nada en Azure.
+- name: Servidor de QA de MediCore
+  hosts: qa
+  become: true
+  roles:
+    - base
+    - docker
+    - medicore
