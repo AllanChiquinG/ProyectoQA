@@ -10,7 +10,7 @@ La severidad y la prioridad siguen la sección 17 del [plan de pruebas](10-plan-
 |---|---|---|
 | Crítica | 0 | 0 |
 | Alta | 6 | 1 |
-| Media | 9 | 1 |
+| Media | 10 | 1 |
 | Baja | 3 | 1 |
 
 ## Defectos cerrados
@@ -34,6 +34,7 @@ La severidad y la prioridad siguen la sección 17 del [plan de pruebas](10-plan-
 | HA-01 | Accesibilidad | Media | P2 | Ejecutar axe en el calendario | Contraste AA | Contraste insuficiente | Colores en `app.css` | `reports/accesibilidad/axe.json` |
 | HZ-01 | API | Media | P2 | Buscar o guardar texto con un carácter nulo (`%00`) | Respuesta 400 | Error 500 de PostgreSQL | `InvalidTextExceptionHandler` | `PatientsApiTests`, `reports/zap/zap-api.html` |
 | HC-01 | Código | Baja | P3 | Ejecutar `dotnet format --verify-no-changes` en Jenkins | Sin cambios | 7 archivos con formato incorrecto | Formato aplicado | Etapa 3 de Jenkins |
+| HS-02 | Código | Media | P2 | Ejecutar SonarQube sobre código nuevo | Duplicación de 3 % o menos | 9,3 % de duplicación y 49 % de cobertura | Lectura de errores compartida y 4 pruebas | Corrida 2 de Jenkins, `reports/sonarqube/quality-gate.json` |
 | HZ-02 | Web | Baja | P3 | Ejecutar ZAP | Cabeceras presentes | Faltaban `Permissions-Policy` y `Cross-Origin-Resource-Policy` | Agregadas en Caddy | `reports/zap/zap.html` |
 
 ## Defectos abiertos
@@ -50,4 +51,5 @@ La severidad y la prioridad siguen la sección 17 del [plan de pruebas](10-plan-
 |---|---|---|
 | ZAP | HTTP Only Site | QA local por HTTP. En Azure se usa HTTPS |
 | ZAP | Unexpected Content-Type | Ocurre en rutas que no son de la API |
-| ZAP | Private IP Disclosure | Es la IP interna de la auditoría, visible para Administrador |
+| Dependency-Check | 4 críticas en bibliotecas cliente | Son CVE de servidores PostgreSQL y Redis. Ver [15-seguridad-y-accesibilidad.md](15-seguridad-y-accesibilidad.md) |
+| ZAP | Private IP Disclosure | Es la IP interna registrada en la auditoría |
