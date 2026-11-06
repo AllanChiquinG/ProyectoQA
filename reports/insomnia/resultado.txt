@@ -1,0 +1,558 @@
+Running request: 01 Salud de la API req_001
+[plugin] Loading bundled plugin @kong/insomnia-plugin-external-vault from /snapshot/insomnia/node_modules/@kong/insomnia-plugin-external-vault/dist/index.js
+[network] Response succeeded req=req_001 status=200
+
+Test results:
+✅ Salud de la API responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 02 Sin token req_002
+[network] Response succeeded req=req_002 status=401
+
+Test results:
+✅ Sin token responde 401
+
+Test: 1 passed, 1 total
+
+
+Running request: 03 Token manipulado req_003
+[network] Response succeeded req=req_003 status=401
+
+Test results:
+✅ Token manipulado responde 401
+
+Test: 1 passed, 1 total
+
+
+Running request: 04 Credenciales inválidas req_004
+[network] Response succeeded req=req_004 status=401
+
+Test results:
+✅ Credenciales inválidas responde 401
+
+Test: 1 passed, 1 total
+
+
+Running request: 05 Datos de acceso incompletos req_005
+[network] Response succeeded req=req_005 status=400
+
+Test results:
+✅ Datos de acceso incompletos responde 400
+
+Test: 1 passed, 1 total
+
+
+Running request: 06 Inicio de sesión recepcion req_006
+[network] Response succeeded req=req_006 status=200
+
+Test results:
+✅ Inicio de sesión recepcion responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 07 Inicio de sesión medico req_007
+[network] Response succeeded req=req_007 status=200
+
+Test results:
+✅ Inicio de sesión medico responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 08 Inicio de sesión laboratorio req_008
+[network] Response succeeded req=req_008 status=200
+
+Test results:
+✅ Inicio de sesión laboratorio responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 09 Inicio de sesión admin req_009
+[network] Response succeeded req=req_009 status=200
+
+Test results:
+✅ Inicio de sesión admin responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 10 Inicio de sesión paciente req_010
+[network] Response succeeded req=req_010 status=200
+
+Test results:
+✅ Inicio de sesión paciente responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 11 Usuario autenticado req_011
+[network] Response succeeded req=req_011 status=200
+
+Test results:
+✅ Usuario autenticado responde 200
+✅ No expone la contraseña
+
+Test: 2 passed, 2 total
+
+
+Running request: 12 Catálogo de médicos req_012
+[network] Response succeeded req=req_012 status=200
+
+Test results:
+✅ Catálogo de médicos responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 13 Médico sin token req_013
+[network] Response succeeded req=req_013 status=401
+
+Test results:
+✅ Médico sin token responde 401
+
+Test: 1 passed, 1 total
+
+
+Running request: 14 Paciente no ve contacto del médico req_014
+[network] Response succeeded req=req_014 status=200
+
+Test results:
+✅ Paciente no ve contacto del médico responde 200
+✅ Sin teléfono ni correo
+
+Test: 2 passed, 2 total
+
+
+Running request: 15 Recepción no crea médicos req_015
+[network] Response succeeded req=req_015 status=403
+
+Test results:
+✅ Recepción no crea médicos responde 403
+
+Test: 1 passed, 1 total
+
+
+Running request: 16 Disponibilidad req_016
+[network] Response succeeded req=req_016 status=200
+
+Test results:
+✅ Disponibilidad responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 17 Disponibilidad con fecha inválida req_017
+[network] Response succeeded req=req_017 status=400
+
+Test results:
+✅ Disponibilidad con fecha inválida responde 400
+
+Test: 1 passed, 1 total
+
+
+Running request: 18 Disponibilidad de médico inexistente req_018
+[network] Response succeeded req=req_018 status=404
+
+Test results:
+✅ Disponibilidad de médico inexistente responde 404
+
+Test: 1 passed, 1 total
+
+
+Running request: 19 Alta de paciente req_019
+[network] Response succeeded req=req_019 status=201
+
+Test results:
+✅ Alta de paciente responde 201
+
+Test: 1 passed, 1 total
+
+
+Running request: 20 Identificación duplicada req_020
+[network] Response succeeded req=req_020 status=409
+
+Test results:
+✅ Identificación duplicada responde 409
+
+Test: 1 passed, 1 total
+
+
+Running request: 21 Datos inválidos req_021
+[network] Response succeeded req=req_021 status=400
+
+Test results:
+✅ Datos inválidos responde 400
+
+Test: 1 passed, 1 total
+
+
+Running request: 22 Lectura por recepción req_022
+[network] Response succeeded req=req_022 status=200
+
+Test results:
+✅ Lectura por recepción responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 23 Lectura sin token req_023
+[network] Response succeeded req=req_023 status=401
+
+Test results:
+✅ Lectura sin token responde 401
+
+Test: 1 passed, 1 total
+
+
+Running request: 24 Laboratorio sin acceso a pacientes req_024
+[network] Response succeeded req=req_024 status=403
+
+Test results:
+✅ Laboratorio sin acceso a pacientes responde 403
+
+Test: 1 passed, 1 total
+
+
+Running request: 25 Médico sin relación de atención req_025
+[network] Response succeeded req=req_025 status=404
+
+Test results:
+✅ Médico sin relación de atención responde 404
+
+Test: 1 passed, 1 total
+
+
+Running request: 26 Otro paciente no lo puede leer req_026
+[network] Response succeeded req=req_026 status=404
+
+Test results:
+✅ Otro paciente no lo puede leer responde 404
+
+Test: 1 passed, 1 total
+
+
+Running request: 27 Paciente inexistente req_027
+[network] Response succeeded req=req_027 status=404
+
+Test results:
+✅ Paciente inexistente responde 404
+
+Test: 1 passed, 1 total
+
+
+Running request: 28 Reserva req_028
+[network] Response succeeded req=req_028 status=201
+
+Test results:
+✅ Reserva responde 201
+
+Test: 1 passed, 1 total
+
+
+Running request: 29 Reintento con la misma clave req_029
+[network] Response succeeded req=req_029 status=200
+
+Test results:
+✅ Reintento con la misma clave responde 200
+✅ Devuelve la misma cita
+
+Test: 2 passed, 2 total
+
+
+Running request: 31 Segundo paciente req_031
+[network] Response succeeded req=req_031 status=201
+
+Test results:
+✅ Segundo paciente responde 201
+
+Test: 1 passed, 1 total
+
+
+Running request: 30 Otro paciente en el mismo horario req_030
+[network] Response succeeded req=req_030 status=409
+
+Test results:
+✅ Otro paciente en el mismo horario responde 409
+
+Test: 1 passed, 1 total
+
+
+Running request: 32 Horario fuera de la atención req_032
+[network] Response succeeded req=req_032 status=400
+
+Test results:
+✅ Horario fuera de la atención responde 400
+
+Test: 1 passed, 1 total
+
+
+Running request: 33 Fecha pasada req_033
+[network] Response succeeded req=req_033 status=400
+
+Test results:
+✅ Fecha pasada responde 400
+
+Test: 1 passed, 1 total
+
+
+Running request: 34 Clave de idempotencia inválida req_034
+[network] Response succeeded req=req_034 status=400
+
+Test results:
+✅ Clave de idempotencia inválida responde 400
+
+Test: 1 passed, 1 total
+
+
+Running request: 35 Paciente reserva para otro req_035
+[network] Response succeeded req=req_035 status=404
+
+Test results:
+✅ Paciente reserva para otro responde 404
+
+Test: 1 passed, 1 total
+
+
+Running request: 36 Laboratorio no reserva req_036
+[network] Response succeeded req=req_036 status=403
+
+Test results:
+✅ Laboratorio no reserva responde 403
+
+Test: 1 passed, 1 total
+
+
+Running request: 37 Detalle de la cita req_037
+[network] Response succeeded req=req_037 status=200
+
+Test results:
+✅ Detalle de la cita responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 38 Paciente ajeno no ve la cita req_038
+[network] Response succeeded req=req_038 status=404
+
+Test results:
+✅ Paciente ajeno no ve la cita responde 404
+
+Test: 1 passed, 1 total
+
+
+Running request: 39 Cancelación req_039
+[network] Response succeeded req=req_039 status=204
+
+Test results:
+✅ Cancelación responde 204
+
+Test: 1 passed, 1 total
+
+
+Running request: 40 Cancelación repetida req_040
+[network] Response succeeded req=req_040 status=204
+
+Test results:
+✅ Cancelación repetida responde 204
+
+Test: 1 passed, 1 total
+
+
+Running request: 41 Registro de resultado req_041
+[network] Response succeeded req=req_041 status=201
+
+Test results:
+✅ Registro de resultado responde 201
+
+Test: 1 passed, 1 total
+
+
+Running request: 42 Sin parámetros req_042
+[network] Response succeeded req=req_042 status=400
+
+Test results:
+✅ Sin parámetros responde 400
+
+Test: 1 passed, 1 total
+
+
+Running request: 43 Fecha futura req_043
+[network] Response succeeded req=req_043 status=400
+
+Test results:
+✅ Fecha futura responde 400
+
+Test: 1 passed, 1 total
+
+
+Running request: 44 Paciente inexistente req_044
+[network] Response succeeded req=req_044 status=400
+
+Test results:
+✅ Paciente inexistente responde 400
+
+Test: 1 passed, 1 total
+
+
+Running request: 45 Recepción no registra req_045
+[network] Response succeeded req=req_045 status=403
+
+Test results:
+✅ Recepción no registra responde 403
+
+Test: 1 passed, 1 total
+
+
+Running request: 46 Médico no registra req_046
+[network] Response succeeded req=req_046 status=403
+
+Test results:
+✅ Médico no registra responde 403
+
+Test: 1 passed, 1 total
+
+
+Running request: 47 Detalle por laboratorio req_047
+[network] Response succeeded req=req_047 status=200
+
+Test results:
+✅ Detalle por laboratorio responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 48 Administrador sin acceso clínico req_048
+[network] Response succeeded req=req_048 status=403
+
+Test results:
+✅ Administrador sin acceso clínico responde 403
+
+Test: 1 passed, 1 total
+
+
+Running request: 49 Paciente ajeno req_049
+[network] Response succeeded req=req_049 status=404
+
+Test results:
+✅ Paciente ajeno responde 404
+
+Test: 1 passed, 1 total
+
+
+Running request: 50 Los resultados no se editan req_050
+[network] Response succeeded req=req_050 status=405
+
+Test results:
+✅ Los resultados no se editan responde 405
+
+Test: 1 passed, 1 total
+
+
+Running request: 51 Los resultados no se borran req_051
+[network] Response succeeded req=req_051 status=405
+
+Test results:
+✅ Los resultados no se borran responde 405
+
+Test: 1 passed, 1 total
+
+
+Running request: 52 Mis recetas req_052
+[network] Response succeeded req=req_052 status=200
+
+Test results:
+✅ Mis recetas responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 53 Receta inexistente req_053
+[network] Response succeeded req=req_053 status=404
+
+Test results:
+✅ Receta inexistente responde 404
+
+Test: 1 passed, 1 total
+
+
+Running request: 54 Recepción sin acceso clínico req_054
+[network] Response succeeded req=req_054 status=403
+
+Test results:
+✅ Recepción sin acceso clínico responde 403
+
+Test: 1 passed, 1 total
+
+
+Running request: 55 Sin token req_055
+[network] Response succeeded req=req_055 status=401
+
+Test results:
+✅ Sin token responde 401
+
+Test: 1 passed, 1 total
+
+
+Running request: 56 Mis notificaciones req_056
+[network] Response succeeded req=req_056 status=200
+
+Test results:
+✅ Mis notificaciones responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 57 Sin leer req_057
+[network] Response succeeded req=req_057 status=200
+
+Test results:
+✅ Sin leer responde 200
+
+Test: 1 passed, 1 total
+
+
+Running request: 58 Recepción sin notificaciones req_058
+[network] Response succeeded req=req_058 status=403
+
+Test results:
+✅ Recepción sin notificaciones responde 403
+
+Test: 1 passed, 1 total
+
+
+Running request: 59 Auditoría para administrador req_059
+[network] Response succeeded req=req_059 status=200
+
+Test results:
+✅ Auditoría para administrador responde 200
+✅ Sin contenido clínico
+
+Test: 2 passed, 2 total
+
+
+Running request: 60 Auditoría prohibida a recepción req_060
+[network] Response succeeded req=req_060 status=403
+
+Test results:
+✅ Auditoría prohibida a recepción responde 403
+
+Test: 1 passed, 1 total
+
+
+Running request: 61 Usuarios prohibidos a médico req_061
+[network] Response succeeded req=req_061 status=403
+
+Test results:
+✅ Usuarios prohibidos a médico responde 403
+
+Test: 1 passed, 1 total
+
+
+
+Test Requests: 61 passed, 61 total
+Tests:         65 passed, 65 total
+
