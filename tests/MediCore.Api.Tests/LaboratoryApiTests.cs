@@ -407,8 +407,13 @@ public class LaboratoryApiTests(StackFixture stack)
         var db = scope.ServiceProvider.GetRequiredService<MediCoreDbContext>();
         var notification = new Notification
         {
-            PatientId = patientId, Type = NotificationTypes.LabResultReady, SourceId = labResultId, EventId = Guid.NewGuid(),
-            Title = "Tu resultado está disponible", Body = "Ya puedes consultar tu resultado.", ReadAtUtc = read ? DateTime.UtcNow : null,
+            PatientId = patientId,
+            Type = NotificationTypes.LabResultReady,
+            SourceId = labResultId,
+            EventId = Guid.NewGuid(),
+            Title = "Tu resultado está disponible",
+            Body = "Ya puedes consultar tu resultado.",
+            ReadAtUtc = read ? DateTime.UtcNow : null,
         };
         db.Notifications.Add(notification);
         await db.SaveChangesAsync();
