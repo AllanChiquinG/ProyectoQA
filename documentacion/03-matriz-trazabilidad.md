@@ -82,7 +82,7 @@ Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 sol
 | GEN-04 | Azure + Terraform (aprovisionar, modificar, destruir) | `infrastructure/terraform/{bootstrap,azure}` (estado remoto protegido, VM, red, NSG, IP, discos). Ciclo aprovisionar, modificar y destruir ejecutado con proveedor simulado (`documentacion/evidencias/iac-sin-costo.md`). **Sin despliegue real**: el equipo decidió no usar recursos de pago | 8, 12 | ◐ |
 | GEN-05 | Ansible (SO, Docker, reverse proxy) | `infrastructure/ansible` (roles `base`, `docker`, `medicore`; proxy Caddy en el Compose). Aplicado sin fallas sobre un Ubuntu 24.04 desechable, con la aplicación funcionando (`documentacion/evidencias/iac-sin-costo.md`). **Sin servidor en Azure** | 8, 12 | ◐ |
 | GEN-06 | API REST documentada (OpenAPI) | `AddOpenApi` + `/openapi/v1.json` en Development (sin esquema Bearer ni comentarios aún) | 1 | ◐ |
-| GEN-07 | SonarQube + Quality Gate | Puerta "MediCore" aprobada; rechazó código nuevo en la corrida 2; `reports/sonarqube/` | 11 | ✔ |
+| GEN-07 | SonarQube + Quality Gate | Puerta "MediCore" aprobada; rechazó código nuevo en las corridas 2, 7 y 8, y aprobó la 9; `reports/sonarqube/` | 11 | ✔ |
 | GEN-08 | Fortify, Dependency-Check, npm audit | Dependency-Check, npm audit y NuGet ejecutados. **Fortify sin ejecutar: falta licencia** (`scripts/sec-fortify.sh`) | 11 | ◐ |
 | GEN-09 | OWASP ZAP sobre QA | Web y API con 5 roles: 0 alertas altas, 40 de 45 operaciones alcanzadas; `reports/zap/` | 11 | ✔ |
 | GEN-10 | Cypress (smoke, crítico, regresión, negativo) | `tests/cypress/e2e/*.cy.js` (10 specs; ver fila superior y `tests/cypress/README.md`) | 10 | ◐ |
