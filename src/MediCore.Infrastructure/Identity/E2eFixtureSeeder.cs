@@ -45,6 +45,21 @@ public static class E2eFixtureSeeder
         }
 
         await SeedPatientAccountAsync(db, hasher, password, ct);
+        await SeedStaffAccountAsync(db, hasher, password, ct);
+        await db.SaveChangesAsync(ct);
+    }
+
+    /// <summary>Cuenta de personal (Recepción) dedicada a las pruebas de sesión y de cambio de rol: se puede cambiar de rol o revocar sin afectar a los usuarios de uso normal.</summary>
+    public const string StaffEmail = "e2e.acceso@example.com";
+
+    private static async Task SeedStaffAccountAsync(MediCoreDbContext db, IPasswordHasher<User> hasher, string password, CancellationToken ct)
+    {
+        var normalized = User.NormalizeEmail(StaffEmail);
+        if (await db.Users.AnyAsync(u => u.NormalizedEmail == normalized, ct)) return;
+
+        var user = new User { Email = StaffEmail, NormalizedEmail = normalized, DisplayName = "Cypress Acceso", Role = UserRole.Recepcion, PasswordHash = "" };
+        user.PasswordHash = hasher.HashPassword(user, password);
+        db.Users.Add(user);
         await db.SaveChangesAsync(ct);
     }
 

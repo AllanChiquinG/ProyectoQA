@@ -69,6 +69,49 @@ const tasks = {
     });
   },
 
+  /**
+   * Borra los pacientes de las pruebas web (identificación CYP-E2E-W*) y todo lo que depende de ellos. Solo de esos pacientes: nunca toca a nadie más.
+   * Los usa el spec de pacientes para empezar y terminar sin dejar registros.
+   */
+  async 'db:cleanE2eWebPatients'() {
+    return withDb(async (db) => {
+      const ids = `select "Id" from patients where "IdentificationNumber" like 'CYP-E2E-W%'`;
+      await db.query(`delete from notifications where "PatientId" in (${ids})`);
+      await db.query(`delete from outbox_messages where "Type" = 'LabResultReady' and "Payload"->>'patientId' in (select "Id"::text from patients where "IdentificationNumber" like 'CYP-E2E-W%')`);
+      await db.query(`delete from lab_results where "PatientId" in (${ids})`);
+      await db.query(`delete from prescriptions where "PatientId" in (${ids})`);
+      await db.query(`delete from consultations where "PatientId" in (${ids})`);
+      await db.query(`delete from appointments where "PatientId" in (${ids})`);
+      const result = await db.query(`delete from patients where "IdentificationNumber" like 'CYP-E2E-W%'`);
+      return result.rowCount;
+    });
+  },
+
+  /** Borra los médicos creados por el spec de Administrador (nombre "Dr. Cypress Web…"), con su horario y citas. Solo esos. */
+  async 'db:cleanE2eWebDoctors'() {
+    return withDb(async (db) => {
+      const ids = `select "Id" from doctors where "FullName" like '% Cypress Web%'`;
+      await db.query(`delete from doctor_schedules where "DoctorId" in (${ids})`);
+      await db.query(`delete from appointments where "DoctorId" in (${ids})`);
+      return (await db.query(`delete from doctors where "FullName" like '% Cypress Web%'`)).rowCount;
+    });
+  },
+
+  /**
+   * Resultado de laboratorio SIN evento en el outbox (como si la notificación no se hubiera generado): su estado queda "Pendiente" y WEB-18 ofrece
+   * "Reintentar notificación". Se inserta directo en la base local porque la API siempre guarda resultado y evento juntos.
+   */
+  async 'db:createPendingLabResult'({ patientId, examType }) {
+    return withDb(async (db) => {
+      const registeredBy = (await db.query(`select "Id" from users where "NormalizedEmail" = 'daniela.reyes@example.com'`)).rows[0].Id;
+      const id = (await db.query(
+        `insert into lab_results ("Id","PatientId","RegisteredByUserId","ExamType","PerformedOn","Notes","CreatedAtUtc") values (gen_random_uuid(), $1, $2, $3, current_date - 1, 'Sin evento', now()) returning "Id"`,
+        [patientId, registeredBy, examType])).rows[0].Id;
+      await db.query(`insert into lab_result_parameters ("Id","LabResultId","Position","Name","Value","Unit","ReferenceRange") values (gen_random_uuid(), $1, 1, 'Glucosa', '90', 'mg/dL', '70-100')`, [id]);
+      return id;
+    });
+  },
+
   /** Borra la información clínica (incluidos resultados de laboratorio y notificaciones) y las citas de los pacientes de prueba (identificación CYP-E2E-*). No toca a nadie más. */
   async 'db:cleanE2eClinical'() {
     return withDb(async (db) => {

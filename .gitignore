@@ -494,3 +494,6 @@ node_modules/
 
 # APK de desarrollo generado localmente
 artifacts/
+
+# Cuentas de demostración locales (con contraseña): nunca se versionan
+*.local.txt

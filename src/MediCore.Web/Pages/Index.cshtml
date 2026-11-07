@@ -1,15 +1,30 @@
 @page
-@using System.Security.Claims
+@using MediCore.Contracts
 @model IndexModel
 @{
     ViewData["Code"] = "INICIO";
     ViewData["Title"] = "Espacio de trabajo";
     ViewData["Subtitle"] = "Tu jornada de atención, en un solo lugar.";
     var firstName = (User.Identity?.Name ?? "").Split(' ', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
+
+    // Accesos directos a las pantallas del rol (las mismas del menú lateral).
+    var shortcuts = User.IsInRole(Roles.Administrador)
+        ? new[] { ("/Pacientes/Index", "Pacientes", "Registra y edita los datos generales de los pacientes."), ("/Medicos/Index", "Médicos", "El equipo de atención y su disponibilidad."), ("/Usuarios", "Usuarios y roles", "Accesos según la responsabilidad de cada persona.") }
+        : User.IsInRole(Roles.Medico)
+            ? new[] { ("/MiAgenda", "Mi agenda", "Tu jornada de atención del día."), ("/Pacientes/Index", "Pacientes autorizados", "Expedientes de quienes atiendes.") }
+            : User.IsInRole(Roles.Laboratorio)
+                ? new[] { ("/Laboratorio/Index", "Resultados de laboratorio", "Resultados organizados por paciente."), ("/Laboratorio/Registrar", "Registrar resultado", "Registra los valores del examen realizado.") }
+                : new[] { ("/Agenda/Index", "Agenda de citas", "Organiza la atención, un horario a la vez."), ("/Pacientes/Index", "Pacientes", "Información general, organizada y a tu alcance.") };
 }
 
 <div class="panel panelpad narrow">
     <h2>Hola, @firstName</h2>
-    <p class="sub">Tu sesión está iniciada. Verás aquí los módulos que corresponden a tu rol.</p>
-    <div class="notice">Los módulos de trabajo se habilitarán en las próximas entregas.</div>
+    <p class="sub">Tu sesión está iniciada. Estos son los módulos que corresponden a tu rol.</p>
+    @foreach (var (destino, title, text) in shortcuts)
+    {
+        <a class="mobcard shortcut" asp-page="@destino">
+            <h3>@title ↗</h3>
+            <p>@text</p>
+        </a>
+    }
 </div>
