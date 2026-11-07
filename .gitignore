@@ -505,3 +505,6 @@ infrastructure/terraform/**/*.tfvars
 infrastructure/ansible/inventory/qa.ini
 infrastructure/ansible/group_vars/**/vault.yml
 infrastructure/ansible/.vault_pass*
+
+# Cuentas de demostración locales (con contraseña): nunca se versionan
+*.local.txt

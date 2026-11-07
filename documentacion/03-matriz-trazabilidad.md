@@ -8,12 +8,12 @@ Las 293 pruebas xUnit actuales (44 unitarias, 50 de la lógica móvil y 199 de i
 
 | Entregable (documento, secciones 4, 8 y 12) | ID | Qué exige | Estado | Entrega |
 |---|---|---|---|---|
-| **Cypress** (web) | GEN-10 | Smoke, flujo funcional crítico, regresión y al menos un escenario negativo | ◐ **INICIADO** — `tests/cypress`: 3 specs y 26 pruebas (Recepción: 8; Médico: 10; Laboratorio: 8, con notificación asíncrona real vía RabbitMQ), 26/26 en Chrome 155 y en Electron 146 (ejecutadas contra la API y la web en contenedores Linux). Incluye varios negativos (conflicto de horario, consulta incompleta, resultado incompleto, médico sin relación, Recepción sin acceso a laboratorio). **Faltan**: smoke general, flujos de Administrador, regresión formal y más negativos | 10 |
+| **Cypress** (web) | GEN-10 | Smoke, flujo funcional crítico, regresión y al menos un escenario negativo | ◐ **AMPLIADO (web)** — `tests/cypress`: 10 specs y 102 pruebas, **102/102 en Chrome 155** contra la API y la web en contenedores Linux (acceso y permisos 19; Recepción: pacientes 12, agenda y reserva 12 + recorrido 8; Administrador 10; Médico: recorrido 10 + agenda, pacientes y receta 8; Laboratorio: recorrido 8 + listado, registro y notificación pendiente 8; pantalla pequeña 7). Incluye negativos (conflicto y doble reserva, validaciones, accesos ajenos 404/403, sesión vencida, rol cambiado). **No se re-ejecutó en Electron** tras la ampliación (las 26 anteriores sí pasaron en Electron 146). **Faltan**: smoke formal en el pipeline, auditoría de accesibilidad con axe/Lighthouse y la caída de servicios (se comprobó a mano con `scripts/web_conexion.py`, no con Cypress) | 10 |
 | **Insomnia** (API) | GEN-17 | Colección con pruebas positivas, negativas, de autenticación, autorización y errores | ○ **PENDIENTE** — no existe la colección | 10 |
 | **Maestro** (móvil) | GEN-11 | Entre 5 y 8 flujos de la app, con al menos un escenario negativo | ✔ **EJECUTADO** — `tests/maestro`: 8 flujos (login válido e inválido, reserva, consulta y cancelación, resultados, recetas, notificaciones, cierre de sesión; con negativos) **8/8 aprobados en el emulador Android 35** (`documentacion/evidencias/entrega-7-maestro.md`). Límites: un emulador, sin dispositivo físico | 7, 10 |
 | **Rendimiento con k6 o JMeter** | GEN-12, CRI-01, CRI-02 | Load, Stress y Spike con umbrales declarados antes de ejecutar (p95, tasa de error, throughput) y el escenario de alta demanda de citas con lecturas de agenda | ○ **PENDIENTE** — no hay scripts ni resultados | 13 |
 
-Cypress ya existe para el recorrido de Recepción (WEB-01 a WEB-04), el de Médico (WEB-11 a WEB-15) y el de Laboratorio (WEB-16 a WEB-18), pero **no cubre** el smoke general ni a Administrador, ni una regresión formal; el caso "RabbitMQ detenido" no es automatizable desde Cypress (se cubre con `MessagingTests` y `scripts/evidencia_laboratorio.py`).
+Cypress cubre ahora los recorridos web de Acceso, Recepción, Administrador, Médico y Laboratorio (ver fila GEN-10); **no cubre** el smoke del pipeline ni una auditoría de accesibilidad automatizada; el caso "RabbitMQ detenido" no es automatizable desde Cypress (se cubre con `MessagingTests` y `scripts/evidencia_laboratorio.py`) y la caída de la API se comprobó con `scripts/web_conexion.py`.
 
 Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 solicitudes al mismo horario, 24 pacientes por 4 horarios con lecturas simultáneas), que sirven como base del escenario pero **no cuentan como prueba de rendimiento** (no miden p95 ni throughput y no usan umbrales previos). La verificación manual en navegador está descrita en `04-registro-de-hallazgos.md` y tampoco sustituye a Cypress.
 
@@ -28,7 +28,7 @@ Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 sol
 | RF-05 | Registro/consulta de resultados de laboratorio (P2) | WEB-16…18; MOB-08, 09 (app: `Pages/LabResult*`) | `LabsController`, `LabResultAuthorizationHandler`, `Pages/Laboratorio`, pestaña Laboratorio de `Pages/Pacientes/Expediente` | `LaboratoryApiTests` (registro, validación, roles, IDOR, atomicidad, reintento, auditoría sin contenido), `LabResultAuthorizationTests`, `LabResultRequestValidationTests`; Cypress `laboratorio-resultados.cy.js`; Insomnia y Maestro pendientes | 6 | ✔ (web y API; móvil pendiente) |
 | RF-06 | Notificaciones al paciente (P2) | WEB-18; MOB-12 (app: `Pages/NotificationsPage`) | `NotificationsController` (`GET /api/notifications`, `unread-count`, `POST /{id}/read`), `Notification`, `NotificationConsumerService` | `LaboratoryApiTests` (notificaciones propias y ajenas), `MessagingTests` (notificación asíncrona real); Maestro pendiente | 6 | ◐ (falta la app móvil) |
 | RF-07 | Aplicación móvil para pacientes (P2) | MOB-01…12 | `src/MediCore.Mobile.Core` (cliente, sesión, ViewModels), `src/MediCore.Mobile` (vistas MAUI) | `MediCore.Mobile.Tests` (50), `MobileApiIntegrationTests` (17, API real); **Maestro 8/8 en emulador Android** | 7 | ✔ (probada en emulador; falta dispositivo físico) |
-| RF-08 | Usuarios y roles (diseño) | WEB-10 | `UsersController`, `Pages/Usuarios.cshtml` | `IdentityApiTests` (RBAC, cambio de rol); Cypress pendiente | 2 | ◐ |
+| RF-08 | Usuarios y roles (diseño) | WEB-10 | `UsersController`, `Pages/Usuarios.cshtml` | `IdentityApiTests` (RBAC, cambio de rol); Cypress `administrador.cy.js` (cambio de rol y su efecto, cuenta propia, acceso por rol) | 2 | ✔ |
 
 ## API de referencia
 
@@ -85,7 +85,7 @@ Lo que sí existe hoy y se reutilizará: pruebas de concurrencia por API (12 sol
 | GEN-07 | SonarQube + Quality Gate | — | 11 | ○ |
 | GEN-08 | Fortify, Dependency-Check, npm audit | — | 11 | ○ |
 | GEN-09 | OWASP ZAP sobre QA | — | 11 | ○ |
-| GEN-10 | Cypress (smoke, crítico, regresión, negativo) | `tests/cypress/e2e/recepcion-reserva.cy.js`, `medico-expediente.cy.js` y `laboratorio-resultados.cy.js` (ver pendientes arriba) | 10 | ◐ |
+| GEN-10 | Cypress (smoke, crítico, regresión, negativo) | `tests/cypress/e2e/*.cy.js` (10 specs; ver fila superior y `tests/cypress/README.md`) | 10 | ◐ |
 | GEN-11 | Maestro (5–8 flujos) | `tests/maestro/*.yaml` (8 flujos), `scripts/maestro_run.py` — 8/8 aprobados en emulador | 7, 10 | ✔ |
 | GEN-12 | k6/JMeter: Load, Stress, Spike con umbrales previos | — | 13 | ○ |
 | GEN-13 | Usabilidad (≥5 participantes) + Lighthouse/axe | — | 13 | ○ |

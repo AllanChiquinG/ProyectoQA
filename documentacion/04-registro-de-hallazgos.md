@@ -236,6 +236,33 @@ Evidencia: `documentacion/evidencias/entrega-7-pruebas.md`.
 
 Evidencia: `documentacion/evidencias/entrega-8-verificacion.md` y `entrega-8-maestro-qa.md`.
 
+## Web de extremo a extremo (2026-11-02) · Acceso, Recepción, Administrador, Médico y Laboratorio
+
+Prioridad cambiada: se pausó Azure/Terraform/Ansible/Jenkins y la app móvil (sin borrar nada) para revisar la web del personal. Rama `feature/web-extremo-a-extremo` (desde `main`; la entrega 8 sigue sin fusionar).
+
+### Qué se ejecutó (resultados reales)
+- **Cypress en Chrome 155: 102/102** (10 specs, ver `tests/cypress/README.md`) contra la API y la web en contenedores (`scripts/dev-stack-linux.sh`). No se re-ejecutó en Electron.
+- **xUnit: 293/293** (44 + 50 + 199) con `scripts/dotnet-linux.sh test MediCore.slnx`.
+- **Rastreo por rol** (`scripts/web_crawl.py`, solo GET): las 18 pantallas del diseño existen y responden; permisos por rol correctos; sin textos de "pendiente".
+- **Caída de la API** (`scripts/web_conexion.py`, a mano, no Cypress): todas las pantallas principales responden 200 con un mensaje en español ("No se pudo cargar…"), sin trazas; la API se volvió a levantar.
+
+### Hallazgos
+| ID | Tipo | Qué ocurrió | Resultado |
+|---|---|---|---|
+| HW-01 | Defecto | La página de inicio decía que las pantallas llegarían en "próximas entregas". | Accesos directos por rol. Corregido. |
+| HW-02 | Defecto | `max` de la fecha de nacimiento tenía un formato inválido y el navegador no limitaba fechas futuras. | Corregido (`yyyy-MM-dd`). |
+| HW-03 | Defecto (visible en celular) | Con el menú del Administrador (más enlaces) la página se ensanchaba a 427 px en una pantalla de 360 px. | `grid-template-columns: minmax(0,1fr)` en `app.css`; el menú se desplaza en su franja. Corregido. |
+| HW-04 | Defecto (visible en celular) | Las tablas anchas (médicos, usuarios, pacientes, resultados) podían ensanchar la página. | Se desplazan dentro de su panel. Corregido. |
+| HW-05 | Prueba | Tras elegir paciente en Reservar la página se recarga sola; la prueba actuaba antes de la recarga. | Las pruebas esperan cada recarga. No era defecto de la web. |
+| HW-06 | Prueba | La notificación del laboratorio es asíncrona: el estado "Enviada" no es inmediato. | La prueba acepta Enviada o Pendiente en el listado. |
+| HW-07 | Prueba | La tarea `db:createPendingLabResult` buscaba el correo en mayúsculas; el normalizado está en minúsculas. | Corregida. |
+
+### Pendiente / no comprobado
+- Auditoría de accesibilidad automatizada (axe/Lighthouse) y lector de pantalla: solo se comprobaron etiquetas, orden de teclado y desbordes con pruebas propias.
+- La concurrencia real de doble reserva se cubre con xUnit/API (la prueba Cypress reserva dos veces seguidas, no en paralelo).
+- Electron tras la ampliación; Firefox/Safari; navegadores móviles reales (solo viewport de 375 px).
+- Insomnia, k6/JMeter, Maestro adicional, Jenkins/DevSecOps y Azure siguen pendientes (pausados por decisión).
+
 ## Entregas anteriores
 
 Los hallazgos de las entregas 0 a 3 se trasladarán al registro formal de defectos en la entrega 14. Los principales: login con 503 por usar `localhost` para Redis (el cliente probaba IPv6 y Docker publica solo IPv4; corregido con `127.0.0.1`), una prueba que comparaba el `traceId` de dos respuestas de error, una prueba del catálogo de médicos afectada por la caché compartida con otras pruebas (se descarta la clave antes de insertar datos directos) y la interfaz de `IAsyncLifetime` de xUnit v2.

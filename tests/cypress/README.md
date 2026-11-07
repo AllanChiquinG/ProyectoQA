@@ -1,11 +1,21 @@
 # Pruebas end-to-end (Cypress)
 
-Pruebas de la web del personal. Hoy hay dos specs (18 pruebas):
+Pruebas de la web del personal: 10 specs, 102 pruebas (102/102 en Chrome 155). Todas las acciones del usuario van por la interfaz; la API solo prepara datos.
 
-- `recepcion-reserva.cy.js` (8): **Recepción** — agenda, reserva, detalle, cancelación con y sin confirmación, conflicto de horario y calendario.
-- `medico-expediente.cy.js` (10): **Médicos** — agenda, expediente (consultas, recetas y laboratorio pendiente), registrar consulta, receta con varios medicamentos, acceso denegado a un paciente sin relación y **expediente compartido**: un colega con relación de atención lee lo que escribió otro médico, no puede crear recetas sobre su consulta (ni por la pantalla ni por la API) y pierde el acceso si deja de tener relación.
+| Spec | Pruebas | Qué cubre |
+|---|---|---|
+| `acceso-permisos.cy.js` | 19 | Inicio y cierre de sesión, mensajes de error, sesión vencida o revocada, rol cambiado, accesos por rol y navegación por teclado |
+| `recepcion-pacientes.cy.js` | 12 | Lista, búsqueda, paginación, alta con validaciones, edición, etiquetas y pantalla pequeña |
+| `recepcion-agenda.cy.js` | 12 | Agenda (filtros, calendario, días sin atención o pasados), validaciones de la reserva, reserva, detalle, cancelación y doble reserva |
+| `recepcion-reserva.cy.js` | 8 | Recorrido principal de Recepción: reserva, detalle, cancelar con y sin confirmación, conflicto y calendario |
+| `administrador.cy.js` | 10 | Médicos (lista, búsqueda, alta, edición, validaciones), disponibilidad y su efecto en la reserva, usuarios y roles |
+| `medico-expediente.cy.js` | 10 | Médicos: agenda, expediente, consulta, receta con varios medicamentos y **expediente compartido** entre colegas |
+| `medico-agenda.cy.js` | 8 | Mi agenda, pacientes autorizados, pestañas del expediente y validaciones de la receta (máximo 10 medicamentos) |
+| `laboratorio-resultados.cy.js` | 8 | Registro de un resultado y notificación asíncrona real (RabbitMQ), vista del médico autorizado |
+| `laboratorio-completo.cy.js` | 8 | Listado, búsqueda, paginación, validaciones del registro, detalle y "Reintentar notificación" |
+| `pantalla-pequena.cy.js` | 7 | 375 px: inicio de sesión, inicio y menú de cada rol, pacientes |
 
-Faltan el *smoke* general, los flujos de Administrador y Laboratorio, una regresión formal y más escenarios negativos (entrega 10).
+Datos aislados: pacientes `CYP-E2E-*` (los de la web `CYP-E2E-W*`), médicos `e2e.medico`, `e2e.colega` y los "Dr. Cypress Web…", y la cuenta `e2e.acceso@example.com`. Las tareas `db:cleanE2eWebPatients`, `db:cleanE2eWebDoctors` y `db:cleanE2eClinical` borran solo esos datos al empezar y al terminar. `support/a11y.js` comprueba etiquetas y desbordes (no sustituye a axe/Lighthouse).
 
 ## Requisitos
 

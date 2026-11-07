@@ -12,6 +12,7 @@ Plataforma hospitalaria (Proyecto 2 de `Docs/Proyecto Final QA.docx`, curso 048 
 - Cambios de accesibilidad/adaptación permitidos sin alterar la identidad visual; explicarlos al hacerlos.
 - **Sin secretos en el repo.** Solo datos ficticios. Configuración sensible por variables de entorno / user-secrets; `.env.example` con valores de ejemplo.
 - Pendientes obligatorios de pruebas, siempre visibles en la matriz: ampliar Cypress (iniciado: Recepción y Médico), Insomnia, Maestro y k6/JMeter (las pruebas xUnit no los sustituyen). Registro de hallazgos y verificación manual: `documentacion/04-registro-de-hallazgos.md`.
+- **Sin atribuciones automáticas de Claude** en commits ni Pull Requests (nada de `Co-Authored-By`, firmas ni "Generated with Claude"). El autor es el usuario (`AllanChiquinG`, su correo de `git config`). Configurado en `.claude/settings.json` (`attribution` vacío). No reescribir el historial ni hacer force push sin que el usuario lo pida.
 - Una entrega pequeña a la vez; actualizar `documentacion/03-matriz-trazabilidad.md` en cada una. No declarar comprobaciones que no se ejecutaron.
 
 ## Decisiones técnicas acordadas
