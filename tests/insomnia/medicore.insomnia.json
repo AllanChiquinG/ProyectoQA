@@ -1,0 +1,1680 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_source": "medicore.generador",
+  "resources": [
+    {
+      "_id": "wrk_medicore",
+      "_type": "workspace",
+      "parentId": null,
+      "name": "MediCore API",
+      "scope": "collection",
+      "description": "Positivas, negativas, autenticación, autorización y errores.",
+      "modified": 1762400000000,
+      "created": 1762400000000
+    },
+    {
+      "_id": "env_base",
+      "_type": "environment",
+      "parentId": "wrk_medicore",
+      "name": "Base",
+      "data": {},
+      "modified": 1762400000000,
+      "created": 1762400000000
+    },
+    {
+      "_id": "env_medicore",
+      "_type": "environment",
+      "parentId": "env_base",
+      "name": "QA local",
+      "isPrivate": false,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "data": {
+        "base_url": "http://127.0.0.1:8080",
+        "password": "defina-SEED_DEV_PASSWORD"
+      }
+    },
+    {
+      "_id": "fld_1autenticación",
+      "_type": "request_group",
+      "parentId": "wrk_medicore",
+      "name": "1 Autenticación",
+      "metaSortKey": 3,
+      "modified": 1762400000000,
+      "created": 1762400000000
+    },
+    {
+      "_id": "req_001",
+      "_type": "request",
+      "parentId": "fld_1autenticación",
+      "name": "01 Salud de la API",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/health",
+      "headers": [],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 1,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Salud de la API responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\n"
+    },
+    {
+      "_id": "req_002",
+      "_type": "request",
+      "parentId": "fld_1autenticación",
+      "name": "02 Sin token",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/auth/me",
+      "headers": [],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 2,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Sin token responde 401', () => { insomnia.expect(insomnia.response.code).to.eql(401); });\n"
+    },
+    {
+      "_id": "req_003",
+      "_type": "request",
+      "parentId": "fld_1autenticación",
+      "name": "03 Token manipulado",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/auth/me",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6IkFkbWluaXN0cmFkb3IifQ.firma-invalida"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 3,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Token manipulado responde 401', () => { insomnia.expect(insomnia.response.code).to.eql(401); });\n"
+    },
+    {
+      "_id": "req_004",
+      "_type": "request",
+      "parentId": "fld_1autenticación",
+      "name": "04 Credenciales inválidas",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/auth/login",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 4,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Credenciales inválidas responde 401', () => { insomnia.expect(insomnia.response.code).to.eql(401); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"nadie@example.com\",\n  \"password\": \"incorrecta\"\n}"
+      }
+    },
+    {
+      "_id": "req_005",
+      "_type": "request",
+      "parentId": "fld_1autenticación",
+      "name": "05 Datos de acceso incompletos",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/auth/login",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 5,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Datos de acceso incompletos responde 400', () => { insomnia.expect(insomnia.response.code).to.eql(400); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"no-es-correo\",\n  \"password\": \"\"\n}"
+      }
+    },
+    {
+      "_id": "req_006",
+      "_type": "request",
+      "parentId": "fld_1autenticación",
+      "name": "06 Inicio de sesión recepcion",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/auth/login",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 6,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Inicio de sesión recepcion responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\ninsomnia.environment.set('token_recepcion', insomnia.response.json().accessToken);\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"elena.vargas@example.com\",\n  \"password\": \"{{ _.password }}\"\n}"
+      }
+    },
+    {
+      "_id": "req_007",
+      "_type": "request",
+      "parentId": "fld_1autenticación",
+      "name": "07 Inicio de sesión medico",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/auth/login",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 7,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Inicio de sesión medico responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\ninsomnia.environment.set('token_medico', insomnia.response.json().accessToken);\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"lucia.mendez@example.com\",\n  \"password\": \"{{ _.password }}\"\n}"
+      }
+    },
+    {
+      "_id": "req_008",
+      "_type": "request",
+      "parentId": "fld_1autenticación",
+      "name": "08 Inicio de sesión laboratorio",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/auth/login",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 8,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Inicio de sesión laboratorio responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\ninsomnia.environment.set('token_laboratorio', insomnia.response.json().accessToken);\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"daniela.reyes@example.com\",\n  \"password\": \"{{ _.password }}\"\n}"
+      }
+    },
+    {
+      "_id": "req_009",
+      "_type": "request",
+      "parentId": "fld_1autenticación",
+      "name": "09 Inicio de sesión admin",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/auth/login",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 9,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Inicio de sesión admin responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\ninsomnia.environment.set('token_admin', insomnia.response.json().accessToken);\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"{{ _.password }}\"\n}"
+      }
+    },
+    {
+      "_id": "req_010",
+      "_type": "request",
+      "parentId": "fld_1autenticación",
+      "name": "10 Inicio de sesión paciente",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/auth/login",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 10,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Inicio de sesión paciente responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\ninsomnia.environment.set('token_paciente', insomnia.response.json().accessToken);\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"ana.garcia@example.com\",\n  \"password\": \"{{ _.password }}\"\n}"
+      }
+    },
+    {
+      "_id": "req_011",
+      "_type": "request",
+      "parentId": "fld_1autenticación",
+      "name": "11 Usuario autenticado",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/auth/me",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 11,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Usuario autenticado responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\ninsomnia.test('No expone la contraseña', () => { insomnia.expect(insomnia.response.text()).to.not.include('asswordHash'); });\n"
+    },
+    {
+      "_id": "fld_2médicosydisponibilidad",
+      "_type": "request_group",
+      "parentId": "wrk_medicore",
+      "name": "2 Médicos y disponibilidad",
+      "metaSortKey": 15,
+      "modified": 1762400000000,
+      "created": 1762400000000
+    },
+    {
+      "_id": "req_012",
+      "_type": "request",
+      "parentId": "fld_2médicosydisponibilidad",
+      "name": "12 Catálogo de médicos",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/doctors",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 12,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Catálogo de médicos responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\ninsomnia.environment.set('doctor_id', insomnia.response.json().find(d => d.fullName.includes('Méndez')).id);\n"
+    },
+    {
+      "_id": "req_013",
+      "_type": "request",
+      "parentId": "fld_2médicosydisponibilidad",
+      "name": "13 Médico sin token",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/doctors",
+      "headers": [],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 13,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Médico sin token responde 401', () => { insomnia.expect(insomnia.response.code).to.eql(401); });\n"
+    },
+    {
+      "_id": "req_014",
+      "_type": "request",
+      "parentId": "fld_2médicosydisponibilidad",
+      "name": "14 Paciente no ve contacto del médico",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/doctors",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_paciente }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 14,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Paciente no ve contacto del médico responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\ninsomnia.test('Sin teléfono ni correo', () => { insomnia.expect(insomnia.response.json().every(d => !d.phone && !d.email)).to.eql(true); });\n"
+    },
+    {
+      "_id": "req_015",
+      "_type": "request",
+      "parentId": "fld_2médicosydisponibilidad",
+      "name": "15 Recepción no crea médicos",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/doctors",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 15,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Recepción no crea médicos responde 403', () => { insomnia.expect(insomnia.response.code).to.eql(403); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"fullName\": \"Dr. No Autorizado\",\n  \"specialty\": \"General\",\n  \"phone\": \"5555-1234\",\n  \"email\": \"no@example.com\"\n}"
+      }
+    },
+    {
+      "_id": "req_016",
+      "_type": "request",
+      "parentId": "fld_2médicosydisponibilidad",
+      "name": "16 Disponibilidad",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/doctors/{{ _.doctor_id }}/availability?date={{ _.booking_date }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 16,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "const d = new Date(Date.now() + (7 + Math.floor(Math.random() * 75)) * 86400000);\nwhile ([0, 6].includes(d.getUTCDay())) d.setUTCDate(d.getUTCDate() + 1);\ninsomnia.environment.set('booking_date', d.toISOString().slice(0, 10));\n",
+      "afterResponseScript": "insomnia.test('Disponibilidad responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\ninsomnia.environment.set('slot', insomnia.response.json().slots.find(s => s.available).time);\n"
+    },
+    {
+      "_id": "req_017",
+      "_type": "request",
+      "parentId": "fld_2médicosydisponibilidad",
+      "name": "17 Disponibilidad con fecha inválida",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/doctors/{{ _.doctor_id }}/availability?date=no-es-fecha",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 17,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Disponibilidad con fecha inválida responde 400', () => { insomnia.expect(insomnia.response.code).to.eql(400); });\n"
+    },
+    {
+      "_id": "req_018",
+      "_type": "request",
+      "parentId": "fld_2médicosydisponibilidad",
+      "name": "18 Disponibilidad de médico inexistente",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/doctors/00000000-0000-0000-0000-000000000001/availability?date={{ _.booking_date }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 18,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Disponibilidad de médico inexistente responde 404', () => { insomnia.expect(insomnia.response.code).to.eql(404); });\n"
+    },
+    {
+      "_id": "fld_3pacientes",
+      "_type": "request_group",
+      "parentId": "wrk_medicore",
+      "name": "3 Pacientes",
+      "metaSortKey": 23,
+      "modified": 1762400000000,
+      "created": 1762400000000
+    },
+    {
+      "_id": "req_019",
+      "_type": "request",
+      "parentId": "fld_3pacientes",
+      "name": "19 Alta de paciente",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/patients",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 19,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "insomnia.environment.set('unique', String(Date.now()));\n",
+      "afterResponseScript": "insomnia.test('Alta de paciente responde 201', () => { insomnia.expect(insomnia.response.code).to.eql(201); });\ninsomnia.environment.set('patient_id', insomnia.response.json().id);\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"fullName\": \"Paciente Insomnia\",\n  \"identificationNumber\": \"INS-{{ _.unique }}\",\n  \"birthDate\": \"1990-05-20\",\n  \"phone\": \"5555-1234\",\n  \"email\": \"insomnia@example.com\"\n}"
+      }
+    },
+    {
+      "_id": "req_020",
+      "_type": "request",
+      "parentId": "fld_3pacientes",
+      "name": "20 Identificación duplicada",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/patients",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 20,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Identificación duplicada responde 409', () => { insomnia.expect(insomnia.response.code).to.eql(409); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"fullName\": \"Paciente Insomnia\",\n  \"identificationNumber\": \"INS-{{ _.unique }}\",\n  \"birthDate\": \"1990-05-20\",\n  \"phone\": \"5555-1234\",\n  \"email\": \"insomnia@example.com\"\n}"
+      }
+    },
+    {
+      "_id": "req_021",
+      "_type": "request",
+      "parentId": "fld_3pacientes",
+      "name": "21 Datos inválidos",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/patients",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 21,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Datos inválidos responde 400', () => { insomnia.expect(insomnia.response.code).to.eql(400); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"fullName\": \"\",\n  \"identificationNumber\": \"\",\n  \"birthDate\": \"2999-01-01\",\n  \"phone\": \"x\",\n  \"email\": \"x\"\n}"
+      }
+    },
+    {
+      "_id": "req_022",
+      "_type": "request",
+      "parentId": "fld_3pacientes",
+      "name": "22 Lectura por recepción",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/patients/{{ _.patient_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 22,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Lectura por recepción responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\n"
+    },
+    {
+      "_id": "req_023",
+      "_type": "request",
+      "parentId": "fld_3pacientes",
+      "name": "23 Lectura sin token",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/patients/{{ _.patient_id }}",
+      "headers": [],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 23,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Lectura sin token responde 401', () => { insomnia.expect(insomnia.response.code).to.eql(401); });\n"
+    },
+    {
+      "_id": "req_024",
+      "_type": "request",
+      "parentId": "fld_3pacientes",
+      "name": "24 Laboratorio sin acceso a pacientes",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/patients/{{ _.patient_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_laboratorio }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 24,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Laboratorio sin acceso a pacientes responde 403', () => { insomnia.expect(insomnia.response.code).to.eql(403); });\n"
+    },
+    {
+      "_id": "req_025",
+      "_type": "request",
+      "parentId": "fld_3pacientes",
+      "name": "25 Médico sin relación de atención",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/patients/{{ _.patient_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_medico }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 25,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Médico sin relación de atención responde 404', () => { insomnia.expect(insomnia.response.code).to.eql(404); });\n"
+    },
+    {
+      "_id": "req_026",
+      "_type": "request",
+      "parentId": "fld_3pacientes",
+      "name": "26 Otro paciente no lo puede leer",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/patients/{{ _.patient_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_paciente }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 26,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Otro paciente no lo puede leer responde 404', () => { insomnia.expect(insomnia.response.code).to.eql(404); });\n"
+    },
+    {
+      "_id": "req_027",
+      "_type": "request",
+      "parentId": "fld_3pacientes",
+      "name": "27 Paciente inexistente",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/patients/00000000-0000-0000-0000-000000000001",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 27,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Paciente inexistente responde 404', () => { insomnia.expect(insomnia.response.code).to.eql(404); });\n"
+    },
+    {
+      "_id": "fld_4citas",
+      "_type": "request_group",
+      "parentId": "wrk_medicore",
+      "name": "4 Citas",
+      "metaSortKey": 33,
+      "modified": 1762400000000,
+      "created": 1762400000000
+    },
+    {
+      "_id": "req_028",
+      "_type": "request",
+      "parentId": "fld_4citas",
+      "name": "28 Reserva",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/appointments",
+      "headers": [
+        {
+          "name": "Idempotency-Key",
+          "value": "ins-{{ _.unique }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 28,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Reserva responde 201', () => { insomnia.expect(insomnia.response.code).to.eql(201); });\ninsomnia.environment.set('appointment_id', insomnia.response.json().id);\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.patient_id }}\",\n  \"doctorId\": \"{{ _.doctor_id }}\",\n  \"date\": \"{{ _.booking_date }}\",\n  \"time\": \"{{ _.slot }}\",\n  \"reason\": \"Control\"\n}"
+      }
+    },
+    {
+      "_id": "req_029",
+      "_type": "request",
+      "parentId": "fld_4citas",
+      "name": "29 Reintento con la misma clave",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/appointments",
+      "headers": [
+        {
+          "name": "Idempotency-Key",
+          "value": "ins-{{ _.unique }}"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 29,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Reintento con la misma clave responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\ninsomnia.test('Devuelve la misma cita', () => { insomnia.expect(insomnia.response.json().id).to.eql(insomnia.environment.get('appointment_id')); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.patient_id }}\",\n  \"doctorId\": \"{{ _.doctor_id }}\",\n  \"date\": \"{{ _.booking_date }}\",\n  \"time\": \"{{ _.slot }}\",\n  \"reason\": \"Control\"\n}"
+      }
+    },
+    {
+      "_id": "req_031",
+      "_type": "request",
+      "parentId": "fld_4citas",
+      "name": "31 Segundo paciente",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/patients",
+      "authentication": {},
+      "parameters": [],
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "metaSortKey": 29.5,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\"fullName\": \"Paciente Insomnia\", \"identificationNumber\": \"INS2-{{ _.unique }}\", \"birthDate\": \"1990-05-20\", \"phone\": \"5555-1234\", \"email\": \"insomnia@example.com\"}"
+      },
+      "afterResponseScript": "insomnia.test('Segundo paciente responde 201', () => { insomnia.expect(insomnia.response.code).to.eql(201); });\ninsomnia.environment.set('other_patient_id', insomnia.response.json().id);\n"
+    },
+    {
+      "_id": "req_030",
+      "_type": "request",
+      "parentId": "fld_4citas",
+      "name": "30 Otro paciente en el mismo horario",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/appointments",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 30,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Otro paciente en el mismo horario responde 409', () => { insomnia.expect(insomnia.response.code).to.eql(409); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.other_patient_id }}\",\n  \"doctorId\": \"{{ _.doctor_id }}\",\n  \"date\": \"{{ _.booking_date }}\",\n  \"time\": \"{{ _.slot }}\"\n}"
+      }
+    },
+    {
+      "_id": "req_032",
+      "_type": "request",
+      "parentId": "fld_4citas",
+      "name": "32 Horario fuera de la atención",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/appointments",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 32,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Horario fuera de la atención responde 400', () => { insomnia.expect(insomnia.response.code).to.eql(400); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.patient_id }}\",\n  \"doctorId\": \"{{ _.doctor_id }}\",\n  \"date\": \"{{ _.booking_date }}\",\n  \"time\": \"22:00\",\n  \"reason\": \"Control\"\n}"
+      }
+    },
+    {
+      "_id": "req_033",
+      "_type": "request",
+      "parentId": "fld_4citas",
+      "name": "33 Fecha pasada",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/appointments",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 33,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Fecha pasada responde 400', () => { insomnia.expect(insomnia.response.code).to.eql(400); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.patient_id }}\",\n  \"doctorId\": \"{{ _.doctor_id }}\",\n  \"date\": \"2020-01-06\",\n  \"time\": \"{{ _.slot }}\",\n  \"reason\": \"Control\"\n}"
+      }
+    },
+    {
+      "_id": "req_034",
+      "_type": "request",
+      "parentId": "fld_4citas",
+      "name": "34 Clave de idempotencia inválida",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/appointments",
+      "headers": [
+        {
+          "name": "Idempotency-Key",
+          "value": "x"
+        },
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 34,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Clave de idempotencia inválida responde 400', () => { insomnia.expect(insomnia.response.code).to.eql(400); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.patient_id }}\",\n  \"doctorId\": \"{{ _.doctor_id }}\",\n  \"date\": \"{{ _.booking_date }}\",\n  \"time\": \"{{ _.slot }}\",\n  \"reason\": \"Control\"\n}"
+      }
+    },
+    {
+      "_id": "req_035",
+      "_type": "request",
+      "parentId": "fld_4citas",
+      "name": "35 Paciente reserva para otro",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/appointments",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_paciente }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 35,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Paciente reserva para otro responde 404', () => { insomnia.expect(insomnia.response.code).to.eql(404); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.patient_id }}\",\n  \"doctorId\": \"{{ _.doctor_id }}\",\n  \"date\": \"{{ _.booking_date }}\",\n  \"time\": \"{{ _.slot }}\",\n  \"reason\": \"Control\"\n}"
+      }
+    },
+    {
+      "_id": "req_036",
+      "_type": "request",
+      "parentId": "fld_4citas",
+      "name": "36 Laboratorio no reserva",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/appointments",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_laboratorio }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 36,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Laboratorio no reserva responde 403', () => { insomnia.expect(insomnia.response.code).to.eql(403); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.patient_id }}\",\n  \"doctorId\": \"{{ _.doctor_id }}\",\n  \"date\": \"{{ _.booking_date }}\",\n  \"time\": \"{{ _.slot }}\",\n  \"reason\": \"Control\"\n}"
+      }
+    },
+    {
+      "_id": "req_037",
+      "_type": "request",
+      "parentId": "fld_4citas",
+      "name": "37 Detalle de la cita",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/appointments/{{ _.appointment_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 37,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Detalle de la cita responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\n"
+    },
+    {
+      "_id": "req_038",
+      "_type": "request",
+      "parentId": "fld_4citas",
+      "name": "38 Paciente ajeno no ve la cita",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/appointments/{{ _.appointment_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_paciente }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 38,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Paciente ajeno no ve la cita responde 404', () => { insomnia.expect(insomnia.response.code).to.eql(404); });\n"
+    },
+    {
+      "_id": "req_039",
+      "_type": "request",
+      "parentId": "fld_4citas",
+      "name": "39 Cancelación",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/appointments/{{ _.appointment_id }}/cancel",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 39,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Cancelación responde 204', () => { insomnia.expect(insomnia.response.code).to.eql(204); });\n"
+    },
+    {
+      "_id": "req_040",
+      "_type": "request",
+      "parentId": "fld_4citas",
+      "name": "40 Cancelación repetida",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/appointments/{{ _.appointment_id }}/cancel",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 40,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Cancelación repetida responde 204', () => { insomnia.expect(insomnia.response.code).to.eql(204); });\n"
+    },
+    {
+      "_id": "fld_5laboratorio",
+      "_type": "request_group",
+      "parentId": "wrk_medicore",
+      "name": "5 Laboratorio",
+      "metaSortKey": 47,
+      "modified": 1762400000000,
+      "created": 1762400000000
+    },
+    {
+      "_id": "req_041",
+      "_type": "request",
+      "parentId": "fld_5laboratorio",
+      "name": "41 Registro de resultado",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/labs/results",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_laboratorio }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 41,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Registro de resultado responde 201', () => { insomnia.expect(insomnia.response.code).to.eql(201); });\ninsomnia.environment.set('lab_id', insomnia.response.json().id);\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.patient_id }}\",\n  \"examType\": \"Química sanguínea\",\n  \"performedOn\": \"2026-01-15\",\n  \"notes\": \"Prueba de API\",\n  \"parameters\": [\n    {\n      \"name\": \"Glucosa\",\n      \"value\": \"92\",\n      \"unit\": \"mg/dL\",\n      \"referenceRange\": \"70-100\"\n    }\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_042",
+      "_type": "request",
+      "parentId": "fld_5laboratorio",
+      "name": "42 Sin parámetros",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/labs/results",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_laboratorio }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 42,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Sin parámetros responde 400', () => { insomnia.expect(insomnia.response.code).to.eql(400); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.patient_id }}\",\n  \"examType\": \"Química sanguínea\",\n  \"performedOn\": \"2026-01-15\",\n  \"notes\": \"Prueba de API\",\n  \"parameters\": []\n}"
+      }
+    },
+    {
+      "_id": "req_043",
+      "_type": "request",
+      "parentId": "fld_5laboratorio",
+      "name": "43 Fecha futura",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/labs/results",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_laboratorio }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 43,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Fecha futura responde 400', () => { insomnia.expect(insomnia.response.code).to.eql(400); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.patient_id }}\",\n  \"examType\": \"Química sanguínea\",\n  \"performedOn\": \"2999-01-01\",\n  \"notes\": \"Prueba de API\",\n  \"parameters\": [\n    {\n      \"name\": \"Glucosa\",\n      \"value\": \"92\",\n      \"unit\": \"mg/dL\",\n      \"referenceRange\": \"70-100\"\n    }\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_044",
+      "_type": "request",
+      "parentId": "fld_5laboratorio",
+      "name": "44 Paciente inexistente",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/labs/results",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_laboratorio }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 44,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Paciente inexistente responde 400', () => { insomnia.expect(insomnia.response.code).to.eql(400); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"00000000-0000-0000-0000-000000000001\",\n  \"examType\": \"Química sanguínea\",\n  \"performedOn\": \"2026-01-15\",\n  \"notes\": \"Prueba de API\",\n  \"parameters\": [\n    {\n      \"name\": \"Glucosa\",\n      \"value\": \"92\",\n      \"unit\": \"mg/dL\",\n      \"referenceRange\": \"70-100\"\n    }\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_045",
+      "_type": "request",
+      "parentId": "fld_5laboratorio",
+      "name": "45 Recepción no registra",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/labs/results",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 45,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Recepción no registra responde 403', () => { insomnia.expect(insomnia.response.code).to.eql(403); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.patient_id }}\",\n  \"examType\": \"Química sanguínea\",\n  \"performedOn\": \"2026-01-15\",\n  \"notes\": \"Prueba de API\",\n  \"parameters\": [\n    {\n      \"name\": \"Glucosa\",\n      \"value\": \"92\",\n      \"unit\": \"mg/dL\",\n      \"referenceRange\": \"70-100\"\n    }\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_046",
+      "_type": "request",
+      "parentId": "fld_5laboratorio",
+      "name": "46 Médico no registra",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/labs/results",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_medico }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 46,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Médico no registra responde 403', () => { insomnia.expect(insomnia.response.code).to.eql(403); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.patient_id }}\",\n  \"examType\": \"Química sanguínea\",\n  \"performedOn\": \"2026-01-15\",\n  \"notes\": \"Prueba de API\",\n  \"parameters\": [\n    {\n      \"name\": \"Glucosa\",\n      \"value\": \"92\",\n      \"unit\": \"mg/dL\",\n      \"referenceRange\": \"70-100\"\n    }\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_047",
+      "_type": "request",
+      "parentId": "fld_5laboratorio",
+      "name": "47 Detalle por laboratorio",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/labs/results/{{ _.lab_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_laboratorio }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 47,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Detalle por laboratorio responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\n"
+    },
+    {
+      "_id": "req_048",
+      "_type": "request",
+      "parentId": "fld_5laboratorio",
+      "name": "48 Administrador sin acceso clínico",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/labs/results/{{ _.lab_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 48,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Administrador sin acceso clínico responde 403', () => { insomnia.expect(insomnia.response.code).to.eql(403); });\n"
+    },
+    {
+      "_id": "req_049",
+      "_type": "request",
+      "parentId": "fld_5laboratorio",
+      "name": "49 Paciente ajeno",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/labs/results/{{ _.lab_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_paciente }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 49,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Paciente ajeno responde 404', () => { insomnia.expect(insomnia.response.code).to.eql(404); });\n"
+    },
+    {
+      "_id": "req_050",
+      "_type": "request",
+      "parentId": "fld_5laboratorio",
+      "name": "50 Los resultados no se editan",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/api/labs/results/{{ _.lab_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_laboratorio }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 50,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Los resultados no se editan responde 405', () => { insomnia.expect(insomnia.response.code).to.eql(405); });\n",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"patientId\": \"{{ _.patient_id }}\",\n  \"examType\": \"Química sanguínea\",\n  \"performedOn\": \"2026-01-15\",\n  \"notes\": \"Prueba de API\",\n  \"parameters\": [\n    {\n      \"name\": \"Glucosa\",\n      \"value\": \"92\",\n      \"unit\": \"mg/dL\",\n      \"referenceRange\": \"70-100\"\n    }\n  ]\n}"
+      }
+    },
+    {
+      "_id": "req_051",
+      "_type": "request",
+      "parentId": "fld_5laboratorio",
+      "name": "51 Los resultados no se borran",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/api/labs/results/{{ _.lab_id }}",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_laboratorio }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 51,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Los resultados no se borran responde 405', () => { insomnia.expect(insomnia.response.code).to.eql(405); });\n"
+    },
+    {
+      "_id": "fld_6recetas",
+      "_type": "request_group",
+      "parentId": "wrk_medicore",
+      "name": "6 Recetas",
+      "metaSortKey": 59,
+      "modified": 1762400000000,
+      "created": 1762400000000
+    },
+    {
+      "_id": "req_052",
+      "_type": "request",
+      "parentId": "fld_6recetas",
+      "name": "52 Mis recetas",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/prescriptions/me",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_paciente }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 52,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Mis recetas responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\n"
+    },
+    {
+      "_id": "req_053",
+      "_type": "request",
+      "parentId": "fld_6recetas",
+      "name": "53 Receta inexistente",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/prescriptions/00000000-0000-0000-0000-000000000001",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_medico }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 53,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Receta inexistente responde 404', () => { insomnia.expect(insomnia.response.code).to.eql(404); });\n"
+    },
+    {
+      "_id": "req_054",
+      "_type": "request",
+      "parentId": "fld_6recetas",
+      "name": "54 Recepción sin acceso clínico",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/prescriptions/00000000-0000-0000-0000-000000000001",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 54,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Recepción sin acceso clínico responde 403', () => { insomnia.expect(insomnia.response.code).to.eql(403); });\n"
+    },
+    {
+      "_id": "req_055",
+      "_type": "request",
+      "parentId": "fld_6recetas",
+      "name": "55 Sin token",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/prescriptions/00000000-0000-0000-0000-000000000001",
+      "headers": [],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 55,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Sin token responde 401', () => { insomnia.expect(insomnia.response.code).to.eql(401); });\n"
+    },
+    {
+      "_id": "fld_7notificacionesyauditoría",
+      "_type": "request_group",
+      "parentId": "wrk_medicore",
+      "name": "7 Notificaciones y auditoría",
+      "metaSortKey": 64,
+      "modified": 1762400000000,
+      "created": 1762400000000
+    },
+    {
+      "_id": "req_056",
+      "_type": "request",
+      "parentId": "fld_7notificacionesyauditoría",
+      "name": "56 Mis notificaciones",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/notifications",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_paciente }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 56,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Mis notificaciones responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\n"
+    },
+    {
+      "_id": "req_057",
+      "_type": "request",
+      "parentId": "fld_7notificacionesyauditoría",
+      "name": "57 Sin leer",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/notifications/unread-count",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_paciente }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 57,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Sin leer responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\n"
+    },
+    {
+      "_id": "req_058",
+      "_type": "request",
+      "parentId": "fld_7notificacionesyauditoría",
+      "name": "58 Recepción sin notificaciones",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/notifications",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 58,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Recepción sin notificaciones responde 403', () => { insomnia.expect(insomnia.response.code).to.eql(403); });\n"
+    },
+    {
+      "_id": "req_059",
+      "_type": "request",
+      "parentId": "fld_7notificacionesyauditoría",
+      "name": "59 Auditoría para administrador",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/audit?take=20",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_admin }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 59,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Auditoría para administrador responde 200', () => { insomnia.expect(insomnia.response.code).to.eql(200); });\ninsomnia.test('Sin contenido clínico', () => { insomnia.expect(insomnia.response.text()).to.not.include('Glucosa'); });\n"
+    },
+    {
+      "_id": "req_060",
+      "_type": "request",
+      "parentId": "fld_7notificacionesyauditoría",
+      "name": "60 Auditoría prohibida a recepción",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/audit",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_recepcion }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 60,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Auditoría prohibida a recepción responde 403', () => { insomnia.expect(insomnia.response.code).to.eql(403); });\n"
+    },
+    {
+      "_id": "req_061",
+      "_type": "request",
+      "parentId": "fld_7notificacionesyauditoría",
+      "name": "61 Usuarios prohibidos a médico",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/users",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{ _.token_medico }}"
+        }
+      ],
+      "authentication": {},
+      "parameters": [],
+      "metaSortKey": 61,
+      "modified": 1762400000000,
+      "created": 1762400000000,
+      "isPrivate": false,
+      "settingFollowRedirects": "global",
+      "preRequestScript": "",
+      "afterResponseScript": "insomnia.test('Usuarios prohibidos a médico responde 403', () => { insomnia.expect(insomnia.response.code).to.eql(403); });\n"
+    }
+  ]
+}

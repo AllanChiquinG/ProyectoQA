@@ -59,8 +59,15 @@ public static class AgendaBuilder
 
         return (new ApiResult(ApiStatus.Ok), new AgendaDay
         {
-            Date = date, Today = calendar.Today, DoctorId = doctor.Id, DoctorName = doctor.FullName,
-            IsWorkingDay = working || appointments.Count > 0, Rows = rows, PagePath = pagePath, IsReception = isReception, Doctors = doctors,
+            Date = date,
+            Today = calendar.Today,
+            DoctorId = doctor.Id,
+            DoctorName = doctor.FullName,
+            IsWorkingDay = working || appointments.Count > 0,
+            Rows = rows,
+            PagePath = pagePath,
+            IsReception = isReception,
+            Doctors = doctors,
         });
     }
 }

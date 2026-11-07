@@ -36,7 +36,7 @@ public sealed class AppointmentAuthorizationHandler : AuthorizationHandler<Opera
                 context.Succeed(requirement);
                 break;
 
-            // Administrador, Laboratorio y cualquier otro caso: sin acceso.
+                // Administrador, Laboratorio y cualquier otro caso: sin acceso.
         }
 
         return Task.CompletedTask;

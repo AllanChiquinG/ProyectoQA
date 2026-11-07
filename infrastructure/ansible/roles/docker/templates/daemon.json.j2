@@ -1,0 +1,7 @@
+{
+  "log-driver": "json-file",
+  "log-opts": { "max-size": "10m", "max-file": "3" },
+  "live-restore": true{% if medicore_data_disk_device | length > 0 %},
+  "data-root": "{{ medicore_data_mount }}/docker"{% endif %}
+
+}

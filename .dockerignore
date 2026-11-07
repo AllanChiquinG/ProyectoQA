@@ -1,0 +1,25 @@
+# El contexto de construcción es la raíz del repositorio: se excluye todo lo que no forma parte de las imágenes.
+**/bin
+**/obj
+**/node_modules
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+!.env.qa.example
+artifacts
+reports
+Docs
+Referencias
+documentacion
+infrastructure
+tests
+**/*.md
+PR-*.md
+src/MediCore.Mobile
+src/MediCore.Mobile.Core
+**/.vs
+**/*.user
+*.tfstate*
+.terraform

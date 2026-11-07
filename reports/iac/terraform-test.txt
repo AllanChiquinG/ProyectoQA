@@ -1,0 +1,8 @@
+tests/simulacion.tftest.hcl... in progress
+  run "aprovisionar"... pass
+  run "modificar"... pass
+  run "rechaza_ssh_abierto_a_internet"... pass
+tests/simulacion.tftest.hcl... tearing down
+tests/simulacion.tftest.hcl... pass
+
+Success! 3 passed, 0 failed.

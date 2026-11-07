@@ -7,6 +7,7 @@ using MediCore.Domain.Auditing;
 using MediCore.Domain.Doctors;
 using MediCore.Domain.Patients;
 using MediCore.Domain.Scheduling;
+using MediCore.Infrastructure.Messaging;
 using MediCore.Infrastructure.Auditing;
 using MediCore.Infrastructure.Persistence;
 using MediCore.Infrastructure.Scheduling;
@@ -184,6 +185,7 @@ public partial class AppointmentsController(
                 await db.Database.ExecuteSqlAsync($"SELECT pg_advisory_xact_lock(hashtextextended({patientLock}, 0))", ct);
 
                 db.Appointments.Add(appointment);
+                db.OutboxMessages.Add(OutboxEvents.AppointmentCreated(appointment.Id, appointment.PatientId, appointment.CreatedAtUtc));
                 await db.SaveChangesAsync(ct);
                 await transaction.CommitAsync(ct);
                 break;
@@ -227,12 +229,22 @@ public partial class AppointmentsController(
         // Actualización condicional y atómica: si dos solicitudes cancelan a la vez, solo una cambia la fila.
         var now = time.GetUtcNow().UtcDateTime;
         var userId = User.UserId();
+        await using var transaction = await db.Database.BeginTransactionAsync(ct);
         var changed = await db.Appointments
             .Where(a => a.Id == id && a.Status == AppointmentStatus.Confirmed)
             .ExecuteUpdateAsync(s => s
                 .SetProperty(a => a.Status, AppointmentStatus.Cancelled)
                 .SetProperty(a => a.CancelledAtUtc, now)
                 .SetProperty(a => a.CancelledByUserId, userId), ct);
+
+        if (changed == 1)
+        {
+            // Outbox transaccional: la cancelación y su evento se guardan juntos o no se guarda ninguno.
+            db.OutboxMessages.Add(OutboxEvents.AppointmentCancelled(id, appointment.PatientId, now));
+            await db.SaveChangesAsync(ct);
+        }
+
+        await transaction.CommitAsync(ct);
 
         if (changed == 1)
         {

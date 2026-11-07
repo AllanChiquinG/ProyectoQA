@@ -1,0 +1,9 @@
+{
+  "dependency-check": {
+    "CVE-2018-1115": "Falso positivo: la NVD describe PostgreSQL servidor (pg_catalog.pg_logfile_rotate); Dependency-Check lo asoció a la biblioteca cliente Npgsql.EntityFrameworkCore.PostgreSQL 10.0.3. El servidor de QA es PostgreSQL 17.11.",
+    "CVE-2018-16850": "Falso positivo: afecta a pg_upgrade y pg_dump del servidor PostgreSQL 10 y 11, no a la biblioteca cliente. El servidor de QA es PostgreSQL 17.11.",
+    "CVE-2019-10211": "Falso positivo: afecta al instalador de PostgreSQL en Windows, no a la biblioteca cliente ni a la imagen Linux de QA.",
+    "CVE-2025-49844": "Falso positivo en la biblioteca StackExchange.Redis: el defecto está en el servidor Redis y se corrigió en 7.4.6. El servidor de QA es Redis 7.4.12."
+  },
+  "zap": {}
+}

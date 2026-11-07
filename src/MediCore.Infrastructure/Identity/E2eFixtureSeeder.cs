@@ -85,8 +85,13 @@ public static class E2eFixtureSeeder
         {
             db.Patients.Add(new Patient
             {
-                FullName = "Cypress Paciente App", IdentificationNumber = PatientIdentification, NormalizedIdentification = PatientIdentification,
-                BirthDate = new DateOnly(1992, 3, 15), Phone = "5550 0000", Email = PatientEmail, UserId = user.Id,
+                FullName = "Cypress Paciente App",
+                IdentificationNumber = PatientIdentification,
+                NormalizedIdentification = PatientIdentification,
+                BirthDate = new DateOnly(1992, 3, 15),
+                Phone = "5550 0000",
+                Email = PatientEmail,
+                UserId = user.Id,
             });
         }
         else if (patient.UserId is null)

@@ -1,0 +1,595 @@
+[STARTED] [07:52:57]  Verifying Cypress can run /root/.cache/Cypress/16.2.0/Cypress
+[COMPLETED] [07:52:58]  Verified Cypress!       /root/.cache/Cypress/16.2.0/Cypress
+
+[90m====================================================================================================[39m
+
+[0m  ([4m[1mRun Starting[22m[24m)[0m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mCypress:[39m        16.2.0                                                                         [90m│[39m
+[90m  │[39m [90mBrowser:[39m        Chrome 156 [90m(headless)[39m                                                          [90m│[39m
+[90m  │[39m [90mNode Version:[39m   [0mv24.22.1 [90m(/usr/local/bin/node)[39m[0m                                                 [90m│[39m
+[90m  │[39m [90mSpecs:[39m          [0m11 found (accesibilidad-axe.cy.js, acceso-permisos.cy.js, administrador.cy.js,[0m [90m│[39m
+[90m  │[39m                 [0m laboratorio-completo.cy.js, laboratorio-resultados.cy.js, medico-agenda.cy.js[0m [90m│[39m
+[90m  │[39m                 [0m, medico-expediente.cy.js, pantalla-pequena.cy.js, recepcion-agenda.cy.js, rec[0m [90m│[39m
+[90m  │[39m                 [0mepcion-pacientes.cy.js,...)[0m                                                    [90m│[39m
+[90m  │[39m [90mSearched:[39m       [0me2e/**/*.cy.js[0m                                                                 [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90maccesibilidad-axe.cy.js[39m                                                        [90m(1 of 11)[39m
+
+[0m[0m
+[0m  Accesibilidad con axe-core[0m
+  [32m  ✓[0m[90m publico: /Login[0m[90m (577ms)[0m
+  [32m  ✓[0m[90m recepcion: /[0m[90m (1378ms)[0m
+  [32m  ✓[0m[90m recepcion: /Pacientes[0m[90m (474ms)[0m
+  [32m  ✓[0m[90m recepcion: /Agenda[0m[90m (536ms)[0m
+  [32m  ✓[0m[90m recepcion: /Agenda/Reservar[0m[90m (342ms)[0m
+  [32m  ✓[0m[90m administrador: /[0m[90m (704ms)[0m
+  [32m  ✓[0m[90m administrador: /Medicos[0m[90m (294ms)[0m
+  [32m  ✓[0m[90m administrador: /Usuarios[0m[90m (313ms)[0m
+  [32m  ✓[0m[90m medico: /[0m[90m (709ms)[0m
+  [32m  ✓[0m[90m medico: /MiAgenda[0m[90m (351ms)[0m
+  [32m  ✓[0m[90m medico: /Pacientes[0m[90m (322ms)[0m
+  [32m  ✓[0m[90m laboratorio: /[0m[90m (717ms)[0m
+  [32m  ✓[0m[90m laboratorio: /Laboratorio[0m[90m (330ms)[0m
+  [32m  ✓[0m[90m laboratorio: /Laboratorio/Registrar[0m[90m (323ms)[0m
+
+
+[92m [0m[32m 14 passing[0m[90m (8s)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m14[39m                                                                               [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m14[39m                                                                               [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m7 seconds[39m                                                                        [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32maccesibilidad-axe.cy.js[32m[39m                                                          [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90macceso-permisos.cy.js[39m                                                          [90m(2 of 11)[39m
+
+[0m[0m
+[0m  Acceso · inicio y cierre de sesión[0m
+  [32m  ✓[0m[90m 1. la pantalla de inicio de sesión tiene campos con etiqueta, está en español y no muestra datos ficticios[0m[90m (383ms)[0m
+  [32m  ✓[0m[90m 2. teclado: se escribe, se pasa con Tab del correo a la contraseña y al botón, y Enter envía el formulario[0m[90m (389ms)[0m
+  [32m  ✓[0m[90m 3. un formulario vacío o con correo inválido muestra un mensaje comprensible y no entra[0m[90m (457ms)[0m
+  [32m  ✓[0m[90m 4. credenciales incorrectas: el mismo mensaje con contraseña errónea o con un correo que no existe (no revela cuál falló)[0m[90m (1217ms)[0m
+  [32m  ✓[0m[90m 5. Recepcion: entra, ve su nombre y rol, su menú y sus accesos directos funcionan[0m[90m (783ms)[0m
+  [32m  ✓[0m[90m 5. Medico: entra, ve su nombre y rol, su menú y sus accesos directos funcionan[0m[90m (803ms)[0m
+  [32m  ✓[0m[90m 5. Laboratorio: entra, ve su nombre y rol, su menú y sus accesos directos funcionan[0m[90m (793ms)[0m
+  [32m  ✓[0m[90m 5. Administrador: entra, ve su nombre y rol, su menú y sus accesos directos funcionan[0m[90m (772ms)[0m
+  [32m  ✓[0m[90m 6. cerrar sesión vuelve al inicio de sesión y la sesión ya no sirve al regresar a una página protegida[0m[90m (836ms)[0m
+  [32m  ✓[0m[90m 7. una página protegida sin sesión pide iniciar sesión y, al entrar, regresa a esa página[0m[90m (534ms)[0m
+  [32m  ✓[0m[90m 8. un ReturnUrl externo no se sigue (no hay redirección abierta)[0m[90m (476ms)[0m
+
+[0m  Acceso · sesión vencida o revocada[0m
+  [32m  ✓[0m[90m 9. si desaparece la cookie de sesión, la siguiente pantalla pide iniciar sesión de nuevo[0m[90m (738ms)[0m
+  [32m  ✓[0m[90m 10. si el administrador cambia el rol de la persona, su sesión se revoca y la web le pide volver a entrar[0m[90m (1307ms)[0m
+
+[0m  Permisos por rol (web y API)[0m
+  [32m  ✓[0m[90m 11. Recepcion: abre sus pantallas y las que no le corresponden muestran "Acceso restringido"[0m[90m (1099ms)[0m
+  [32m  ✓[0m[90m 11. Medico: abre sus pantallas y las que no le corresponden muestran "Acceso restringido"[0m[90m (1054ms)[0m
+  [32m  ✓[0m[90m 11. Laboratorio: abre sus pantallas y las que no le corresponden muestran "Acceso restringido"[0m[90m (1043ms)[0m
+  [32m  ✓[0m[90m 11. Administrador: abre sus pantallas y las que no le corresponden muestran "Acceso restringido"[0m[90m (1061ms)[0m
+  [32m  ✓[0m[90m 12. la API rechaza por rol aunque se conozca la dirección: 401 sin sesión y 403 al rol equivocado[0m[90m (1496ms)[0m
+  [32m  ✓[0m[90m 13. restricción por recurso: un médico sin relación de atención no abre el expediente de un paciente ajeno (404, sin confirmar que existe)[0m[90m (980ms)[0m
+
+
+[92m [0m[32m 19 passing[0m[90m (17s)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m19[39m                                                                               [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m19[39m                                                                               [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m6[39m                                                                                [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m16 seconds[39m                                                                       [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32macceso-permisos.cy.js[32m[39m                                                            [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[33m  ([4m[1mScreenshots[22m[24m)[39m
+
+[90m [39m -  [0m/repo/reports/cypress/screenshots/acceso-permisos.cy.js/40-login.png[0m                 [90m[90m(1280x633)[90m[39m
+[90m [39m -  [0m/repo/reports/cypress/screenshots/acceso-permisos.cy.js/41-login-incorrecto.png[0m      [90m[90m(1280x633)[90m[39m
+[90m [39m -  [0m/repo/reports/cypress/screenshots/acceso-permisos.cy.js/42-inicio-Recepcion.png[0m      [90m[90m(1280x633)[90m[39m
+[90m [39m -  [0m/repo/reports/cypress/screenshots/acceso-permisos.cy.js/42-inicio-Medico.png[0m         [90m[90m(1280x633)[90m[39m
+[90m [39m -  [0m/repo/reports/cypress/screenshots/acceso-permisos.cy.js/42-inicio-Laboratorio.pn[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mg[0m                                                                                              
+[90m [39m -  [0m/repo/reports/cypress/screenshots/acceso-permisos.cy.js/42-inicio-Administrador.[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mpng[0m                                                                                            
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90madministrador.cy.js[39m                                                            [90m(3 of 11)[39m
+
+[0m[0m
+[0m  Administrador[0m
+[0m    Médicos[0m
+    [32m  ✓[0m[90m 1. lista, busca (por nombre), muestra "sin resultados" y conserva la búsqueda[0m[90m (1437ms)[0m
+    [32m  ✓[0m[90m 2. valida el registro: campos vacíos, correo y teléfono inválidos, sin guardar[0m[90m (1159ms)[0m
+    [32m  ✓[0m[90m 3. registra un médico, aparece en la lista y se conserva al recargar[0m[90m (1150ms)[0m
+    [32m  ✓[0m[90m 4. edita al médico (datos precargados), Cancelar no guarda y Guardar persiste el cambio[0m[90m (992ms)[0m
+[0m    Disponibilidad[0m
+    [32m  ✓[0m[90m 5. muestra el horario actual y valida horas[0m[90m (530ms)[0m
+    [32m  ✓[0m[90m 6. cambiar días y horas se refleja en la reserva (martes y jueves 09:00 a 10:30)[0m[90m (1282ms)[0m
+[0m    Usuarios y roles[0m
+    [32m  ✓[0m[90m 7. lista a las personas con su rol; la cuenta propia no se puede cambiar[0m[90m (77ms)[0m
+    [32m  ✓[0m[90m 8. cambia el rol de una cuenta, avisa del cierre de sus sesiones y el nuevo rol se aplica; se restaura[0m[90m (1212ms)[0m
+    [32m  ✓[0m[90m 9. Recepción no entra a Médicos ni a Usuarios[0m[90m (323ms)[0m
+[0m    Pantalla pequeña[0m
+    [32m  ✓[0m[90m 10. médicos, formulario, disponibilidad y usuarios no desbordan a 375 px[0m[90m (405ms)[0m
+
+
+[92m [0m[32m 10 passing[0m[90m (9s)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m10[39m                                                                               [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m10[39m                                                                               [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m2[39m                                                                                [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m8 seconds[39m                                                                        [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32madministrador.cy.js[32m[39m                                                              [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[33m  ([4m[1mScreenshots[22m[24m)[39m
+
+[90m [39m -  [0m/repo/reports/cypress/screenshots/administrador.cy.js/51-medico-validacion.png[0m       [90m[90m(1280x633)[90m[39m
+[90m [39m -  [0m/repo/reports/cypress/screenshots/administrador.cy.js/52-usuarios-movil.png[0m           [90m[90m(375x633)[90m[39m
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90mlaboratorio-completo.cy.js[39m                                                     [90m(4 of 11)[39m
+
+[0m[0m
+[0m  Laboratorio · listado, registro y detalle[0m
+[0m    Listado[0m
+    [32m  ✓[0m[90m 1. busca por examen y por paciente, informa el total y avisa cuando no hay resultados[0m[90m (2851ms)[0m
+    [32m  ✓[0m[90m 2. pagina de 20 en 20 conservando la búsqueda (Anterior y Siguiente)[0m[90m (258ms)[0m
+    [32m  ✓[0m[90m 3. "Ver resultado" abre el detalle con los parámetros y "Volver" regresa al listado[0m[90m (294ms)[0m
+[0m    Registro[0m
+    [32m  ✓[0m[90m 4. valida paciente, examen, fecha y parámetro; una fecha futura se rechaza con un mensaje claro[0m[90m (1050ms)[0m
+    [32m  ✓[0m[90m 5. el filtro de pacientes acota la lista; sin coincidencias solo queda "Selecciona un paciente…"[0m[90m (512ms)[0m
+    [32m  ✓[0m[90m 6. permite hasta 10 parámetros y quitar los que sobran; con uno solo no se puede quitar[0m[90m (1029ms)[0m
+[0m    Notificación pendiente[0m
+    [32m  ✓[0m[90m 7. un resultado sin notificación se ve "Pendiente" y "Reintentar notificación" la reprograma[0m[90m (289ms)[0m
+[0m    Pantalla pequeña[0m
+    [32m  ✓[0m[90m 8. listado, registro y detalle no desbordan a 375 px[0m[90m (338ms)[0m
+
+
+[92m [0m[32m 8 passing[0m[90m (7s)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m8[39m                                                                                [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m8[39m                                                                                [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m1[39m                                                                                [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m6 seconds[39m                                                                        [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32mlaboratorio-completo.cy.js[32m[39m                                                       [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[33m  ([4m[1mScreenshots[22m[24m)[39m
+
+[90m [39m -  [0m/repo/reports/cypress/screenshots/laboratorio-completo.cy.js/55-laboratorio-movi[0m      [90m[90m(375x633)[90m[39m
+[90m [39m    [0ml.png[0m                                                                                          
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90mlaboratorio-resultados.cy.js[39m                                                   [90m(5 of 11)[39m
+
+[0m[0m
+[0m  Laboratorio · registrar, consultar y notificar un resultado[0m
+[0m    Laboratorio[0m
+    [32m  ✓[0m[90m 1. inicia sesión como Laboratorio y abre "Resultados de laboratorio" desde el menú[0m[90m (1207ms)[0m
+    [32m  ✓[0m[90m 2. no guarda un resultado incompleto y muestra los errores[0m[90m (301ms)[0m
+    [32m  ✓[0m[90m 3. registra un resultado con dos parámetros escribiendo en el formulario[0m[90m (1960ms)[0m
+    [32m  ✓[0m[90m 4. la notificación al paciente se genera de forma asíncrona y pasa a "enviada"[0m[90m (2298ms)[0m
+    [32m  ✓[0m[90m 5. el listado muestra el resultado con su notificación "Enviada" y permite buscarlo[0m[90m (501ms)[0m
+[0m    Médico (expediente)[0m
+    [32m  ✓[0m[90m 6. el médico con relación de atención ve el resultado en la pestaña Laboratorio y abre su detalle[0m[90m (848ms)[0m
+    [32m  ✓[0m[90m 7. un médico sin relación de atención no ve el resultado (404, sin confirmar que existe)[0m[90m (644ms)[0m
+[0m    Otros roles[0m
+    [32m  ✓[0m[90m 8. Recepción no tiene acceso a los resultados de laboratorio[0m[90m (571ms)[0m
+
+
+[92m [0m[32m 8 passing[0m[90m (8s)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m8[39m                                                                                [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m8[39m                                                                                [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m7[39m                                                                                [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m8 seconds[39m                                                                        [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32mlaboratorio-resultados.cy.js[32m[39m                                                     [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[33m  ([4m[1mScreenshots[22m[24m)[39m
+
+[90m [39m -  [0m/repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/30-laboratorio-re[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0msultados.png[0m                                                                                   
+[90m [39m -  [0m/repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/31-laboratorio-er[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mrores.png[0m                                                                                      
+[90m [39m -  [0m/repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/32-laboratorio-fo[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mrmulario.png[0m                                                                                   
+[90m [39m -  [0m/repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/33-laboratorio-de[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mtalle-enviada.png[0m                                                                              
+[90m [39m -  [0m/repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/34-laboratorio-li[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mstado.png[0m                                                                                      
+[90m [39m -  [0m/repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/35-medico-detalle[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0m-resultado.png[0m                                                                                 
+[90m [39m -  [0m/repo/reports/cypress/screenshots/laboratorio-resultados.cy.js/36-medico-sin-rel[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0macion.png[0m                                                                                      
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90mmedico-agenda.cy.js[39m                                                            [90m(6 of 11)[39m
+
+[0m[0m
+[0m  Médico · agenda, pacientes autorizados y receta[0m
+[0m    Mi agenda[0m
+    [32m  ✓[0m[90m 1. muestra solo su agenda del día con las citas, el contador, el calendario y sin opciones de reserva[0m[90m (1517ms)[0m
+    [32m  ✓[0m[90m 2. cambia de día con la fecha y con el calendario; un día sin citas y un día pasado lo dicen[0m[90m (1170ms)[0m
+    [32m  ✓[0m[90m 3. "Abrir expediente" desde la cita lleva al expediente del paciente correcto[0m[90m (174ms)[0m
+[0m    Pacientes autorizados[0m
+    [32m  ✓[0m[90m 4. lista solo a los pacientes con relación de atención, sin "Registrar paciente", y busca[0m[90m (524ms)[0m
+    [32m  ✓[0m[90m 5. un paciente sin relación no se abre (404) y el médico no entra al alta ni a la edición de pacientes[0m[90m (156ms)[0m
+[0m    Expediente y receta[0m
+    [32m  ✓[0m[90m 6. las pestañas se recorren con el teclado y la pestaña activa queda marcada[0m[90m (166ms)[0m
+    [32m  ✓[0m[90m 7. la receta valida los campos obligatorios, permite hasta 10 medicamentos y conserva lo escrito[0m[90m (2940ms)[0m
+[0m    Pantalla pequeña[0m
+    [32m  ✓[0m[90m 8. mi agenda, pacientes y expediente no desbordan a 375 px[0m[90m (329ms)[0m
+
+
+[92m [0m[32m 8 passing[0m[90m (7s)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m8[39m                                                                                [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m8[39m                                                                                [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m2[39m                                                                                [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m7 seconds[39m                                                                        [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32mmedico-agenda.cy.js[32m[39m                                                              [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[33m  ([4m[1mScreenshots[22m[24m)[39m
+
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-agenda.cy.js/53-mi-agenda.png[0m               [90m[90m(1280x633)[90m[39m
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-agenda.cy.js/54-mi-agenda-movil.png[0m          [90m[90m(375x633)[90m[39m
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90mmedico-expediente.cy.js[39m                                                        [90m(7 of 11)[39m
+
+[0m[0m
+[0m  Médicos · expediente compartido, consulta y receta[0m
+[0m    Médico autor[0m
+    [32m  ✓[0m[90m 1. inicia sesión como Médico y ve en su agenda la cita del paciente[0m[90m (2639ms)[0m
+    [32m  ✓[0m[90m 2. abre el expediente desde la agenda y recorre las secciones vacías (consultas, recetas y laboratorio)[0m[90m (622ms)[0m
+    [32m  ✓[0m[90m 3. no guarda una consulta incompleta y muestra los errores[0m[90m (393ms)[0m
+    [32m  ✓[0m[90m 4 y 5. registra la consulta, crea una receta con dos medicamentos y la consulta[0m[90m (2615ms)[0m
+    [32m  ✓[0m[90m 6. el expediente muestra la consulta y la receta, y la receta se abre desde su tarjeta[0m[90m (437ms)[0m
+    [32m  ✓[0m[90m 7. la cita ya tiene consulta: no se puede registrar otra[0m[90m (71ms)[0m
+    [32m  ✓[0m[90m 8. un paciente sin cita ni consulta con este médico no se puede abrir[0m[90m (283ms)[0m
+[0m    Médico colega (expediente compartido)[0m
+    [32m  ✓[0m[90m 9. el colega con una cita con el paciente lee la consulta y la receta de otro médico, marcadas como ajenas[0m[90m (1033ms)[0m
+    [32m  ✓[0m[90m 10. el colega no puede crear una receta sobre la consulta de otro: ni por la pantalla ni por la API[0m[90m (416ms)[0m
+    [32m  ✓[0m[90m 11. sin una relación válida el colega ya no accede al expediente[0m[90m (472ms)[0m
+
+
+[92m [0m[32m 10 passing[0m[90m (9s)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m10[39m                                                                               [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m10[39m                                                                               [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m12[39m                                                                               [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m9 seconds[39m                                                                        [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32mmedico-expediente.cy.js[32m[39m                                                          [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[33m  ([4m[1mScreenshots[22m[24m)[39m
+
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-expediente.cy.js/10-medico-mi-agenda.pn[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mg[0m                                                                                              
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-expediente.cy.js/11-expediente-consulta[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0ms.png[0m                                                                                          
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-expediente.cy.js/12-expediente-laborato[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mrio-vacio.png[0m                                                                                  
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-expediente.cy.js/13-consulta-con-errore[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0ms.png[0m                                                                                          
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-expediente.cy.js/14-consulta-llena.png[0m      [90m[90m(1280x633)[90m[39m
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-expediente.cy.js/15-receta-dos-medicame[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mntos.png[0m                                                                                       
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-expediente.cy.js/16-detalle-de-receta.p[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mng[0m                                                                                             
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-expediente.cy.js/17-expediente-con-cons[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0multa.png[0m                                                                                       
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-expediente.cy.js/18-paciente-sin-relaci[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mon.png[0m                                                                                         
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-expediente.cy.js/19-colega-lee-consulta[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0m-ajena.png[0m                                                                                     
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-expediente.cy.js/20-colega-lee-receta-a[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mjena.png[0m                                                                                       
+[90m [39m -  [0m/repo/reports/cypress/screenshots/medico-expediente.cy.js/21-colega-sin-relacion[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0m.png[0m                                                                                           
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90mpantalla-pequena.cy.js[39m                                                         [90m(8 of 11)[39m
+
+[0m[0m
+[0m  Pantalla pequeña (375 px)[0m
+  [32m  ✓[0m[90m 1. el inicio de sesión cabe y sus campos tienen etiqueta[0m[90m (135ms)[0m
+  [32m  ✓[0m[90m 2. Recepción: el inicio no desborda y el menú se puede recorrer[0m[90m (658ms)[0m
+  [32m  ✓[0m[90m 2. Administrador: el inicio no desborda y el menú se puede recorrer[0m[90m (556ms)[0m
+  [32m  ✓[0m[90m 2. Médico: el inicio no desborda y el menú se puede recorrer[0m[90m (566ms)[0m
+  [32m  ✓[0m[90m 2. Laboratorio: el inicio no desborda y el menú se puede recorrer[0m[90m (580ms)[0m
+  [32m  ✓[0m[90m 3. Recepción: pacientes y alta de paciente no desbordan y las etiquetas están completas[0m[90m (147ms)[0m
+  [32m  ✓[0m[90m 4. el aviso de acceso restringido cabe[0m[90m (105ms)[0m
+
+
+[92m [0m[32m 7 passing[0m[90m (3s)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m7[39m                                                                                [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m7[39m                                                                                [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m2 seconds[39m                                                                        [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32mpantalla-pequena.cy.js[32m[39m                                                           [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90mrecepcion-agenda.cy.js[39m                                                         [90m(9 of 11)[39m
+
+[0m[0m
+[0m  Recepción · agenda y reserva[0m
+[0m    Agenda (WEB-02)[0m
+    [32m  ✓[0m[90m 1. muestra la fecha, el filtro de médico, el calendario y el aviso, y "Reservar cita" lleva al formulario con lo elegido[0m[90m (1472ms)[0m
+    [32m  ✓[0m[90m 2. los filtros funcionan: cambiar de médico, de fecha, un día del calendario y los meses anterior y siguiente[0m[90m (1391ms)[0m
+    [32m  ✓[0m[90m 3. un fin de semana sin atención lo dice, y un día pasado no ofrece horarios[0m[90m (153ms)[0m
+    [32m  ✓[0m[90m 4. un horario libre abre la reserva con médico, fecha y hora ya elegidos[0m[90m (163ms)[0m
+[0m    Reserva (WEB-03)[0m
+    [32m  ✓[0m[90m 5. valida: sin paciente y sin horario pide elegirlos, y conserva lo ya elegido[0m[90m (534ms)[0m
+    [32m  ✓[0m[90m 6. tiene etiquetas en todos los campos, el grupo de horarios con nombre y la duración informada[0m[90m (79ms)[0m
+    [32m  ✓[0m[90m 7. cambiar de médico o de fecha actualiza los horarios sin perder el paciente; un día sin atención no ofrece horarios[0m[90m (1210ms)[0m
+    [32m  ✓[0m[90m 8. reserva y abre el detalle; Volver a agenda regresa al día; cancelar libera el horario[0m[90m (757ms)[0m
+[0m    Prevención de doble reserva[0m
+    [32m  ✓[0m[90m 9. dos reservas al mismo horario (una tras otra; la concurrencia real la cubren las pruebas xUnit): solo una queda y la otra recibe 409[0m[90m (296ms)[0m
+    [32m  ✓[0m[90m 10. pulsar dos veces "Confirmar cita" crea una sola cita (la reserva lleva una clave de idempotencia)[0m[90m (528ms)[0m
+    [32m  ✓[0m[90m 11. un horario ocupado aparece sin opción de elegirlo (deshabilitado) en la reserva[0m[90m (74ms)[0m
+[0m    Pantalla pequeña[0m
+    [32m  ✓[0m[90m 12. la agenda, la reserva y el detalle se adaptan a 375 px sin desbordar; el menú sigue disponible[0m[90m (353ms)[0m
+
+
+[92m [0m[32m 12 passing[0m[90m (7s)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m12[39m                                                                               [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m12[39m                                                                               [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m3[39m                                                                                [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m7 seconds[39m                                                                        [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32mrecepcion-agenda.cy.js[32m[39m                                                           [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[33m  ([4m[1mScreenshots[22m[24m)[39m
+
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-agenda.cy.js/48-agenda.png[0m               [90m[90m(1280x633)[90m[39m
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-agenda.cy.js/49-reserva-validacion.p[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mng[0m                                                                                             
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-agenda.cy.js/50-agenda-movil.png[0m          [90m[90m(375x633)[90m[39m
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90mrecepcion-pacientes.cy.js[39m                                                     [90m(10 of 11)[39m
+
+[0m[0m
+[0m  Recepción · pacientes[0m
+[0m    Lista y búsqueda (WEB-05)[0m
+    [32m  ✓[0m[90m 1. muestra el encabezado, el contador, las columnas y las acciones de Recepción[0m[90m (2068ms)[0m
+    [32m  ✓[0m[90m 2. busca por nombre (sin distinguir mayúsculas), por identificación y por parte del texto[0m[90m (820ms)[0m
+    [32m  ✓[0m[90m 3. una búsqueda sin resultados lo dice, y los caracteres especiales no rompen la pantalla[0m[90m (753ms)[0m
+    [32m  ✓[0m[90m 4. la paginación recorre las páginas, conserva la búsqueda y deshabilita lo que no aplica[0m[90m (650ms)[0m
+[0m    Registro (WEB-06)[0m
+    [32m  ✓[0m[90m 5. el formulario tiene etiquetas, marca los obligatorios, y el teclado recorre los campos en orden[0m[90m (114ms)[0m
+    [32m  ✓[0m[90m 6. un formulario vacío muestra los errores en español junto a cada campo y no guarda[0m[90m (319ms)[0m
+    [32m  ✓[0m[90m 7. valida correo, teléfono y fecha de nacimiento, y conserva lo que ya se escribió[0m[90m (953ms)[0m
+    [32m  ✓[0m[90m 8. registra un paciente, lo avisa y aparece en la lista; repetir la identificación se rechaza con un mensaje claro[0m[90m (2364ms)[0m
+[0m    Edición (WEB-06)[0m
+    [32m  ✓[0m[90m 9. abre el paciente desde la lista, cambia el teléfono y lo ve reflejado; Cancelar no guarda[0m[90m (1517ms)[0m
+    [32m  ✓[0m[90m 10. al editar, un dato inválido muestra el error y no cambia el registro[0m[90m (1050ms)[0m
+    [32m  ✓[0m[90m 11. un paciente que no existe en la dirección se informa con la página de "no encontrado" sin romper la pantalla[0m[90m (65ms)[0m
+[0m    Pantalla pequeña[0m
+    [32m  ✓[0m[90m 12. la lista y el formulario se adaptan a 375 px: sin desbordar la página y con el menú disponible[0m[90m (342ms)[0m
+
+
+[92m [0m[32m 12 passing[0m[90m (11s)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m12[39m                                                                               [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m12[39m                                                                               [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m5[39m                                                                                [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m11 seconds[39m                                                                       [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32mrecepcion-pacientes.cy.js[32m[39m                                                        [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[33m  ([4m[1mScreenshots[22m[24m)[39m
+
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-pacientes.cy.js/43-pacientes-lista.p[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mng[0m                                                                                             
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-pacientes.cy.js/44-pacientes-paginac[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mion.png[0m                                                                                        
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-pacientes.cy.js/45-paciente-errores.[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mpng[0m                                                                                            
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-pacientes.cy.js/46-paciente-duplicad[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mo.png[0m                                                                                          
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-pacientes.cy.js/47-pacientes-movil.p[0m      [90m[90m(375x633)[90m[39m
+[90m [39m    [0mng[0m                                                                                             
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90mrecepcion-reserva.cy.js[39m                                                       [90m(11 of 11)[39m
+
+[0m[0m
+[0m  Recepción · reservar, consultar y cancelar citas[0m
+  [32m  ✓[0m[90m 1. inicia sesión como Recepción escribiendo en el formulario y pulsando el botón[0m[90m (1310ms)[0m
+  [32m  ✓[0m[90m 2 y 3. elige médico, fecha, paciente y horario, y confirma con el botón de la interfaz[0m[90m (3755ms)[0m
+  [32m  ✓[0m[90m 4. abre "Ver detalle" desde la agenda[0m[90m (1176ms)[0m
+  [32m  ✓[0m[90m 5a. cancelar: si se RECHAZA la confirmación, la cita se conserva[0m[90m (1199ms)[0m
+  [32m  ✓[0m[90m 5b. cancelar: si se ACEPTA la confirmación, la cita se cancela[0m[90m (326ms)[0m
+  [32m  ✓[0m[90m 6. el horario cancelado vuelve a estar disponible[0m[90m (1335ms)[0m
+  [32m  ✓[0m[90m 7. un conflicto de horario muestra el aviso y conserva lo ingresado[0m[90m (752ms)[0m
+  [32m  ✓[0m[90m 8. cambia de mes en el calendario[0m[90m (1611ms)[0m
+
+
+[92m [0m[32m 8 passing[0m[90m (12s)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m8[39m                                                                                [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m8[39m                                                                                [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m8[39m                                                                                [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m11 seconds[39m                                                                       [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32mrecepcion-reserva.cy.js[32m[39m                                                          [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[33m  ([4m[1mScreenshots[22m[24m)[39m
+
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-reserva.cy.js/01-sesion-recepcion.pn[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mg[0m                                                                                              
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-reserva.cy.js/02-agenda-del-medico.p[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mng[0m                                                                                             
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-reserva.cy.js/03-formulario-de-reser[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mva.png[0m                                                                                         
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-reserva.cy.js/04-cita-confirmada.png[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-reserva.cy.js/05-cita-cancelada.png[0m      [90m[90m(1280x633)[90m[39m
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-reserva.cy.js/06-horario-liberado.pn[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mg[0m                                                                                              
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-reserva.cy.js/07-conflicto-de-horari[0m     [90m[90m(1280x633)[90m[39m
+[90m [39m    [0mo.png[0m                                                                                          
+[90m [39m -  [0m/repo/reports/cypress/screenshots/recepcion-reserva.cy.js/08-calendario.png[0m          [90m[90m(1280x633)[90m[39m
+
+
+[90m====================================================================================================[39m
+
+[0m  ([4m[1mRun Finished[22m[24m)[0m
+
+
+[90m   [39m    [90mSpec[39m                                              [90mTests[39m  [90mPassing[39m  [90mFailing[39m  [90mPending[39m  [90mSkipped[39m [90m [39m
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [32m✔[39m  [0maccesibilidad-axe.cy.js[0m                  [90m00:07[39m       [0m14[0m       [32m14[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  ├[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┤[39m
+[90m  │[39m [32m✔[39m  [0macceso-permisos.cy.js[0m                    [90m00:16[39m       [0m19[0m       [32m19[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  ├[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┤[39m
+[90m  │[39m [32m✔[39m  [0madministrador.cy.js[0m                      [90m00:08[39m       [0m10[0m       [32m10[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  ├[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┤[39m
+[90m  │[39m [32m✔[39m  [0mlaboratorio-completo.cy.js[0m               [90m00:06[39m        [0m8[0m        [32m8[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  ├[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┤[39m
+[90m  │[39m [32m✔[39m  [0mlaboratorio-resultados.cy.js[0m             [90m00:08[39m        [0m8[0m        [32m8[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  ├[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┤[39m
+[90m  │[39m [32m✔[39m  [0mmedico-agenda.cy.js[0m                      [90m00:07[39m        [0m8[0m        [32m8[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  ├[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┤[39m
+[90m  │[39m [32m✔[39m  [0mmedico-expediente.cy.js[0m                  [90m00:09[39m       [0m10[0m       [32m10[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  ├[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┤[39m
+[90m  │[39m [32m✔[39m  [0mpantalla-pequena.cy.js[0m                   [90m00:02[39m        [0m7[0m        [32m7[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  ├[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┤[39m
+[90m  │[39m [32m✔[39m  [0mrecepcion-agenda.cy.js[0m                   [90m00:07[39m       [0m12[0m       [32m12[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  ├[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┤[39m
+[90m  │[39m [32m✔[39m  [0mrecepcion-pacientes.cy.js[0m                [90m00:11[39m       [0m12[0m       [32m12[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  ├[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┤[39m
+[90m  │[39m [32m✔[39m  [0mrecepcion-reserva.cy.js[0m                  [90m00:11[39m        [0m8[0m        [32m8[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+[90m   [39m [32m✔[39m  [32mAll specs passed![39m                        [90m01:37[39m      [0m116[0m      [32m116[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m [39m
+

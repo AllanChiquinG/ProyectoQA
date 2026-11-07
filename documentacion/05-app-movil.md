@@ -56,11 +56,11 @@ Cada pantalla que carga datos muestra **cargando**, **error de conexión con "Re
 | Herramienta | Estado en este equipo | Para qué |
 |---|---|---|
 | .NET SDK 10.0.401 | instalado | todo |
-| JDK 17 (Eclipse Adoptium 17.0.20) | instalado | compilar Android y Maestro |
+| JDK 17 (Microsoft OpenJDK 17.0.21) | instalado | compilar Android y Maestro |
 | Workload `maui-android` | **no instalado en Windows a propósito** (la app se compila en el contenedor Linux; no hace falta para probar) | compilar `src/MediCore.Mobile` de forma nativa |
 | SDK de Android en `%LOCALAPPDATA%\Android\Sdk` (command-line tools, platform-tools y emulator, instalados de dl.google.com) | **instalado** (no había un SDK reutilizable: Visual Studio 18 Insiders no trae uno) | instalar y ejecutar |
 | Emulador `medicore_pixel` (Pixel 6, `system-images;android-35;google_apis;x86_64`) | **instalado y en uso** | probar la app |
-| Maestro CLI 2.12.0 en `%LOCALAPPDATA%\Maestro\maestro\bin` (release oficial de GitHub) | **instalado** | ejecutar los flujos |
+| Maestro CLI 2.12.1 en `%LOCALAPPDATA%\Maestro\maestro\bin` (release oficial de GitHub) | **instalado** | ejecutar los flujos |
 | Aceleración del emulador | **WHPX disponible** (`emulator -accel-check`): no hizo falta habilitar nada ni reiniciar | rendimiento |
 
 Instalación autorizada por la persona responsable; se aceptaron las licencias del SDK de Android. Smart App Control sigue activo.
@@ -139,6 +139,8 @@ python scripts/maestro_run.py
 ```
 
 > **Desinstala antes de instalar:** cada compilación en contenedor genera una clave de depuración nueva; `adb install -r` falla con `INSTALL_FAILED_UPDATE_INCOMPATIBLE` y se seguiría probando la versión anterior. Al desinstalar se pierden los datos locales de la app (la sesión). **Mejora pendiente:** conservar una clave de depuración estable fuera del repositorio (ver H7-13 en `04-registro-de-hallazgos.md`).
+
+**Repetición final (2026-11-06):** 8/8 con el código final, en emulador Android 35 contra QA (`http://10.0.2.2:8080/`). Evidencia: `documentacion/evidencias/maestro-codigo-final.md`. Antes de ejecutar hay que cerrar la cortina de notificaciones del emulador: `adb shell cmd statusbar collapse`.
 
 ### Defectos que solo aparecieron al ejecutar en Android (corregidos)
 1. **La app se cerraba al abrir** (`No assemblies found ... Fast Deployment`): el APK Debug no incluía los ensamblados. Ahora `EmbedAssembliesIntoApk=true` y `AndroidUseSharedRuntime=false` (el APK pesa ≈84 MB).

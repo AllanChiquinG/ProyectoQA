@@ -1,0 +1,28 @@
+name: Defecto
+description: Registro de un defecto con evidencia
+labels: [defecto]
+body:
+  - type: textarea
+    id: pasos
+    attributes: { label: Pasos para reproducir }
+    validations: { required: true }
+  - type: textarea
+    id: esperado
+    attributes: { label: Resultado esperado }
+    validations: { required: true }
+  - type: textarea
+    id: obtenido
+    attributes: { label: Resultado obtenido }
+    validations: { required: true }
+  - type: dropdown
+    id: severidad
+    attributes: { label: Severidad, options: [Crítica, Alta, Media, Baja] }
+    validations: { required: true }
+  - type: dropdown
+    id: prioridad
+    attributes: { label: Prioridad, options: [P1, P2, P3, P4] }
+    validations: { required: true }
+  - type: textarea
+    id: evidencia
+    attributes: { label: Evidencia, description: Captura, reporte o ruta del archivo }
+    validations: { required: true }

@@ -1,0 +1,20 @@
+  Determining projects to restore...
+  Restored /work/src/MediCore.Mobile.Core/MediCore.Mobile.Core.csproj (in 99 ms).
+  Restored /work/tests/MediCore.Mobile.Tests/MediCore.Mobile.Tests.csproj (in 184 ms).
+  Restored /work/tests/MediCore.UnitTests/MediCore.UnitTests.csproj (in 190 ms).
+  Restored /work/tests/MediCore.Api.Tests/MediCore.Api.Tests.csproj (in 190 ms).
+  6 of 10 projects are up-to-date for restore.
+
+The following sources were used:
+   https://api.nuget.org/v3/index.json
+
+The given project `MediCore.Api` has no vulnerable packages given the current sources.
+The given project `MediCore.Contracts` has no vulnerable packages given the current sources.
+The given project `MediCore.Domain` has no vulnerable packages given the current sources.
+The given project `MediCore.Infrastructure` has no vulnerable packages given the current sources.
+The given project `MediCore.Mobile.Core` has no vulnerable packages given the current sources.
+The given project `MediCore.Web` has no vulnerable packages given the current sources.
+The given project `MediCore.Worker` has no vulnerable packages given the current sources.
+The given project `MediCore.Api.Tests` has no vulnerable packages given the current sources.
+The given project `MediCore.Mobile.Tests` has no vulnerable packages given the current sources.
+The given project `MediCore.UnitTests` has no vulnerable packages given the current sources.

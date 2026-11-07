@@ -58,6 +58,7 @@ public static class DependencyInjection
         services.AddOptions<MessagingOptions>().Bind(configuration.GetSection(MessagingOptions.SectionName));
         services.AddSingleton<IRabbitMqConnection, RabbitMqConnection>();
         services.AddScoped<ILabResultReadyHandler, LabResultReadyHandler>();
+        services.AddScoped<IPatientEventHandler, PatientEventHandler>();
         if (configuration.GetValue(MessagingOptions.SectionName + ":Enabled", true))
         {
             services.AddSingleton<OutboxPublisherService>();

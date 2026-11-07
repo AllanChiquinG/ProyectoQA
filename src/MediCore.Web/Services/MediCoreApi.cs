@@ -246,12 +246,7 @@ internal sealed class MediCoreApi(HttpClient http, IHttpContextAccessor accessor
         try
         {
             using var document = await JsonDocument.ParseAsync(await response.Content.ReadAsStreamAsync(ct), cancellationToken: ct);
-            var root = document.RootElement;
-            if (root.TryGetProperty("errors", out var errors) && errors.ValueKind == JsonValueKind.Object)
-                foreach (var field in errors.EnumerateObject())
-                    foreach (var message in field.Value.EnumerateArray())
-                        return message.GetString();
-            return root.TryGetProperty("detail", out var detail) ? detail.GetString() : null;
+            return ProblemDetailsReader.FirstMessage(document.RootElement);
         }
         catch (Exception ex) when (ex is JsonException or InvalidOperationException or HttpRequestException)
         {

@@ -74,3 +74,7 @@ fieldset.medicamento .link { margin-top: 8px; }
 @media (max-width: 700px) {
   .layout { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Accesibilidad: contraste de al menos 4,5:1 en el calendario (WCAG 2.1 AA, detectado con axe). */
+.calendar > .eyebrow { color: #2f5f59; }
+.calgrid .faded { color: #566b5e; }

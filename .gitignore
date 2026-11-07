@@ -485,6 +485,7 @@ $RECYCLE.BIN/
 .env
 .env.*
 !.env.example
+!.env.qa.example
 *.tfstate
 *.tfstate.*
 .terraform/
@@ -497,3 +498,18 @@ artifacts/
 
 # Cuentas de demostración locales (con contraseña): nunca se versionan
 *.local.txt
+
+# Ambiente QA: secretos generados localmente
+.env.qa
+
+# Terraform y Ansible: nada de secretos ni estado en el repositorio
+infrastructure/terraform/**/backend.hcl
+infrastructure/terraform/**/*.tfvars
+infrastructure/ansible/inventory/qa.ini
+infrastructure/ansible/group_vars/**/vault.yml
+infrastructure/ansible/.vault_pass*
+
+# CI local y salidas pesadas de los análisis
+ci/.env.ci
+reports/dependency-check/*.html
+reports/dependency-check/publicado/

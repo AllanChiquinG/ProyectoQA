@@ -71,7 +71,8 @@ internal static class RabbitMqTopologyDeclarer
     {
         await channel.ExchangeDeclareAsync(Topology.EventsExchange, ExchangeType.Topic, durable: true, autoDelete: false, cancellationToken: ct);
         await channel.QueueDeclareAsync(Topology.NotificationsQueue, durable: true, exclusive: false, autoDelete: false, cancellationToken: ct);
-        await channel.QueueBindAsync(Topology.NotificationsQueue, Topology.EventsExchange, EventTypes.LabResultReady, cancellationToken: ct);
+        foreach (var eventType in EventTypes.All)
+            await channel.QueueBindAsync(Topology.NotificationsQueue, Topology.EventsExchange, eventType, cancellationToken: ct);
 
         // Cola de reintento: cada mensaje lleva su propia espera (Expiration) y, al vencer, vuelve a la cola de trabajo por el exchange por defecto.
         await channel.QueueDeclareAsync(Topology.NotificationsRetryQueue, durable: true, exclusive: false, autoDelete: false,

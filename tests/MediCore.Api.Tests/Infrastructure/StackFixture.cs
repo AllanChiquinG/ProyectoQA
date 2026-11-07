@@ -113,10 +113,12 @@ public class StackFixture : ApiFactory, IAsyncLifetime
         var db = scope.ServiceProvider.GetRequiredService<MediCoreDbContext>();
         var appointment = new Appointment
         {
-            PatientId = patientId, DoctorId = doctorId,
+            PatientId = patientId,
+            DoctorId = doctorId,
             StartsAtLocal = DateTime.SpecifyKind(startsAtLocal, DateTimeKind.Unspecified),
             EndsAtLocal = DateTime.SpecifyKind(startsAtLocal.AddMinutes(30), DateTimeKind.Unspecified),
-            Status = status, CreatedByUserId = Guid.NewGuid(),
+            Status = status,
+            CreatedByUserId = Guid.NewGuid(),
         };
         db.Appointments.Add(appointment);
         await db.SaveChangesAsync();
@@ -130,8 +132,12 @@ public class StackFixture : ApiFactory, IAsyncLifetime
         var db = scope.ServiceProvider.GetRequiredService<MediCoreDbContext>();
         var consultation = new Consultation
         {
-            PatientId = appointment.PatientId, DoctorId = appointment.DoctorId, AppointmentId = appointment.Id,
-            Reason = reason, Notes = "Notas de prueba", Diagnosis = "Diagnóstico de prueba",
+            PatientId = appointment.PatientId,
+            DoctorId = appointment.DoctorId,
+            AppointmentId = appointment.Id,
+            Reason = reason,
+            Notes = "Notas de prueba",
+            Diagnosis = "Diagnóstico de prueba",
         };
         db.Consultations.Add(consultation);
         await db.SaveChangesAsync();

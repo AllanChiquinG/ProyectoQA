@@ -80,12 +80,18 @@ public static class ClinicalDemoSeeder
             var visit = new Appointment { PatientId = ana.Id, DoctorId = lucia.Id, StartsAtLocal = start, EndsAtLocal = end, Reason = "Consulta de seguimiento", CreatedByUserId = createdBy };
             var consultation = new Consultation
             {
-                PatientId = ana.Id, DoctorId = lucia.Id, AppointmentId = visit.Id,
-                Reason = "Consulta de seguimiento", Diagnosis = "Control general", Notes = "Consulta ficticia de demostración.",
+                PatientId = ana.Id,
+                DoctorId = lucia.Id,
+                AppointmentId = visit.Id,
+                Reason = "Consulta de seguimiento",
+                Diagnosis = "Control general",
+                Notes = "Consulta ficticia de demostración.",
             };
             var prescription = new Prescription
             {
-                PatientId = ana.Id, DoctorId = lucia.Id, ConsultationId = consultation.Id,
+                PatientId = ana.Id,
+                DoctorId = lucia.Id,
+                ConsultationId = consultation.Id,
                 Items =
                 [
                     new PrescriptionItem { Position = 1, Medication = "Paracetamol", Dose = "500 mg", Frequency = "Cada 8 horas", Duration = "3 días", Instructions = "Receta ficticia para demostrar la interfaz." },

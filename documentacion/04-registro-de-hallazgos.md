@@ -240,6 +240,56 @@ Prioridad cambiada: se pausó Azure/Terraform/Ansible/Jenkins y la app móvil (s
 - Electron tras la ampliación; Firefox/Safari; navegadores móviles reales (solo viewport de 375 px).
 - Insomnia, k6/JMeter, Maestro adicional, Jenkins/DevSecOps y Azure siguen pendientes (pausados por decisión).
 
+## Entrega 8 · contenedores e infraestructura
+
+### Qué se implementó, ejecutó y qué no
+- **Implementado:** 4 Dockerfile (api, web, worker, migrator), proyecto `MediCore.Worker`, `docker-compose.qa.yml` sobre el Compose existente, proxy Caddy, scripts `qa.sh`/`qa-smoke.sh`/`qa-persistence.sh`/`validate-iac.sh`, Terraform (bootstrap del estado + VM de QA), Ansible (base, docker, aplicación), `documentacion/06-infraestructura.md`.
+- **Ejecutado:** imágenes construidas; ambiente QA levantado desde cero; humo de web y API; persistencia tras `restart` y `down`+`up` (13/13); puertos de datos no publicados; Cypress de Recepción 8/8 a través del proxy; APK contra el ambiente en contenedores y 8/8 flujos Maestro; xUnit 293/293 tras los cambios; validación de Terraform, Ansible, hadolint y compose. Detalle: `documentacion/evidencias/entrega-8-verificacion.md`.
+- **No ejecutado:** `terraform plan/apply`, `ansible-playbook` contra un servidor, HTTPS real, prueba en Azure. **La validación de archivos no se presenta como un despliegue.**
+
+### Hallazgos
+
+| ID | Tipo | Qué ocurrió | Causa | Corrección | Resultado |
+|---|---|---|---|---|---|
+| H8-01 | Defecto (solo visible en contenedor) | La web quedó `unhealthy`: `UnauthorizedAccessException` al escribir en `/keys`. | El volumen nuevo es propiedad de root y la imagen corre sin privilegios. | `Dockerfile` de la web crea `/keys` con el dueño del usuario de la aplicación. | Web saludable; las claves persisten. |
+| H8-02 | Defecto (solo visible en una base nueva) | `--seed-qa` fallaba: `ClinicalDemoSeeder` no encontraba a la Dra. Méndez. | `DevelopmentBootstrap` sembraba primero los médicos de las pruebas E2E y el sembrado de demostración solo crea médicos si no hay ninguno; en desarrollo no se notaba porque ya había datos. | Se siembra primero la demostración y después los datos E2E. | Base nueva con 8 usuarios, 5 médicos y 5 pacientes. |
+| H8-03 | Prueba | Con el contenedor `-p medicore` el `name:` del archivo base podía colisionar con los volúmenes de desarrollo. | Dos archivos Compose definen `name`. | `docker-compose.qa.yml` fija `name: medicore-qa` y `scripts/qa.sh` siempre usa `-p medicore-qa`; se comprobó que los volúmenes de desarrollo no cambian. | Sin efectos en el desarrollo. |
+| H8-04 | Herramienta | `ansible-lint` marcó 2 faltas (nombre en minúscula, variable de rol sin prefijo) y `apt_repository` está obsoleto. | Primer borrador del playbook. | Corregidas; repositorio con `deb822_repository`. | Perfil *production* sin fallos. |
+| H8-05 | Prueba | En la primera pasada de Maestro contra QA fallaron 01 y 03 en 8-9 s. | `DeviceServerDiedException` del driver de Maestro en el emulador; no la app. | Se repitió la suite completa. | 8/8. |
+| H8-06 | Seguridad (decisión) | Detrás del proxy, el límite de intentos de login por IP veía siempre la IP del proxy. | Faltaban cabeceras reenviadas. | `ForwardedHeaders__Enabled` (solo en el Compose de QA, donde la API no publica puertos). | Documentado; IP real del cliente. |
+| H8-07 | Riesgo abierto | La construcción de imágenes ocurre en la VM (no hay registro) y requiere acceso al repositorio. | Evitar el costo de un registro en esta etapa. | Anotado: GHCR/ACR con el pipeline de Jenkins. | Abierto. |
+| H8-08 | Riesgo abierto | Copias de seguridad de PostgreSQL y monitoreo no existen; el disco de datos es la única protección. | Fuera del alcance de esta entrega. | Resuelto: copias cifradas automáticas y restauración probada, ver `evidencias/respaldos.md`. El monitoreo sigue pendiente. | Cerrado. |
+| H8-09 | Riesgo abierto | No hay prueba xUnit para el worker ni para `--seed-qa` (solo verificación con el ambiente). | Se verificó con el ambiente en contenedores. | Anotado. | Abierto. |
+
+Evidencia: `documentacion/evidencias/entrega-8-verificacion.md` y `entrega-8-maestro-qa.md`.
+
+## Cierre · rendimiento, seguridad y pipeline (2026-11-06)
+
+El registro formal, con pasos, severidad y prioridad, está en [12-registro-de-defectos.md](12-registro-de-defectos.md).
+
+| ID | Tipo | Qué ocurrió | Causa | Corrección | Resultado |
+|---|---|---|---|---|---|
+| HP-01 | Prueba | Stress y Spike aprobaron casi sin reservas. | Load había llenado las agendas. | Cada corrida crea sus médicos, y falla si no reserva. | Corridas válidas. |
+| HP-02 | Producto | Quedaron 14 405 eventos pendientes después del pico. | El outbox publicaba 20 eventos cada 2 s. | Lote de 200 y drenado continuo. | 0 pendientes. |
+| HS-01 | Producto | SonarQube encontró bugs S1751. | Bucles que salían en la primera vuelta. | Lectura corregida. | 0 bugs. |
+| HS-02 | Producto | La puerta rechazó el código nuevo. | Duplicación entre web y móvil, sin pruebas. | `ProblemDetailsReader` compartido y 4 pruebas. | Puerta aprobada. |
+| HS-03 | Prueba | La puerta por defecto aprobaba sin condiciones. | Era un proyecto sin puerta asignada. | Puerta propia "MediCore". | La puerta exige condiciones reales. |
+| HA-01 | Producto | axe encontró contraste insuficiente en el calendario. | Colores del diseño. | Colores en `app.css`. | 0 infracciones. |
+| HZ-01 | Producto | Un carácter nulo provocaba un error 500. | PostgreSQL rechaza NUL en texto. | `InvalidTextExceptionHandler` responde 400. | Prueba de regresión. |
+| HZ-02 | Producto | ZAP reportó cabeceras faltantes. | No estaban en Caddy. | Agregadas. | 0 fallas en ZAP. |
+| HZ-04 | Prueba | ZAP API recibía casi solo 401. | Probaba cerrar sesión y perdía la sesión. | Rutas de sesión excluidas. | Análisis con sesión; se completó en HZ-05. |
+| HZ-05 | Prueba | ZAP no llegaba a la lógica clínica. | Usaba solo Administrador, identificadores inventados y cuerpos que la API rechazaba. | Análisis por rol, con identificadores y cuerpos válidos. El orden importa: el análisis activo altera datos. | 40 de 45 operaciones alcanzadas, 0 errores 500. |
+| HC-01 | Producto | 7 archivos fallaban `dotnet format` en Jenkins. | La validación nunca se había ejecutado. | Formato aplicado. | Etapa 3 aprobada. |
+| HJ-01 | Entorno | Jenkins no tenía `docker`. | Debian separa el cliente en `docker-cli`. | Paquete correcto. | Corre etapas. |
+| HJ-02 | Entorno | El smoke fallaba en Jenkins. | `127.0.0.1` era el propio contenedor. | Jenkins entra a la red del proxy. | Etapa 10 aprobada. |
+| HJ-03 | Prueba | Insomnia falló en Jenkins sin horarios libres. | QA acumuló 761 médicos y 34 655 citas de k6 y ZAP. | QA se recrea en cada corrida y la fecha varía. | 65 de 65. |
+| HD-01 | Herramienta | Dependency-Check reportó 4 críticas. | Confundió bibliotecas cliente con servidores. | Revisadas y aceptadas con motivo. | Ver reporte de seguridad. |
+| H9-01 | Producto | QA no arrancaba tras reiniciar Docker. | Jenkins crea los contenedores con rutas de su workspace. | Archivos dentro de las imágenes. | `qa.sh smoke` correcto. |
+| H9-02 | Producto | Ansible fallaba en un Ubuntu mínimo. | Faltaba `python3-debian`. | Paquete agregado. | Dos pasadas sin fallas. |
+| H9-03 | Entorno | Los 8 flujos de Maestro fallaron a la vez. | La cortina de notificaciones del emulador tapaba la app. | Cortina cerrada antes de ejecutar. | 8 de 8. |
+| HJ-04 | Entorno | Jenkins perdió su historial al reiniciar Docker. | `/var/jenkins_home` vive en la VM de Docker Desktop. | Aceptado; las consolas están en `reports/jenkins/`. | Numeración reiniciada. |
+| HE-01 | Error propio | Se borraron capturas antiguas de Cypress que no estaban en Git (unos 9,7 MB). | Una limpieza con `rm -rf`. | No se pueden recuperar. Cypress genera capturas nuevas si una prueba falla. | Sin efecto en las pruebas. |
+
 ## Entregas anteriores
 
 Los hallazgos de las entregas 0 a 3 se trasladarán al registro formal de defectos en la entrega 14. Los principales: login con 503 por usar `localhost` para Redis (el cliente probaba IPv6 y Docker publica solo IPv4; corregido con `127.0.0.1`), una prueba que comparaba el `traceId` de dos respuestas de error, una prueba del catálogo de médicos afectada por la caché compartida con otras pruebas (se descarta la clave antes de insertar datos directos) y la interfaz de `IAsyncLifetime` de xUnit v2.

@@ -72,7 +72,7 @@ public sealed class PatientAuthorizationHandler(IServiceProvider services) : Aut
                     context.Succeed(requirement);
                 break;
 
-            // Laboratorio no accede a pacientes.
+                // Laboratorio no accede a pacientes.
         }
     }
 }

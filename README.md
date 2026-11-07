@@ -1,6 +1,6 @@
 # MediCore
 
-Plataforma hospitalaria: web del personal (Razor Pages), API (ASP.NET Core) y app móvil del paciente (.NET MAUI, Android). Proyecto 2 del Proyecto Final de QA. **Estado: entrega 5 (expediente, consultas y recetas) en curso.** Ver el plan en [documentacion/02-plan-de-trabajo.md](documentacion/02-plan-de-trabajo.md).
+Plataforma hospitalaria: web del personal (Razor Pages), API (ASP.NET Core) y app móvil del paciente (.NET MAUI, Android). Proyecto 2 del Proyecto Final de QA. **Estado: aplicación, pruebas y pipeline completos en QA local.** Propuesta actual: NO-GO para producción y GO condicionado para QA ([informe final](documentacion/13-informe-final.md)).
 
 ## Requisitos
 
@@ -9,9 +9,9 @@ Plataforma hospitalaria: web del personal (Razor Pages), API (ASP.NET Core) y ap
 | .NET SDK | compilar y ejecutar (hoy) | 10.0.x |
 | Git | control de versiones | cualquiera reciente |
 | Visual Studio 2022 17.14+ o 2026 | IDE (soporta `.slnx`) | opcional |
-| Docker Desktop | PostgreSQL, Redis, RabbitMQ y pruebas de integración | necesario desde la entrega 1 |
-| Workload MAUI + Android SDK | app móvil (entrega 9) | opcional por ahora |
-| Terraform, Ansible | infraestructura (entrega 12) | opcional por ahora |
+| Docker Desktop | ambiente QA, pruebas y pipeline | necesario |
+| Workload MAUI + Android SDK | app móvil y Maestro | opcional |
+| Terraform, Ansible | infraestructura | opcional; la validación y la simulación corren en contenedores |
 
 ## Ejecutar
 
@@ -84,6 +84,21 @@ Windows con Smart App Control en modo activo bloquea la carga de los `.dll` sin 
 
 App Android con .NET MAUI (`src/MediCore.Mobile`) sobre la API real: inicio y cierre de sesión, próxima cita, mis citas y detalle, reserva en tres pasos, cancelación, resultados, recetas y notificaciones (MOB-01 a MOB-12). La lógica está en `src/MediCore.Mobile.Core` y se prueba sin Android. **Cómo compilar, instalar, conectar con la API en Docker y ejecutar Maestro: [documentacion/05-app-movil.md](documentacion/05-app-movil.md).** La app se compila con `scripts/android-build-linux.sh` (contenedor Linux) y se prueba en un emulador con Maestro; las herramientas (SDK de Android, emulador, Maestro) ya están instaladas en este equipo. Pasos exactos en el documento.
 
+## Contenedores y ambiente QA (entrega 8)
+
+El sistema completo corre en contenedores (API, web, proceso de mensajería, PostgreSQL, Redis, RabbitMQ y proxy inverso). **Guía, arquitectura, costos estimados de Azure y procedimientos de crear, modificar y destruir: [documentacion/06-infraestructura.md](documentacion/06-infraestructura.md).**
+
+```bash
+scripts/qa.sh init      # .env.qa con contraseñas aleatorias (no se versiona)
+scripts/qa.sh up        # construye, migra y levanta; solo el proxy publica puertos (http://127.0.0.1:8080)
+scripts/qa.sh seed      # usuarios y datos ficticios
+scripts/qa.sh smoke     # pruebas de humo de web y API
+scripts/qa.sh down      # conserva los volúmenes; "destroy" los borra (pide confirmación)
+scripts/qa.sh backups   # lista los respaldos automáticos; también: backup, export, import, restore
+```
+
+La infraestructura de Azure (Terraform y Ansible) se **ejecutó sin costo, no en Azure**: `scripts/iac-simulacion.sh` usa un proveedor simulado y un Ubuntu desechable. No se creó ningún recurso real; el plan y su costo esperan aprobación (sección 3 del documento). La app Android es un APK, no un servicio del Compose.
+
 ## Agenda y citas
 
 - Las horas son del reloj de la clínica (`Clinic:TimeZone`, por defecto `America/Guatemala`); se puede reservar desde hoy hasta `Scheduling:MaxDaysAhead` días (90). Las citas duran 30 minutos.
@@ -109,7 +124,41 @@ Docs/  Referencias/     documento del proyecto y diseño aprobado (solo lectura)
 
 ## Estado de las pruebas
 
-Hoy: 293 pruebas xUnit superadas (44 unitarias, 50 de la lógica móvil y 199 de integración con PostgreSQL, Redis y RabbitMQ reales; ver `documentacion/evidencias/`). **Maestro: 8 flujos, 8/8 aprobados en el emulador Android 35** (`documentacion/evidencias/entrega-7-maestro.md`). Además, **Cypress** (`tests/cypress`) ya cubre los recorridos de Recepción (8 pruebas), Médico (10, con datos aislados y sin depender de la hora) y Laboratorio (8, con notificación asíncrona real); ver su README. **Pendientes y obligatorios según el documento del proyecto**: ampliar Cypress (smoke, Administrador y Laboratorio, regresión), colección de Insomnia (API), Maestro (móvil) y pruebas de rendimiento con k6 o JMeter. Detalle en [documentacion/03-matriz-trazabilidad.md](documentacion/03-matriz-trazabilidad.md); los hallazgos y la verificación manual en [documentacion/04-registro-de-hallazgos.md](documentacion/04-registro-de-hallazgos.md).
+| Suite | Resultado |
+|---|---|
+| xUnit | 304/304 (48 unitarias, 50 móviles, 206 de integración) |
+| Insomnia | 65/65 comprobaciones en 61 solicitudes |
+| Cypress en Chrome | 116/116, incluidas 14 pantallas con axe |
+| Maestro | 8/8 con el código final, en emulador contra QA |
+| k6 | Load, Stress y Spike dentro de umbrales, en equipo local |
+| SonarQube | Puerta aprobada, 0 bugs, 74,2 % de cobertura |
+| ZAP | 0 alertas altas en web y API con 5 roles; 40 de 45 operaciones alcanzadas |
+| Fortify | Sin ejecutar: falta licencia |
+| Usabilidad | Definida, sin aplicar a personas |
+
+## Documentos de entrega
+
+| Documento | Contenido |
+|---|---|
+| [Plan de pruebas](documentacion/10-plan-de-pruebas.md) | Las 20 secciones exigidas |
+| [Matriz de riesgos](documentacion/09-matriz-de-riesgos.md) | Confidencialidad, integridad y disponibilidad |
+| [Casos de prueba](documentacion/11-casos-de-prueba.md) | Casos críticos con su evidencia |
+| [Registro de defectos](documentacion/12-registro-de-defectos.md) | Pasos, severidad, prioridad y evidencia |
+| [Informe final](documentacion/13-informe-final.md) | Métricas y decisión GO / NO-GO |
+| [Guion de defensa](documentacion/14-guion-de-defensa.md) | Demostraciones en vivo |
+| [Seguridad y accesibilidad](documentacion/15-seguridad-y-accesibilidad.md) | Hallazgos y su tratamiento |
+
+## Pipeline
+
+Jenkins y SonarQube corren en contenedores:
+
+```bash
+docker compose -p medicore-ci --env-file ci/.env.ci -f ci/docker-compose.ci.yml up -d --build
+```
+
+Jenkins queda en `http://127.0.0.1:8090` y SonarQube en `http://127.0.0.1:9000`. `ci/.env.ci` no se versiona y define `JENKINS_ADMIN_PASSWORD`, `SONAR_ADMIN_PASSWORD`, `SONAR_TOKEN` y `MEDICORE_BRANCH`. Para crear la puerta de calidad, usa `scripts/sonar-setup.sh`.
+
+**Cada corrida borra los datos de QA y los vuelve a sembrar.** Solo afecta los volúmenes `medicore-qa_*`.
 
 ## Seguridad
 
