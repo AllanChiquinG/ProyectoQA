@@ -54,3 +54,14 @@ Cambió código (proyecto `MediCore.Worker`, reordenamiento de sembradores, cabe
 - `ansible-playbook` contra un servidor real (no hay servidor), HTTPS con certificado real (Let's Encrypt necesita un nombre DNS público), el clon del repositorio desde la VM y el disco de datos de Azure.
 - Cypress de Médico y Laboratorio contra QA (sus tareas escriben en la base y la base de QA no se publica); Maestro/Cypress contra Azure.
 - Escaneo de seguridad de las imágenes y del código (DevSecOps pendiente).
+
+## 6. Repetición tras fusionar la web de extremo a extremo (2026-11-06)
+
+Se fusionó `main` (PR #7: web de extremo a extremo y su Cypress ampliado) en esta rama, con conflictos solo en `.gitignore` y en el registro de hallazgos (se conservaron ambos lados), y se reconstruyó y levantó el ambiente QA con ese código (`scripts/qa.sh up`, `seed`).
+
+- Servicios `healthy` (api, web, worker, postgres, redis, rabbitmq, proxy); `migrate` terminó con código 0.
+- `scripts/qa.sh smoke`: 11/11 OK.
+- `scripts/qa-persistence.sh`: correcto (el paciente, el resultado y la notificación sobreviven a `restart` y a `down` + `up`; volúmenes `medicore-qa_*` intactos).
+- Cypress en Chrome contra el proxy (`MEDICORE_WEB_URL` y `MEDICORE_API_URL` = `http://localhost:8080`): **46/46** en los 4 specs que no usan tareas de base de datos (acceso y permisos 19, pantalla pequeña 7, agenda y reserva 12, recorrido de Recepción 8).
+- **No se ejecutaron contra QA** los 6 specs que usan tareas directas a PostgreSQL (`administrador`, `laboratorio-*`, `medico-*`, `recepcion-pacientes`): la base de QA no publica puertos, por diseño. Esos 56 casos siguen verificados solo contra el ambiente de desarrollo (102/102 en total allí).
+- No se re-ejecutó Maestro contra esta versión de QA (el último 8/8 es el de la sección 5).
