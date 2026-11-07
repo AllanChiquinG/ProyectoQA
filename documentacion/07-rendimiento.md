@@ -22,10 +22,25 @@ Una reserva rechazada con 409 es el comportamiento correcto (horario ocupado) y 
 
 Después de cada perfil: 0 solapes por médico, 0 solapes por paciente, 0 eventos pendientes y 0 mensajes en la DLQ (`reports/k6/integridad.txt`, `reports/k6/corrida.txt`).
 
+## Reservas simultáneas
+
+`scripts/perf-citas.sh [cantidad] [distintas|mismo]` lanza todas las reservas a la vez, cada una con un paciente distinto, y luego comprueba la integridad.
+
+| Prueba | Creadas | 409 | Errores | p95 |
+|---|---|---|---|---|
+| 100 en horarios distintos | 100 | 0 | 0 | 194,6 ms |
+| 100 al mismo horario | 1 | 99 | 0 | 382,8 ms |
+| 200 en horarios distintos | 200 | 0 | 0 | 120,6 ms |
+| 200 al mismo horario | 1 | 199 | 0 | 634,2 ms |
+
+En las cuatro hubo 0 solapes por médico y por paciente, y 0 errores 500 en la API. Antes de corregir HP-03, 1 de cada 100 reservas fallaba. Los JSON de `reports/k6/citas-*.json` son de las pruebas de 200.
+
 ## Defectos que encontró esta prueba
 
 - **HP-01, escenario de carga:** las primeras corridas de Stress y Spike aparecieron aprobadas casi sin reservas, porque Load había llenado las agendas. Se descartaron. Ahora cada corrida crea sus médicos y falla si no alcanza un mínimo de reservas.
 - **HP-02, defecto de producto:** el publicador del outbox enviaba como máximo 20 eventos cada 2 s. La API seguía rápida, pero al terminar quedaron 14 405 notificaciones pendientes. Ahora el lote es de 200 y el publicador continúa sin esperar mientras haya lotes completos. El rezago se vació en menos de un minuto y las corridas finales terminan con 0 pendientes.
+
+- **HP-03, defecto de configuración:** 100 reservas sin pausa agotaron las conexiones de PostgreSQL. Load, Stress y Spike no lo vieron porque cada usuario espera entre peticiones. Se limitó cada proceso a 40 conexiones.
 
 ## Límites de esta medición
 
