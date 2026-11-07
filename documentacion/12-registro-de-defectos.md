@@ -10,7 +10,7 @@ La severidad y la prioridad siguen la sección 17 del [plan de pruebas](10-plan-
 |---|---|---|
 | Crítica | 0 | 0 |
 | Alta | 7 | 0 |
-| Media | 13 | 0 |
+| Media | 14 | 0 |
 | Baja | 3 | 3 |
 
 ## Defectos cerrados
@@ -36,6 +36,7 @@ La severidad y la prioridad siguen la sección 17 del [plan de pruebas](10-plan-
 | HC-01 | Código | Baja | P3 | Ejecutar `dotnet format --verify-no-changes` en Jenkins | Sin cambios | 7 archivos con formato incorrecto | Formato aplicado | Etapa 3 de Jenkins |
 | HS-02 | Código | Media | P2 | Ejecutar SonarQube sobre código nuevo | Duplicación de 3 % o menos | 9,3 % de duplicación y 49 % de cobertura | Lectura de errores compartida y 4 pruebas | Corrida 2 de Jenkins, `reports/sonarqube/quality-gate.json` |
 | H8-08 | Datos | Alta | P1 antes de producción | Revisar la infraestructura | Copias automáticas | No hay respaldos | Copias cifradas cada 6 horas, verificadas, y restauración probada con pérdida total | `documentacion/evidencias/respaldos.md`, `reports/respaldos/simulacro.txt` |
+| HP-03 | Agenda | Media | P1 | Enviar 100 reservas simultáneas (`scripts/perf-citas.sh 100`) | Todas responden 201 o 409 | 1 de cada 100 falló con error 500: `53300 too many clients`. API y worker podían abrir más conexiones que `max_connections` | Tope de 40 conexiones por proceso en `docker-compose.qa.yml`. Repetido con 100 y 200 reservas: 0 errores | `reports/k6/citas-mismo.json`, `reports/k6/citas-distintas.json` |
 | HS-03 | Código | Media | P2 | Ejecutar la etapa 16 con los scripts nuevos | Puerta de SonarQube aprobada | Corridas 7 y 8 rechazadas: 8 y luego 1 incidencia nueva, y puntos de seguridad sin revisar; las etapas 17 y 18 no se ejecutaron | Incidencias corregidas sin bajar la puerta; una expresión regular reemplazada y un punto de seguridad revisado con justificación | `reports/jenkins/corrida-7.txt`, `reports/jenkins/corrida-8.txt`, `reports/sonarqube/quality-gate.json` |
 | H9-01 | Contenedores | Media | P1 | Crear QA desde Jenkins y reiniciar Docker | QA vuelve a arrancar | API, web y proxy terminan con código 127: montaban archivos del workspace de Jenkins | Script de salud y Caddyfile dentro de las imágenes | `docker/proxy.Dockerfile`, `scripts/qa.sh smoke` |
 | H9-02 | Infraestructura | Media | P2 | Aplicar `site.yml` en un Ubuntu mínimo | Docker instalado | Falla: faltaba `python3-debian` | Paquete agregado al rol `base` | `documentacion/evidencias/iac-sin-costo.md` |

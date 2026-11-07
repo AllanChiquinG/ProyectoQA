@@ -105,7 +105,7 @@ scripts/dotnet-linux.sh ef-migration <Nombre>              # genera la migració
 scripts/dev-stack-linux.sh up                              # API (5011) y web (5298) en contenedores, para Cypress; "down" los elimina
 ```
 
-Ambiente QA en contenedores (local o servidor): `scripts/qa.sh init|up|seed|status|smoke|restart|down|destroy|backup|backups|export|import|restore`; validación de IaC sin instalar nada: `scripts/validate-iac.sh`; ejecución de Terraform y Ansible sin Azure ni costo: `scripts/iac-simulacion.sh`; PDF de la documentación: `scripts/docs-pdf.py` (salida en `documentacion/pdf/`, se regenera cuando cambia el Markdown).
+Ambiente QA en contenedores (local o servidor): `scripts/qa.sh init|up|seed|status|smoke|restart|down|destroy|backup|backups|export|import|restore`; validación de IaC sin instalar nada: `scripts/validate-iac.sh`; ejecución de Terraform y Ansible sin Azure ni costo: `scripts/iac-simulacion.sh`; reservas simultáneas: `scripts/perf-citas.sh [cantidad] [distintas|mismo]`; publicación con ngrok en contenedor: `scripts/qa-publicar.sh up|status|down` (token en `.env.ngrok`, no versionado); PDF de la documentación: `scripts/docs-pdf.py` (salida en `documentacion/pdf/`, se regenera cuando cambia el Markdown).
 
 Cypress: `cd tests/cypress && CYPRESS_MEDICORE_PASSWORD=<Seed:DevPassword> npx cypress run --browser chrome` (requiere API y web en marcha; ver `tests/cypress/README.md`). Los archivos estáticos de la web (`wwwroot`) se publican con huella al compilar: tras cambiar un `.js` o `.css` hay que recompilar y reiniciar la web.
 

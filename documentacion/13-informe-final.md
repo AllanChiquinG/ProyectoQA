@@ -32,6 +32,8 @@ La decisión final corresponde al equipo.
 
 ### Rendimiento
 
+La prueba de reservas simultáneas (`scripts/perf-citas.sh`) se ejecutó después de la corrida 9 y su corrección no pasó por Jenkins. Ver [07-rendimiento.md](07-rendimiento.md).
+
 | Perfil | Peticiones | req/s | p95 lectura | p95 reserva | Error inesperado | Reservas | 409 |
 |---|---|---|---|---|---|---|---|
 | Load, corrida 5 | 20 399 | 75,2 | 5,3 ms | 8,9 ms | 0 % | 3260 | 41 |
@@ -44,7 +46,7 @@ No se alcanzó el punto de quiebre. k6, la API y la base de datos compartieron e
 
 ### Defectos
 
-Se registraron 26 defectos: 23 cerrados y 3 abiertos, ninguno crítico ni de severidad alta. Todos están en GitHub Issues. Las pruebas de esta etapa encontraron defectos reales que las suites anteriores no veían:
+Se registraron 27 defectos: 24 cerrados y 3 abiertos, ninguno crítico ni de severidad alta. Todos están en GitHub Issues. Las pruebas de esta etapa encontraron defectos reales que las suites anteriores no veían:
 
 - **k6:** el outbox acumuló 14 405 eventos pendientes después del pico.
 - **ZAP:** un carácter nulo provocaba un error 500.

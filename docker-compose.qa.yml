@@ -14,7 +14,8 @@ x-logging: &logging
 x-app-env: &app-env
   ASPNETCORE_ENVIRONMENT: QA
   DOTNET_ENVIRONMENT: QA
-  ConnectionStrings__Postgres: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-medicore};Username=${POSTGRES_USER:-medicore};Password=${POSTGRES_PASSWORD:?Define POSTGRES_PASSWORD en .env.qa}"
+  # API y worker juntos deben quedar bajo max_connections (100): sin este tope, 100 reservas simultáneas agotaban PostgreSQL (HP-03).
+  ConnectionStrings__Postgres: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-medicore};Username=${POSTGRES_USER:-medicore};Password=${POSTGRES_PASSWORD:?Define POSTGRES_PASSWORD en .env.qa};Maximum Pool Size=40"
   Clinic__TimeZone: ${CLINIC_TIMEZONE:-America/Guatemala}
 
 services:
