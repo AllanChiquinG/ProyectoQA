@@ -1,20 +1,25 @@
 """Genera la versión PDF de la documentación en documentacion/pdf/. La fuente sigue siendo el Markdown: si cambia, se vuelve a generar.
 
-Requisitos: Google Chrome instalado y  pip install markdown playwright  (no descarga navegadores: usa Chrome).
+Sin filtro también genera MediCore-documentacion-completa.pdf: portada, índice y todos los documentos, con marcadores.
+
+Requisitos: Google Chrome instalado y  pip install markdown playwright pypdf  (no descarga navegadores: usa Chrome).
 Uso: python scripts/docs-pdf.py [nombre-parcial]
 """
 import datetime
 import html
+import io
 import pathlib
 import re
 import sys
 
 import markdown
 from playwright.sync_api import sync_playwright
+from pypdf import PdfReader, PdfWriter
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 DOCS = ROOT / "documentacion"
 OUT = DOCS / "pdf"
+COMPLETE = OUT / "MediCore-documentacion-completa.pdf"
 MERMAID = "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"
 
 STYLE = """
@@ -45,11 +50,15 @@ def links_to_pdf(text):
     return text.replace(".md)", ".pdf)").replace(".md#", ".pdf#")
 
 
+def title_of(text, fallback):
+    return next((line[2:].strip() for line in text.splitlines() if line.startswith("# ")), fallback)
+
+
 def render(page, source, target):
     text = source.read_text(encoding="utf-8-sig")
     body = markdown.markdown(links_to_pdf(text), extensions=["tables", "fenced_code", "sane_lists"])
     wide = max((line.count("|") - 1 for line in text.splitlines() if line.lstrip().startswith("|")), default=0) >= 6
-    title = html.escape(next((line[2:].strip() for line in text.splitlines() if line.startswith("# ")), source.stem))
+    title = html.escape(title_of(text, source.stem))
     diagrams = re.sub(r'<pre><code class="language-mermaid">(.*?)</code></pre>', r'<div class="mermaid">\1</div>', body, flags=re.S)
     page.set_content(f'<!doctype html><html lang="es"><head><meta charset="utf-8"><title>{title}</title><style>{STYLE}</style></head><body>{diagrams}</body></html>')
     if diagrams != body:  # Los diagramas se dibujan antes de imprimir; requiere conexión la primera vez.
@@ -64,17 +73,61 @@ def render(page, source, target):
              margin={"top": "16mm", "bottom": "16mm", "left": "14mm", "right": "14mm"})
 
 
+def front_matter(page, entries, offset):
+    """Portada e índice. Las páginas del índice son las del visor de PDF: cada documento conserva su propia numeración al pie."""
+    rows = "".join(f"<tr><td>{i}</td><td>{html.escape(title)}</td><td>{start + offset}</td></tr>" for i, (title, start) in enumerate(entries, 1))
+    today = datetime.date.today().isoformat()
+    page.set_content(f'''<!doctype html><html lang="es"><head><meta charset="utf-8"><title>MediCore</title><style>{STYLE}
+.cover {{ height: 235mm; display: flex; flex-direction: column; justify-content: center; break-after: page; }}
+.cover h1 {{ font-size: 46pt; border: 0; margin: 0 0 12px; }} .cover p {{ font-size: 15pt; }}
+td:first-child, td:last-child {{ white-space: nowrap; }} table {{ font-size: 10pt; }}</style></head><body>
+<div class="cover"><h1>MediCore</h1><p>Documentación completa del proyecto</p><p>Proyecto 2, curso 048 Aseguramiento de la Calidad, UMG</p>
+<p>{len(entries)} documentos. Generado el {today}.</p></div>
+<h1>Índice</h1><table><thead><tr><th>#</th><th>Documento</th><th>Página del PDF</th></tr></thead><tbody>{rows}</tbody></table></body></html>''')
+    return PdfReader(io.BytesIO(page.pdf(format="Letter", print_background=True, margin={"top": "16mm", "bottom": "16mm", "left": "14mm", "right": "14mm"})))
+
+
+def build_complete(page, documents):
+    """Une los PDF ya generados. El índice se dibuja dos veces porque su largo define dónde empieza cada documento."""
+    entries, start = [], 1
+    readers = []
+    for title, path in documents:
+        reader = PdfReader(path)
+        readers.append(reader)
+        entries.append((title, start))
+        start += len(reader.pages)
+    front = front_matter(page, entries, 0)
+    front = front_matter(page, entries, len(front.pages))
+    writer = PdfWriter()
+    for sheet in front.pages:
+        writer.add_page(sheet)
+    writer.add_outline_item("Índice", 1)
+    for (title, _), reader in zip(entries, readers):
+        first = len(writer.pages)
+        for sheet in reader.pages:
+            writer.add_page(sheet)
+        writer.add_outline_item(title, first)
+    writer.add_metadata({"/Title": "MediCore: documentación completa"})
+    with COMPLETE.open("wb") as output:
+        writer.write(output)
+    print(COMPLETE.relative_to(ROOT), f"{len(writer.pages)} páginas, {COMPLETE.stat().st_size // 1024} KB")
+
+
 def main():
     only = sys.argv[1] if len(sys.argv) > 1 else ""
-    sources = sorted(DOCS.glob("*.md")) + sorted((DOCS / "evidencias").glob("*.md"))
+    sources = [ROOT / "README.md"] + sorted(DOCS.glob("*.md")) + sorted((DOCS / "evidencias").glob("*.md"))
+    documents = []
     with sync_playwright() as p:
         browser = p.chromium.launch(channel="chrome")
         page = browser.new_page()
         for source in sources:
             if only in source.name:
-                target = OUT / source.relative_to(DOCS).with_suffix(".pdf")
+                target = OUT / ("00-README.pdf" if source.parent == ROOT else source.relative_to(DOCS).with_suffix(".pdf"))
                 render(page, source, target)
+                documents.append((title_of(source.read_text(encoding="utf-8-sig"), source.stem), target))
                 print(target.relative_to(ROOT), f"{target.stat().st_size // 1024} KB")
+        if not only:
+            build_complete(page, documents)
         browser.close()
     print("Generado:", datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
 
